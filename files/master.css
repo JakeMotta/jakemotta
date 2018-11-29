@@ -1,0 +1,108 @@
+body:after{ display:none;content:url(files/images/blackchamber.jpg) url(files/images/blackchamber_bw.jpg) url(files/images/danjames.jpg) url(files/images/danjames_bw.jpg) url(files/images/juneteenth.jpg) url(files/images/juneteenth_bw.jpg) url(files/images/teamsaferacing.jpg) url(files/images/teamsaferacing_bw.jpg)}
+#container
+{
+	width:960px;
+	min-height:200px;
+	height:auto !important;
+	height:200px;
+	background-color:transparent;
+	margin:auto;
+	margin-top:30px;
+}
+#header
+{
+	width:100%;
+	min-height:10px;
+	height:auto !important;
+	height:10px;
+	background-color:transparent;
+	text-align:center;
+}
+#content
+{
+	width:100%;
+	min-height:300px;
+	height:auto !important;
+	height:300px;
+	background-color:transparent;
+	float:left;
+	margin-top:15px;
+}
+#chamber
+{
+	width:450px;
+	height:375px;
+	margin:13px 13px 13px 13px;
+	background-image:url(files/images/blackchamber_bw.jpg);
+	background-repeat:none;
+	transition: background-image .5s ease-in-out;
+	float:left;
+	border:2px solid #D3D3D3;
+}
+#chamber:hover
+{
+	background-image:url(files/images/blackchamber.jpg);
+}
+#danjames
+{
+	width:450px;
+	height:375px;
+	margin:13px 13px 13px 13px;
+	background-image:url(files/images/danjames_bw.jpg);
+	background-repeat:none;
+	transition: background-image .5s ease-in-out;
+	float:left;
+	border:2px solid #D3D3D3;
+}
+#danjames:hover
+{
+	background-image:url(files/images/danjames.jpg);
+}
+#teamsafe
+{
+	width:450px;
+	height:375px;
+	margin:13px 13px 13px 13px;
+	background-image:url(files/images/teamsaferacing_bw.jpg);
+	background-repeat:none;
+	transition: background-image .5s ease-in-out;
+	float:left;
+	border:2px solid #D3D3D3;
+}
+#teamsafe:hover
+{
+	background-image:url(files/images/teamsaferacing.jpg);
+}
+#juneteenth
+{
+	width:450px;
+	height:375px;
+	margin:13px 13px 13px 13px;
+	background-image:url(files/images/juneteenth_bw.jpg);
+	background-repeat:none;
+	transition: background-image .5s ease-in-out;
+	float:left;
+	border:2px solid #D3D3D3;
+}
+#juneteenth:hover
+{
+	background-image:url(files/images/juneteenth.jpg);
+}
+#footer
+{
+	width:100%;
+	height:60px;
+	background-color:transparent;
+	clear:both;
+}
+.text
+{
+	font-family: 'Montserrat', sans-serif;
+	font-size:32px;
+}
+.mid-text
+{
+	font-family: 'Montserrat', sans-serif;
+	font-size:18px;
+}
+

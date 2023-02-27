@@ -1,15 +1,19 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Ignore stuff
+/info.txt
+/ShareNote
+**node_modules
+**myAdmin
 /BlackChamber
 /CS160
-/DanJames
-/dev
+/misc
+/NinjaDonut/Games/Downloadable
+/NinjaDonut/Games/EhGames
+/NinjaDonut/Games/GoodGames
+**/isGuy
+**/OldSite
+/Pistolart/files/static
+/files
 /FUA
 /Music
-/Pistolart
-/Psycho
-/ShareNote
-/NinjaDonut
-/misc
-/info.txt

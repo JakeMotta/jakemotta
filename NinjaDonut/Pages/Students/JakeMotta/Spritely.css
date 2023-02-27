@@ -1,0 +1,51 @@
+
+        #stage {
+            top: 0px;
+            left: 0px;
+            z-index: 100;
+        }
+        .stage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-width: 900px;
+            height: 300px;
+            overflow: hidden;
+        }
+        #bg {
+            background: url(Images/SpritelyImages/Sky.png) 0 0 repeat-x;
+        }
+        #clouds {
+            background: transparent url(Images/SpritelyImages/Cloud2.png);
+        }
+        #City2 {
+            background: transparent url(Images/SpritelyImages/City2.png) 0 241px repeat-x;
+        }
+        #City {
+            background: transparent url(Images/SpritelyImages/City.png) 0 241px repeat-x;
+        }
+		
+		
+		
+	    /*#stage2
+	    {
+            z-index: 100;
+        }
+        .stage2 {
+            width: 100%;
+            min-width: 900px;
+            height: 800px;
+            overflow:visible;
+        }
+        #bg2 {
+             background: url(Images/InsideDirt.png);
+			 background-color:#6B4F2E;
+			 background-repeat:no-repeat;
+			 background-position:center;
+        }
+		#clouds2 {
+			position:relative;
+			top:-800px;
+            background: transparent url(Images/SpritelyImages/.png) repeat-x;
+        }*/

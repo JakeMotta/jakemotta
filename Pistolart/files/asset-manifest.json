@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/sandbox1/static/css/main.0c372c26.chunk.css",
+    "main.js": "/sandbox1/static/js/main.87e377e1.chunk.js",
+    "main.js.map": "/sandbox1/static/js/main.87e377e1.chunk.js.map",
+    "runtime-main.js": "/sandbox1/static/js/runtime-main.6cd42f94.js",
+    "runtime-main.js.map": "/sandbox1/static/js/runtime-main.6cd42f94.js.map",
+    "static/js/2.39e30fd6.chunk.js": "/sandbox1/static/js/2.39e30fd6.chunk.js",
+    "static/js/2.39e30fd6.chunk.js.map": "/sandbox1/static/js/2.39e30fd6.chunk.js.map",
+    "index.html": "/sandbox1/index.html",
+    "precache-manifest.271fd5f167deb58e2b89328730f3f945.js": "/sandbox1/precache-manifest.271fd5f167deb58e2b89328730f3f945.js",
+    "service-worker.js": "/sandbox1/service-worker.js",
+    "static/css/main.0c372c26.chunk.css.map": "/sandbox1/static/css/main.0c372c26.chunk.css.map",
+    "static/js/2.39e30fd6.chunk.js.LICENSE.txt": "/sandbox1/static/js/2.39e30fd6.chunk.js.LICENSE.txt",
+    "static/media/index.scss": "/sandbox1/static/media/AmericanFlag.6fd20d55.jpg",
+    "static/media/food_white.png": "/sandbox1/static/media/food_white.3e5edf45.png",
+    "static/media/pavilion_blue.png": "/sandbox1/static/media/pavilion_blue.487be63a.png",
+    "static/media/pavilion_white.png": "/sandbox1/static/media/pavilion_white.da4db3b2.png",
+    "static/media/vcs_logo.png": "/sandbox1/static/media/vcs_logo.4bd29778.png",
+    "static/media/welcome_blue.png": "/sandbox1/static/media/welcome_blue.7991fe87.png",
+    "static/media/welcome_white.png": "/sandbox1/static/media/welcome_white.de929f50.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6cd42f94.js",
+    "static/js/2.39e30fd6.chunk.js",
+    "static/css/main.0c372c26.chunk.css",
+    "static/js/main.87e377e1.chunk.js"
+  ]
+}

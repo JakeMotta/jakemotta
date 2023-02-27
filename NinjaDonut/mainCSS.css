@@ -1,0 +1,283 @@
+body
+{
+	background-color:#1a1a1a;
+}
+#container
+{
+	width:100%;
+	background-color:transparent;
+	margin-top:25px;
+}
+#topLogo
+{
+	background-color:transparent;
+	width:960px;
+	font-size:25px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	color:#fff;
+	margin:auto;
+}
+#ninjadonut
+{
+	position:relative;
+	top:75px;
+}
+#sprite
+{
+	text-align:right;
+}
+#content
+{
+	width:100%;
+	min-height:400px;
+	height:auto !important;
+	height:400px;
+	background-color:#F2EEEA;
+}
+#context
+{
+	width:960px;
+	background-color:#F2EEEA;
+	min-height:400px;
+	height:auto !important;
+	height:400px;
+	margin:auto;
+}
+#homeNinja
+{
+	width:285px;
+	height:300px;
+	float:left;
+	margin-left:180px;
+}
+#quotes
+{
+	background-image:url(Images/QuoteBlock.jpg);
+	width:244px;
+	height:300px;
+	background-repeat:none;
+	float:left;
+	margin-left:50px;
+}
+#quoteText
+{
+	width:180px;
+	height:240px;
+	background-color:transparent;
+	position:relative;
+	left:30px;
+	top:30px;
+	font-size:25px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	text-align:center;
+}
+#navbar
+{
+	width:960px;
+	margin:auto;
+	background-color:#59524D;
+	font-size:25px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	text-align:center;
+}
+strong
+{
+	color:#fff;
+}
+#navbar a
+{
+	color:black;
+	text-decoration:none;
+}
+#navbar a:visited
+{
+	color:black;
+	text-decoration:none;
+}
+#navbar a:hover
+{
+	color:#F2EEEA;
+}
+#navbackground
+{
+	width:100%;
+	background-color:#59524D;
+}
+#navInvis
+{
+	color:#59524D;
+}
+#text
+{
+	font-size:16px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	text-align:center;
+}
+#invisifont
+{
+	color:#F2EEEA;
+}
+#pageTitle
+{
+	width:100%;
+	text-align:center;
+	font-size:25px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	background-color:transparent;
+	padding-top:10px;
+}
+a
+{
+	color:black;
+	text-decoration:none;
+}
+a:visited
+{
+	color:black;
+	text-decoration:none;
+}
+a:hover
+{
+	color:#AE6809;
+}
+table
+{
+	margin-top:20px;
+	text-align:center;
+	font-size:16px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	margin:auto;
+}
+tr
+{
+	height:50px;
+}
+td
+{
+	width:200px;
+	border-right:1px solid black;
+}
+#gameTypes
+{
+	text-align:center;
+	font-size:15px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	background-color:transparent;
+	width:100%;
+}
+#contentNav
+{
+	width:960px;
+	text-align:center;
+	margin-top:100px;
+	background-color:transparent;
+	clear:both;
+}
+#title
+{
+	padding-top:10px;
+}
+#smallFont
+{
+	font-size:12px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	text-align:center;
+}
+#mediumFont
+{
+	font-size:16px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	text-align:center;
+}
+#Action
+{
+	width:150px;
+	height:300px;
+	text-align:center;
+	font-size:18px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	background-color:#DDD2C8;
+	display:none;
+	float:left;
+	margin-left:5px;
+	margin-top:15px;
+}
+#Action a
+{
+	color:black;
+	text-decoration:none;
+}
+#Action a:visited
+{
+	color:black;
+	text-decoration:none;
+}
+#Action a:hover
+{
+	color:#F2EEEA;
+}
+#Adventure
+{
+	width:150px;
+	height:300px;
+	text-align:center;
+	font-size:18px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	background-color:#DDD2C8;
+	display:none;
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
+}
+#Arcade
+{
+	width:150px;
+	height:300px;
+	text-align:center;
+	font-size:18px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	background-color:#DDD2C8;
+	display:none;
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
+}
+#StrategyDefense
+{
+	width:150px;
+	height:300px;
+	text-align:center;
+	font-size:18px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	background-color:#DDD2C8;
+	display:none;
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
+}
+#Shooter
+{
+	width:150px;
+	height:300px;
+	text-align:center;
+	font-size:18px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	background-color:#DDD2C8;
+	display:none;
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
+}
+#Puzzle
+{
+	width:150px;
+	height:300px;
+	text-align:center;
+	font-size:18px;
+	font-family: 'Carrois Gothic SC', sans-serif;
+	background-color:#DDD2C8;
+	display:none;
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
+}

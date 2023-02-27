@@ -1,0 +1,46 @@
+version: 2
+jobs:
+  build:
+      docker:
+        - image: circleci/node:10.0
+      steps:
+        - checkout
+        # Run a step to install node_modules.
+        - run: 
+            name: "Installing Modules"
+            command: npm install
+        # Run step to build.
+        - run: 
+            name: "Building"
+            command: npm run build-ci
+        # Run step to commit 
+        - run: 
+            name: "Commiting"
+            command: |
+              git config user.name 'Build Automation'
+              git config user.email 'build@ci.com'
+              git add .
+              git commit -m "build"
+              # Run a step to setup ssh.
+        - run: 
+            name: "Key Setup"
+            command: ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 -d )
+        # Run step to setup deployment.
+        - run: 
+            name: "Deployment Setup"
+            command: echo -e "Host host\n\tHostname $HOSTNAME\n\tPort 22\n\tUser ubuntu\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+        # Run deployment step 
+        - run: 
+            name: "Deploying"
+            command: |
+              git remote set-url --push origin ssh://host:/home/ubuntu/webapp.git
+              git push -f origin HEAD:master
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master

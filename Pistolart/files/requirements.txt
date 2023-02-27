@@ -1,0 +1,5 @@
+beautifulsoup4==4.6.3
+expressvpn-python==1.1
+pymongo==3.10.1
+dnspython==2.0.0
+email-scraper==0.3

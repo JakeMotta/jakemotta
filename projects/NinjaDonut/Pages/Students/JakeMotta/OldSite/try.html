@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>JakeMotta</title>
+
+<style>
+#bg
+{
+	width:960px;
+	height:650px;
+	background-color:red;
+	position:absolute;
+	top:100px;
+	z-index:0;
+}
+#GarageDoor
+{
+	width:960px;
+	height:650px;
+	background-color:blue;
+	position:absolute;
+	top:100px;
+	z-index:2;
+}
+#GarageDoor2
+{
+	width:960px;
+	height:650px;
+	background-color:green;
+	position:absolute;
+	top:100px;
+}
+
+}
+</style>
+
+
+<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+
+</head>
+
+<body>
+
+<div id="bg">
+</div>
+<div id="GarageDoor" style="width: 960px; height: 650px; display: none; background-color:blue;"></div>
+
+
+<a href="javascript:void(0);" onclick="ToggleBox();">Click Here</a>
+<script type="text/javascript">
+function ToggleBox()
+{
+        $("#GarageDoor").slideToggle("slow", function()
+		{
+			$("ToggleBox2").slideUp("slow");
+		});
+}
+</script>
+
+
+
+</body>
+</html>

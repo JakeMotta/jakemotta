@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.params=
+comment0.target=TrainingVille()
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ TrainingVille.\r\n\ \r\n
+comment1.params=
+comment1.target=void\ PopulateWater()
+comment2.params=
+comment2.target=void\ PopulateTallGrass()
+comment3.params=
+comment3.target=void\ PopulateRocks()
+comment4.params=
+comment4.target=void\ PopulateTrees()
+numComments=5

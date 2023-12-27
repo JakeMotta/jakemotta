@@ -1,0 +1,23 @@
+.user-profile-modal-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .item-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--spacing-md);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-title {
+      color: var(--text-dark);
+    }
+
+    .item-value {
+      color: var(--text);
+      text-transform: capitalize;
+    }
+  }
+}

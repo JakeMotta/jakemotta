@@ -1,0 +1,24 @@
+/** Import global styles and such here **/
+@import url('./assets/styles/global.scss');
+@import url('./assets/styles/fonts.scss');
+@import url('./assets/styles/primeOverride.scss');
+@import url('./assets/styles/animations.scss');
+@import url('~primereact/resources/primereact.min.css');
+@import url('~primeicons/primeicons.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.screen-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background-color: var(--background);
+}

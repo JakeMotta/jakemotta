@@ -1,0 +1,195 @@
+<manifest alg="2" build="2015.2.1.352" opt="false" iceEnabled="true" iceMarkupVersion="2" iceEnabledOptions="link,responsive" exportTarget="other" domain="blackchamber.com" resolutions="1x,2x" timestamp="1477877892122">
+  <folder name="css">
+    <file name="site_global.css" crc="4062357286"/>
+    <file name="master_a-master.css" crc="75905972" ref="services:index:abous-us:events:calendar:members:news:giving:contact:programs:initiatives"/>
+    <file name="nomq_preview_master_a-master.css" crc="4091939471" ref="services:index:abous-us:events:calendar:members:news:giving:contact:programs:initiatives"/>
+    <file name="services.css" crc="3928611235" ref="services"/>
+    <file name="nomq_services.css" crc="3914792636" ref="services"/>
+    <file name="iefonts_services.css" crc="3824530138" ref="services"/>
+    <file name="index.css" crc="252387772" ref="index"/>
+    <file name="nomq_index.css" crc="91245780" ref="index"/>
+    <file name="iefonts_index.css" crc="3824530138" ref="index"/>
+    <file name="abous-us.css" crc="3968808818" ref="abous-us"/>
+    <file name="nomq_abous-us.css" crc="3927784128" ref="abous-us"/>
+    <file name="iefonts_abous-us.css" crc="3824530138" ref="abous-us"/>
+    <file name="events.css" crc="458298707" ref="events"/>
+    <file name="nomq_events.css" crc="19545583" ref="events"/>
+    <file name="iefonts_events.css" crc="3824530138" ref="events"/>
+    <file name="calendar.css" crc="4003297904" ref="calendar"/>
+    <file name="nomq_calendar.css" crc="325631542" ref="calendar"/>
+    <file name="iefonts_calendar.css" crc="3824530138" ref="calendar"/>
+    <file name="members.css" crc="36668091" ref="members"/>
+    <file name="nomq_members.css" crc="402894031" ref="members"/>
+    <file name="iefonts_members.css" crc="3824530138" ref="members"/>
+    <file name="news.css" crc="3855646378" ref="news"/>
+    <file name="nomq_news.css" crc="3919461631" ref="news"/>
+    <file name="iefonts_news.css" crc="3824530138" ref="news"/>
+    <file name="giving.css" crc="4277538381" ref="giving"/>
+    <file name="nomq_giving.css" crc="535313558" ref="giving"/>
+    <file name="iefonts_giving.css" crc="3824530138" ref="giving"/>
+    <file name="contact.css" crc="329517856" ref="contact"/>
+    <file name="nomq_contact.css" crc="417230417" ref="contact"/>
+    <file name="iefonts_contact.css" crc="3824530138" ref="contact"/>
+    <file name="programs.css" crc="4114340675" ref="programs"/>
+    <file name="nomq_programs.css" crc="157864255" ref="programs"/>
+    <file name="iefonts_programs.css" crc="3824530138" ref="programs"/>
+    <file name="initiatives.css" crc="4216133579" ref="initiatives"/>
+    <file name="nomq_initiatives.css" crc="4243820222" ref="initiatives"/>
+    <file name="iefonts_initiatives.css" crc="3824530138" ref="initiatives"/>
+  </folder>
+  <folder name="assets">
+    <file name="--mt---mobile-menu---classic-accordian-(l11.1).mulib" crc="157767992" seo="true" mt="1454982470000"/>
+  </folder>
+  <folder name="scripts">
+    <file name="jquery-1.8.3.min.js" crc="169078940" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="museutils.js" crc="3851988764" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="whatinput.js" crc="86476730" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="museconfig.js" crc="4242129463" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="jquery.watch.js" crc="3842844514" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="pie.js" crc="3831537696" ref="index:news"/>
+    <file name="webpro.js" crc="4067903014" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="musewpdisclosure.js" crc="338211507" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="musewpslideshow.js" crc="4265225696" ref="index"/>
+    <file name="jquery.museoverlay.js" crc="4075157096" ref="index"/>
+    <file name="touchswipe.js" crc="474750357" ref="index"/>
+    <file name="jquery.museresponsive.js" crc="516761069" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="require.js" crc="4108833657" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="jquery.musepolyfill.bgsize.js" crc="271560940" ref="programs:giving:news:contact:abous-us:initiatives:events:services:members"/>
+  </folder>
+  <folder name="images">
+    <file name="a-master-favicon.ico" crc="132627582" ref="index"/>
+    <file name="blank.gif" crc="4208392903" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="youtube.png" crc="480463270" seo="true" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="new award winning logo black chamber_102016150x140.jpg" crc="433848474" seo="true" ref="index"/>
+    <file name="new award winning logo black chamber_102016150x140_2x.jpg" crc="523628425" seo="true" ref="index"/>
+    <file name="svced_logo.png" crc="4203650209" seo="true" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="icon_submenu-u48387-3-fr.png" crc="3880606118" ref="index:news"/>
+    <file name="icon_submenu.gif" crc="3854650843" ref="index:news"/>
+    <file name="icon_submenu_open.gif" crc="4294875186" ref="index:news"/>
+    <file name="wallhaven-51276.jpg" crc="3791882782" seo="true" ref="index"/>
+    <file name="wallhaven-52668.jpg" crc="79375961" seo="true" ref="index"/>
+    <file name="wallhaven-166560.jpg" crc="4256870430" seo="true" ref="index:contact"/>
+    <file name="wallhaven-169340.jpg" crc="76035510" seo="true" ref="index"/>
+    <file name="wallhaven-242781.jpg" crc="440436807" seo="true" ref="index"/>
+    <file name="loading.gif" crc="3815509949" ref="index"/>
+    <file name="newbanner4.jpg" crc="61550727" seo="true" ref="index"/>
+    <file name="up-arrow.png" crc="4103428589" seo="true" ref="index:programs:giving:abous-us:events"/>
+    <file name="at-t180x81.png" crc="521692638" seo="true" ref="index"/>
+    <file name="at-t180x81_2x.png" crc="24956779" seo="true" ref="index"/>
+    <file name="intel147x96.jpg" crc="3919133862" seo="true" ref="index"/>
+    <file name="hp180x79.jpg" crc="277152433" seo="true" ref="index"/>
+    <file name="microsoft194x44.jpg" crc="4135612104" seo="true" ref="index"/>
+    <file name="comcast208x58.jpg" crc="166768616" seo="true" ref="index"/>
+    <file name="image1180x67.jpg" crc="225291772" seo="true" ref="index"/>
+    <file name="image12.gif" crc="322059367" seo="true" ref="index"/>
+    <file name="image4180x38.jpg" crc="4237215845" seo="true" ref="index"/>
+    <file name="image3151x58.jpg" crc="4172842075" seo="true" ref="index"/>
+    <file name="image7180x54.jpg" crc="377506469" seo="true" ref="index"/>
+    <file name="rocketfuel180x58.jpg" crc="406506038" seo="true" ref="index"/>
+    <file name="kblx180x72.jpg" crc="207037874" seo="true" ref="index"/>
+    <file name="cisco136x78.jpg" crc="4136458222" seo="true" ref="index"/>
+    <file name="image2179x86.jpg" crc="4252453253" seo="true" ref="index"/>
+    <file name="chevron115x127.jpg" crc="514899427" seo="true" ref="index"/>
+    <file name="chevron115x127_2x.jpg" crc="41547374" seo="true" ref="index"/>
+    <file name="image11173x99.jpg" crc="4053327217" seo="true" ref="index"/>
+    <file name="uncfsvg.png" crc="3815080566" seo="true" ref="index"/>
+    <file name="uncfsvg_2x.png" crc="4162010990" seo="true" ref="index"/>
+    <file name="logo_codewritingkids.jpg" crc="4252111617" seo="true" ref="index"/>
+    <file name="bata logo.jpg" crc="4216296610" seo="true" ref="index"/>
+    <file name="junior_achievement_logo_badge.png" crc="4142431159" seo="true" ref="index"/>
+    <file name="junior_achievement_logo_badge_2x.png" crc="28813797" seo="true" ref="index"/>
+    <file name="new sbdc logo.png" crc="4121374696" seo="true" ref="index"/>
+    <file name="kdow_logo_header.jpg" crc="3977153245" seo="true" ref="index"/>
+    <file name="newbanner4800x334.jpg" crc="75979184" seo="true" ref="index"/>
+    <file name="at-t161x73.png" crc="3875756443" seo="true" ref="index"/>
+    <file name="at-t161x73_2x.png" crc="77984181" seo="true" ref="index"/>
+    <file name="intel131x86.jpg" crc="272125718" seo="true" ref="index"/>
+    <file name="hp161x71.jpg" crc="358335358" seo="true" ref="index"/>
+    <file name="microsoft174x39.jpg" crc="227321781" seo="true" ref="index"/>
+    <file name="comcast186x52.jpg" crc="3949929333" seo="true" ref="index"/>
+    <file name="image1161x60.jpg" crc="211193564" seo="true" ref="index"/>
+    <file name="image4161x34.jpg" crc="429258491" seo="true" ref="index"/>
+    <file name="image3135x52.jpg" crc="154256298" seo="true" ref="index"/>
+    <file name="image7161x48.jpg" crc="4086945701" seo="true" ref="index"/>
+    <file name="rocketfuel161x52.jpg" crc="174250299" seo="true" ref="index"/>
+    <file name="kblx161x65.jpg" crc="4144345418" seo="true" ref="index"/>
+    <file name="cisco122x70.jpg" crc="3845867441" seo="true" ref="index"/>
+    <file name="image2161x77.jpg" crc="163841869" seo="true" ref="index"/>
+    <file name="chevron103x114.jpg" crc="4224329672" seo="true" ref="index"/>
+    <file name="chevron103x114_2x.jpg" crc="4015437650" seo="true" ref="index"/>
+    <file name="image11155x89.jpg" crc="4143814329" seo="true" ref="index"/>
+    <file name="uncfsvg174x105.png" crc="334607667" seo="true" ref="index"/>
+    <file name="uncfsvg174x105_2x.png" crc="4162010990" seo="true" ref="index"/>
+    <file name="logo_codewritingkids147x136.jpg" crc="4013955536" seo="true" ref="index"/>
+    <file name="bata logo174x71.jpg" crc="3862394555" seo="true" ref="index"/>
+    <file name="junior_achievement_logo_badge161x156.png" crc="341907234" seo="true" ref="index"/>
+    <file name="junior_achievement_logo_badge161x156_2x.png" crc="28813797" seo="true" ref="index"/>
+    <file name="new sbdc logo174x79.png" crc="60208563" seo="true" ref="index"/>
+    <file name="kdow_logo_header174x108.jpg" crc="4102000957" seo="true" ref="index"/>
+    <file name="new award winning logo black chamber_102016.jpg" crc="3982959243" seo="true" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="new award winning logo black chamber_102016_2x.jpg" crc="4103221725" seo="true" ref="index:programs:giving:news:contact:calendar:abous-us:initiatives:events:services:members"/>
+    <file name="newbanner4600x250.jpg" crc="35960951" seo="true" ref="index"/>
+    <file name="intel.jpg" crc="3993245688" seo="true" ref="index"/>
+    <file name="at-t.png" crc="4238540752" seo="true" ref="index"/>
+    <file name="at-t_2x.png" crc="4266912016" seo="true" ref="index"/>
+    <file name="hp.jpg" crc="3905011565" seo="true" ref="index"/>
+    <file name="comcast.jpg" crc="3819099231" seo="true" ref="index"/>
+    <file name="image4.jpg" crc="3864193405" seo="true" ref="index"/>
+    <file name="rocketfuel.jpg" crc="4286861432" seo="true" ref="index"/>
+    <file name="cisco.jpg" crc="38997288" seo="true" ref="index"/>
+    <file name="chevron.jpg" crc="4229811867" seo="true" ref="index"/>
+    <file name="chevron_2x.jpg" crc="249810394" seo="true" ref="index"/>
+    <file name="kblx.jpg" crc="3859148802" seo="true" ref="index"/>
+    <file name="microsoft.jpg" crc="3785194950" seo="true" ref="index"/>
+    <file name="image1.jpg" crc="281007016" seo="true" ref="index"/>
+    <file name="image3.jpg" crc="91118597" seo="true" ref="index"/>
+    <file name="image7.jpg" crc="161178567" seo="true" ref="index"/>
+    <file name="image2.jpg" crc="191742103" seo="true" ref="index"/>
+    <file name="image11.jpg" crc="4260392171" seo="true" ref="index"/>
+    <file name="new award winning logo black chamber_102016166x156.jpg" crc="3982959243" seo="true" ref="index"/>
+    <file name="new award winning logo black chamber_102016166x156_2x.jpg" crc="511742173" seo="true" ref="index"/>
+    <file name="newbanner4400x167.jpg" crc="327633772" seo="true" ref="index"/>
+    <file name="intel130x85.jpg" crc="170782168" seo="true" ref="index"/>
+    <file name="at-t159x72.png" crc="3806671989" seo="true" ref="index"/>
+    <file name="at-t159x72_2x.png" crc="467246975" seo="true" ref="index"/>
+    <file name="hp159x70.jpg" crc="4196265680" seo="true" ref="index"/>
+    <file name="comcast184x51.jpg" crc="6743159" seo="true" ref="index"/>
+    <file name="image4159x34.jpg" crc="4228170316" seo="true" ref="index"/>
+    <file name="rocketfuel159x52.jpg" crc="4249634591" seo="true" ref="index"/>
+    <file name="cisco120x69.jpg" crc="4270498398" seo="true" ref="index"/>
+    <file name="chevron102x113.jpg" crc="4115114517" seo="true" ref="index"/>
+    <file name="chevron102x113_2x.jpg" crc="535983495" seo="true" ref="index"/>
+    <file name="kblx159x64.jpg" crc="3873593251" seo="true" ref="index"/>
+    <file name="microsoft172x39.jpg" crc="4172797924" seo="true" ref="index"/>
+    <file name="image1159x59.jpg" crc="282657106" seo="true" ref="index"/>
+    <file name="image3134x51.jpg" crc="4181658274" seo="true" ref="index"/>
+    <file name="image7159x48.jpg" crc="4072431467" seo="true" ref="index"/>
+    <file name="image2159x76.jpg" crc="311738942" seo="true" ref="index"/>
+    <file name="image11153x88.jpg" crc="305721810" seo="true" ref="index"/>
+    <file name="wallhaven-512762.jpg" crc="3791882782" ref="programs:giving:initiatives:events:services:members"/>
+    <file name="donatebutton.png" crc="4079436969" seo="true" ref="giving"/>
+    <file name="page_header_img.jpg" crc="3973627909" ref="news"/>
+    <file name="news_img01.jpg" crc="247484946" ref="news"/>
+    <file name="wallhaven-526682.jpg" crc="79375961" ref="abous-us"/>
+    <file name="services_img01.jpg" crc="215658422" ref="abous-us"/>
+    <file name="services_img01-u187008-fr.jpg" crc="4275062080" ref="abous-us"/>
+    <file name="services_img01-u187008-fr2.jpg" crc="4236506202" ref="abous-us"/>
+    <file name="phones.jpg" crc="168006357" seo="true" ref="initiatives"/>
+    <file name="phones327x311.jpg" crc="4272074193" seo="true" ref="initiatives"/>
+    <file name="phones218x208.jpg" crc="232097702" seo="true" ref="initiatives"/>
+    <file name="rounddot.gif" crc="4183003753" seo="true" ref="events"/>
+    <file name="member_smallfw.jpg" crc="466666664" seo="true" ref="members"/>
+    <file name="memberfw.jpg" crc="3910475168" seo="true" ref="members"/>
+  </folder>
+  <file name="index.html" crc="3855946145" seo="true" mt="1477877253230" redirect="true"/>
+  <file name="programs.html" crc="322076962" seo="true" mt="1477877253230" redirect="true"/>
+  <file name="giving.html" crc="251004487" seo="true" mt="1477877253230" redirect="true"/>
+  <file name="news.html" crc="3988066696" seo="true" mt="1477877253230" redirect="true"/>
+  <file name="contact.html" crc="3924184505" seo="true" mt="1477877253230" redirect="true"/>
+  <file name="calendar.html" crc="3900482790" seo="true" mt="1477877253230" redirect="true"/>
+  <file name="abous-us.html" crc="352470276" seo="true" mt="1477877253230" redirect="true"/>
+  <file name="initiatives.html" crc="227190775" seo="true" mt="1477877253230" redirect="true"/>
+  <file name="events.html" crc="4141782598" seo="true" mt="1477877253230" redirect="true"/>
+  <file name="services.html" crc="4078338471" seo="true" mt="1477877253230" redirect="true"/>
+  <file name="members.html" crc="16721737" seo="true" mt="1477877551049" redirect="true"/>
+</manifest>

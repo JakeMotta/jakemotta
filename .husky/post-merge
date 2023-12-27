@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# This git hook warns you about a file changed in git, and recommends a command to run.
+changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+
+check_run() {
+	echo "$changed_files" | grep --quiet "$1" && echo " * Changes detected in $1" && echo " * You may want to run $2"
+}
+
+# Warn user to decrypt env file if it has changed
+check_run .env.enc "yarn decrypt:local"
+check_run .env.staging.enc "yarn decrypt:staging"
+check_run .env.production.enc "yarn decrypt:production"
+
+# Warn user to run yarn if package.json has changed
+check_run package.json "yarn"
+
+exit 0

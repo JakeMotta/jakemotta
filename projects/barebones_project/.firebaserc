@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "jakemotta-4f0c2",
+    "staging": "jakemotta-4f0c2",
+    "production": "jakemotta-4f0c2"
+  }
+}

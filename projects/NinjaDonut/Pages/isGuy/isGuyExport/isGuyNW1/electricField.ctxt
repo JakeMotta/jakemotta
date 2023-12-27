@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.params=
+comment0.target=electricField()
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ electricField\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment2.params=
+comment2.target=void\ checkElectricity()
+comment3.params=
+comment3.target=void\ checkGuy()
+comment4.params=recievedKey
+comment4.target=void\ checkKey(boolean)
+comment5.params=
+comment5.target=void\ changeImage()
+numComments=6

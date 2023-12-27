@@ -1,0 +1,1267 @@
+<manifest alg="2" build="2017.0.3.363" opt="false" iceEnabled="true" iceMarkupVersion="2" iceEnabledOptions="link,responsive,cachebuster,textStyling" exportTarget="other" domain="blackchamber.com" resolutions="1x,2x" timestamp="1499999834156">
+  <folder name="css">
+    <file name="site_global.css" crc="494861746"/>
+    <file name="master_a-master.css" crc="121392644" ref="media-kit:initiatives:index:video-collection:supporters:newslettersarchive:programs:picture-gallery:untitled-28:events:giving:advertising:services:sponsors:newsletters:catalog:about-us:partners:contact-us:products-for-sale:global:calendar:members"/>
+    <file name="nomq_preview_master_a-master.css" crc="34922430" ref="media-kit:initiatives:index:video-collection:supporters:newslettersarchive:programs:picture-gallery:untitled-28:events:giving:advertising:services:sponsors:newsletters:catalog:about-us:partners:contact-us:products-for-sale:global:calendar:members"/>
+    <file name="master_j-master.css" crc="516076617" ref="radio-show:communication"/>
+    <file name="nomq_preview_master_j-master.css" crc="147167736" ref="radio-show:communication"/>
+    <file name="media-kit.css" crc="3772000407" ref="media-kit"/>
+    <file name="nomq_media-kit.css" crc="21963734" ref="media-kit"/>
+    <file name="iefonts_media-kit.css" crc="254236468" ref="media-kit"/>
+    <file name="radio-show.css" crc="395476055" ref="radio-show"/>
+    <file name="nomq_radio-show.css" crc="3879724164" ref="radio-show"/>
+    <file name="iefonts_radio-show.css" crc="254236468" ref="radio-show"/>
+    <file name="initiatives.css" crc="534097343" ref="initiatives"/>
+    <file name="nomq_initiatives.css" crc="359847092" ref="initiatives"/>
+    <file name="iefonts_initiatives.css" crc="254236468" ref="initiatives"/>
+    <file name="index.css" crc="493549905" ref="index"/>
+    <file name="nomq_index.css" crc="275483600" ref="index"/>
+    <file name="iefonts_index.css" crc="254236468" ref="index"/>
+    <file name="video-collection.css" crc="314969103" ref="video-collection"/>
+    <file name="nomq_video-collection.css" crc="264504772" ref="video-collection"/>
+    <file name="iefonts_video-collection.css" crc="254236468" ref="video-collection"/>
+    <file name="supporters.css" crc="4273642964" ref="supporters"/>
+    <file name="nomq_supporters.css" crc="408439436" ref="supporters"/>
+    <file name="iefonts_supporters.css" crc="254236468" ref="supporters"/>
+    <file name="newslettersarchive.css" crc="3949289357" ref="newslettersarchive"/>
+    <file name="nomq_newslettersarchive.css" crc="280888113" ref="newslettersarchive"/>
+    <file name="iefonts_newslettersarchive.css" crc="254236468" ref="newslettersarchive"/>
+    <file name="programs.css" crc="401300338" ref="programs"/>
+    <file name="nomq_programs.css" crc="248450903" ref="programs"/>
+    <file name="iefonts_programs.css" crc="254236468" ref="programs"/>
+    <file name="picture-gallery.css" crc="198218389" ref="picture-gallery"/>
+    <file name="nomq_picture-gallery.css" crc="362865210" ref="picture-gallery"/>
+    <file name="iefonts_picture-gallery.css" crc="254236468" ref="picture-gallery"/>
+    <file name="untitled-28.css" crc="4102240447" ref="untitled-28"/>
+    <file name="nomq_untitled-28.css" crc="3960380734" ref="untitled-28"/>
+    <file name="iefonts_untitled-28.css" crc="254236468" ref="untitled-28"/>
+    <file name="events.css" crc="3897154652" ref="events"/>
+    <file name="nomq_events.css" crc="3955553373" ref="events"/>
+    <file name="iefonts_events.css" crc="254236468" ref="events"/>
+    <file name="communication.css" crc="4275392523" ref="communication"/>
+    <file name="nomq_communication.css" crc="3882451657" ref="communication"/>
+    <file name="iefonts_communication.css" crc="254236468" ref="communication"/>
+    <file name="giving.css" crc="4288418661" ref="giving"/>
+    <file name="nomq_giving.css" crc="3976654566" ref="giving"/>
+    <file name="iefonts_giving.css" crc="254236468" ref="giving"/>
+    <file name="advertising.css" crc="45305911" ref="advertising"/>
+    <file name="nomq_advertising.css" crc="153289127" ref="advertising"/>
+    <file name="iefonts_advertising.css" crc="254236468" ref="advertising"/>
+    <file name="services.css" crc="351528331" ref="services"/>
+    <file name="nomq_services.css" crc="3921431308" ref="services"/>
+    <file name="iefonts_services.css" crc="254236468" ref="services"/>
+    <file name="sponsors.css" crc="4263827699" ref="sponsors"/>
+    <file name="nomq_sponsors.css" crc="466171592" ref="sponsors"/>
+    <file name="iefonts_sponsors.css" crc="254236468" ref="sponsors"/>
+    <file name="newsletters.css" crc="401559903" ref="newsletters"/>
+    <file name="nomq_newsletters.css" crc="4144908004" ref="newsletters"/>
+    <file name="iefonts_newsletters.css" crc="254236468" ref="newsletters"/>
+    <file name="catalog.css" crc="4119927461" ref="catalog"/>
+    <file name="nomq_catalog.css" crc="4049856332" ref="catalog"/>
+    <file name="iefonts_catalog.css" crc="254236468" ref="catalog"/>
+    <file name="about-us.css" crc="224721122" ref="about-us"/>
+    <file name="nomq_about-us.css" crc="3873430827" ref="about-us"/>
+    <file name="iefonts_about-us.css" crc="254236468" ref="about-us"/>
+    <file name="partners.css" crc="3775028995" ref="partners"/>
+    <file name="nomq_partners.css" crc="448579254" ref="partners"/>
+    <file name="iefonts_partners.css" crc="254236468" ref="partners"/>
+    <file name="contact-us.css" crc="3760926227" ref="contact-us"/>
+    <file name="nomq_contact-us.css" crc="302394209" ref="contact-us"/>
+    <file name="iefonts_contact-us.css" crc="254236468" ref="contact-us"/>
+    <file name="products-for-sale.css" crc="4183321231" ref="products-for-sale"/>
+    <file name="nomq_products-for-sale.css" crc="362741500" ref="products-for-sale"/>
+    <file name="iefonts_products-for-sale.css" crc="254236468" ref="products-for-sale"/>
+    <file name="global.css" crc="3786583998" ref="global"/>
+    <file name="nomq_global.css" crc="4000913540" ref="global"/>
+    <file name="iefonts_global.css" crc="254236468" ref="global"/>
+    <file name="calendar.css" crc="187512666" ref="calendar"/>
+    <file name="nomq_calendar.css" crc="4130520472" ref="calendar"/>
+    <file name="iefonts_calendar.css" crc="254236468" ref="calendar"/>
+    <file name="members.css" crc="462457376" ref="members"/>
+    <file name="nomq_members.css" crc="427274314" ref="members"/>
+    <file name="iefonts_members.css" crc="254236468" ref="members"/>
+  </folder>
+  <folder name="scripts">
+    <file name="jquery-1.8.3.min.js" crc="209076791" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="museutils.js" crc="46400467" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="whatinput.js" crc="86476730" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="museconfig.js" crc="436936948" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="jquery.watch.js" crc="4178585335" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="jquery.musemenu.js" crc="3936200140" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="webpro.js" crc="4152390327" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="musewpslideshow.js" crc="380562115" ref="index"/>
+    <file name="jquery.museoverlay.js" crc="3986278607" ref="index"/>
+    <file name="touchswipe.js" crc="4228958816" ref="index"/>
+    <file name="musewpdisclosure.js" crc="204784597" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="html5shiv.js" crc="4241844378" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="jquery.museresponsive.js" crc="52098982" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="require.js" crc="85721165" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="jquery.musepolyfill.bgsize.js" crc="532123423" ref="programs:giving:newsletters:contact-us:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:sponsors:radio-show:partners"/>
+    <file name="form_check.php" crc="4286608207" ref="contact-us"/>
+    <file name="form_throttle.php" crc="313199896" ref="contact-us"/>
+    <file name="form_process.php" crc="3855659497" ref="contact-us"/>
+    <file name="form-u276321.php" crc="3876000291" ref="contact-us"/>
+  </folder>
+  <folder name="images">
+    <file name="a-master-favicon.ico" crc="132627582" ref="index"/>
+    <file name="blank.gif" crc="4208392903" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28"/>
+    <file name="youtube.png" crc="480463270" seo="true" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28">
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016140x131.jpg" crc="4101396247" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016140x131_2x.jpg" crc="4204310836" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="svced_logo.png" crc="4203650209" seo="true" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28">
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+    </file>
+    <file name="wallhaven-166560.jpg" crc="4256870430" seo="true" ref="index:contact-us">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="wallhaven-51276.jpg" crc="3791882782" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="wallhaven-52668.jpg" crc="79375961" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="wallhaven-169340.jpg" crc="76035510" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="wallhaven-242781.jpg" crc="440436807" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="presidents message_042517.jpg" crc="261038265" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="presidents message_042517_2x.jpg" crc="3762999720" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="button2.png" crc="194344103" ref="index">
+      <caption webpage="index" alt="Membership Promote your local chambers! Membership really does have its Benefits !! See why Become a Member Today !! See how we can Help you Start, Finance and Grow your business today!"/>
+    </file>
+    <file name="button2_2x.png" crc="47636732" ref="index">
+      <caption webpage="index" alt="Membership Promote your local chambers! Membership really does have its Benefits !! See why Become a Member Today !! See how we can Help you Start, Finance and Grow your business today!"/>
+    </file>
+    <file name="sbdc2.jpg" crc="439957178" ref="index">
+      <caption webpage="index" alt="Next Big Event Weekly Radio Show “Silicon Valley Business Connections” every Saturday, 2:30pm on KDOW 1220 am Join Silicon Valley Black Chamber president, Carl Davis, Jr. and Producer, Co-Host Karl Welch &quot;Big Pappa&quot; every Saturday afternoon 2:30pm for the Bay Area’s hook-up with local Rock Starts sharing how and what Connections get them where they are. "/>
+    </file>
+    <file name="sbdc2_2x.jpg" crc="3760079900" ref="index">
+      <caption webpage="index" alt="Next Big Event Weekly Radio Show “Silicon Valley Business Connections” every Saturday, 2:30pm on KDOW 1220 am Join Silicon Valley Black Chamber president, Carl Davis, Jr. and Producer, Co-Host Karl Welch &quot;Big Pappa&quot; every Saturday afternoon 2:30pm for the Bay Area’s hook-up with local Rock Starts sharing how and what Connections get them where they are. "/>
+    </file>
+    <file name="sbdc.jpg" crc="149858230" ref="index">
+      <caption webpage="index" alt="SBDC Services Promoting FREE Consulting services Small Business Development Center’s certified business advisors are there to help you reach your goals. Need 1-on-1 consulting advice? Ask how we can Help (408) 288-8806"/>
+    </file>
+    <file name="sbdc_2x.jpg" crc="331363658" ref="index">
+      <caption webpage="index" alt="SBDC Services Promoting FREE Consulting services Small Business Development Center’s certified business advisors are there to help you reach your goals. Need 1-on-1 consulting advice? Ask how we can Help (408) 288-8806"/>
+    </file>
+    <file name="loading.gif" crc="3815509949" ref="index"/>
+    <file name="fullsizerender.jpg" crc="4271285666" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="fullsizerender_2x.jpg" crc="3959870714" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="newbanner4.jpg" crc="61550727" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="up-arrow.png" crc="4103428589" seo="true" ref="index:programs:giving:about-us:events:video-collection:picture-gallery:catalog:products-for-sale:supporters:sponsors:partners">
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+    </file>
+    <file name="at-t180x81.png" crc="102510458" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="at-t180x81_2x.png" crc="4113479350" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="intel147x96.jpg" crc="4059678833" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="hp180x79.jpg" crc="465302177" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="microsoft194x44.jpg" crc="510715121" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="comcast208x58.jpg" crc="4147471907" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image1180x67.jpg" crc="105294915" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image12.gif" crc="322059367" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image4180x38.jpg" crc="3801756575" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image3151x58.jpg" crc="490001736" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image7180x54.jpg" crc="4062871793" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="rocketfuel180x58.jpg" crc="3834260589" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="kblx180x72.jpg" crc="129996688" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="cisco136x78.jpg" crc="4114293493" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image2179x86.jpg" crc="4097815801" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="chevron115x127.jpg" crc="4180556618" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="chevron115x127_2x.jpg" crc="380584783" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image11173x99.jpg" crc="4140099544" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="uncfsvg.png" crc="402339133" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="uncfsvg_2x.png" crc="4162010990" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="logo_codewritingkids.jpg" crc="4035569088" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="bata logo.jpg" crc="3791414361" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="junior_achievement_logo_badge.png" crc="52815966" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="junior_achievement_logo_badge_2x.png" crc="28813797" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="new sbdc logo.png" crc="4121374696" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="kdow_logo_header.jpg" crc="4209316078" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016139x130.jpg" crc="531572177" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016139x130_2x.jpg" crc="4066632103" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="newbanner4800x334.jpg" crc="3849348989" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="at-t161x73.png" crc="478906482" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="at-t161x73_2x.png" crc="362624589" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="intel131x86.jpg" crc="3887598289" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="hp161x71.jpg" crc="3804595719" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="microsoft174x39.jpg" crc="424154370" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="comcast186x52.jpg" crc="4277842186" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image1161x60.jpg" crc="47514752" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image4161x34.jpg" crc="4060188961" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image3135x52.jpg" crc="4065444368" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image7161x48.jpg" crc="128667022" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="rocketfuel161x52.jpg" crc="121153946" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="kblx161x65.jpg" crc="506079932" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="cisco122x70.jpg" crc="3894204603" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image2161x77.jpg" crc="162076073" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="chevron103x114.jpg" crc="4076430060" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="chevron103x114_2x.jpg" crc="3796204715" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image11155x89.jpg" crc="9016766" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="uncfsvg174x105.png" crc="4275299616" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="uncfsvg174x105_2x.png" crc="4162010990" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="logo_codewritingkids147x136.jpg" crc="66977949" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="bata logo174x71.jpg" crc="4195764716" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="junior_achievement_logo_badge161x156.png" crc="3910433238" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="junior_achievement_logo_badge161x156_2x.png" crc="28813797" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="new sbdc logo174x79.png" crc="399752735" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="kdow_logo_header174x108.jpg" crc="3815862757" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016.jpg" crc="4064385733" seo="true" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28">
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016_2x.jpg" crc="3965754047" seo="true" ref="index:programs:giving:newsletters:contact-us:calendar:about-us:initiatives:events:services:members:global:media-kit:video-collection:picture-gallery:advertising:catalog:products-for-sale:supporters:newslettersarchive:communication:sponsors:radio-show:partners:untitled-28">
+      <caption webpage="media-kit" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="products-for-sale" alt=""/>
+      <caption webpage="communication" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="global" alt=""/>
+      <caption webpage="advertising" alt=""/>
+      <caption webpage="radio-show" alt=""/>
+      <caption webpage="giving" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="calendar" alt=""/>
+      <caption webpage="programs" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="catalog" alt=""/>
+      <caption webpage="contact-us" alt=""/>
+      <caption webpage="newslettersarchive" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="newsletters" alt=""/>
+      <caption webpage="untitled-28" alt=""/>
+      <caption webpage="picture-gallery" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="video-collection" alt=""/>
+    </file>
+    <file name="newbanner4600x250.jpg" crc="4276484585" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="intel.jpg" crc="4208585356" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="at-t.png" crc="4164594970" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="at-t_2x.png" crc="4266912016" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="hp.jpg" crc="4190466229" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="comcast.jpg" crc="3856731239" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image4.jpg" crc="3763009018" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="rocketfuel.jpg" crc="3955482306" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="cisco.jpg" crc="412064942" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="chevron.jpg" crc="3917444511" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="chevron_2x.jpg" crc="249810394" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="kblx.jpg" crc="3801262906" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="microsoft.jpg" crc="3947110799" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image1.jpg" crc="3986158928" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image3.jpg" crc="4289901651" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image7.jpg" crc="385128945" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image2.jpg" crc="401501570" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image11.jpg" crc="436178908" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016146x137.jpg" crc="505995585" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016146x137_2x.jpg" crc="3896652192" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="fullsizerender62x61.jpg" crc="97139503" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="fullsizerender62x61_2x.jpg" crc="330862860" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="newbanner4400x167.jpg" crc="3858573290" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="intel130x85.jpg" crc="487843534" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="at-t159x72.png" crc="316678693" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="at-t159x72_2x.png" crc="4229706240" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="hp159x70.jpg" crc="3842920872" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="comcast184x51.jpg" crc="130946032" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image4159x34.jpg" crc="180313275" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="rocketfuel159x52.jpg" crc="3841398213" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="cisco120x69.jpg" crc="4283446738" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="chevron102x113.jpg" crc="270721649" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="chevron102x113_2x.jpg" crc="507464646" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="kblx159x64.jpg" crc="414485213" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="microsoft172x39.jpg" crc="513044176" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image1159x59.jpg" crc="346896293" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image3134x51.jpg" crc="3782330725" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image7159x48.jpg" crc="490444523" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image2159x76.jpg" crc="101248153" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image11153x88.jpg" crc="3845507769" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="business-1.jpg" crc="242151904" ref="programs:picture-gallery:catalog:products-for-sale">
+      <caption webpage="programs" alt=""/>
+    </file>
+    <file name="business-12.jpg" crc="4265486769" ref="programs:picture-gallery:catalog:products-for-sale">
+      <caption webpage="programs" alt=""/>
+    </file>
+    <file name="business-1_2x.jpg" crc="242151904" ref="programs:picture-gallery:catalog:products-for-sale">
+      <caption webpage="programs" alt=""/>
+    </file>
+    <file name="business-1-u18024-fr.jpg" crc="36318298" ref="programs:catalog"/>
+    <file name="business-1-u18024-fr_2x.jpg" crc="4116215896" ref="programs:catalog"/>
+    <file name="jk-31032016-mois-pedagogie-udes.jpg" crc="3838204063" ref="giving">
+      <caption webpage="giving" alt=""/>
+    </file>
+    <file name="donatebutton-u214880.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u215279.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u227482.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u227489.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u227487.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u227485.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2148802.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2152792.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274822.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274892.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274872.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274852.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2152793.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2148803.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274853.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274873.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274893.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274823.png" crc="45749046" ref="giving"/>
+    <file name="jk-31032016-mois-pedagogie-udes2.jpg" crc="291166636" ref="giving">
+      <caption webpage="giving" alt=""/>
+    </file>
+    <file name="jk-31032016-mois-pedagogie-udes_2x.jpg" crc="3838204063" ref="giving">
+      <caption webpage="giving" alt=""/>
+    </file>
+    <file name="donatebutton-u2148804.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2152794.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274854.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274874.png" crc="4163132996" ref="giving"/>
+    <file name="donatebutton-u2274894.png" crc="45749046" ref="giving"/>
+    <file name="donatebutton-u2274824.png" crc="45749046" ref="giving"/>
+    <file name="business3.jpg" crc="3803949765" ref="newsletters:newslettersarchive">
+      <caption webpage="newsletters" alt=""/>
+    </file>
+    <file name="news feature 800x500.jpg" crc="3944431323" ref="newsletters:newslettersarchive">
+      <caption webpage="newsletters" alt=""/>
+    </file>
+    <file name="business32.jpg" crc="448656094" ref="newsletters:newslettersarchive">
+      <caption webpage="newsletters" alt=""/>
+    </file>
+    <file name="business3_2x.jpg" crc="3803949765" ref="newsletters:newslettersarchive">
+      <caption webpage="newsletters" alt=""/>
+    </file>
+    <file name="wallhaven-1665602.jpg" crc="3836471296" ref="contact-us">
+      <caption webpage="contact-us" alt=""/>
+    </file>
+    <file name="wallhaven-166560_2x.jpg" crc="4256870430" ref="contact-us">
+      <caption webpage="contact-us" alt=""/>
+    </file>
+    <file name="close-up-of-handshake.jpg" crc="498237757" ref="about-us">
+      <caption webpage="about-us" alt=""/>
+    </file>
+    <file name="march.jpg" crc="4073466156" ref="about-us">
+      <caption webpage="about-us" alt=""/>
+    </file>
+    <file name="close-up-of-handshake2.jpg" crc="3784079570" ref="about-us">
+      <caption webpage="about-us" alt=""/>
+    </file>
+    <file name="close-up-of-handshake_2x.jpg" crc="498237757" ref="about-us">
+      <caption webpage="about-us" alt=""/>
+    </file>
+    <file name="close-up-of-handshake-u137361-fr.jpg" crc="4090106105" ref="about-us"/>
+    <file name="close-up-of-handshake-u137361-fr_2x.jpg" crc="338938788" ref="about-us"/>
+    <file name="march-u187008-fr.jpg" crc="3791348434" ref="about-us"/>
+    <file name="march-u187008-fr_2x.jpg" crc="461836415" ref="about-us"/>
+    <file name="istock_000040818948_large.jpg" crc="3847639295" ref="initiatives">
+      <caption webpage="initiatives" alt=""/>
+    </file>
+    <file name="istock_000040818948_large_2x.jpg" crc="3953854121" ref="initiatives">
+      <caption webpage="initiatives" alt=""/>
+    </file>
+    <file name="phones.jpg" crc="168006357" seo="true" ref="initiatives">
+      <caption webpage="initiatives" alt=""/>
+      <caption webpage="initiatives" alt=""/>
+    </file>
+    <file name="istock_000040818948_large-u220210-fr.jpg" crc="4265271107" ref="initiatives"/>
+    <file name="istock_000040818948_large-u220210-fr_2x.jpg" crc="467132752" ref="initiatives"/>
+    <file name="phones327x311.jpg" crc="29435750" seo="true" ref="initiatives">
+      <caption webpage="initiatives" alt=""/>
+    </file>
+    <file name="istock_000040818948_large-u220210-fr2.jpg" crc="4071307395" ref="initiatives"/>
+    <file name="istock_000040818948_large-u220210-fr_2x2.jpg" crc="3956031763" ref="initiatives"/>
+    <file name="phones218x208.jpg" crc="353093106" seo="true" ref="initiatives">
+      <caption webpage="initiatives" alt=""/>
+    </file>
+    <file name="slide4.jpg" crc="456633554" ref="events:supporters:sponsors:partners">
+      <caption webpage="events" alt=""/>
+    </file>
+    <file name="rounddot.gif" crc="4183003753" seo="true" ref="events:supporters:sponsors:partners">
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="events" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="supporters" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+      <caption webpage="sponsors" alt=""/>
+    </file>
+    <file name="slide42.jpg" crc="3851264870" ref="events:supporters:sponsors:partners">
+      <caption webpage="events" alt=""/>
+    </file>
+    <file name="slide4_2x.jpg" crc="456633554" ref="events:supporters:sponsors:partners">
+      <caption webpage="events" alt=""/>
+    </file>
+    <file name="slide4-u226847-fr.jpg" crc="237843096" ref="events:sponsors:partners"/>
+    <file name="slide4-u226847-fr_2x.jpg" crc="235733486" ref="events:sponsors:partners"/>
+    <file name="photodune-5991085-multi-ethnic-business-team-at-a-meeting-interacting-focus-on-africanamerican-man-m.jpg" crc="4108535492" ref="services:media-kit:advertising">
+      <caption webpage="services" alt=""/>
+    </file>
+    <file name="photodune-5991085-multi-ethnic-business-team-at-a-meeting-interacting-focus-on-africanamerican-man-m-u227341-fr.jpg" crc="4010264149" ref="services"/>
+    <file name="photodune-5991085-multi-ethnic-business-team-at-a-meeting-interacting-focus-on-africanamerican-man-m-u227341-fr_2x.jpg" crc="228062179" ref="services"/>
+    <file name="headsupstrartegies-photo-1-211.jpg" crc="181981143" ref="members">
+      <caption webpage="members" alt=""/>
+    </file>
+    <file name="member_smallfw.jpg" crc="466666664" seo="true" ref="members">
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+    </file>
+    <file name="memberfw.jpg" crc="3910475168" seo="true" ref="members">
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+      <caption webpage="members" alt=""/>
+    </file>
+    <file name="headsupstrartegies-photo-1-211-u228692-fr.jpg" crc="503895816" ref="members"/>
+    <file name="headsupstrartegies-photo-1-211-u228692-fr_2x.jpg" crc="436957972" ref="members"/>
+    <file name="black-and-white-holding-hands_96871.jpg" crc="3976377587" ref="global">
+      <caption webpage="global" alt=""/>
+    </file>
+    <file name="untitled.png" crc="4166560516" ref="media-kit">
+      <caption webpage="media-kit" alt=""/>
+    </file>
+    <file name="untitled2.png" crc="3794782583" ref="media-kit">
+      <caption webpage="media-kit" alt=""/>
+    </file>
+    <file name="untitled_2x.png" crc="4166560516" ref="media-kit">
+      <caption webpage="media-kit" alt=""/>
+    </file>
+    <file name="photodune-5991085-multi-ethnic-business-team-at-a-meeting-interacting-focus-on-africanamerican-man-m-u233179-fr.jpg" crc="4037373557" ref="media-kit"/>
+    <file name="photodune-5991085-multi-ethnic-business-team-at-a-meeting-interacting-focus-on-africanamerican-man-m-u233179-fr_2x.jpg" crc="439343052" ref="media-kit"/>
+    <file name="video_gallery.jpg" crc="3966736630" ref="video-collection">
+      <caption webpage="video-collection" alt=""/>
+    </file>
+    <file name="business-1-u233375-fr.jpg" crc="155266160" ref="picture-gallery"/>
+    <file name="business-1-u233375-fr_2x.jpg" crc="4126556217" ref="picture-gallery"/>
+    <file name="photodune-5991085-multi-ethnic-business-team-at-a-meeting-interacting-focus-on-africanamerican-man-m-u233638-fr.jpg" crc="4097946577" ref="advertising"/>
+    <file name="photodune-5991085-multi-ethnic-business-team-at-a-meeting-interacting-focus-on-africanamerican-man-m-u233638-fr_2x.jpg" crc="108159260" ref="advertising"/>
+    <file name="business-1-u234000-fr.jpg" crc="3849518683" ref="products-for-sale"/>
+    <file name="business-1-u234000-fr_2x.jpg" crc="4266780077" ref="products-for-sale"/>
+    <file name="slide4-u242413-fr.jpg" crc="421890017" ref="supporters"/>
+    <file name="slide4-u242413-fr_2x.jpg" crc="4276779812" ref="supporters"/>
+    <file name="j-master-favicon.ico" crc="132627582" ref="communication"/>
+    <file name="new award winning logo black chamber_102016150x140.jpg" crc="99379087" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016150x140_2x.jpg" crc="478053314" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_carl_pic_w_hat.jpg" crc="4275368885" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_carl_pic_w_hat_2x.jpg" crc="365480388" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_karl_pic317x229.jpg" crc="3955088034" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_karl_pic317x229_2x.jpg" crc="4105436123" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_carl_pic_w_hat275x360.jpg" crc="312300669" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_carl_pic_w_hat275x360_2x.jpg" crc="441318826" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_karl_pic.jpg" crc="141395800" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_karl_pic_2x.jpg" crc="3786259421" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_carl_pic_w_hat284x372.jpg" crc="517400236" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_carl_pic_w_hat284x372_2x.jpg" crc="365480388" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_karl_pic350x253.jpg" crc="3789654225" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_karl_pic350x253_2x.jpg" crc="130689061" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016166x156.jpg" crc="4064385733" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="new award winning logo black chamber_102016166x156_2x.jpg" crc="144585799" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_carl_pic_w_hat268x352.jpg" crc="3935223188" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_carl_pic_w_hat268x352_2x.jpg" crc="522405507" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_karl_pic333x241.jpg" crc="62057994" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_karl_pic333x241_2x.jpg" crc="4059968466" seo="true" ref="communication">
+      <caption webpage="communication" alt=""/>
+    </file>
+    <file name="cropped_carl_pic_w_hat224x295.jpg" crc="4059327963" seo="true" ref="radio-show">
+      <caption webpage="radio-show" alt=""/>
+    </file>
+    <file name="cropped_carl_pic_w_hat224x295_2x.jpg" crc="112314912" seo="true" ref="radio-show">
+      <caption webpage="radio-show" alt=""/>
+    </file>
+    <file name="radio2-u353736-fr.jpg" crc="21283818" ref="radio-show"/>
+    <file name="radio2-u353736-fr_2x.jpg" crc="216899954" ref="radio-show"/>
+    <file name="radio1-u353739-fr.jpg" crc="3813591865" ref="radio-show"/>
+    <file name="radio1-u353739-fr_2x.jpg" crc="3875808256" ref="radio-show"/>
+    <file name="radio1-u353739-fr2.jpg" crc="3892049415" ref="radio-show"/>
+    <file name="radio1-u353739-fr_2x2.jpg" crc="447524345" ref="radio-show"/>
+    <file name="radio2-u353736-fr2.jpg" crc="4086264096" ref="radio-show"/>
+    <file name="radio2-u353736-fr_2x2.jpg" crc="59679333" ref="radio-show"/>
+    <file name="radio1-u353739-fr3.jpg" crc="4011686335" ref="radio-show"/>
+    <file name="radio1-u353739-fr_2x3.jpg" crc="41350373" ref="radio-show"/>
+    <file name="radio2-u353736-fr3.jpg" crc="250263561" ref="radio-show"/>
+    <file name="radio2-u353736-fr_2x3.jpg" crc="4031421476" ref="radio-show"/>
+    <file name="radio1-u353739-fr4.jpg" crc="4009810672" ref="radio-show"/>
+    <file name="radio1-u353739-fr_2x4.jpg" crc="176553775" ref="radio-show"/>
+    <file name="radio2-u353736-fr4.jpg" crc="4281903686" ref="radio-show"/>
+    <file name="radio2-u353736-fr_2x4.jpg" crc="160888178" ref="radio-show"/>
+  </folder>
+  <file name="index.html" crc="4122206812" seo="true" mt="1499617128602" redirect="true"/>
+  <file name="programs.html" crc="4051655625" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="giving.html" crc="392232479" seo="true" mt="1499911006323" redirect="true"/>
+  <file name="newsletters.html" crc="535102752" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="contact-us.html" crc="499215386" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="calendar.html" crc="3961795082" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="about-us.html" crc="3868009105" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="initiatives.html" crc="489273801" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="events.html" crc="149964556" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="services.html" crc="4014951899" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="members.html" crc="489728720" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="global.html" crc="257995036" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="media-kit.html" crc="117490767" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="video-collection.html" crc="113608624" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="picture-gallery.html" crc="3774305630" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="advertising.html" crc="4089611988" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="catalog.html" crc="50725465" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="products-for-sale.html" crc="3835994949" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="supporters.html" crc="468804680" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="newslettersarchive.html" crc="55654643" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="communication.html" crc="278997631" seo="true" mt="1498797253724" redirect="true"/>
+  <file name="sponsors.html" crc="126620788" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="radio-show.html" crc="359843006" seo="true" mt="1498797253724" redirect="true"/>
+  <file name="partners.html" crc="4016174568" seo="true" mt="1499473874330" redirect="true"/>
+  <file name="untitled-28.html" crc="4084020834" seo="true" mt="1499473874330" redirect="true"/>
+</manifest>

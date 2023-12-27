@@ -1,0 +1,136 @@
+<html>
+<head>
+
+<title>Jacob Motta</title>
+
+<link rel="stylesheet" href="Reset.css" />
+
+<script>
+
+var rText;
+
+rText = Math.floor(Math.random() * 5) + 1;
+
+function rUpdate(rText)
+{
+	if(rText == 0)
+	{
+		window.document.write("Working!");
+	}
+	
+	if(rText == 1)
+	{
+		window.document.write("Better Not Say Undefined");
+	}
+	
+	if(rText == 2)
+	{
+		window.document.write("I hate Greenfoot!");
+	}
+	
+	if(rText == 3)
+	{
+		window.document.write("Trying to code... ");
+	}
+	
+	if(rText == 4)
+	{
+		window.document.write("Now with Color!");
+	}
+	
+	if(rText == 5)
+	{
+		window.document.write("Version 1.0!");
+	}
+}
+
+</script>
+
+<style>
+#container
+{
+	width:960px;
+	height:800px;
+	background-color:#E8E8E8;
+	position:absolute;
+	left:150px;
+}
+#randomText
+{
+	width:100%;
+	background-color:#FF0000;
+	text-align:right;
+	color:black;
+	font-family:"Courier New", Courier, monospace;
+	font-size:30px;
+	
+}
+#wrapper
+{
+	width:800px;
+	height:600px;
+	background-color:#B8B8B8;
+	position:relative;
+	top:100px;
+	left:80px;
+}
+#header
+{
+	width:100%;
+	background-color:#C2C2C2;
+	font-size:100px;
+	color:#C39;
+}
+#underHead
+{
+	font-size:18px;
+	color:black;
+	background-color:#C8C8C8;
+	width:100%;
+	text-align:right;
+}
+</style>
+
+
+</head>
+
+<body>
+
+
+<div id="container">
+
+
+<div id="wrapper">
+
+
+<div id="header">
+<script type="text/javascript">
+window.document.write(" ''Hello World!'' ");
+</script>
+</div>
+
+<div id="randomText">
+
+<script>
+window.document.write(rUpdate(rText));
+</script>
+
+</div>
+
+
+<div id="underHead">
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

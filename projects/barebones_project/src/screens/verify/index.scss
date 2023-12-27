@@ -1,0 +1,28 @@
+.verify-screen-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  .verify-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    color: var(--text);
+    margin-top: 100vh * 0.2;
+
+    .title {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .subtitle {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+}

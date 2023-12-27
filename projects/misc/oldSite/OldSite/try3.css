@@ -1,0 +1,210 @@
+body
+{
+	background-color:#181818;
+	background-image:url(Design/background.jpg);
+	background-repeat:repeat-x;
+}
+#MainContainer
+{
+	width:960px;
+	height:800px;
+	background-color:transparent;
+	margin:auto;
+}
+#GarageDoor
+{
+	width:960px;
+	height:120px;
+	background-color:blue;
+	position:relative;
+	top:-20px;
+	z-index:2;
+}
+#FlashDoor
+{
+	width:960px;
+	height:90px;
+	background-color:blue;
+	position:relative;
+	top:-20px;
+	z-index:3;
+}
+#School
+{
+	position:absolute;
+	top:218px;
+	left:30px;
+	font-size:18px;
+	color:black;
+}
+#blackLink
+{
+	color:black;
+	margin:auto;
+	text-align:center;
+}
+#blackLink:hover
+{
+	color:#ECAD1A;
+	text-decoration:none;
+}
+#wrapper
+{
+	width:960px;
+	height:650px;
+	background-color:#181818;
+	background-repeat:no-repeat;
+	position:relative;
+	top:90px;
+	background-image:url(Design/earth.gif);
+}
+#center
+{
+	width:960px;
+	height:400px;
+	background-color:transparent;
+	background-image:url(Design/wrapper.gif);
+	background-repeat:no-repeat;
+	margin:auto;
+	position:relative;
+	top:-20px;
+	color:white;
+	z-index:0;
+}
+#pictures
+{
+	width:900px;
+	background-color:transparent;
+	margin:auto;
+	position:relative;
+	color:white;
+	top:25px;
+}
+#name
+{
+	width:500px;
+	height:90px;
+	background-color:transparent;
+	font-size:40px;
+	font-family:Arial, Helvetica, sans-serif;
+	position:relative;
+	color:white;
+}
+#contact
+{
+	background-color:transparent;
+	width:420px;
+	height:20px;
+	position:relative;
+	left:540px;
+	top:-20px;
+	color:white; 
+	font-family:Arial, Helvetica, sans-serif;
+}
+#resume
+{
+	background-color:transparent;
+	width:300px;
+	height:150px;
+	font-size:18px;
+	letter-spacing:1px;
+	position:relative;
+	left:660px;
+	top:-10px;
+	color:white;
+	font-family:Arial, Helvetica, sans-serif;
+}
+#textColor
+{
+	color:#FEE496;
+	letter-spacing:.5px;
+}
+a
+{
+	color:white;
+	text-decoration:none;
+}
+a:hover
+{
+	color:#ECAD1A;
+	text-decoration:none;
+}
+#ToggleLinks
+{
+	width:100px;
+	height:20px;
+	position:relative;
+	color:white;
+	font-size:25px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+#ToggleLinks:hover
+{
+	color:#ECAD1A;
+}
+#textRegular
+{
+	font-size:18px;
+	letter-spacing:2px;
+	color:white;
+	font-family:Arial, Helvetica, sans-serif;
+}
+#edgeWatch
+{
+	width:940px;
+	background-color:transparent;
+	margin-left:10px;
+	margin-right:10px;
+	padding-top:10px;
+}
+#FlashedgeWatch
+{
+	width:940px;
+	background-color:transparent;
+	margin-left:30px;
+	margin-right:10px;
+	padding-top:15px;
+}
+#textResize
+{
+	font-size:35px;
+}
+
+#Jake
+{
+	position:relative;
+	top:-32px;
+	left:620px;
+	background-image:url(Design/Jake.jpg);
+	width:279px;
+	height:352px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

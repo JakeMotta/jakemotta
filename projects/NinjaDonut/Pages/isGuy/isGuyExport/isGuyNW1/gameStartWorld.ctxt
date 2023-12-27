@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.params=
+comment0.target=gameStartWorld()
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ gameStartWorld.\r\n\ \r\n
+comment1.params=
+comment1.target=void\ populateIntro()
+comment2.params=
+comment2.target=void\ populateStart()
+comment3.params=
+comment3.target=void\ populateHowTo()
+comment4.params=
+comment4.target=void\ act()
+comment5.params=
+comment5.target=void\ addMusic()
+comment6.params=isStart
+comment6.target=void\ startGame(boolean)
+comment7.params=isHowTo
+comment7.target=void\ openHowTo(boolean)
+comment8.params=shouldMusic
+comment8.target=void\ checkMusic(boolean)
+comment9.params=
+comment9.target=void\ switchImage()
+numComments=10

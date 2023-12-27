@@ -1,0 +1,594 @@
+body
+{
+	background-image:url(../images/background.jpg);
+	background-repeat:repeat-x;
+	background-color:white;
+}
+
+#bigbox
+{
+	width:1100px;
+	margin:auto;
+	min-height:200px;
+	height:auto !important;
+	height:200px;
+	background-color:transparent;
+	overflow:auto;
+	margin-top: 20px;
+}
+#mobileBanner {
+	width: 1100px;
+	background-image: url(../images/mobilebanner.png);
+	background-repeat: no-repeat;
+	height: 70px;
+}
+#vStrip
+{
+	width:40px;
+	height:300px;
+	background-color:transparent;
+	float:left;
+	margin-top:244px;
+}
+#sideLogo
+{
+	margin-top:10px;
+}
+.fade {
+   opacity: .5;
+   transition: opacity .8s ease-in-out;
+   -moz-transition: opacity .8s ease-in-out;
+   -webkit-transition: opacity .8s ease-in-out;
+}
+
+.fade:hover {
+   opacity: 1;
+}
+#container
+{
+	width:960px;
+	margin:auto;
+	min-height:200px;
+	height:auto !important;
+	height:200px;
+	background-color:#948A54;
+	margin-top:10px;
+	float:left;
+	border:4px solid black;
+	margin-left:16px;
+}
+#header
+{
+	width:100%;
+	height:80px;
+	background-color:white;
+	background-image:url(../images/home-page-head-2.jpg);
+	background-repeat:no-repeat;
+}
+#spanlink
+{ 
+  float:left;
+  width:100%;
+  height:100%;
+  background-color:transparent;
+
+  /* edit: added z-index */
+  z-index: 1;
+
+  /* edit: fixes overlap error in IE7/8, 
+     make sure you have an empty gif */
+  background-image: url('empty.gif');
+}  
+#spanLink2
+{
+	z-index:5;
+}
+#login
+{
+	z-index:100px;
+	width:165px;
+	height:37px;
+	background-color:transparent;
+	background-image:url(../images/login_small.gif);
+	position:relative;
+	top:22px;
+	left:763px;	
+}
+#events
+{
+	position:relative;
+	top:38px;
+	left:15px;
+	width:75px;
+	height:85px;
+	background-repeat:no-repeat;
+	z-index:10;
+	background-color:transparent;
+	background-image:url(../images/calendar.fw.png);
+}
+#topNav
+{
+	width:100%;
+	min-height:10px;
+	height:auto !important;
+	height:10px;
+	background-color:black;
+}
+#content
+{
+	width:100%;
+	min-height:200px;
+	height:auto !important;
+	height:200px;
+	background-color:transparent;
+	margin-top:5px;
+}
+#leftColumn
+{
+	margin-top:70px;
+	margin-left:15px;
+	float:left;	
+	width:135px;
+	min-height:100px;
+	height:auto !important;
+	height:100px;
+	background-color:transparent;
+	text-align:center;
+}
+#rightColumn
+{	
+	float:left;
+	width:740px;
+	height:600px;
+	margin-left:15px;
+	margin-top:15px;
+	margin-bottom:15px;
+	background-color:white;
+	border:5px solid #4A452A;
+	overflow:auto;
+	padding:15px 15px 15px 15px;
+	font-family: sans-serif;
+}
+#rightColumn a
+{
+	font-family: sans-serif;
+	color:black;
+	text-decoration:underline;
+}
+#rightColumn a:hover
+{
+	color:#03C;
+}
+#rightColumnLarge
+{	
+	float:left;
+	width:890px;
+	height:600px;
+	margin-left:15px;
+	margin-top:15px;
+	margin-bottom:15px;
+	background-color:white;
+	border:5px solid #4A452A;
+	overflow:auto;
+	padding:15px 15px 15px 15px;
+	font-family: sans-serif;
+}
+#rightColumnLargeBG
+{	
+	float:left;
+	background-image:url(../juneteenth/bg.png);
+	width:890px;
+	height:600px;
+	margin-left:15px;
+	margin-top:15px;
+	margin-bottom:15px;
+	background-color:white;
+	border:5px solid #4A452A;
+	overflow:auto;
+	padding:15px 15px 15px 15px;
+	font-family: sans-serif;
+}
+.sectionLink
+{
+	padding-top:15px;
+}
+#phoneDiv
+{
+	position:relative;
+	top:2.5px;
+	left:830px;
+	width:0px;
+	height:0px;
+	z-index:0;
+}
+#videoDiv
+{
+	width:100%;
+	background-color:transparent;
+	min-height:100px;
+	height:auto !important;
+	height:100px;
+	margin:auto;
+	float:left;
+}
+/*RightColumn has padding on, so left video can't have margin-left on it, but right video needs margin to make it even*/
+#videoBox
+{
+	width:325px;
+	min-height:20px;
+	height:auto !important;
+	height:20px;
+	background-color:transparent;
+	float:left;
+	margin-bottom:36.5px;
+	margin-left:28px;
+}
+#videoBoxRight
+{
+	width:325px;
+	min-height:20px;
+	height:auto !important;
+	height:20px;
+	background-color:transparent;
+	float:left;
+	margin-left:15px;
+	margin-bottom:36.5px;
+}
+#banner
+{
+	width:100%;
+	min-height:400px;
+	height:auto !important;
+	height:400px;
+	background-image:url(../images/newBanner4.jpg);
+	background-repeat:no-repeat;
+}
+#strip
+{
+	clear:both;
+	margin-top:10px;
+	width:960px;
+	height:110px;
+	background-color:black;
+	overflow:hidden;
+}
+#stripContent
+{
+	border-right:1px solid black;
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+}
+#subscribeButton
+{
+	position:relative;
+	top:300px;
+	left:358px;
+}
+#newsDiv
+{
+	width:693px;
+	margin-left:15px;
+	margin:auto;
+	min-height:100px;
+	height:auto !important;
+	height:100px;
+	background-color:red;
+}
+#footer
+{
+	width:100%;
+	min-height:10px;
+	height:auto !important;
+	height:10px;
+	background-color:#4A452A;
+	background-image:url(../images/footbg.gif);
+	background-repeat:no-repeat;
+	margin-top:10px;
+	padding-top:5px;
+}
+#footerTable
+{
+	width:100%;
+	font: bold 14px sans-serif;
+	color:white;
+}
+#footerTD
+{
+	text-align:center;
+	border-right:2px solid transparent;
+	width:240px;
+	vertical-align:middle;
+}
+#footerTD a
+{
+	color:white;
+	text-decoration:none;
+}
+#footerTD a:hover
+{
+	color:black;
+}
+#footerTDend
+{
+	text-align:center;
+	vertical-align:middle;
+}
+#footerTDend a
+{
+	color:white;
+	text-decoration:none;
+}
+#footerTDend a:hover
+{
+	color:black;
+}
+#cmslink
+{
+	padding-top:15px;
+	width:1100px;
+	height:50px;
+	background-color:transparent;
+	margin:auto;
+	text-align:center;
+	font: bold 14px sans-serif;
+	color:black;
+}
+#cmslink a
+{
+	text-decoration:none;
+	color:black;
+}
+#cmsText
+{
+	width:175px;
+	float:right;
+	margin-right:76px;
+	height:50px;
+	background-color:transparent;
+}
+.center
+{
+	text-align:center;
+}
+#pageTitle
+{
+	font: bold 24px sans-serif;
+}
+#pageSubTitle
+{
+	font: bold 18px sans-serif;
+}
+#topic
+{
+	font: bold 16px sans-serif;
+}
+#subtopic
+{
+	font: bold 14px sans-serif;
+}
+p
+{
+	font: 16px sans-serif;
+}
+#link a:hover
+{
+	color:#948A54;
+}
+#'Text
+{
+	font: 12px sans-serif;
+}
+.lightText
+{
+	color:#AAAAAA;
+}
+#liText
+{
+	font-family: 'Open Sans', sans-serif;
+	color:#666666;
+	font-size:14px;
+	margin-left:20px;
+}
+#dot
+{
+	float:left;
+	margin-right:10px;	
+	width:25px;
+	background-color:orange;
+}
+#sideLinkDiv
+{
+	width:100%;
+	background-color:transparent;
+	min-height:10px;
+	height:auto !important;
+	height:10px;
+}
+#sideLink
+{
+	width:100%;
+	min-height:10px;
+	height:auto !important;
+	height:10px;
+	background-color:transparent;
+	font: bold 18px sans-serif;
+	color:#000;
+	text-align:left;
+}
+#sideLink a
+{
+	color:#000;
+	text-decoration:none;
+}
+#sideLink a:hover
+{
+	color:#FFF;
+}
+.sideLinkBreak
+{
+	margin-top:15px;
+}
+.break
+{
+	margin-top:20px;
+}
+#sideLinkTopic
+{
+	width:100%;
+	min-height:10px;
+	height:auto !important;
+	height:10px;
+	background-color:transparent;
+	font: bold 18px sans-serif;
+	color:#000;
+	float:left;
+	text-align:left;
+	margin-bottom:15px;
+}
+#sideLinkTopic a
+{
+	color:#000;
+	text-decoration:none;
+}
+#sideLinkTopic a:hover
+{
+	color:#FFF;
+}
+#sideLinkOption
+{
+	margin-bottom:10px;
+	float:right;
+	width:95%;
+	font: bold 14px sans-serif;
+	color:#000;
+	text-align:left;
+	background-color:transparent;
+}
+#sideLinkOption a
+{
+	color:#000;
+	text-decoration:none;
+}
+#sideLinkOption a:hover
+{
+	color:#FFF;
+}
+#leftImage
+{
+	float:left;
+	margin:15px 15px 5px 0px;
+}
+#rightImage
+{
+	float:right;
+	margin:15px 15px 5px 0px;
+}
+#imgBorder
+{
+	float:left;
+	margin:15px 15px 5px 0px;
+	border:2px solid black;
+}
+#imgBorderNF
+{
+	border:2px solid black;
+}
+.anchor
+{
+
+}
+.longAnchor
+{
+	padding-top:-500px;
+	margin-top:500px;
+}
+#bold
+{
+	font-weight:bolder;
+	font-size:18px;
+	color:#A31B14;
+}
+#bold:hover
+{
+	color:white;
+}
+#bold:visited
+{
+	color:#A31B14;
+}
+
+/*FOR TOP NAVBAR*/
+ul {
+  text-align: left;
+  display: inline;
+  margin: 0;
+  padding: 15px 4px 17px 0;
+  list-style: none;
+}
+ul li {
+  font: bold 14px/18px sans-serif;
+  display: inline-block;
+  margin-right: -4px;
+  position: relative;
+  left:114px;
+  padding: 8px 30px;
+  background: black;
+  color:white;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+  z-index:10;
+}
+ul li a
+{
+	color:white;
+	text-decoration:none;
+}
+ul li:hover {
+  background: #948A54;
+  color: #fff;
+}
+ul li ul {
+  padding: 0;
+  position: absolute;
+  top: 33px;
+  left: -125.5px;
+  width: 170px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s;
+  z-index:20;
+}
+ul li ul li { 
+  background: #948A54; 
+  border-left:2px solid black;
+  border-right:2px solid black;
+  display: block; 
+  color: #fff;
+  z-index:30;
+}
+ul li ul li:hover { background: #7C7547; }
+ul li:hover ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+#bottomNav
+{
+	border-bottom:2px solid black;
+}
+#smallText
+{
+	font: 12px sans-serif;
+}

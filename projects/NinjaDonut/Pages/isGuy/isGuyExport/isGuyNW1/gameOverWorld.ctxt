@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.params=endGameScore
+comment0.target=gameOverWorld(int)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ gameOverWorld.\r\n\ \r\n
+comment1.params=
+comment1.target=void\ act()
+comment2.params=
+comment2.target=void\ addBlackIn()
+comment3.params=
+comment3.target=void\ addScore()
+comment4.params=
+comment4.target=void\ addButtons()
+comment5.params=replay
+comment5.target=void\ checkReplay(boolean)
+comment6.params=isHowTo
+comment6.target=void\ openHowTo(boolean)
+comment7.params=isInfo
+comment7.target=void\ openGameInfo(boolean)
+comment8.params=
+comment8.target=void\ addQuote()
+numComments=9

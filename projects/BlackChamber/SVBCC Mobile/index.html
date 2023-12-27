@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>SVBCC</title>
+  <META NAME="Author" CONTENT="PUT YOUR COMPANY INFO HERE">
+  <meta name="keywords" content="PUT, YOUR, CLIENT'S, COMPANY, INFO, HERE">
+  <meta name="description" content="PUT YOUR CLIENT'S COMPANY INFO HERE">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="MobileOptimized" content="220">
+  <meta name="viewport" content="width=320">
+
+  <link rel="stylesheet" type="text/css" href="css/global_style.css">
+  <link rel="stylesheet" type="text/css" href="css/fontsheet.css">
+ </head>
+
+<body  class="home">
+	
+	<div id="header"><a href="index.html" class="logo"><img src="images/header.jpg" alt=""  /></a>
+    </div>
+    <div class="car-01">
+    	<p><span>OUR MISSION:</span>To create, identify and/or expand economic development opportunities for African Americans and minorities in Silicon Valley.</p>
+   </div>
+    <p class="clear"></p>
+<div class="videoBox">
+<iframe width="100%" height="120" frameborder="0" src="https://www.youtube.com/embed/V4BSGbwQ_UU" allowfullscreen=""></iframe>
+</div>
+		<div class="dealBox">
+        	<div class="dealBox-left"><br />
+            	<a href="https://www.youtube.com/watch?v=--9ePUXHEqI&feature=youtu.be"><img src="images/phonepicture.fw.png"></a>		
+            </div>
+            
+            <div class="dealBox-right">
+                <p>Doing Business<br />
+                <span>using</span><br />
+                Mobile Devices</p>
+            </div>
+         </div>
+<!-- image slider background -->
+
+
+<!--<style type="text/css">
+	/* rotator in-page placement */
+	div.rotator {
+		/*position:relative;*/
+		height: 120px;
+		width: 320px%;
+		margin-right: auto;
+	    margin-left: auto;
+	}
+
+	/* rotator css */
+	div.rotator ul li {
+		/*float:left; */
+		position:absolute;
+		list-style: none;
+		width: 320px;
+	}
+
+	 div.rotator ul li.show {
+		z-index:500;
+	}
+</style>-->
+<script type="text/javascript" src="js/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.1.min.js"></script>
+<script type="text/javascript">
+	function theRotator() {
+		//Set the opacity of all images to 0
+		$('div.rotator ul li').css({opacity: 0.0});
+
+		//Get the first image and display it (gets set to full opacity)
+		$('div.rotator ul li:first').css({opacity: 1.0});
+
+		//Call the rotator function to run the slideshow, 6000 = change to next image after 6 seconds
+
+		setInterval('rotate()',6000);
+
+	}
+
+	function rotate() {
+		//Get the first image
+		var current = ($('div.rotator ul li.show')?  $('div.rotator ul li.show') : $('div.rotator ul li:first'));
+
+	    if ( current.length == 0 ) current = $('div.rotator ul li:first');
+
+		//Get next image, when it reaches the end, rotate it back to the first image
+		var next = ((current.next().length) ? ((current.next().hasClass('show')) ? $('div.rotator ul li:first') :current.next()) : $('div.rotator ul li:first'));
+
+		//Un-comment the 3 lines below to get the images in random order
+
+		//var sibs = current.siblings();
+	        //var rndNum = Math.floor(Math.random() * sibs.length );
+	        //var next = $( sibs[ rndNum ] );
+
+
+		//Set the fade in effect for the next image, the show class has higher z-index
+		next.css({opacity: 0.0})
+		.addClass('show')
+		.animate({opacity: 1.0}, 1000);
+
+		//Hide the current image
+		current.animate({opacity: 0.0}, 1000)
+		.removeClass('show');
+
+	};
+
+
+
+	$(document).ready(function() {
+		//Load the slideshow
+		theRotator();
+		$('div.rotator').fadeIn(1000);
+	    $('div.rotator ul li').fadeIn(1000); // tweek for IE
+	});
+</script>
+
+
+
+		<div id="content">
+	  <a data-role="button" data-transition="fade" href="https://www.youtube.com/watch?v=V4BSGbwQ_UU" class="btn"><span></span>LIKE OUR YOUTUBE VIDEO!</a>
+    <div id="home-nav">
+
+			  <div class="item">
+
+					<div class="item-in">
+						<p><a href="about_us.html" class="ivalue">about us</a></p>
+				</div>
+				
+      </div>
+
+				<div class="item">
+				  
+					<div class="item-in">
+						<p><a href="products.html" class="ivalue">products</a></p>
+				  </div>
+					
+				</div>
+
+				<div class="item">
+					<div class="item-in">
+
+						<p><a href="services.html" class="ivalue">services</a></p>
+
+				  </div>
+				</div>
+                
+                <div class="item">
+					<div class="item-in">
+
+						<p><a href="events.html" class="ivalue">Events</a></p>
+
+				  </div>
+				</div>
+                
+                <div class="item">
+					<div class="item-in">
+
+						<p><a href="giving.html" class="ivalue">Giving</a></p>
+
+				  </div>
+				</div>
+
+				<div class="item">
+				  <div class="item-l"></div>
+
+					<div class="item-in">
+						<p><a href="contact.html" class="ivalue">contact</a></p>
+				  </div>
+
+					<div class="item-r"></div>
+				</div>
+		  </div>
+</div>
+<div id="footer">
+<div id="footer-links">
+				<div id="social">
+                <a title="Facebook" href="https://www.facebook.com/pages/Silicon-Valley-Black-Chamber-of-Commerce/580069725373490"><img src="images/fb-art.gif" alt="Facebook" style="margin-top:20px;"/></a>
+                 <a title="Linkedin" href="#"><img src="images/LinkedIn_logo_initials.png" alt="Linkedin" /></a>
+                <a title="Twitter" href="https://twitter.com/SVBlackChamber"><img src="images/Twitter-logo21.png" alt="Twitter" /></a>
+                <a title="Youtube" href="https://www.youtube.com/channel/UCMbWyMrLOO57uwq2-m55F6Q"><img src="images/Youtube_2013_icon.png" alt="YouTube"/></a>
+                </div>
+                <p>&copy; 2014. Edward Palmer Law Firms. All Rights Reserved</p>
+			    </div>
+			
+		</div>
+</body>
+
+</html>

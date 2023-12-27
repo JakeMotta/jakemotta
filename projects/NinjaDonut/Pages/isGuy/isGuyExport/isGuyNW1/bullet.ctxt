@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.params=direction
+comment0.target=bullet(int)
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ bullet\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment2.params=
+comment2.target=void\ move()
+comment3.params=
+comment3.target=void\ checkFlick()
+comment4.params=
+comment4.target=void\ checkLasers()
+comment5.params=
+comment5.target=void\ checkSkuddle()
+comment6.params=
+comment6.target=void\ checkBarriers()
+comment7.params=
+comment7.target=void\ checkLadder()
+comment8.params=
+comment8.target=void\ checkUfo()
+numComments=9

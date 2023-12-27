@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.params=
+comment0.target=shrinkingFloor()
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ blackOut\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment2.params=
+comment2.target=void\ makeBoard()
+comment3.params=
+comment3.target=void\ updateBoard()
+comment4.params=guyHasKey
+comment4.target=void\ checkKey(boolean)
+numComments=5

@@ -1,0 +1,28 @@
+<!--THIS PAGE IS USED FOR A SIDEBAR SNIPPET-->
+<span id="sideTitle">Categories</span><br>
+
+<!--Dynamically lists all of the folders-->
+<div id="indentRight">
+    <cms:folders masterpage='index.php' >
+        &bull;&nbsp;<a href="<cms:show k_folder_link />"><cms:show k_folder_title /></a><br />
+    </cms:folders>
+</div>
+
+<!--SHOW ONLY IF IT'S A CLONED PAGE-->
+<cms:if k_is_page >
+<br /><span id="sideTitle">Latest News</span><br>
+    <div id="indentRight">
+        <cms:pages masterpage='index.php' limit='4'>
+            &bull;&nbsp;<a href="<cms:show k_page_link />"><cms:show k_page_title /></a><br />
+        </cms:pages>
+    </div>
+</cms:if>
+
+<br />
+
+<span id="sideTitle">Archives</span><br>
+    <span id="indentRight">
+        <cms:archives masterpage='index.php' >
+            &bull;&nbsp;<a href="<cms:show k_archive_link />"><cms:date k_archive_date format='F Y' /></a><br />
+        </cms:archives>
+    </span>

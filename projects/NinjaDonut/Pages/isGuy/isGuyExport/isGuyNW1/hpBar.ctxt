@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=previousHp
+comment0.target=hpBar(int)
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ hpBar\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment2.params=
+comment2.target=void\ makeHP()
+comment3.params=guyHP
+comment3.target=void\ setHP(int)
+comment3.text=\r\n\r\nI\ FINALLY\ DID\ IT\!\ I\ GOT\ THE\ HEALTH\ BAR\ TO\ WORK\ CORRECTLY\!\ \:*)\r\n\ \r\n
+numComments=4

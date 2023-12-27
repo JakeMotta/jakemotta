@@ -1,0 +1,94 @@
+<manifest alg="2" build="2015.2.1.352" opt="false" iceEnabled="true" iceMarkupVersion="2" iceEnabledOptions="link,responsive" exportTarget="other" domain="blackchamber.com" resolutions="1x,2x" timestamp="1474156918205">
+  <folder name="css">
+    <file name="site_global.css" crc="218300426"/>
+    <file name="master_a-master.css" crc="4112767455" ref="index:calendar:giving:abous-us:news:contact:programs-services"/>
+    <file name="nomq_preview_master_a-master.css" crc="4091939471" ref="index:calendar:giving:abous-us:news:contact:programs-services"/>
+    <file name="index.css" crc="446299422" ref="index"/>
+    <file name="nomq_index.css" crc="100765409" ref="index"/>
+    <file name="iefonts_index.css" crc="3824530138" ref="index"/>
+    <file name="calendar.css" crc="78160480" ref="calendar"/>
+    <file name="nomq_calendar.css" crc="483481581" ref="calendar"/>
+    <file name="iefonts_calendar.css" crc="3824530138" ref="calendar"/>
+    <file name="giving.css" crc="4205262761" ref="giving"/>
+    <file name="nomq_giving.css" crc="3829569655" ref="giving"/>
+    <file name="iefonts_giving.css" crc="3824530138" ref="giving"/>
+    <file name="abous-us.css" crc="3795870675" ref="abous-us"/>
+    <file name="nomq_abous-us.css" crc="94858683" ref="abous-us"/>
+    <file name="iefonts_abous-us.css" crc="3824530138" ref="abous-us"/>
+    <file name="news.css" crc="48589875" ref="news"/>
+    <file name="nomq_news.css" crc="4002500573" ref="news"/>
+    <file name="iefonts_news.css" crc="3824530138" ref="news"/>
+    <file name="contact.css" crc="4005950860" ref="contact"/>
+    <file name="nomq_contact.css" crc="4276215164" ref="contact"/>
+    <file name="iefonts_contact.css" crc="3824530138" ref="contact"/>
+    <file name="programs-services.css" crc="4142089235" ref="programs-services"/>
+    <file name="nomq_programs-services.css" crc="4255978547" ref="programs-services"/>
+    <file name="iefonts_programs-services.css" crc="3824530138" ref="programs-services"/>
+  </folder>
+  <folder name="assets">
+    <file name="--mt---mobile-menu---classic-accordian-(l11.1).mulib" crc="157767992" seo="true" mt="1454982470000"/>
+  </folder>
+  <folder name="scripts">
+    <file name="jquery-1.8.3.min.js" crc="169078940" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="museutils.js" crc="3851988764" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="whatinput.js" crc="86476730" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="museconfig.js" crc="4242129463" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="jquery.watch.js" crc="3842844514" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="pie.js" crc="3831537696" ref="index:news"/>
+    <file name="webpro.js" crc="4067903014" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="musewpdisclosure.js" crc="338211507" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="musewpslideshow.js" crc="4265225696" ref="index"/>
+    <file name="jquery.museoverlay.js" crc="4075157096" ref="index"/>
+    <file name="touchswipe.js" crc="474750357" ref="index"/>
+    <file name="jquery.musepolyfill.bgsize.js" crc="271560940" ref="index:programs-services:giving:news:contact:abous-us"/>
+    <file name="jquery.museresponsive.js" crc="516761069" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="require.js" crc="4108833657" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+  </folder>
+  <folder name="images">
+    <file name="a-master-favicon.ico" crc="132627582" ref="index"/>
+    <file name="youtube.png" crc="480463270" seo="true" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="logo.jpg" crc="4193636869" seo="true" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="svced_logo.png" crc="4203650209" seo="true" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="icon_submenu-u48387-3-fr.png" crc="3873617138" ref="index:news"/>
+    <file name="icon_submenu.gif" crc="394687933" ref="index:news"/>
+    <file name="icon_submenu_open.gif" crc="150887644" ref="index:news"/>
+    <file name="blank.gif" crc="4208392903" ref="index:programs-services:giving:news:contact:calendar:abous-us"/>
+    <file name="wallhaven-51276.jpg" crc="3791882782" seo="true" ref="index"/>
+    <file name="wallhaven-52668.jpg" crc="79375961" seo="true" ref="index"/>
+    <file name="wallhaven-166560.jpg" crc="4256870430" seo="true" ref="index:contact"/>
+    <file name="wallhaven-169340.jpg" crc="76035510" seo="true" ref="index"/>
+    <file name="wallhaven-242781.jpg" crc="440436807" seo="true" ref="index"/>
+    <file name="loading.gif" crc="3815509949" ref="index"/>
+    <file name="newbanner4.jpg" crc="61550727" seo="true" ref="index"/>
+    <file name="client1.png" crc="3964563035" ref="index"/>
+    <file name="client2.png" crc="440606175" ref="index"/>
+    <file name="client3.png" crc="4105681861" ref="index"/>
+    <file name="client4.png" crc="232789348" ref="index"/>
+    <file name="client5.png" crc="4215646388" ref="index"/>
+    <file name="client6.png" crc="4248981999" ref="index"/>
+    <file name="logo.png" crc="4263823683" ref="index:news"/>
+    <file name="newbanner4800x334.jpg" crc="75979184" seo="true" ref="index"/>
+    <file name="newbanner4600x250.jpg" crc="35960951" seo="true" ref="index"/>
+    <file name="newbanner4400x167.jpg" crc="327633772" seo="true" ref="index"/>
+    <file name="wallhaven-512762.jpg" crc="3791882782" ref="programs-services:giving"/>
+    <file name="phones.jpg" crc="168006357" seo="true" ref="programs-services"/>
+    <file name="donatebutton.jpg" crc="338500124" seo="true" ref="programs-services:giving"/>
+    <file name="up-arrow.png" crc="4103428589" seo="true" ref="programs-services"/>
+    <file name="phones327x311.jpg" crc="4272074193" seo="true" ref="programs-services"/>
+    <file name="phones218x208.jpg" crc="232097702" seo="true" ref="programs-services"/>
+    <file name="rounddot.gif" crc="4183003753" seo="true" ref="giving"/>
+    <file name="page_header_img.jpg" crc="3973627909" ref="news"/>
+    <file name="news_img01.jpg" crc="247484946" ref="news"/>
+    <file name="wallhaven-526682.jpg" crc="79375961" ref="abous-us"/>
+    <file name="services_img01.jpg" crc="215658422" ref="abous-us"/>
+    <file name="services_img01-u187008-fr.jpg" crc="4275062080" ref="abous-us"/>
+    <file name="services_img01-u187008-fr2.jpg" crc="4236506202" ref="abous-us"/>
+  </folder>
+  <file name="index.html" crc="4291103759" seo="true" mt="1474156825886" redirect="true"/>
+  <file name="programs-services.html" crc="404047186" seo="true" mt="1474156825886" redirect="true"/>
+  <file name="giving.html" crc="3767187659" seo="true" mt="1474156825886" redirect="true"/>
+  <file name="news.html" crc="4145429087" seo="true" mt="1474156825886" redirect="true"/>
+  <file name="contact.html" crc="3966234935" seo="true" mt="1474156825886" redirect="true"/>
+  <file name="calendar.html" crc="3798696139" seo="true" mt="1474156825886" redirect="true"/>
+  <file name="abous-us.html" crc="52163361" seo="true" mt="1474156825886" redirect="true"/>
+</manifest>

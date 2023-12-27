@@ -5,6 +5,7 @@ import SignUp from '../screens/sign-up';
 import EmailVerification from '../screens/email-verification';
 import Verify from '../screens/verify';
 import ResetPassword from '../screens/reset-password';
+import Homepage from '../screens/homepage';
 
 // Imports
 import { useLocation, Navigate } from 'react-router-dom';
@@ -50,7 +51,7 @@ const routes = [
     path: '/',
     element: (
       <Middleware>
-        <SignIn />
+        <Homepage />
       </Middleware>
     ),
     errorElement: <ErrorScreen />,

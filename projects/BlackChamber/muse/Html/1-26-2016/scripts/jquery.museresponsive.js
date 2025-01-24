@@ -43,8 +43,8 @@
           a == h
             ? b('WARNING: Setting the same "active" state twice', this.toString())
             : (h = a)
-            ? (f.addClass('active'), p.trigger('muse_bp_activate', [i, f, g]), f.trigger('muse_this_bp_activate'))
-            : (f.removeClass('active'), p.trigger('muse_bp_deactivate', [i, f, g]), f.trigger('muse_this_bp_deactivate'));
+              ? (f.addClass('active'), p.trigger('muse_bp_activate', [i, f, g]), f.trigger('muse_this_bp_activate'))
+              : (f.removeClass('active'), p.trigger('muse_bp_deactivate', [i, f, g]), f.trigger('muse_this_bp_deactivate'));
         },
         i = (function () {
           var a = f.attr('data-min-width') || void 0,
@@ -96,8 +96,8 @@
             0 == g.length
               ? b('WARNING: Could not find content node with GUID', f)
               : 1 < g.length
-              ? b('WARNING: Found', g.length, 'content nodes with GUID', f, ', expected only 1')
-              : (j(a, g), c.swapPlaceholderNodesRecursively(g));
+                ? b('WARNING: Found', g.length, 'content nodes with GUID', f, ', expected only 1')
+                : (j(a, g), c.swapPlaceholderNodesRecursively(g));
           } else b('WARNING: Invalid placeholder-for data property for placeholder node', a);
         });
       };

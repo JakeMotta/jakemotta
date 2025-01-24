@@ -1,40 +1,13 @@
-import './wdyr';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
-import { PrimeReactProvider } from 'primereact/api';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import { ToastProvider } from './providers/toastProvider';
-import { OverlayProvider } from './providers/overlayProvider';
-import { AuthProvider } from './providers/authProvider';
 import App from './App';
-import './index.scss';
+import reportWebVitals from './reportWebVitals';
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-const queryClient = new QueryClient();
-
-// Disable console logs in production
-if (process.env.NODE_ENV === 'production') {
-  console.log = () => {};
-  console.error = () => {};
-  console.debug = () => {};
-}
-
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <PrimeReactProvider>
-        <AuthProvider>
-          <ToastProvider>
-            <OverlayProvider>
-              <App />
-            </OverlayProvider>
-          </ToastProvider>
-        </AuthProvider>
-      </PrimeReactProvider>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-    </QueryClientProvider>
+    <App />
   </React.StrictMode>,
 );
 

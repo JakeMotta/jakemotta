@@ -1059,13 +1059,13 @@
                           ? a === d || (a.ownerDocument === O && M(O, a))
                             ? -1
                             : b === d || (b.ownerDocument === O && M(O, b))
-                            ? 1
-                            : D
-                            ? ab(D, a) - ab(D, b)
-                            : 0
+                              ? 1
+                              : D
+                                ? ab(D, a) - ab(D, b)
+                                : 0
                           : 4 & c
-                          ? -1
-                          : 1);
+                            ? -1
+                            : 1);
                   }
                 : function (a, b) {
                     if (a === b) return (E = !0), 0;
@@ -1190,23 +1190,23 @@
                 return null == f
                   ? '!=' === c
                   : c
-                  ? ((f += ''),
-                    '=' === c
-                      ? f === d
-                      : '!=' === c
-                      ? f !== d
-                      : '^=' === c
-                      ? d && 0 === f.indexOf(d)
-                      : '*=' === c
-                      ? d && f.indexOf(d) > -1
-                      : '$=' === c
-                      ? d && f.slice(-d.length) === d
-                      : '~=' === c
-                      ? (' ' + f.replace(hb, ' ') + ' ').indexOf(d) > -1
-                      : '|=' === c
-                      ? f === d || f.slice(0, d.length + 1) === d + '-'
-                      : !1)
-                  : !0;
+                    ? ((f += ''),
+                      '=' === c
+                        ? f === d
+                        : '!=' === c
+                          ? f !== d
+                          : '^=' === c
+                            ? d && 0 === f.indexOf(d)
+                            : '*=' === c
+                              ? d && f.indexOf(d) > -1
+                              : '$=' === c
+                                ? d && f.slice(-d.length) === d
+                                : '~=' === c
+                                  ? (' ' + f.replace(hb, ' ') + ' ').indexOf(d) > -1
+                                  : '|=' === c
+                                    ? f === d || f.slice(0, d.length + 1) === d + '-'
+                                    : !1)
+                    : !0;
               };
             },
             CHILD: function (a, b, c, d, e) {
@@ -1260,15 +1260,15 @@
               return f[N]
                 ? f(c)
                 : f.length > 1
-                ? ((e = [a, a, '', c]),
-                  w.setFilters.hasOwnProperty(a.toLowerCase())
-                    ? d(function (a, b) {
-                        for (var d, e = f(a, c), g = e.length; g--; ) (d = ab(a, e[g])), (a[d] = !(b[d] = e[g]));
-                      })
-                    : function (a) {
-                        return f(a, 0, e);
-                      })
-                : f;
+                  ? ((e = [a, a, '', c]),
+                    w.setFilters.hasOwnProperty(a.toLowerCase())
+                      ? d(function (a, b) {
+                          for (var d, e = f(a, c), g = e.length; g--; ) (d = ab(a, e[g])), (a[d] = !(b[d] = e[g]));
+                        })
+                      : function (a) {
+                          return f(a, 0, e);
+                        })
+                  : f;
             },
           },
           pseudos: {
@@ -1532,10 +1532,10 @@
       return a.nodeType
         ? ((this.context = this[0] = a), (this.length = 1), this)
         : _.isFunction(a)
-        ? 'undefined' != typeof ib.ready
-          ? ib.ready(a)
-          : a(_)
-        : (void 0 !== a.selector && ((this.selector = a.selector), (this.context = a.context)), _.makeArray(a, this));
+          ? 'undefined' != typeof ib.ready
+            ? ib.ready(a)
+            : a(_)
+          : (void 0 !== a.selector && ((this.selector = a.selector), (this.context = a.context)), _.makeArray(a, this));
     });
   (kb.prototype = _.fn), (ib = _(Z));
   var lb = /^(?:parents|prev(?:Until|All))/,
@@ -1985,11 +1985,11 @@
           arguments.length < c
             ? _.queue(this[0], a)
             : void 0 === b
-            ? this
-            : this.each(function () {
-                var c = _.queue(this, a, b);
-                _._queueHooks(this, a), 'fx' === a && 'inprogress' !== c[0] && _.dequeue(this, a);
-              })
+              ? this
+              : this.each(function () {
+                  var c = _.queue(this, a, b);
+                  _._queueHooks(this, a), 'fx' === a && 'inprogress' !== c[0] && _.dequeue(this, a);
+                })
         );
       },
       dequeue: function (a) {
@@ -2793,8 +2793,8 @@
           _.fx.step[a.prop]
             ? _.fx.step[a.prop](a)
             : a.elem.style && (null != a.elem.style[_.cssProps[a.prop]] || _.cssHooks[a.prop])
-            ? _.style(a.elem, a.prop, a.now + a.unit)
-            : (a.elem[a.prop] = a.now);
+              ? _.style(a.elem, a.prop, a.now + a.unit)
+              : (a.elem[a.prop] = a.now);
         },
       },
     }),
@@ -2993,10 +2993,10 @@
                   ? e
                   : ((e = _.find.attr(a, b)), null == e ? void 0 : e)
                 : null !== c
-                ? d && 'set' in d && void 0 !== (e = d.set(a, c, b))
-                  ? e
-                  : (a.setAttribute(b, c + ''), c)
-                : void _.removeAttr(a, b));
+                  ? d && 'set' in d && void 0 !== (e = d.set(a, c, b))
+                    ? e
+                    : (a.setAttribute(b, c + ''), c)
+                  : void _.removeAttr(a, b));
       },
       removeAttr: function (a, b) {
         var c,
@@ -3159,11 +3159,11 @@
                 null == e
                   ? (e = '')
                   : 'number' == typeof e
-                  ? (e += '')
-                  : _.isArray(e) &&
-                    (e = _.map(e, function (a) {
-                      return null == a ? '' : a + '';
-                    })),
+                    ? (e += '')
+                    : _.isArray(e) &&
+                      (e = _.map(e, function (a) {
+                        return null == a ? '' : a + '';
+                      })),
                 (b = _.valHooks[this.type] || _.valHooks[this.nodeName.toLowerCase()]),
                 (b && 'set' in b && void 0 !== b.set(this, e, 'value')) || (this.value = e));
             })
@@ -3520,10 +3520,10 @@
             return null == c
               ? null
               : _.isArray(c)
-              ? _.map(c, function (a) {
-                  return { name: b.name, value: a.replace(zc, '\r\n') };
-                })
-              : { name: b.name, value: c.replace(zc, '\r\n') };
+                ? _.map(c, function (a) {
+                    return { name: b.name, value: a.replace(zc, '\r\n') };
+                  })
+                : { name: b.name, value: c.replace(zc, '\r\n') };
           })
           .get();
       },
@@ -3562,8 +3562,8 @@
                     'abort' === a
                       ? f.abort()
                       : 'error' === a
-                      ? d(f.status, f.statusText)
-                      : d(Ec[f.status] || f.status, f.statusText, 'string' == typeof f.responseText ? { text: f.responseText } : void 0, f.getAllResponseHeaders()));
+                        ? d(f.status, f.statusText)
+                        : d(Ec[f.status] || f.status, f.statusText, 'string' == typeof f.responseText ? { text: f.responseText } : void 0, f.getAllResponseHeaders()));
                 };
               }),
                 (f.onload = b()),
@@ -3791,10 +3791,10 @@
               return _.isWindow(b)
                 ? b.document.documentElement['client' + a]
                 : 9 === b.nodeType
-                ? ((e = b.documentElement), Math.max(b.body['scroll' + a], e['scroll' + a], b.body['offset' + a], e['offset' + a], e['client' + a]))
-                : void 0 === d
-                ? _.css(b, c, g)
-                : _.style(b, c, d, g);
+                  ? ((e = b.documentElement), Math.max(b.body['scroll' + a], e['scroll' + a], b.body['offset' + a], e['offset' + a], e['client' + a]))
+                  : void 0 === d
+                    ? _.css(b, c, g)
+                    : _.style(b, c, d, g);
             },
             b,
             f ? d : void 0,
@@ -4029,12 +4029,12 @@
         return b > this.$items.length - 1 || 0 > b
           ? void 0
           : this.sliding
-          ? this.$element.one('slid.bs.carousel', function () {
-              c.to(b);
-            })
-          : d == b
-          ? this.pause().cycle()
-          : this.slide(b > d ? 'next' : 'prev', a(this.$items[b]));
+            ? this.$element.one('slid.bs.carousel', function () {
+                c.to(b);
+              })
+            : d == b
+              ? this.pause().cycle()
+              : this.slide(b > d ? 'next' : 'prev', a(this.$items[b]));
       }),
       (c.prototype.pause = function (b) {
         return (
@@ -4721,12 +4721,12 @@
               'bottom' == g && j.top + j.height + l - o.scroll > o.height
                 ? 'top'
                 : 'top' == g && j.top - o.scroll - l < 0
-                ? 'bottom'
-                : 'right' == g && j.right + k > o.width
-                ? 'left'
-                : 'left' == g && j.left - k < o.left
-                ? 'right'
-                : g),
+                  ? 'bottom'
+                  : 'right' == g && j.right + k > o.width
+                    ? 'left'
+                    : 'left' == g && j.left - k < o.left
+                      ? 'right'
+                      : g),
               e.removeClass(m).addClass(g);
           }
           var p = this.getCalculatedOffset(g, j, k, l);
@@ -4819,10 +4819,10 @@
         return 'bottom' == a
           ? { top: b.top + b.height, left: b.left + b.width / 2 - c / 2 }
           : 'top' == a
-          ? { top: b.top - d, left: b.left + b.width / 2 - c / 2 }
-          : 'left' == a
-          ? { top: b.top + b.height / 2 - d / 2, left: b.left - c }
-          : { top: b.top + b.height / 2 - d / 2, left: b.left + b.width };
+            ? { top: b.top - d, left: b.left + b.width / 2 - c / 2 }
+            : 'left' == a
+              ? { top: b.top + b.height / 2 - d / 2, left: b.left - c }
+              : { top: b.top + b.height / 2 - d / 2, left: b.left + b.width };
       }),
       (c.prototype.getViewportAdjustedDelta = function (a, b, c, d) {
         var e = { top: 0, left: 0 };

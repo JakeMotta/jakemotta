@@ -25,12 +25,12 @@
       Muse.Utils.getCssVendorPrefix.flag = /webkit/i.test(navigator.appVersion)
         ? '-webkit'
         : /firefox/i.test(navigator.userAgent)
-        ? '-moz'
-        : /trident/i.test(navigator.userAgent)
-        ? '-ms'
-        : 'opera' in window
-        ? '-o'
-        : '';
+          ? '-moz'
+          : /trident/i.test(navigator.userAgent)
+            ? '-ms'
+            : 'opera' in window
+              ? '-o'
+              : '';
     return Muse.Utils.getCssVendorPrefix.flag;
   };
   Muse.Utils.wrapElement = function (c, a) {
@@ -378,8 +378,8 @@
           ? Muse.Utils.redirectHyperlinkInNewTab(c.href, a.shiftKey)
           : Muse.Utils.redirectHyperlink(c)
         : Muse.Utils.isMouseMiddleClick(a) && b.indexOf(this) != -1
-        ? Muse.Utils.redirectHyperlinkInNewTab(c.href, a.shiftKey)
-        : Muse.Utils.isRedirectLinkKeyboardAction(a) && Muse.Utils.redirectHyperlink(c);
+          ? Muse.Utils.redirectHyperlinkInNewTab(c.href, a.shiftKey)
+          : Muse.Utils.isRedirectLinkKeyboardAction(a) && Muse.Utils.redirectHyperlink(c);
       return !1;
     });
     Muse.Utils.isIBE() ||
@@ -564,22 +564,22 @@
     b.naturalWidth != null
       ? (a = b.naturalWidth)
       : b.runtimeStyle
-      ? ((b.runtimeStyle.width = 'auto'),
-        (b.runtimeStyle.height = 'auto'),
-        (b.runtimeStyle.borderWidth = '0'),
-        (b.runtimeStyle.padding = '0'),
-        (a = b.offsetWidth),
-        (b.runtimeStyle.width = ''),
-        (b.runtimeStyle.height = ''),
-        (b.runtimeStyle.borderWidth = ''),
-        (b.runtimeStyle.padding = ''))
-      : ((b = b.cloneNode(!0)),
-        (b.className = ''),
-        (b.style.width = 'auto !important'),
-        (b.style.height = 'auto !important'),
-        (b.style.borderWidth = '0 !important'),
-        (b.style.padding = '0 !important'),
-        (a = b.width));
+        ? ((b.runtimeStyle.width = 'auto'),
+          (b.runtimeStyle.height = 'auto'),
+          (b.runtimeStyle.borderWidth = '0'),
+          (b.runtimeStyle.padding = '0'),
+          (a = b.offsetWidth),
+          (b.runtimeStyle.width = ''),
+          (b.runtimeStyle.height = ''),
+          (b.runtimeStyle.borderWidth = ''),
+          (b.runtimeStyle.padding = ''))
+        : ((b = b.cloneNode(!0)),
+          (b.className = ''),
+          (b.style.width = 'auto !important'),
+          (b.style.height = 'auto !important'),
+          (b.style.borderWidth = '0 !important'),
+          (b.style.padding = '0 !important'),
+          (a = b.width));
     return a;
   };
   Muse.Utils.getNaturalHeight = function (b) {
@@ -587,22 +587,22 @@
     b.naturalHeight != null
       ? (a = b.naturalHeight)
       : b.runtimeStyle
-      ? ((b.runtimeStyle.width = 'auto'),
-        (b.runtimeStyle.height = 'auto'),
-        (b.runtimeStyle.borderWidth = '0'),
-        (b.runtimeStyle.padding = '0'),
-        (a = b.offsetHeight),
-        (b.runtimeStyle.width = ''),
-        (b.runtimeStyle.height = ''),
-        (b.runtimeStyle.borderWidth = ''),
-        (b.runtimeStyle.padding = ''))
-      : ((b = b.cloneNode(!0)),
-        (b.className = ''),
-        (b.style.width = 'auto !important'),
-        (b.style.height = 'auto !important'),
-        (b.style.borderWidth = '0 !important'),
-        (b.style.padding = '0 !important'),
-        (a = b.height));
+        ? ((b.runtimeStyle.width = 'auto'),
+          (b.runtimeStyle.height = 'auto'),
+          (b.runtimeStyle.borderWidth = '0'),
+          (b.runtimeStyle.padding = '0'),
+          (a = b.offsetHeight),
+          (b.runtimeStyle.width = ''),
+          (b.runtimeStyle.height = ''),
+          (b.runtimeStyle.borderWidth = ''),
+          (b.runtimeStyle.padding = ''))
+        : ((b = b.cloneNode(!0)),
+          (b.className = ''),
+          (b.style.width = 'auto !important'),
+          (b.style.height = 'auto !important'),
+          (b.style.borderWidth = '0 !important'),
+          (b.style.padding = '0 !important'),
+          (a = b.height));
     return a;
   };
   Muse.Utils.pieLoading = !1;
@@ -879,8 +879,8 @@
         b.hasClass('actAsDiv')
           ? (b.wrap('<span class="actAsDiv rotateWrapper"></span>'), b.parent().css('float', b.css('float')))
           : b.hasClass('actAsInlineDiv')
-          ? b.wrap('<span class="actAsInlineDiv rotateWrapper"></span>')
-          : b.wrap('<div class="rotateWrapper"></div>');
+            ? b.wrap('<span class="actAsInlineDiv rotateWrapper"></span>')
+            : b.wrap('<div class="rotateWrapper"></div>');
         b.parent().css({ top: j, left: g, position: 'relative', 'margin-bottom': j });
       });
   };

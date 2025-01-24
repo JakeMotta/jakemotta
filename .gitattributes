@@ -1,3 +1,0 @@
-.env filter=git-crypt diff=git-crypt
-.env.staging filter=git-crypt diff=git-crypt
-.env.production filter=git-crypt diff=git-crypt

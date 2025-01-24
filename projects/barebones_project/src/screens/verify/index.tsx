@@ -41,7 +41,8 @@ const Verify = () => {
 
   useEffect(() => {
     if (!error && token) {
-      if (queryParams['mode'] === 'verifyEmail') verifyEmailAddress(token); // Verify Email
+      if (queryParams['mode'] === 'verifyEmail')
+        verifyEmailAddress(token); // Verify Email
       else if (queryParams['mode'] === 'resetPassword') navigate('/reset-password', { state: { token } }); // Password Reset
     }
   }, [token]);
@@ -121,8 +122,8 @@ const Verify = () => {
                   {loading
                     ? 'Please give us just a moment to verify your email'
                     : verified
-                    ? 'Thanks for waiting. Welcome to JakeMotta.com!'
-                    : "We're sorry, but there was an error when verifying your email. Please try signing up again."}
+                      ? 'Thanks for waiting. Welcome to JakeMotta.com!'
+                      : "We're sorry, but there was an error when verifying your email. Please try signing up again."}
                 </div>
 
                 {verified && <div className="subtitle smallBold m-b-xl">Logging you in</div>}
@@ -133,8 +134,8 @@ const Verify = () => {
                   {loading
                     ? 'Please give us just a moment to verify your password reset link'
                     : verified
-                    ? 'One second. We are redirecting you to reset your password.'
-                    : "We're sorry, but there was an error with your reset password link. Please try requesting a new password reset link again."}
+                      ? 'One second. We are redirecting you to reset your password.'
+                      : "We're sorry, but there was an error with your reset password link. Please try requesting a new password reset link again."}
                 </div>
 
                 {verified && <div className="subtitle smallBold m-b-xl">Rerouting...</div>}

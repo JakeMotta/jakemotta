@@ -191,10 +191,10 @@ var $JssorEasing$ = (window.$JssorEasing$ = {
     return t < 1 / 2.75
       ? 7.5625 * t * t
       : t < 2 / 2.75
-      ? 7.5625 * (t -= 1.5 / 2.75) * t + 0.75
-      : t < 2.5 / 2.75
-      ? 7.5625 * (t -= 2.25 / 2.75) * t + 0.9375
-      : 7.5625 * (t -= 2.625 / 2.75) * t + 0.984375;
+        ? 7.5625 * (t -= 1.5 / 2.75) * t + 0.75
+        : t < 2.5 / 2.75
+          ? 7.5625 * (t -= 2.25 / 2.75) * t + 0.9375
+          : 7.5625 * (t -= 2.625 / 2.75) * t + 0.984375;
   },
   $EaseInOutBounce: function (t) {
     return t < 1 / 2 ? $JssorEasing$.$EaseInBounce(t * 2) * 0.5 : $JssorEasing$.$EaseOutBounce(t * 2 - 1) * 0.5 + 0.5;

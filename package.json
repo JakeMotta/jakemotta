@@ -26,14 +26,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write \"**/*.+(tsx|ts|jsx|js|json|css|scss|md)\" --fix",
-    "eslint": "eslint 'src/**/*.{ts,tsx,js,jsx,json}' --max-warnings=0 --fix",
-    "lint": "yarn eslint && yarn prettier"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "reset": "rm -rf node_modules yarn.lock && yarn"
   },
   "browserslist": {
     "production": [
@@ -48,15 +41,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@eslint/js": "^9.19.0",
-    "eslint": "^9.19.0",
-    "eslint-config-prettier": "^10.0.1",
-    "eslint-plugin-prettier": "^5.2.3",
-    "eslint-plugin-react": "^7.37.4",
-    "globals": "^15.14.0",
     "prettier": "^3.4.2",
-    "tailwindcss": "^3.4.17",
-    "typescript-eslint": "^8.21.0"
+    "tailwindcss": "^3.4.17"
   }
 }

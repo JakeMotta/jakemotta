@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCanvas } from './useCanvas';
 
 // eslint-disable-next-line

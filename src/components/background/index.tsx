@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 
-// Import your SVGs directly - you'll need to add these imports
+/* @ts-ignore */
 import image1 from './a.svg';
+/* @ts-ignore */
 import image2 from './b.svg';
 
 export const Background = () => {
@@ -11,7 +12,7 @@ export const Background = () => {
 
     // Cleanup on unmount
     return () => {
-      // Add any cleanup if needed
+      // @ts-ignore
       window.removeEventListener('resize', particleSystem['resize']);
     };
   }, []);
@@ -180,6 +181,7 @@ export const Background = () => {
           const startY = (row + 0.5) * spacingY;
 
           const index = row * this.numberOfCols + col;
+          // @ts-ignore
           const image = existingParticles[index]?.image || this.particleImages[Math.floor(Math.random() * this.particleImages.length)];
 
           const particle = new Particle({

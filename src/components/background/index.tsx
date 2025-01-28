@@ -48,7 +48,7 @@ export const Background = () => {
       this.canvas = canvas;
       this.x = startX;
       this.y = startY;
-      this.size = 50;
+      this.size = 55;
       this.speedX = 1;
       this.speedY = -1;
       this.image = image;
@@ -148,7 +148,7 @@ export const Background = () => {
     private calculateGridSize(): void {
       const aspectRatio = window.innerWidth / window.innerHeight;
       // Reduce base particles for mobile screens
-      const baseParticles = window.innerWidth < 768 ? 40 : 120;
+      const baseParticles = window.innerWidth < 768 ? 40 : 60;
       this.numberOfCols = Math.round(Math.sqrt(baseParticles * aspectRatio));
       this.numberOfRows = Math.round(baseParticles / this.numberOfCols);
     }
@@ -181,6 +181,10 @@ export const Background = () => {
       const spacingX = this.canvas.width / this.numberOfCols;
       const spacingY = this.canvas.height / this.numberOfRows;
 
+      // Create a shuffled copy of particleImages
+      const shuffledImages = [...this.particleImages]
+        .sort(() => Math.random() - 0.5);
+      
       const existingParticles = [...this.particles];
       this.particles = [];
 
@@ -189,9 +193,9 @@ export const Background = () => {
           const startX = (col + 0.5) * spacingX;
           const startY = (row + 0.5) * spacingY;
 
-          const index = row * this.numberOfCols + col;
-          // @ts-ignore
-          const image = existingParticles[index]?.image || this.particleImages[Math.floor(Math.random() * this.particleImages.length)];
+          // Use modulo to cycle through the shuffled images
+          const imageIndex = (row * this.numberOfCols + col) % shuffledImages.length;
+          const image = existingParticles[row * this.numberOfCols + col]?.image || shuffledImages[imageIndex];
 
           const particle = new Particle({
             canvas: this.canvas,

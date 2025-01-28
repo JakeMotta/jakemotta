@@ -15,6 +15,16 @@ declare const require: {
 const svgContext = require.context('./svgs/', false, /\.svg$/);
 const svgFiles = svgContext.keys().map(svgContext);
 
+// Configuration constants
+const MOBILE_PARTICLE_COUNT = 40;
+const DESKTOP_PARTICLE_COUNT = 80;
+const MIN_OPACITY = 0.25;
+const MAX_OPACITY = 1;
+const MOUSE_RADIUS = 200;
+const PARTICLE_SIZE = 55;
+const PARTICLE_SPEED_X = 0.25;
+const PARTICLE_SPEED_Y = -0.25;
+
 export const Background = () => {
   useEffect(() => {
     // Initialize ParticleSystem when component mounts
@@ -49,9 +59,9 @@ export const Background = () => {
       this.canvas = canvas;
       this.x = startX;
       this.y = startY;
-      this.size = 55;
-      this.speedX = 2;
-      this.speedY = -2;
+      this.size = PARTICLE_SIZE;
+      this.speedX = PARTICLE_SPEED_X;
+      this.speedY = PARTICLE_SPEED_Y;
       this.image = image;
       this.color = color;
     }
@@ -75,8 +85,20 @@ export const Background = () => {
       }
     }
 
-    draw(ctx: CanvasRenderingContext2D): void {
-      ctx.globalAlpha = 0.8;
+    draw(ctx: CanvasRenderingContext2D, mouseX: number, mouseY: number): void {
+      // Calculate distance from mouse
+      const dx = this.x - mouseX;
+      const dy = this.y - mouseY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const mouseRadius = MOUSE_RADIUS;
+      
+      // Calculate opacity with minimum of 0.25
+      let opacity = MAX_OPACITY;
+      if (distance < mouseRadius) {
+        opacity = Math.max(MIN_OPACITY, distance / mouseRadius);
+      }
+
+      ctx.globalAlpha = opacity;
       ctx.save();
       
       if (this.color) {
@@ -146,6 +168,8 @@ export const Background = () => {
     private particleImages: HTMLImageElement[];
     private numberOfCols: number;
     private numberOfRows: number;
+    private mouseX: number = 0;  // Add mouse position tracking
+    private mouseY: number = 0;
 
     constructor() {
       const canvas = document.getElementById('particleCanvas') as HTMLCanvasElement;
@@ -174,12 +198,18 @@ export const Background = () => {
         this.canvas.height = window.innerHeight;
         this.initParticles();
       });
+
+      // Add mouse move event listener
+      window.addEventListener('mousemove', (e) => {
+        this.mouseX = e.clientX;
+        this.mouseY = e.clientY;
+      });
     }
 
     private calculateGridSize(): void {
       const aspectRatio = window.innerWidth / window.innerHeight;
       // Reduce base particles for mobile screens
-      const baseParticles = window.innerWidth < 768 ? 40 : 60;
+      const baseParticles = window.innerWidth < 768 ? MOBILE_PARTICLE_COUNT : DESKTOP_PARTICLE_COUNT;
       this.numberOfCols = Math.round(Math.sqrt(baseParticles * aspectRatio));
       this.numberOfRows = Math.round(baseParticles / this.numberOfCols);
     }
@@ -218,9 +248,7 @@ export const Background = () => {
       const existingParticles = [...this.particles];
       this.particles = [];
 
-      // Example colors - you can modify this array or pass it as a prop
-      // const colors = ['#FF5733', '#33FF57', '#3357FF', '#F033FF'];
-      const colors = ['#414141']
+      const colors = ['#000000']
 
       for (let row = 0; row < this.numberOfRows; row++) {
         for (let col = 0; col < this.numberOfCols; col++) {
@@ -251,7 +279,7 @@ export const Background = () => {
 
       this.particles.forEach((particle) => {
         particle.update();
-        particle.draw(this.ctx);
+        particle.draw(this.ctx, this.mouseX, this.mouseY);
       });
 
       requestAnimationFrame(() => this.animate());

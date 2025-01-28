@@ -49,8 +49,8 @@ export const Background = () => {
       this.x = startX;
       this.y = startY;
       this.size = 55;
-      this.speedX = 1;
-      this.speedY = -1;
+      this.speedX = 2;
+      this.speedY = -2;
       this.image = image;
       this.hue = Math.random() * 360;
     }

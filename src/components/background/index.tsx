@@ -1,9 +1,19 @@
 import React, { useEffect } from 'react';
 
-/* @ts-ignore */
-import image1 from './a.svg';
-/* @ts-ignore */
-import image2 from './b.svg';
+declare const require: {
+  context: (
+    directory: string,
+    useSubdirectories: boolean,
+    regExp: RegExp,
+  ) => {
+    keys(): string[];
+    (id: string): string;
+  };
+};
+
+// Replace the static imports with dynamic imports
+const svgContext = require.context('./svgs/', false, /\.svg$/);
+const svgFiles = svgContext.keys().map(svgContext);
 
 export const Background = () => {
   useEffect(() => {
@@ -145,9 +155,8 @@ export const Background = () => {
 
     private async loadParticleImages(): Promise<void> {
       try {
-        const imageFiles = [image1, image2]; // Use imported SVG paths
         const loadedImages = await Promise.all(
-          imageFiles.map((imagePath) => {
+          svgFiles.map((imagePath) => {
             return new Promise<HTMLImageElement>((resolve, reject) => {
               const img = new Image();
               img.src = imagePath;

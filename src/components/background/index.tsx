@@ -32,6 +32,7 @@ export const Background = () => {
     image: HTMLImageElement;
     startX: number;
     startY: number;
+    color: string;
   }
 
   class Particle {
@@ -42,9 +43,9 @@ export const Background = () => {
     private speedX: number;
     private speedY: number;
     private image: HTMLImageElement;
-    private hue: number;
+    private color: string;
 
-    constructor({ canvas, image, startX, startY }: ParticleProps) {
+    constructor({ canvas, image, startX, startY, color }: ParticleProps) {
       this.canvas = canvas;
       this.x = startX;
       this.y = startY;
@@ -52,7 +53,7 @@ export const Background = () => {
       this.speedX = 2;
       this.speedY = -2;
       this.image = image;
-      this.hue = Math.random() * 360;
+      this.color = color;
     }
 
     update(): void {
@@ -77,22 +78,23 @@ export const Background = () => {
     draw(ctx: CanvasRenderingContext2D): void {
       ctx.globalAlpha = 0.8;
       ctx.save();
-      ctx.filter = `hue-rotate(${this.hue}deg)`;
+      
+      if (this.color) {
+        ctx.filter = 'grayscale(100%)';
+        ctx.globalCompositeOperation = 'source-over';
+      }
 
-      // Draw the main particle
+      // Draw all particles (main and wrapped) first
       this.drawAtPosition(ctx, this.x, this.y);
 
-      // Draw duplicate particles near edges for smooth wrapping
+      // Draw wrapped particles
       const margin = this.size;
-
-      // Wrap horizontally
       if (this.x < margin) {
         this.drawAtPosition(ctx, this.x + this.canvas.width, this.y);
       } else if (this.x > this.canvas.width - margin) {
         this.drawAtPosition(ctx, this.x - this.canvas.width, this.y);
       }
 
-      // Wrap vertically
       if (this.y < margin) {
         this.drawAtPosition(ctx, this.x, this.y + this.canvas.height);
       } else if (this.y > this.canvas.height - margin) {
@@ -101,10 +103,39 @@ export const Background = () => {
 
       ctx.restore();
       ctx.globalAlpha = 1;
+
+      // Apply color overlay to all drawn particles
+      if (this.color) {
+        ctx.save();
+        ctx.globalCompositeOperation = 'source-atop';
+        ctx.fillStyle = this.color;
+        
+        // Color the main particle
+        this.colorAtPosition(ctx, this.x, this.y);
+        
+        // Color the wrapped particles
+        if (this.x < margin) {
+          this.colorAtPosition(ctx, this.x + this.canvas.width, this.y);
+        } else if (this.x > this.canvas.width - margin) {
+          this.colorAtPosition(ctx, this.x - this.canvas.width, this.y);
+        }
+
+        if (this.y < margin) {
+          this.colorAtPosition(ctx, this.x, this.y + this.canvas.height);
+        } else if (this.y > this.canvas.height - margin) {
+          this.colorAtPosition(ctx, this.x, this.y - this.canvas.height);
+        }
+        
+        ctx.restore();
+      }
     }
 
     private drawAtPosition(ctx: CanvasRenderingContext2D, x: number, y: number): void {
       ctx.drawImage(this.image, x - this.size / 2, y - this.size / 2, this.size, this.size);
+    }
+
+    private colorAtPosition(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+      ctx.fillRect(x - this.size / 2, y - this.size / 2, this.size, this.size);
     }
   }
 
@@ -181,27 +212,34 @@ export const Background = () => {
       const spacingX = this.canvas.width / this.numberOfCols;
       const spacingY = this.canvas.height / this.numberOfRows;
 
-      // Create a shuffled copy of particleImages
       const shuffledImages = [...this.particleImages]
         .sort(() => Math.random() - 0.5);
       
       const existingParticles = [...this.particles];
       this.particles = [];
 
+      // Example colors - you can modify this array or pass it as a prop
+      // const colors = ['#FF5733', '#33FF57', '#3357FF', '#F033FF'];
+      const colors = ['#414141']
+
       for (let row = 0; row < this.numberOfRows; row++) {
         for (let col = 0; col < this.numberOfCols; col++) {
           const startX = (col + 0.5) * spacingX;
           const startY = (row + 0.5) * spacingY;
 
-          // Use modulo to cycle through the shuffled images
           const imageIndex = (row * this.numberOfCols + col) % shuffledImages.length;
           const image = existingParticles[row * this.numberOfCols + col]?.image || shuffledImages[imageIndex];
+          
+          // Assign a color from the colors array
+          const colorIndex = (row * this.numberOfCols + col) % colors.length;
+          const color = colors[colorIndex];
 
           const particle = new Particle({
             canvas: this.canvas,
             image,
             startX,
             startY,
+            color,
           });
           this.particles.push(particle);
         }

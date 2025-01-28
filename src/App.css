@@ -25,3 +25,78 @@ canvas {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+@keyframes rainbow {
+  0% {
+    background-color: #ff0000;
+  }
+
+  17% {
+    background-color: #ff8000;
+  }
+
+  33% {
+    background-color: #ffff00;
+  }
+
+  50% {
+    background-color: #00ff00;
+  }
+
+  67% {
+    background-color: #0000ff;
+  }
+
+  84% {
+    background-color: #8000ff;
+  }
+
+  100% {
+    background-color: #ff0000;
+  }
+}
+
+.animate-rainbow {
+  animation: rainbow 10s linear infinite;
+}
+
+/* @keyframes rainbow {
+
+  0%,
+  15% {
+    background-color: #ff0000;
+  }
+
+  17%,
+  31% {
+    background-color: #ff8000;
+  }
+
+  33%,
+  48% {
+    background-color: #ffff00;
+  }
+
+  50%,
+  65% {
+    background-color: #00ff00;
+  }
+
+  67%,
+  82% {
+    background-color: #0000ff;
+  }
+
+  84%,
+  98% {
+    background-color: #8000ff;
+  }
+
+  100% {
+    background-color: #ff0000;
+  }
+}
+
+.animate-rainbow {
+  animation: rainbow 5s linear infinite;
+} */

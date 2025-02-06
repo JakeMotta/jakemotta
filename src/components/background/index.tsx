@@ -20,10 +20,11 @@ const MOBILE_PARTICLE_COUNT = 40;
 const DESKTOP_PARTICLE_COUNT = 80;
 const MIN_OPACITY = 0.25;
 const MAX_OPACITY = 1;
-const MOUSE_RADIUS = 200;
+const MOUSE_RADIUS = 100;
 const PARTICLE_SIZE = 55;
-const PARTICLE_SPEED_X = 0.25;
-const PARTICLE_SPEED_Y = -0.25;
+const SPEED = 2;
+const PARTICLE_SPEED_X = SPEED;
+const PARTICLE_SPEED_Y = -SPEED;
 
 export const Background = () => {
   useEffect(() => {
@@ -91,7 +92,7 @@ export const Background = () => {
       const dy = this.y - mouseY;
       const distance = Math.sqrt(dx * dx + dy * dy);
       const mouseRadius = MOUSE_RADIUS;
-      
+
       // Calculate opacity with minimum of 0.25
       let opacity = MAX_OPACITY;
       if (distance < mouseRadius) {
@@ -100,7 +101,7 @@ export const Background = () => {
 
       ctx.globalAlpha = opacity;
       ctx.save();
-      
+
       if (this.color) {
         ctx.filter = 'grayscale(100%)';
         ctx.globalCompositeOperation = 'source-over';
@@ -131,10 +132,10 @@ export const Background = () => {
         ctx.save();
         ctx.globalCompositeOperation = 'source-atop';
         ctx.fillStyle = this.color;
-        
+
         // Color the main particle
         this.colorAtPosition(ctx, this.x, this.y);
-        
+
         // Color the wrapped particles
         if (this.x < margin) {
           this.colorAtPosition(ctx, this.x + this.canvas.width, this.y);
@@ -147,7 +148,7 @@ export const Background = () => {
         } else if (this.y > this.canvas.height - margin) {
           this.colorAtPosition(ctx, this.x, this.y - this.canvas.height);
         }
-        
+
         ctx.restore();
       }
     }
@@ -244,7 +245,7 @@ export const Background = () => {
 
       const shuffledImages = [...this.particleImages]
         .sort(() => Math.random() - 0.5);
-      
+
       const existingParticles = [...this.particles];
       this.particles = [];
 
@@ -257,7 +258,7 @@ export const Background = () => {
 
           const imageIndex = (row * this.numberOfCols + col) % shuffledImages.length;
           const image = existingParticles[row * this.numberOfCols + col]?.image || shuffledImages[imageIndex];
-          
+
           // Assign a color from the colors array
           const colorIndex = (row * this.numberOfCols + col) % colors.length;
           const color = colors[colorIndex];

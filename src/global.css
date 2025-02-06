@@ -1,0 +1,22 @@
+@layer tailwind-base, antd, tailwind-components, tailwind-utilities;
+
+@layer tailwind-base {
+    @tailwind base;
+}
+
+@layer tailwind-components {
+    @tailwind components;
+}
+
+@layer tailwind-utilities {
+    @tailwind utilities;
+}
+
+/* 
+
+This setup ensures:
+- Tailwind's base styles load first
+- Ant Design styles come next
+- Tailwind components and utilities load last, allowing them to properly override Ant Design styles when needed
+- Clear separation of concerns between different style layers 
+*/

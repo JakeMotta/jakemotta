@@ -1,0 +1,29 @@
+.overlay-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    box-shadow: 0px 0px 15px 8px rgba(0,0,0,.5) inset;
+    -webkit-box-shadow: 0px 0px 15px 8px rgba(0,0,0,.5) inset;
+    -moz-box-shadow: 0px 0px 15px 8px rgba(0,0,0,.5) inset;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+      box-shadow: 0px 0px 15px 8px rgba(0,0,0,.5) inset;
+      -webkit-box-shadow: 0px 0px 15px 8px rgba(0,0,0,.5) inset;
+      -moz-box-shadow: 0px 0px 15px 8px rgba(0,0,0,.5) inset;
+    }
+    50% {
+      box-shadow: 0px 0px 25px 12px rgba(0,0,0,.5) inset;
+      -webkit-box-shadow: 0px 0px 25px 12px rgba(0,0,0,.5) inset;
+      -moz-box-shadow: 0px 0px 25px 12px rgba(0,0,0,.5) inset;
+    }
+    100% {
+      box-shadow: 0px 0px 15px 8px rgba(0,0,0,.5) inset;
+      -webkit-box-shadow: 0px 0px 15px 8px rgba(0,0,0,.5) inset;
+      -moz-box-shadow: 0px 0px 15px 8px rgba(0,0,0,.5) inset;
+    }
+  }

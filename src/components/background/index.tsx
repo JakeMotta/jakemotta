@@ -17,12 +17,12 @@ const svgFiles = svgContext.keys().map(svgContext);
 
 // Configuration constants
 const MOBILE_PARTICLE_COUNT = 40;
-const DESKTOP_PARTICLE_COUNT = 80;
+const DESKTOP_PARTICLE_COUNT = 120;
 const MIN_OPACITY = 0.25;
 const MAX_OPACITY = 1;
 const MOUSE_RADIUS = 100;
-const PARTICLE_SIZE = 55;
-const SPEED = 2;
+const PARTICLE_SIZE = 35;
+const SPEED = 4;
 const PARTICLE_SPEED_X = SPEED;
 const PARTICLE_SPEED_Y = -SPEED;
 
@@ -249,7 +249,7 @@ export const Background = () => {
       const existingParticles = [...this.particles];
       this.particles = [];
 
-      const colors = ['#000000']
+      const colors = ['#2a2a2a']
 
       for (let row = 0; row < this.numberOfRows; row++) {
         for (let col = 0; col < this.numberOfCols; col++) {

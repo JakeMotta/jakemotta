@@ -3,13 +3,17 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Home, Welcome } from './components/pages';
 import { ConfigProvider } from 'antd';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+import { TsParticleBackground, MusicPlayer } from './components/atoms';
+import { useCommonStore } from './store/common';
+import { AudioVisualizer } from './components/atoms/AudioVisualizer';
+
 import 'antd/dist/reset.css';
 import './global.scss';
 import './App.scss';
-import { TsParticleBackground } from './components/atoms';
 
 const AppContent = () => {
   const { primaryColor, primaryDark, setPrimaryColor } = useTheme();
+  const musicEnabled = useCommonStore((store) => store.musicEnabled);
 
   useEffect(() => {
     let startTime = Date.now();
@@ -48,18 +52,17 @@ const AppContent = () => {
         },
         token: {
           colorPrimary: primaryDark,
-          colorPrimaryBg: primaryDark,
-          colorPrimaryBgHover: primaryDark,
-          colorPrimaryBorder: primaryDark,
-          colorPrimaryHover: primaryDark,
-          colorPrimaryActive: primaryDark,
         }
       }}
     >
       {/* Particle background */}
-      <div className='overlay-screen'>
-        <TsParticleBackground />
-      </div>
+      <TsParticleBackground />
+
+      {/* Music visualizer */}
+      <AudioVisualizer />
+
+      {/* Music player */}
+      {musicEnabled && <MusicPlayer />}
 
       <BrowserRouter>
         <Routes>

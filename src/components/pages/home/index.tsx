@@ -4,7 +4,6 @@ import { ColorShiftingBackground } from '../../templates';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import './index.scss';
-// import colors from 'tailwindcss/colors';
 
 /**
  * Build a backend. Hookup spotify API, and listen for my play events. Whatever i'm listening to, play that 

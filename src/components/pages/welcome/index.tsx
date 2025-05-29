@@ -1,19 +1,23 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { TsParticleBackground } from '../../atoms';
-import { ConfigProvider, InputNumberProps, Slider, Button } from 'antd';
-import { PlayCircleOutlined, PauseCircleOutlined } from '@ant-design/icons';
+import React from 'react';
+import { ColorShiftingBackground } from '../../templates';
+import { useTheme } from '../../../contexts/ThemeContext';
+import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import './index.scss';
-// import colors from 'tailwindcss/colors';
-
-/**
- * Build a backend. Hookup spotify API, and listen for my play events. Whatever i'm listening to, play that 
- * on the site. May need to use Youtube. Maybe show cover art. Maybe match bpm via server song analysis. If it's from 
- * spotify, that may have the details. Also musicbrainz. 
- */
 
 export const Welcome = () => {
+    let navigate = useNavigate();
+    const { primaryColor } = useTheme();
 
     return (
-        <div>welcome</div>
+        <ColorShiftingBackground>
+            {/* <div className='flex flex-col bg-black bg-opacity-80 text-white rounded-lg w-1/2 z-10'>
+                <div className='flex flex-col items-center justify-center'>
+                    <h1 className='text-2xl font-bold' style={{ color: primaryColor }}>Jake Motta</h1>
+                    <p className='text-sm' style={{ color: primaryColor }}>Software Engineer</p>
+                </div>
+            </div> */}
+            <Button type='primary' size='large' onClick={() => navigate('/home')}>Enter</Button>
+        </ColorShiftingBackground>
     );
 }

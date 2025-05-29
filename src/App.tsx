@@ -9,7 +9,7 @@ import './App.scss';
 import { TsParticleBackground } from './components/atoms';
 
 const AppContent = () => {
-  const { primaryColor, setPrimaryColor } = useTheme();
+  const { primaryColor, primaryDark, setPrimaryColor } = useTheme();
 
   useEffect(() => {
     let startTime = Date.now();
@@ -46,7 +46,14 @@ const AppContent = () => {
         components: {
           Slider: {},
         },
-        token: { colorPrimary: primaryColor }
+        token: {
+          colorPrimary: primaryDark,
+          colorPrimaryBg: primaryDark,
+          colorPrimaryBgHover: primaryDark,
+          colorPrimaryBorder: primaryDark,
+          colorPrimaryHover: primaryDark,
+          colorPrimaryActive: primaryDark,
+        }
       }}
     >
       {/* Particle background */}

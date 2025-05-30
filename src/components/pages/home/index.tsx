@@ -17,17 +17,31 @@ export const Home = () => {
 
     return (
         <ColorShiftingBackground>
-            <div className='flex flex-col bg-black bg-opacity-80 text-white rounded-lg w-1/2 z-10'>
-                <div className='flex flex-col items-center justify-center bg-'>
-                    <div className="text-primary">
-                        This text will use the rotating primary color
+            <div className='flex flex-col items-center gap-4 py-8 px-16 h-screen '>
+
+                {/* <div className='flex flex-col w-full overflow-y-hidden overflow-x-auto'>
+                    <div className='flex text-primary-dark text-2xl font-bold'>Jake Motta</div>
+                    <div className='flex text-primary-dark text-lg font-regular'>You do you</div>
+                </div> */}
+
+                <div className='flex flex-row w-full gap-4 overflow-y-hidden overflow-x-auto'>
+                    <div className='nav-item'>Stats</div>
+                    <div className='nav-item'>Projects</div>
+                    <div className='nav-item'>Music</div>
+                    <div className='nav-item'>Work</div>
+                    <div className='nav-item'>Contact</div>
+                </div>
+
+                {/* <div className='flex flex-col bg-black bg-opacity-60 rounded-lg z-10 w-[80%] gap-4 max-h-[500px] overflow-y-auto overflow-x-hidden'> */}
+                <div className='item-wrapper'>
+                    <div className='flex flex-col gap-4'>
+                        <div className='flex w-[500px] h-[500px] bg-red-500'>a</div>
+                        <div className='flex w-[500px] h-[500px] bg-red-500'>a</div>
+                        <div className='flex w-[500px] h-[500px] bg-red-500'>a</div>
+                        <div className='flex w-[500px] h-[500px] bg-red-500'>a</div>
+                        <div className='flex w-[500px] h-[500px] bg-red-500'>a</div>
+                        <div className='flex w-[500px] h-[500px] bg-red-500'>a</div>
                     </div>
-                    <div className="text-primary-dark">
-                        This text will use the rotating primary color
-                    </div>
-                    <h1 className='text-2xl font-bold' style={{ color: primaryColor }}>Jake Motta</h1>
-                    <p className='text-sm' style={{ color: primaryColor }}>Software Engineer</p>
-                    <Button type='primary' size='large' onClick={() => navigate('/')}>Back</Button>
                 </div>
             </div>
         </ColorShiftingBackground>

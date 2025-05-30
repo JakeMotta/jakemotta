@@ -6,6 +6,10 @@
 
 @layer tailwind-components {
     @tailwind components;
+
+    .nav-item {
+        @apply flex text-primary-dark text-2xl font-bold cursor-pointer hover:opacity-60;
+    }
 }
 
 @layer tailwind-utilities {

@@ -13,7 +13,7 @@ export const Welcome = () => {
 
     return (
         <ColorShiftingBackground>
-            <div className='flex flex-col items-center justify-center gap-4'>
+            <div className='flex flex-col justify-center items-center gap-4 h-screen'>
                 <Button type='primary' size='large' className='text-6xl p-8 py-12' onClick={() => {
                     setMusicEnabled(true);
                     setIsMusicPlaying(true);

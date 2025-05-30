@@ -94,6 +94,12 @@ const TsParticleBackground = React.memo(() => {
         size: {
           value: { min: 1, max: 5 },
         },
+        zIndex: {
+          value: -1,
+        },
+      },
+      zIndex: {
+        value: -1,
       },
       // detectRetina: true,
       autoPlay: true,
@@ -104,11 +110,13 @@ const TsParticleBackground = React.memo(() => {
 
   if (init) {
     return (
-      <Particles
-        id="tsparticles"
-        particlesLoaded={particlesLoaded}
-        options={options}
-      />
+      <div className='-z-1'>
+        <Particles
+          id="tsparticles"
+          particlesLoaded={particlesLoaded}
+          options={options}
+        />
+      </div>
     );
   }
 

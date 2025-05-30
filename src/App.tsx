@@ -55,14 +55,9 @@ const AppContent = () => {
         }
       }}
     >
-      {/* Particle background */}
-      <TsParticleBackground />
 
       {/* Music visualizer */}
       <AudioVisualizer />
-
-      {/* Music player */}
-      {musicEnabled && <MusicPlayer />}
 
       <BrowserRouter>
         <Routes>
@@ -70,6 +65,12 @@ const AppContent = () => {
           <Route path="/home" element={<Home />} />
         </Routes>
       </BrowserRouter>
+
+      {/* Particle background */}
+      <TsParticleBackground />
+
+      {/* Music player */}
+      {musicEnabled && <MusicPlayer />}
 
     </ConfigProvider>
   );

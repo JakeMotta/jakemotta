@@ -7,11 +7,12 @@ export const ColorShiftingBackground = ({ children }: { children: React.ReactNod
     const { primaryColor } = useTheme();
 
     return (
-        <div className="h-screen flex items-center justify-center">
-            {/* {musicEnabled && <div className={`overlay-music-player-pulse ${isMusicPlaying ? 'opacity-100' : 'opacity-0'}`} />} */}
+        <div className="flex flex-col h-screen w-full overflow-auto">
             {/* Color shifting background */}
-            <div className='flex h-screen w-full absolute top-0 left-0 z-[-1] transition-all duration-100' style={{ backgroundColor: primaryColor }}></div>
-            {children}
+            <div className='flex h-screen w-full absolute top-0 left-0 -z-2 transition-all duration-100' style={{ backgroundColor: primaryColor }}></div>
+            <div className='z-10'>
+                {children}
+            </div>
         </div>
     );
 }

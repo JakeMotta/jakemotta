@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useCommonStore } from '../../../store/common';
 import { useAudioStore } from '../../../store/audio';
 import './index.scss';
@@ -50,9 +50,9 @@ export const AudioVisualizer = () => {
             lastIntensity.current = smoothedIntensity;
 
             // Update the visualizer's box-shadow with more dramatic effect
-            const baseSize = 10; // Increased base size
-            const maxSize = 40; // Increased maximum size
-            const pulseSize = baseSize + (maxSize - baseSize) * smoothedIntensity;
+            const baseSize = 10; // Base size when no beat
+            const maxSize = window.innerWidth < 768 ? 20 : 40; // Smaller max size on mobile
+            const pulseSize = isBeat ? maxSize : baseSize + (maxSize - baseSize) * smoothedIntensity;
 
             // Add a second, outer shadow for more dramatic effect
             const outerSize = pulseSize * 1.5;
@@ -81,9 +81,6 @@ export const AudioVisualizer = () => {
     }, [isMusicPlaying, audioContext, analyser]);
 
     return (
-        <div
-            ref={visualizerRef}
-            className="audio-visualizer"
-        />
+        <div ref={visualizerRef} className="audio-visualizer" />
     );
 }; 

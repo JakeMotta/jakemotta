@@ -1,12 +1,16 @@
 import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react';
 
 interface ThemeContextType {
+    randomStartHue: number;
     primaryColor: string;
     primaryDark: string;
     setPrimaryColor: (color: string) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+// Export the random hue generation so it can be used in App.tsx
+export const generateRandomHue = () => Math.floor(Math.random() * 360);
 
 // Helper function to parse HSL string
 const parseHsl = (hsl: string): [number, number, number] => {
@@ -23,8 +27,8 @@ const createDarkerColor = (hsl: string): string => {
     return `hsl(${h}, ${s}%, ${newL}%)`;
 };
 
-export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [primaryColor, setPrimaryColor] = useState('#E6B3B3');
+export const ThemeProvider: React.FC<{ children: ReactNode; initialHue: number }> = ({ children, initialHue }) => {
+    const [primaryColor, setPrimaryColor] = useState(`hsl(${initialHue}, 40%, 60%)`);
 
     // Calculate primaryDark whenever primaryColor changes
     const primaryDark = useMemo(() => {
@@ -38,7 +42,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }, [primaryColor, primaryDark]);
 
     return (
-        <ThemeContext.Provider value={{ primaryColor, primaryDark, setPrimaryColor }}>
+        <ThemeContext.Provider value={{ randomStartHue: initialHue, primaryColor, primaryDark, setPrimaryColor }}>
             {children}
         </ThemeContext.Provider>
     );

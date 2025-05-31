@@ -5,7 +5,7 @@ import { ConfigProvider } from 'antd';
 import { ThemeProvider, useTheme, generateRandomHue } from './contexts/ThemeContext';
 import { TsParticleBackground, MusicPlayer } from './components/atoms';
 import { useCommonStore } from './store/common';
-import { AudioVisualizer } from './components/atoms/AudioVisualizer';
+import { AudioVisualizer } from './components/atoms/audio-visualizer';
 
 import 'antd/dist/reset.css';
 import './global.scss';
@@ -24,6 +24,18 @@ const AppContent = () => {
       const progress = (elapsed % duration) / duration;
       const hue = (randomStartHue + Math.floor(progress * 360)) % 360;
       setPrimaryColor(`hsl(${hue}, 40%, 60%)`);
+
+      // Pastel colors (soft, light)
+      // setPrimaryColor(`hsl(${hue}, 70%, 85%)`);
+
+      // Warm colors (rich, vibrant)
+      // setPrimaryColor(`hsl(${hue}, 80%, 65%)`);
+
+      // Earth tones (natural, subdued)
+      // setPrimaryColor(`hsl(${hue}, 30%, 45%)`);
+
+      // Current implementation (balanced)
+      // setPrimaryColor(`hsl(${hue}, 50%, 80%)`);
       requestAnimationFrame(updateColor);
     };
 

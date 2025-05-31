@@ -9,3 +9,26 @@ canvas {
   width: 100%;
   height: 100%;
 }
+
+/* Global scrollbar customization */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, .25);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 8px;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-dark) rgba(0, 0, 0, 0);
+}

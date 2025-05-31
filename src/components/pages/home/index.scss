@@ -1,8 +1,11 @@
-.item-wrapper {
+.section-wrapper {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    overflow-y: auto;
-    height: 100%;
-    width: 100%;
+
+    .item-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
 }
+

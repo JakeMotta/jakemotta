@@ -51,7 +51,7 @@ export const AudioVisualizer = () => {
 
             // Update the visualizer's box-shadow with more dramatic effect
             const baseSize = 10; // Base size when no beat
-            const maxSize = window.innerWidth < 768 ? 20 : 40; // Smaller max size on mobile
+            const maxSize = window.innerWidth < 768 ? 20 : 20; // Smaller max size on mobile
             const pulseSize = isBeat ? maxSize : baseSize + (maxSize - baseSize) * smoothedIntensity;
 
             // Add a second, outer shadow for more dramatic effect

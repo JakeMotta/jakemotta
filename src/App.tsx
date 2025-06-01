@@ -53,9 +53,6 @@ const AppContent = () => {
         }
       }}
     >
-      {/* Music visualizer */}
-      <AudioVisualizer />
-
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Welcome />} />
@@ -67,7 +64,7 @@ const AppContent = () => {
       <TsParticleBackground />
 
       {/* Music player */}
-      {audioUrl && <MusicPlayer />}
+      <MusicPlayer />
 
     </ConfigProvider>
   );

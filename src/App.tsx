@@ -4,7 +4,7 @@ import { Home, Welcome } from './components/pages';
 import { ConfigProvider } from 'antd';
 import { ThemeProvider, useTheme, generateRandomHue } from './contexts/ThemeContext';
 import { TsParticleBackground, MusicPlayer } from './components/atoms';
-import { useCommonStore } from './store/common';
+import { useAudioStore } from './store/audio';
 import { AudioVisualizer } from './components/atoms/audio-visualizer';
 
 import 'antd/dist/reset.css';
@@ -13,7 +13,7 @@ import './App.scss';
 
 const AppContent = () => {
   const { randomStartHue, primaryDark, setPrimaryColor } = useTheme();
-  const musicEnabled = useCommonStore((store) => store.musicEnabled);
+  const audioUrl = useAudioStore((store) => store.audioUrl);
 
   useEffect(() => {
     let startTime = Date.now();
@@ -67,7 +67,7 @@ const AppContent = () => {
       <TsParticleBackground />
 
       {/* Music player */}
-      {musicEnabled && <MusicPlayer />}
+      {audioUrl && <MusicPlayer />}
 
     </ConfigProvider>
   );

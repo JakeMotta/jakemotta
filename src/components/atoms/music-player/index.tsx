@@ -1,76 +1,66 @@
 import React, { useRef, useEffect } from 'react';
-import { useCommonStore } from '../../../store/common';
 import { useAudioStore } from '../../../store/audio';
 import { Button } from 'antd';
-import { SoundOutlined, PauseOutlined } from '@ant-design/icons';
+import { FaPauseCircle, FaPlayCircle } from 'react-icons/fa';
+
 import './index.scss';
 
 export const MusicPlayer = () => {
     const audioRef = useRef<HTMLAudioElement>(null);
-    const isMusicPlaying = useCommonStore((store) => store.isMusicPlaying);
-    const setIsMusicPlaying = useCommonStore((store) => store.setIsMusicPlaying);
-    const { audioContext, setAudioContext, analyser, setAnalyser, source, setSource } = useAudioStore();
+    const audioUrl = useAudioStore((store) => store.audioUrl);
 
+    // Effect to handle audio URL changes
     useEffect(() => {
-        if (!audioRef.current) return;
+        if (!audioRef.current || !audioUrl) return;
 
-        // Initialize audio context if not already done
-        if (!audioContext) {
-            const context = new AudioContext();
-            setAudioContext(context);
-        }
+        // Load the new audio
+        audioRef.current.load();
 
-        // Set up analyzer if not already done
-        if (audioContext && !analyser) {
-            const analyzer = audioContext.createAnalyser();
-            analyzer.fftSize = 512;
-            analyzer.smoothingTimeConstant = 0.8;
-            setAnalyser(analyzer);
-        }
+        // Wait for the audio to be loaded before playing
+        const handleCanPlay = () => {
+            if (audioUrl) {
+                audioRef.current?.play().catch(error => {
+                    console.error('Error playing audio:', error);
+                });
+            }
+        };
 
-        // Connect audio to analyzer if not already done
-        if (audioContext && analyser && !source) {
-            const audioSource = audioContext.createMediaElementSource(audioRef.current);
-            audioSource.connect(analyser);
-            analyser.connect(audioContext.destination);
-            setSource(audioSource);
-        }
+        audioRef.current.addEventListener('canplay', handleCanPlay);
 
         return () => {
-            // Cleanup will be handled by the AudioVisualizer
+            audioRef.current?.removeEventListener('canplay', handleCanPlay);
         };
-    }, [audioContext, analyser, source, setAudioContext, setAnalyser, setSource]);
+    }, [audioUrl]);
 
-    useEffect(() => {
-        if (audioRef.current) {
-            if (isMusicPlaying) {
+    // Effect to handle audio playback
+    const togglePlayback = () => {
+        if (audioRef.current && audioUrl) {
+            if (audioRef.current.paused) {
+                console.log('hit play');
                 audioRef.current.play().catch(error => {
                     console.error('Error playing audio:', error);
-                    setIsMusicPlaying(false);
                 });
+
             } else {
+                console.log('hit pause');
                 audioRef.current.pause();
+
             }
         }
-    }, [isMusicPlaying, setIsMusicPlaying]);
-
-    const togglePlayback = () => {
-        setIsMusicPlaying(!isMusicPlaying);
     };
 
     return (
         <div className="music-player">
             <audio
                 ref={audioRef}
-                src="/dancin.mp3"
-                loop
+                src={audioUrl}
                 className="hidden"
             />
             <Button
                 type="text"
-                icon={isMusicPlaying ? <PauseOutlined /> : <SoundOutlined />}
+                icon={audioRef.current?.paused ? <FaPlayCircle /> : <FaPauseCircle />}
                 onClick={togglePlayback}
-                className="music-control"
+                className="music-control text-2xl"
             />
         </div>
     );

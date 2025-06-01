@@ -13,6 +13,8 @@ export const MusicPlayer = () => {
     const analyzerNode = useRef<AnalyserNode | null>(null);
     const animationFrame = useRef<number | null>(null);
     const [beatStrength, setBeatStrength] = useState(0);
+    const dataArrayRef = useRef<Uint8Array>();
+    const visualizerRef = useRef<HTMLDivElement>(null);
 
     // Clean up function
     const cleanup = () => {
@@ -59,19 +61,36 @@ export const MusicPlayer = () => {
         sourceNode.current.connect(analyzerNode.current);
         analyzerNode.current.connect(audioContext.current.destination);
 
-        // Start visualization
-        const bufferLength = analyzerNode.current.frequencyBinCount;
-        const dataArray = new Uint8Array(bufferLength);
+        // Initialize data array
+        if (analyzerNode.current) {
+            dataArrayRef.current = new Uint8Array(analyzerNode.current.frequencyBinCount);
+        }
 
         const analyze = () => {
-            if (!analyzerNode.current) return;
+            if (!analyzerNode.current || !dataArrayRef.current || !visualizerRef.current) return;
 
-            analyzerNode.current.getByteFrequencyData(dataArray);
-            const avg = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-            const normalized = Math.min(avg / 128, 1);
-            setBeatStrength(normalized);
+            analyzerNode.current.getByteFrequencyData(dataArrayRef.current);
+
+            // Get bass frequencies (first 5 bins) for better beat detection
+            const bass = dataArrayRef.current.slice(0, 5);
+            const bassAverage = bass.reduce((sum: number, val: number) => sum + val, 0) / bass.length;
+            const normalized = Math.min(bassAverage / 255, 1);
+
+            // Update visualizer pulse
+            const baseSize = 10;
+            const maxSize = 20;
+            const pulseSize = (baseSize + (maxSize - baseSize) * normalized) * 2;
+            const outerSize = pulseSize * 1.5;
+
+            visualizerRef.current.style.boxShadow = `
+                0px 0px ${pulseSize}px ${pulseSize / 2}px rgba(0, 0, 0, .5) inset,
+                0px 0px ${outerSize}px ${outerSize / 2}px rgba(0, 0, 0, .3) inset
+            `;
 
             animationFrame.current = requestAnimationFrame(analyze);
+
+            // Update beat strength
+            setBeatStrength(normalized);
         };
 
         // Start the visualization
@@ -116,10 +135,12 @@ export const MusicPlayer = () => {
         }
     };
 
-    const beatColor = `rgb(${Math.round(beatStrength * 255)}, 0, 0)`;
-
     return (
         <>
+            {/* Visualizer */}
+            <div ref={visualizerRef} className="audio-visualizer" />
+
+            {/* Player */}
             <div className="music-player">
                 <audio
                     ref={audioRef}
@@ -128,10 +149,7 @@ export const MusicPlayer = () => {
                     className="hidden"
                     key={audioUrl}
                 />
-                <div
-                    className="beat-tracker"
-                    style={{ backgroundColor: beatColor }}
-                />
+
                 {audioUrl && <Button
                     type="text"
                     icon={audioRef.current?.paused ? <FaPlayCircle /> : <FaPauseCircle />}
@@ -139,6 +157,9 @@ export const MusicPlayer = () => {
                     className="music-control text-2xl"
                 />}
             </div>
+
+            {/* For debugging beat detection */}
+            {/* <div className="beat-tracker" style={{ backgroundColor: `rgb(${Math.round(beatStrength * 255)}, 0, 0)` }} /> */}
         </>
     );
 }; 

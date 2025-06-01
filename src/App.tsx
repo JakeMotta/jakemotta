@@ -5,7 +5,6 @@ import { ConfigProvider } from 'antd';
 import { ThemeProvider, useTheme, generateRandomHue } from './contexts/ThemeContext';
 import { TsParticleBackground, MusicPlayer } from './components/atoms';
 import { useAudioStore } from './store/audio';
-import { AudioVisualizer } from './components/atoms/audio-visualizer';
 
 import 'antd/dist/reset.css';
 import './global.scss';

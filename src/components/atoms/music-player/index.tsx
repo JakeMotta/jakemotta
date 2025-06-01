@@ -77,14 +77,13 @@ export const MusicPlayer = () => {
             const normalized = Math.min(bassAverage / 255, 1);
 
             // Update visualizer pulse
-            const baseSize = 10;
-            const maxSize = 20;
-            const pulseSize = (baseSize + (maxSize - baseSize) * normalized) * 2;
-            const outerSize = pulseSize * 1.5;
+            const baseSize = 2;
+            const maxSize = 15;
+            const spreadSize = 5;
+            const pulseSize = baseSize + (maxSize - baseSize) * normalized;
 
             visualizerRef.current.style.boxShadow = `
-                0px 0px ${pulseSize}px ${pulseSize / 2}px rgba(0, 0, 0, .5) inset,
-                0px 0px ${outerSize}px ${outerSize / 2}px rgba(0, 0, 0, .3) inset
+                0px 0px ${spreadSize}px ${pulseSize}px rgba(0, 0, 0, .5) inset
             `;
 
             animationFrame.current = requestAnimationFrame(analyze);

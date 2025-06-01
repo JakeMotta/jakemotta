@@ -2,51 +2,90 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useAudioStore } from '../../../store/audio';
 import { Button } from 'antd';
 import { FaPauseCircle, FaPlayCircle } from 'react-icons/fa';
-import { createRealTimeBpmProcessor, getBiquadFilter } from 'realtime-bpm-analyzer';
-import { AudioVisualizer } from '../audio-visualizer';
 
 import './index.scss';
 
 export const MusicPlayer = () => {
+    const audioUrl = useAudioStore((store) => store.audioUrl);
     const audioRef = useRef<HTMLAudioElement>(null);
     const audioContext = useRef<AudioContext | null>(null);
     const sourceNode = useRef<MediaElementAudioSourceNode | null>(null);
     const analyzerNode = useRef<AnalyserNode | null>(null);
-    const [bpm, setBpm] = useState<number | null>(null);
-    const audioUrl = useAudioStore((store) => store.audioUrl);
+    const animationFrame = useRef<number | null>(null);
+    const [beatStrength, setBeatStrength] = useState(0);
 
-    // Initialize audio context
-    useEffect(() => {
-        if (!audioContext.current) {
-            audioContext.current = new AudioContext();
+    // Clean up function
+    const cleanup = () => {
+        if (animationFrame.current) {
+            cancelAnimationFrame(animationFrame.current);
+            animationFrame.current = null;
         }
+        if (sourceNode.current) {
+            sourceNode.current.disconnect();
+            sourceNode.current = null;
+        }
+        if (analyzerNode.current) {
+            analyzerNode.current.disconnect();
+            analyzerNode.current = null;
+        }
+        if (audioContext.current) {
+            audioContext.current.close();
+            audioContext.current = null;
+        }
+    };
 
-        return () => {
-            if (sourceNode.current) {
-                sourceNode.current.disconnect();
-            }
-            if (audioContext.current) {
-                audioContext.current.close();
-                audioContext.current = null;
-            }
-        };
+    // Clean up on unmount
+    useEffect(() => {
+        return cleanup;
     }, []);
 
     // Effect to handle audio URL changes
     useEffect(() => {
-        if (!audioRef.current || !audioUrl || !audioContext.current) return;
+        if (!audioRef.current || !audioUrl) return;
 
-        // Load the new audio
+        // Clean up existing audio context and nodes
+        cleanup();
+
+        // Create new audio context
+        audioContext.current = new AudioContext();
+
+        // Create new audio graph
+        sourceNode.current = audioContext.current.createMediaElementSource(audioRef.current);
+        analyzerNode.current = audioContext.current.createAnalyser();
+        analyzerNode.current.fftSize = 1024;
+
+        // Connect nodes
+        sourceNode.current.connect(analyzerNode.current);
+        analyzerNode.current.connect(audioContext.current.destination);
+
+        // Start visualization
+        const bufferLength = analyzerNode.current.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        const analyze = () => {
+            if (!analyzerNode.current) return;
+
+            analyzerNode.current.getByteFrequencyData(dataArray);
+            const avg = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+            const normalized = Math.min(avg / 128, 1);
+            setBeatStrength(normalized);
+
+            animationFrame.current = requestAnimationFrame(analyze);
+        };
+
+        analyze();
+
+        // Load and play the new audio
         audioRef.current.load();
 
-        analyzeBPM();
-
-        // Wait for the audio to be loaded before playing
-        const handleCanPlay = () => {
-            if (audioUrl) {
-                audioRef.current?.play().catch(error => {
-                    console.error('Error playing audio:', error);
-                });
+        const handleCanPlay = async () => {
+            try {
+                if (audioContext.current?.state === "suspended") {
+                    await audioContext.current.resume();
+                }
+                await audioRef.current?.play();
+            } catch (error) {
+                console.error('Error playing audio:', error);
             }
         };
 
@@ -54,89 +93,41 @@ export const MusicPlayer = () => {
 
         return () => {
             audioRef.current?.removeEventListener('canplay', handleCanPlay);
-            if (sourceNode.current) {
-                sourceNode.current.disconnect();
-                sourceNode.current = null;
-            }
-            if (analyzerNode.current) {
-                analyzerNode.current.disconnect();
-                analyzerNode.current = null;
-            }
-            setBpm(null);
         };
     }, [audioUrl]);
 
-    const analyzeBPM = async () => {
-        if (!audioContext.current) return;
+    const togglePlayback = async () => {
+        if (!audioRef.current || !audioUrl) return;
 
-        const realtimeAnalyzerNode = await createRealTimeBpmProcessor(audioContext.current);
-
-        // Set the source with the HTML Audio Node
-        const myAudioElement = document.getElementById('audio-element');
-        if (!myAudioElement) return;
-
-        // Clean up previous source node if it exists
-        if (sourceNode.current) {
-            sourceNode.current.disconnect();
-            sourceNode.current = null;
-        }
-
-        // Create analyzer node for visualization
-        analyzerNode.current = audioContext.current.createAnalyser();
-        analyzerNode.current.fftSize = 256;
-        analyzerNode.current.smoothingTimeConstant = 0.8;
-
-        sourceNode.current = audioContext.current.createMediaElementSource(myAudioElement as HTMLMediaElement);
-        const lowpass = getBiquadFilter(audioContext.current);
-
-        // Connect nodes together
-        sourceNode.current.connect(lowpass).connect(realtimeAnalyzerNode);
-        sourceNode.current.connect(analyzerNode.current); // Connect to analyzer for visualization
-        sourceNode.current.connect(audioContext.current.destination);
-
-        realtimeAnalyzerNode.port.onmessage = (event) => {
-            if (event.data.message === 'BPM') {
-                console.log('BPM', event.data.data.bpm);
-                setBpm(event.data.data.bpm);
-            }
-            // if (event.data.message === 'BPM_STABLE') {
-            //     console.log('BPM_STABLE', event.data.data.bpm);
-            //     setBpm(event.data.data.bpm);
-            // }
-        };
-    }
-
-    // Effect to handle audio playback
-    const togglePlayback = () => {
-        if (audioRef.current && audioUrl) {
+        try {
             if (audioRef.current.paused) {
-                console.log('hit play');
-                audioRef.current.play().catch(error => {
-                    console.error('Error playing audio:', error);
-                });
+                if (audioContext.current?.state === "suspended") {
+                    await audioContext.current.resume();
+                }
+                await audioRef.current.play();
             } else {
-                console.log('hit pause');
                 audioRef.current.pause();
             }
+        } catch (error) {
+            console.error("Error toggling playback:", error);
         }
     };
 
+    const beatColor = `rgb(${Math.round(beatStrength * 255)}, 0, 0)`;
+
     return (
         <>
-            {/* Music visualizer */}
-            <AudioVisualizer
-                audioRef={audioRef}
-                audioContext={audioContext.current}
-                analyzerNode={analyzerNode.current}
-                bpm={bpm}
-            />
-
             <div className="music-player">
                 <audio
                     ref={audioRef}
                     src={audioUrl}
                     id="audio-element"
                     className="hidden"
+                    key={audioUrl}
+                />
+                <div
+                    className="beat-tracker"
+                    style={{ backgroundColor: beatColor }}
                 />
                 {audioUrl && <Button
                     type="text"

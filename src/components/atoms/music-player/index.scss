@@ -4,6 +4,16 @@
   right: 1rem;
   z-index: 50;
 
+  .beat-tracker {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    transition: all 0.3s ease;
+  }
+
   .music-control {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);

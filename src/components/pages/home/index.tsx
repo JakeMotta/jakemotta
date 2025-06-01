@@ -46,6 +46,13 @@ const musicList = [
         url: '/music/hide_and_seek.mp3',
         date: '2016'
     },
+    {
+        image: '',
+        title: 'Dancin',
+        description: 'My first attempt at a remix',
+        url: '/music/dancin.mp3',
+        date: '2016'
+    },
 ]
 
 const scrollToSection = (sectionId: string) => {

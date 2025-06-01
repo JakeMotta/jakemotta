@@ -32,6 +32,7 @@ export const MusicPlayer = () => {
             audioContext.current.close();
             audioContext.current = null;
         }
+        setBeatStrength(0);
     };
 
     // Clean up on unmount
@@ -73,6 +74,7 @@ export const MusicPlayer = () => {
             animationFrame.current = requestAnimationFrame(analyze);
         };
 
+        // Start the visualization
         analyze();
 
         // Load and play the new audio
@@ -92,6 +94,7 @@ export const MusicPlayer = () => {
         audioRef.current.addEventListener('canplay', handleCanPlay);
 
         return () => {
+            cleanup();
             audioRef.current?.removeEventListener('canplay', handleCanPlay);
         };
     }, [audioUrl]);

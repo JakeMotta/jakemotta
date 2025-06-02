@@ -1,11 +1,16 @@
 .section-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 4px;
 
     .item-wrapper {
         display: flex;
         flex-direction: column;
+    }
+
+    .ant-tabs-nav {
+        &::before {
+            border: none;
+        }
     }
 }
 

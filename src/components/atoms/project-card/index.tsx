@@ -7,13 +7,14 @@ interface ProjectCardProps {
     title: string;
     date: string;
     description: string;
+    onClick: () => void;
 }
 
-export const ProjectCard = ({ image, title, date, description }: ProjectCardProps) => {
+export const ProjectCard = ({ image, title, date, description, onClick }: ProjectCardProps) => {
     const { primaryColor } = useTheme();
 
     return (
-        <div className="flex flex-col w-[400px] h-min-[200px] h-max-[200px] bg-primary-dark rounded-lg p-4">
+        <div className="flex flex-col w-[400px] h-min-[200px] h-max-[200px] bg-primary-dark rounded-lg p-4" onClick={onClick}>
             <div className="flex flex-col w-full aspect-video bg-red-500 rounded-lg">
                 {image}
             </div>

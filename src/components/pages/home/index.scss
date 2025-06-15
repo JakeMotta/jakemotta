@@ -1,15 +1,23 @@
 .section-wrapper {
     display: flex;
     flex-direction: column;
-
-    .item-wrapper {
-        display: flex;
-        flex-direction: column;
-    }
+    margin-bottom: 10vh;
+    // background-color: red;
+    // min-height: calc(100vh - 108px);
+    height: 90vh;
+    flex-shrink: 0;
 
     .ant-tabs-nav {
-        &::before {
+        &::before,
+        &::after,
+        &:focus {
             border: none;
+        }
+    }
+
+    .ant-pagination {
+        svg {
+            @apply text-primary-dark;
         }
     }
 }

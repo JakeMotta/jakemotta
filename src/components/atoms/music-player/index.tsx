@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useAudioStore } from '../../../store/audio';
-import { Button } from 'antd';
+import { Button, Slider } from 'antd';
 import { FaPauseCircle, FaPlayCircle } from 'react-icons/fa';
 
 import './index.scss';
@@ -15,6 +15,9 @@ export const MusicPlayer = () => {
     const [beatStrength, setBeatStrength] = useState(0);
     const dataArrayRef = useRef<Uint8Array>();
     const visualizerRef = useRef<HTMLDivElement>(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [volume, setVolume] = useState(1);
+    const [isHovering, setIsHovering] = useState(false);
 
     // Clean up function
     const cleanup = () => {
@@ -134,13 +137,20 @@ export const MusicPlayer = () => {
         }
     };
 
+    const handleVolumeChange = (value: number) => {
+        if (audioRef.current) {
+            audioRef.current.volume = value;
+            setVolume(value);
+        }
+    };
+
     return (
         <>
             {/* Visualizer */}
             <div ref={visualizerRef} className="audio-visualizer" />
 
             {/* Player */}
-            <div className="music-player">
+            {/* <div className="music-player">
                 <audio
                     ref={audioRef}
                     src={audioUrl}
@@ -155,7 +165,38 @@ export const MusicPlayer = () => {
                     onClick={togglePlayback}
                     className="music-control text-2xl"
                 />}
+            </div> */}
+
+            <div className="fixed bottom-4 right-6 z-50">
+                <div
+                    className="relative"
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                >
+                    {isHovering && (
+                        <div className="absolute bottom-full -right-2 p-2 rounded-lg">
+                            <Slider
+                                vertical
+                                min={0}
+                                max={1}
+                                step={0.01}
+                                value={volume}
+                                onChange={handleVolumeChange}
+                                tooltip={{ open: false }}
+                                className="h-24"
+                            />
+                        </div>
+                    )}
+                    {audioUrl && <Button
+                        type="text"
+                        icon={audioRef.current?.paused ? <FaPlayCircle /> : <FaPauseCircle />}
+                        onClick={togglePlayback}
+                        className="music-control text-2xl"
+                    />}
+                </div>
+                <audio ref={audioRef} src={audioUrl} />
             </div>
+
 
             {/* For debugging beat detection */}
             {/* <div className="beat-tracker" style={{ backgroundColor: `rgb(${Math.round(beatStrength * 255)}, 0, 0)` }} /> */}

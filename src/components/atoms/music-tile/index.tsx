@@ -38,7 +38,7 @@ export const MusicTile = ({ item, onClick }: MusicTileProps) => {
                         {item.title}
                     </div>
                     <div className='flex text-primary-dark text-sm font-bold group-hover:text-primary'>
-                        {item.date} - {item.description}
+                        {item.date}
                     </div>
                 </div>
             </div>

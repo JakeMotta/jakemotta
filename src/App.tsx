@@ -11,7 +11,7 @@ import './global.scss';
 import './App.scss';
 
 const AppContent = () => {
-  const { randomStartHue, primaryDark, setPrimaryColor } = useTheme();
+  const { randomStartHue, primaryColor, primaryDark, setPrimaryColor } = useTheme();
   const audioUrl = useAudioStore((store) => store.audioUrl);
 
   useEffect(() => {
@@ -45,7 +45,17 @@ const AppContent = () => {
     <ConfigProvider
       theme={{
         components: {
-          Slider: {},
+          Slider: {
+            trackBg: primaryDark,
+            trackHoverBg: primaryDark,
+          },
+          Pagination: {
+            itemActiveBg: primaryDark,
+            itemBg: primaryDark,
+            colorPrimary: primaryColor,
+            colorText: primaryColor,
+            fontWeightStrong: 600,
+          },
         },
         token: {
           colorPrimary: primaryDark,
@@ -65,7 +75,7 @@ const AppContent = () => {
       {/* Music player */}
       <MusicPlayer />
 
-    </ConfigProvider>
+    </ConfigProvider >
   );
 };
 

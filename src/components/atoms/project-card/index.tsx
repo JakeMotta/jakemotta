@@ -14,9 +14,9 @@ export const ProjectCard = ({ image, title, date, description, onClick }: Projec
     const { primaryColor } = useTheme();
 
     return (
-        <div className="flex flex-col w-[400px] h-min-[200px] h-max-[200px] bg-primary-dark rounded-lg p-4" onClick={onClick}>
+        <div className="flex flex-col w-full h-min-[200px] h-max-[200px] bg-primary-dark rounded-lg p-4" onClick={onClick}>
             <div className="flex flex-col w-full aspect-video bg-red-500 rounded-lg">
-                {image}
+                <img src={image} className='w-full h-full object-cover rounded-lg' />
             </div>
 
             <div className="flex text-primary font-bold text-2xl">

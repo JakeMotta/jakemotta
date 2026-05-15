@@ -146,3 +146,57 @@ export const favoriteArtists: MusicItemProps[] = [
         date: '2016'
     },
 ]
+
+export interface HomeProject {
+    id: string;
+    image: string;
+    title: string;
+    date: string;
+    description: string;
+    /** In-app route; omit if the card has no destination */
+    to?: string;
+}
+
+export const homeProjectList: HomeProject[] = [
+    {
+        id: 'ambii',
+        image: '/images/projects/ambii.png',
+        title: 'Ambii',
+        date: '2025',
+        description:
+            'This is a project with a long description that wraps around to the next line This is a project with a long description that wraps around to the next line',
+        to: '/projects/',
+    },
+    {
+        id: 'black-chamber',
+        image: '',
+        title: 'Black Chamber',
+        date: '2025',
+        description: '',
+        to: '/projects/black-chamber/index.php',
+    },
+    {
+        id: 'pistol-art',
+        image: '',
+        title: 'Pistol Art',
+        date: '2025',
+        description: 'This is a project with a long description that wraps around to the next line',
+        to: '/projects/pistol-art/index.php',
+    },
+    {
+        id: 'ninjadonut',
+        image: '',
+        title: 'NinjaDonut',
+        date: '2025',
+        description: 'This is a project with a long description that wraps around to the next line',
+        to: '/projects/ninjadonut/index.php',
+    },
+    {
+        id: 'cs160',
+        image: '',
+        title: 'CS160',
+        date: '2016',
+        description: 'This is a project with a long description that wraps around to the next line',
+        to: '/projects/cs160/index.php',
+    },
+]

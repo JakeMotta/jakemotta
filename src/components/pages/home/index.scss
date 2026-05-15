@@ -1,7 +1,7 @@
 .section-wrapper {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10vh;
+    margin-bottom: 1.5rem;
     // background-color: red;
     // min-height: calc(100vh - 108px);
     height: 90vh;
@@ -19,6 +19,20 @@
         svg {
             @apply text-primary-dark;
         }
+    }
+}
+
+.projects-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+
+    @media (min-width: 640px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 

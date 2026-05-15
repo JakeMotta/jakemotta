@@ -12,7 +12,11 @@
     }
 
     .section-title {
-        @apply flex sticky top-0 z-10 text-primary-dark text-2xl font-bold pt-8 pb-2 bg-primary;
+        @apply flex sticky top-0 z-10 text-primary-dark text-2xl font-bold pt-4 pb-1 bg-transparent transition-colors duration-200;
+    }
+
+    .section-title--stuck {
+        @apply bg-primary;
     }
 }
 

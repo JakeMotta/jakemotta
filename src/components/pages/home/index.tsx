@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { ColorShiftingBackground } from '../../templates';
 import { useNavigate } from 'react-router-dom';
-import { MusicTile, ProjectCard } from '../../atoms';
+import { MusicTile, ProjectCard, StickySectionTitle } from '../../atoms';
 import { useAudioStore } from '../../../store/audio';
 import { Pagination, Tabs } from 'antd';
-import { musicTabs, musicList, favoriteArtists } from '../../../common/constants';
+import { musicTabs, musicList, favoriteArtists, homeProjectList } from '../../../common/constants';
 import './index.scss';
 
 /**
@@ -82,128 +82,57 @@ export const Home = () => {
                     ))}
                 </div> */}
 
-                <div className='flex flex-col h-full w-full px-16'>
-                    <div className='section-title'>Music</div>
-                    <div ref={containerRef} className='section-wrapper px-4 py-2 bg-black/10 rounded-lg'>
-                        <Tabs defaultActiveKey="1" items={musicTabs} onChange={onTabChange} />
+                <div className='flex flex-col h-full w-full gap-2 px-16'>
+                    <section className='flex w-full flex-col'>
+                        <StickySectionTitle>Music</StickySectionTitle>
+                        <div ref={containerRef} className='section-wrapper px-4 py-2 bg-black/10 rounded-lg'>
+                            <Tabs defaultActiveKey="1" items={musicTabs} onChange={onTabChange} />
 
-                        <div className='flex flex-col flex-1'>
-                            <div className='flex flex-col'>
-                                {/* My Music */}
-                                {activeTab === '1' && getPaginatedItems().map((item) => (
-                                    <MusicTile key={item.title} item={item} onClick={() => { setAudioUrl(item.url) }} />
-                                ))}
+                            <div className='flex flex-col flex-1'>
+                                <div className='flex flex-col'>
+                                    {/* My Music */}
+                                    {activeTab === '1' && getPaginatedItems().map((item) => (
+                                        <MusicTile key={item.title} item={item} onClick={() => { setAudioUrl(item.url) }} />
+                                    ))}
 
-                                {/* Favorite Artists */}
-                                {activeTab === '2' && getPaginatedItems().map((item) => (
-                                    <MusicTile key={item.title} item={item} onClick={() => { setAudioUrl(item.url) }} />
+                                    {/* Favorite Artists */}
+                                    {activeTab === '2' && getPaginatedItems().map((item) => (
+                                        <MusicTile key={item.title} item={item} onClick={() => { setAudioUrl(item.url) }} />
+                                    ))}
+                                </div>
+
+                                <div className='flex flex-1 items-end'>
+                                    <Pagination
+                                        current={currentPage}
+                                        total={activeTab === '1' ? musicList.length : favoriteArtists.length}
+                                        pageSize={itemsPerPage}
+                                        onChange={onPageChange}
+                                        className='flex pt-2'
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className='flex w-full flex-col'>
+                        <StickySectionTitle>Projects</StickySectionTitle>
+                        <div className='section-wrapper'>
+                            <div className='projects-grid'>
+                                {homeProjectList.map((project) => (
+                                    <ProjectCard
+                                        key={project.id}
+                                        image={project.image}
+                                        title={project.title}
+                                        date={project.date}
+                                        description={project.description}
+                                        onClick={() => {
+                                            if (project.to) navigate(project.to);
+                                        }}
+                                    />
                                 ))}
                             </div>
-
-                            <div className='flex flex-1 items-end'>
-                                <Pagination
-                                    current={currentPage}
-                                    total={activeTab === '1' ? musicList.length : favoriteArtists.length}
-                                    pageSize={itemsPerPage}
-                                    onChange={onPageChange}
-                                    className='flex pt-2'
-                                />
-                            </div>
                         </div>
-                    </div>
-
-
-                    <div className='section-title'>Projects</div>
-                    <div className='section-wrapper'>
-                        <div className='grid grid-cols-2 gap-4'>
-                            <ProjectCard image="/images/projects/ambii.png" title="Ambii" date='2025' description="This is a project with a long description that wraps around to the next line This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/');
-                            }} />
-                            <ProjectCard image="" title="Black Chamber" date='2025' description="" onClick={() => {
-                                navigate('/projects/black-chamber');
-                            }} />
-                            <ProjectCard image="" title="Pistol Art" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/pistol-art');
-                            }} />
-                            <ProjectCard image="" title="NinjaDonut" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => { }} />
-                            <ProjectCard image="" title="Ambii" date='2025' description="This is a project with a long description that wraps around to the next line This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/');
-                            }} />
-                            <ProjectCard image="" title="Black Chamber" date='2025' description="" onClick={() => {
-                                navigate('../projects/BlackChamber/index.php');
-                            }} />
-                            <ProjectCard image="" title="Pistol Art" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/pistol-art');
-                            }} />
-                            <ProjectCard image="" title="NinjaDonut" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => { }} />
-                            <ProjectCard image="" title="Ambii" date='2025' description="This is a project with a long description that wraps around to the next line This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/');
-                            }} />
-                            <ProjectCard image="" title="Black Chamber" date='2025' description="" onClick={() => {
-                                navigate('../projects/BlackChamber/index.php');
-                            }} />
-                            <ProjectCard image="" title="Pistol Art" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/pistol-art');
-                            }} />
-                            <ProjectCard image="" title="NinjaDonut" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => { }} />
-                            <ProjectCard image="" title="Ambii" date='2025' description="This is a project with a long description that wraps around to the next line This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/');
-                            }} />
-                            <ProjectCard image="" title="Black Chamber" date='2025' description="" onClick={() => {
-                                navigate('../projects/BlackChamber/index.php');
-                            }} />
-                            <ProjectCard image="" title="Pistol Art" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/pistol-art');
-                            }} />
-                            <ProjectCard image="" title="NinjaDonut" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => { }} />
-                        </div>
-                    </div>
-
-                    <div className='section-title'>Goals</div>
-                    <div className='section-wrapper'>
-                        <div className='grid grid-cols-2 gap-4'>
-                            <ProjectCard image="" title="Ambii" date='2025' description="This is a project with a long description that wraps around to the next line This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/');
-                            }} />
-                            <ProjectCard image="" title="Black Chamber" date='2025' description="" onClick={() => {
-                                navigate('/projects/black-chamber');
-                            }} />
-                            <ProjectCard image="" title="Pistol Art" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/pistol-art');
-                            }} />
-                            <ProjectCard image="" title="NinjaDonut" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => { }} />
-                            <ProjectCard image="" title="Ambii" date='2025' description="This is a project with a long description that wraps around to the next line This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/');
-                            }} />
-                            <ProjectCard image="" title="Black Chamber" date='2025' description="" onClick={() => {
-                                navigate('/projects/black-chamber');
-                            }} />
-                            <ProjectCard image="" title="Pistol Art" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/pistol-art');
-                            }} />
-                            <ProjectCard image="" title="NinjaDonut" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => { }} />
-                            <ProjectCard image="" title="Ambii" date='2025' description="This is a project with a long description that wraps around to the next line This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/');
-                            }} />
-                            <ProjectCard image="" title="Black Chamber" date='2025' description="" onClick={() => {
-                                navigate('/projects/black-chamber');
-                            }} />
-                            <ProjectCard image="" title="Pistol Art" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/pistol-art');
-                            }} />
-                            <ProjectCard image="" title="NinjaDonut" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => { }} />
-                            <ProjectCard image="" title="Ambii" date='2025' description="This is a project with a long description that wraps around to the next line This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/');
-                            }} />
-                            <ProjectCard image="" title="Black Chamber" date='2025' description="" onClick={() => {
-                                navigate('/projects/black-chamber');
-                            }} />
-                            <ProjectCard image="" title="Pistol Art" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => {
-                                navigate('/projects/pistol-art');
-                            }} />
-                            <ProjectCard image="" title="NinjaDonut" date='2025' description="This is a project with a long description that wraps around to the next line" onClick={() => { }} />
-                        </div>
-                    </div>
+                    </section>
                 </div>
             </div>
         </ColorShiftingBackground>

@@ -25,6 +25,19 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Debug FTP connectivity
+        run: |
+          echo "Resolving DNS..."
+          getent hosts "${{ secrets.FTP_SERVER }}" || echo "DNS lookup FAILED"
+          echo ""
+          echo "Testing TCP connection to port 21..."
+          timeout 10 bash -c "</dev/tcp/${{ secrets.FTP_SERVER }}/21" \
+            && echo "Port 21 reachable" \
+            || echo "Port 21 NOT reachable"
+          echo ""
+          echo "Testing FTPS handshake..."
+          timeout 15 openssl s_client -connect "${{ secrets.FTP_SERVER }}:21" -starttls ftp -servername "${{ secrets.FTP_SERVER }}" < /dev/null 2>&1 | head -20 || echo "FTPS handshake FAILED"
+
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:

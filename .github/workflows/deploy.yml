@@ -34,7 +34,11 @@ jobs:
   deploy:
     name: Build and upload
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Generous on purpose. Steady-state deploys move only the changed bundles
+    # and take a minute, but the first one may have to push all 1.6GB of
+    # projects/ and music/ before --ignore-time has anything to compare
+    # against, and a deploy killed halfway is worse than a slow one.
+    timeout-minutes: 60
 
     steps:
       - name: Check out the repository

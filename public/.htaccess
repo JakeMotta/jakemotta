@@ -1,0 +1,23 @@
+# Client-side routing for the React app.
+#
+# react-router owns /home and anything added beside it, but those paths do not
+# exist on disk — so a refresh or a direct link asks the server for a file it
+# cannot find and gets a 404 before React ever loads. Handing unknown paths to
+# index.html lets the router resolve them.
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /
+
+	# The standalone sites under /projects/ are not part of this app. They are
+	# plain files with rewrite rules of their own, and routing them through
+	# index.html would break them.
+	RewriteCond %{REQUEST_URI} !^/projects/
+
+	# Anything that really is on disk — a bundle, an image, a font — is served
+	# as itself. Only paths with no file behind them reach the router.
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+
+	RewriteRule . /index.html [L]
+</IfModule>

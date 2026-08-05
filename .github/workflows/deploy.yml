@@ -1,19 +1,46 @@
 name: Deploy Website
 
+# Builds the app and uploads build/ to jakemotta.com over FTP with TLS.
+#
+# It runs on a push to master and on demand from the Actions tab. Only the
+# built output is published — the sources, node_modules and .env never leave
+# the runner.
+#
+# Four secrets, under Settings > Secrets and variables > Actions:
+#
+#   FTP_SERVER      the hostname alone, no scheme and no path
+#   FTP_USERNAME    the FTP account
+#   FTP_PASSWORD    its password
+#   FTP_SERVER_DIR  where on the server the build lands, e.g. / or /public_html/
+#
+# FTP_SERVER MUST NOT BE A CLOUDFLARE-PROXIED HOSTNAME. Cloudflare proxies HTTP
+# and HTTPS and nothing else, so a proxied name answers on 443 and refuses 21 —
+# which is what broke every run of the previous version of this workflow. Point
+# it at the host's own server hostname, or at a DNS record with the proxy
+# turned off (grey cloud). The preflight step below checks this and says so.
+
 on:
   push:
-    branches:
-      - master
+    branches: [master]
+  workflow_dispatch:
+
+# One deploy at a time. Two runs writing the same directory over FTP is how a
+# half-uploaded page ends up being served.
+concurrency:
+  group: deploy-website
+  cancel-in-progress: false
 
 jobs:
-  ftp-deploy:
+  deploy:
+    name: Build and upload
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
-      - name: Checkout repo
+      - name: Check out the repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -25,28 +52,117 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Debug FTP connectivity
+      # Fail here with an explanation rather than 40 lines down with a bare
+      # "Connection refused". The Cloudflare case is the one that has actually
+      # happened, and it is invisible from the error lftp gives.
+      - name: Check the FTP host is reachable
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
-          echo "Resolving DNS..."
-          getent hosts "${{ secrets.FTP_SERVER }}" || echo "DNS lookup FAILED"
-          echo ""
-          echo "Testing TCP connection to port 21..."
-          timeout 10 bash -c "</dev/tcp/${{ secrets.FTP_SERVER }}/21" \
-            && echo "Port 21 reachable" \
-            || echo "Port 21 NOT reachable"
-          echo ""
-          echo "Testing FTPS handshake..."
-          timeout 15 openssl s_client -connect "${{ secrets.FTP_SERVER }}:21" -starttls ftp -servername "${{ secrets.FTP_SERVER }}" < /dev/null 2>&1 | head -20 || echo "FTPS handshake FAILED"
+          set -uo pipefail
 
-      - name: Deploy to FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          local-dir: ./build/
-          protocol: ftps
-          port: 21
-          timeout: 60000
-          log-level: verbose
+          for name in FTP_SERVER FTP_USERNAME FTP_PASSWORD; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name is not set. Add it under Settings > Secrets and variables > Actions."
+              exit 1
+            fi
+          done
+
+          if timeout 15 bash -c "</dev/tcp/$FTP_SERVER/21" 2>/dev/null; then
+            echo "Port 21 is reachable."
+            exit 0
+          fi
+
+          # Cloudflare's published ranges begin 104.21, 172.67, 172.64-71 and
+          # 2606:4700. Resolving into one of those is the whole explanation.
+          # getent is glibc, so it is there on the runner but not on a Mac.
+          # The fallbacks keep this diagnostic working wherever it is run from —
+          # a resolver that returns nothing turns the useful message below into
+          # a shrug.
+          ips=$(getent ahosts "$FTP_SERVER" 2>/dev/null | awk '{print $1}' | sort -u | tr '\n' ' ')
+          [ -z "${ips// }" ] && ips=$(dig +short "$FTP_SERVER" A "$FTP_SERVER" AAAA 2>/dev/null | grep -E '^[0-9a-f.:]+$' | sort -u | tr '\n' ' ')
+          [ -z "${ips// }" ] && ips=$(python3 -c "import socket,sys;print(' '.join(sorted({a[4][0] for a in socket.getaddrinfo(sys.argv[1],None)})))" "$FTP_SERVER" 2>/dev/null)
+          echo "::error::Port 21 on the FTP host is not reachable. Resolved to: ${ips:-nothing}"
+          if printf '%s' "$ips" | grep -qE '(^| )(104\.21\.|172\.6[4-9]\.|172\.7[01]\.|2606:4700)'; then
+            echo "::error::Those are Cloudflare addresses. Cloudflare proxies HTTP/HTTPS only and does not pass FTP, so port 21 will never answer through it. Set FTP_SERVER to the host's own server hostname, or add a DNS record for FTP with the Cloudflare proxy turned OFF (grey cloud, not orange)."
+          fi
+          exit 1
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends lftp
+
+      - name: Upload build/ to the server
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: |
+          set -euo pipefail
+
+          # An empty FTP_SERVER_DIR means the account already lands where the
+          # site is served from.
+          target="${FTP_SERVER_DIR:-/}"
+          echo "Uploading ./build/ to $target"
+
+          # The whole session is a script file, and `open` lives inside it.
+          # lftp's -f REPLACES the host argument rather than accompanying it —
+          # passing both makes lftp hand the -f to `open`, which rejects it with
+          # "open: invalid option -- 'f'" and uploads nothing.
+          umask 077
+          {
+            cat <<'LFTP'
+          # Explicit FTP over TLS: refuse to send the password on a plain
+          # connection, and encrypt the data channel as well as the control one.
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate true
+
+          # Fail fast and loudly. reconnect-interval-base defaults to 30s and
+          # backs off exponentially, so retries alone sit silent for minutes
+          # against an unreachable host — long enough to look like a hang
+          # rather than a wrong hostname.
+          set net:max-retries 2
+          set net:timeout 10
+          set net:reconnect-interval-base 5
+          set net:reconnect-interval-multiplier 1
+          set cmd:fail-exit true
+          LFTP
+
+            # --env-password takes the password out of LFTP_PASSWORD, so it is
+            # never written into this file and never appears in the process
+            # list. It is in lftp's man page but not in `help open`.
+            printf "open -u '%s' --env-password %s\n" "$FTP_USERNAME" "ftp://$FTP_SERVER"
+
+            # --reverse uploads. There is deliberately no --delete: nothing
+            # already on the server is removed, so the standalone sites under
+            # /projects/ and anything else up there survive a deploy. The cost
+            # is that superseded bundles accumulate, which is harmless — every
+            # build names its files by content hash, so nothing stale is served.
+            #
+            # --ignore-time compares size alone, and it is what makes this
+            # deploy finish at all. build/ is 1.6GB, nearly all of it the
+            # unchanging sites under projects/ and the audio under music/ —
+            # and CI regenerates the whole tree with fresh timestamps every
+            # run, so the default time comparison would call all 1.6GB new and
+            # re-upload it on every push. Size alone is safe for the bundles
+            # because a changed bundle gets a new hashed filename.
+            printf "mirror --reverse --verbose --parallel=2 --ignore-time --exclude-glob '.DS_Store' ./build/ %s\n" "$target"
+
+            # The exception that --ignore-time would silently break. Both of
+            # these are rewritten by every build and both can come out the
+            # exact same length, because all that changed inside them is a
+            # fixed-width content hash. Compared by size they look untouched,
+            # so the server would keep serving an index.html pointing at
+            # bundles that no longer exist. Upload them unconditionally.
+            printf "put -O %s ./build/index.html\n" "$target"
+            printf "put -O %s ./build/asset-manifest.json\n" "$target"
+
+            echo bye
+          } > "$RUNNER_TEMP/deploy.lftp"
+
+          LFTP_PASSWORD="$FTP_PASSWORD" lftp -f "$RUNNER_TEMP/deploy.lftp"

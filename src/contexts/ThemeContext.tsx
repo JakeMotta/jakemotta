@@ -27,6 +27,12 @@ const createDarkerColor = (hsl: string): string => {
     return `hsl(${h}, ${s}%, ${newL}%)`;
 };
 
+// Helper function to create a pale tint of a color, readable as text on the darker version
+const createLighterColor = (hsl: string): string => {
+    const [h] = parseHsl(hsl);
+    return `hsl(${h}, 45%, 94%)`;
+};
+
 export const ThemeProvider: React.FC<{ children: ReactNode; initialHue: number }> = ({ children, initialHue }) => {
     const [primaryColor, setPrimaryColor] = useState(`hsl(${initialHue}, 40%, 60%)`);
 
@@ -35,11 +41,16 @@ export const ThemeProvider: React.FC<{ children: ReactNode; initialHue: number }
         return createDarkerColor(primaryColor);
     }, [primaryColor]);
 
+    const primaryLight = useMemo(() => {
+        return createLighterColor(primaryColor);
+    }, [primaryColor]);
+
     // Update CSS variables when colors change, this is needed for tailwind to get the color changes
     useEffect(() => {
         document.documentElement.style.setProperty('--color-primary', primaryColor);
         document.documentElement.style.setProperty('--color-primary-dark', primaryDark);
-    }, [primaryColor, primaryDark]);
+        document.documentElement.style.setProperty('--color-primary-light', primaryLight);
+    }, [primaryColor, primaryDark, primaryLight]);
 
     return (
         <ThemeContext.Provider value={{ randomStartHue: initialHue, primaryColor, primaryDark, setPrimaryColor }}>

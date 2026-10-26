@@ -153,50 +153,50 @@ export interface HomeProject {
     title: string;
     date: string;
     description: string;
-    /** In-app route; omit if the card has no destination */
-    to?: string;
+    /** Path to a standalone site under /projects/, opened with a full page load; omit if the card has no destination */
+    href?: string;
 }
 
+/** Leave `image` empty to show a monogram tile, and `description` empty to show none. */
 export const homeProjectList: HomeProject[] = [
     {
         id: 'ambii',
         image: '/images/projects/ambii.png',
         title: 'Ambii',
         date: '2025',
-        description:
-            'This is a project with a long description that wraps around to the next line This is a project with a long description that wraps around to the next line',
-        to: '/projects/',
+        description: '',
+        href: '/projects/',
     },
     {
         id: 'black-chamber',
-        image: '',
+        image: '/images/projects/blackchamber.jpg',
         title: 'Black Chamber',
         date: '2025',
-        description: '',
-        to: '/projects/black-chamber/index.php',
+        description: 'Members, programs and events for the Silicon Valley Black Chamber of Commerce.',
+        href: '/projects/black-chamber/index.php',
     },
     {
         id: 'pistol-art',
-        image: '',
+        image: '/images/projects/pistolArt.png',
         title: 'Pistol Art',
         date: '2025',
-        description: 'This is a project with a long description that wraps around to the next line',
-        to: '/projects/pistol-art/index.php',
+        description: 'Course schedules and class sign-ups for a pistol training school.',
+        href: '/projects/pistol-art/index.php',
     },
     {
         id: 'ninjadonut',
-        image: '',
+        image: '/images/projects/ninjadonut_website.png',
         title: 'NinjaDonut',
         date: '2025',
-        description: 'This is a project with a long description that wraps around to the next line',
-        to: '/projects/ninjadonut/index.php',
+        description: 'Games, comics and odds and ends, starring a very serious donut.',
+        href: '/projects/ninja-donut/index.php',
     },
     {
         id: 'cs160',
         image: '',
         title: 'CS160',
         date: '2016',
-        description: 'This is a project with a long description that wraps around to the next line',
-        to: '/projects/cs160/index.php',
+        description: '',
+        href: '/projects/cs160/index.php',
     },
 ]

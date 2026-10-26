@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { ColorShiftingBackground } from '../../templates';
-import { useNavigate } from 'react-router-dom';
 import { MusicTile, ProjectCard, StickySectionTitle } from '../../atoms';
 import { useAudioStore } from '../../../store/audio';
 import { Pagination, Tabs } from 'antd';
@@ -21,7 +20,6 @@ import './index.scss';
  */
 
 export const Home = () => {
-    let navigate = useNavigate();
     const { primaryColor, primaryDark } = useTheme();
     const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
     const [activeTab, setActiveTab] = useState('1');
@@ -82,7 +80,7 @@ export const Home = () => {
                     ))}
                 </div> */}
 
-                <div className='flex flex-col h-full w-full gap-2 px-16'>
+                <div className='flex flex-col h-full w-full gap-2 px-6 sm:px-16'>
                     <section className='flex w-full flex-col'>
                         <StickySectionTitle>Music</StickySectionTitle>
                         <div ref={containerRef} className='section-wrapper px-4 py-2 bg-black/10 rounded-lg'>
@@ -116,7 +114,7 @@ export const Home = () => {
 
                     <section className='flex w-full flex-col'>
                         <StickySectionTitle>Projects</StickySectionTitle>
-                        <div className='section-wrapper'>
+                        <div className='section-wrapper section-wrapper--auto'>
                             <div className='projects-grid'>
                                 {homeProjectList.map((project) => (
                                     <ProjectCard
@@ -125,9 +123,7 @@ export const Home = () => {
                                         title={project.title}
                                         date={project.date}
                                         description={project.description}
-                                        onClick={() => {
-                                            if (project.to) navigate(project.to);
-                                        }}
+                                        href={project.href}
                                     />
                                 ))}
                             </div>

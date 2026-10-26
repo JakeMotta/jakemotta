@@ -5,98 +5,127 @@ import { FaPauseCircle, FaPlayCircle } from 'react-icons/fa';
 
 import './index.scss';
 
+// A frequency band whose level is normalized against the range the current track actually uses,
+// so quiet and loud masters both swing the visualizer from rest to full.
+interface Band {
+    fromHz: number;
+    toHz: number;
+    // Seconds for the level to rise / fall, and the smallest range we'll stretch to full scale
+    attack: number;
+    release: number;
+    minRange: number;
+    floor: number;
+    ceiling: number;
+    level: number;
+}
+
+const createBands = () => ({
+    // Kick and bass: the punch of the vignette
+    lows: { fromHz: 30, toHz: 150, attack: 0.02, release: 0.22, minRange: 0.12, floor: 0, ceiling: 0, level: 0 } as Band,
+    // Hats, cymbals, vocal air: the shimmer on the rim
+    highs: { fromHz: 4000, toHz: 12000, attack: 0.015, release: 0.12, minRange: 0.08, floor: 0, ceiling: 0, level: 0 } as Band,
+});
+
+// How fast the adaptive range forgets: the floor creeps up toward the signal, the ceiling sinks toward it
+const FLOOR_RISE_SECONDS = 2.5;
+const CEILING_FALL_SECONDS = 4;
+
+const ease = (dt: number, seconds: number) => 1 - Math.exp(-dt / seconds);
+
+const updateBand = (band: Band, data: Uint8Array, hzPerBin: number, dt: number) => {
+    const from = Math.max(1, Math.floor(band.fromHz / hzPerBin));
+    const to = Math.min(data.length - 1, Math.ceil(band.toHz / hzPerBin));
+    let sum = 0;
+    for (let i = from; i <= to; i++) sum += data[i];
+    const raw = sum / (to - from + 1) / 255;
+
+    // Track the quietest and loudest the band has been lately: snap outward, drift back in slowly
+    band.floor = raw < band.floor ? raw : band.floor + (raw - band.floor) * ease(dt, FLOOR_RISE_SECONDS);
+    band.ceiling = raw > band.ceiling ? raw : band.ceiling + (raw - band.ceiling) * ease(dt, CEILING_FALL_SECONDS);
+
+    const range = Math.max(band.ceiling - band.floor, band.minRange);
+    const normalized = Math.min(Math.max((raw - band.floor) / range, 0), 1);
+    // Squaring keeps the troughs calm so the peaks stand out
+    const target = normalized * normalized;
+
+    band.level += (target - band.level) * ease(dt, target > band.level ? band.attack : band.release);
+    return band.level;
+};
+
 export const MusicPlayer = () => {
     const audioUrl = useAudioStore((store) => store.audioUrl);
     const audioRef = useRef<HTMLAudioElement>(null);
     const audioContext = useRef<AudioContext | null>(null);
-    const sourceNode = useRef<MediaElementAudioSourceNode | null>(null);
     const analyzerNode = useRef<AnalyserNode | null>(null);
     const animationFrame = useRef<number | null>(null);
-    const [beatStrength, setBeatStrength] = useState(0);
-    const dataArrayRef = useRef<Uint8Array>();
+    const bands = useRef(createBands());
     const visualizerRef = useRef<HTMLDivElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(1);
     const [isHovering, setIsHovering] = useState(false);
 
-    // Clean up function
-    const cleanup = () => {
-        if (animationFrame.current) {
-            cancelAnimationFrame(animationFrame.current);
-            animationFrame.current = null;
-        }
-        if (sourceNode.current) {
-            sourceNode.current.disconnect();
-            sourceNode.current = null;
-        }
-        if (analyzerNode.current) {
-            analyzerNode.current.disconnect();
-            analyzerNode.current = null;
-        }
-        if (audioContext.current) {
-            audioContext.current.close();
-            audioContext.current = null;
-        }
-        setBeatStrength(0);
-    };
-
-    // Clean up on unmount
+    // Tear the audio graph down on unmount
     useEffect(() => {
-        return cleanup;
+        return () => {
+            if (animationFrame.current) cancelAnimationFrame(animationFrame.current);
+            audioContext.current?.close();
+            audioContext.current = null;
+            analyzerNode.current = null;
+        };
     }, []);
+
+    // The <audio> element can only ever feed one MediaElementAudioSourceNode, so the graph is
+    // built once on the first track and reused for every track after it.
+    const ensureAudioGraph = () => {
+        if (audioContext.current || !audioRef.current) return;
+
+        const context = new AudioContext();
+        const analyzer = context.createAnalyser();
+        // 2048 gives ~23Hz bins, enough to keep the kick separate from the bass line
+        analyzer.fftSize = 2048;
+        // Light smoothing so transients survive; the bands do their own attack/release
+        analyzer.smoothingTimeConstant = 0.5;
+        analyzer.minDecibels = -90;
+        analyzer.maxDecibels = -10;
+
+        context.createMediaElementSource(audioRef.current).connect(analyzer);
+        analyzer.connect(context.destination);
+
+        audioContext.current = context;
+        analyzerNode.current = analyzer;
+
+        const data = new Uint8Array(analyzer.frequencyBinCount);
+        const hzPerBin = context.sampleRate / analyzer.fftSize;
+        let lastTime = performance.now();
+
+        const analyze = (now: number) => {
+            animationFrame.current = requestAnimationFrame(analyze);
+            if (!analyzerNode.current || !visualizerRef.current) return;
+
+            // Clamp so a backgrounded tab doesn't jump the envelopes when it comes back
+            const dt = Math.min((now - lastTime) / 1000, 0.1);
+            lastTime = now;
+
+            analyzerNode.current.getByteFrequencyData(data);
+            const lows = updateBand(bands.current.lows, data, hzPerBin, dt);
+            const highs = updateBand(bands.current.highs, data, hzPerBin, dt);
+
+            // Lows push the dark vignette in; highs flicker a tighter dark rim on top of it
+            const rim = `inset 0 0 ${4 + 10 * highs}px ${1 + 4 * highs}px rgba(0, 0, 0, ${(highs * 0.45).toFixed(3)})`;
+            const vignette = `inset 0 0 ${8 + 28 * lows}px ${2 + 16 * lows}px rgba(0, 0, 0, ${(0.4 + 0.25 * lows).toFixed(3)})`;
+            visualizerRef.current.style.boxShadow = `${rim}, ${vignette}`;
+        };
+
+        animationFrame.current = requestAnimationFrame(analyze);
+    };
 
     // Effect to handle audio URL changes
     useEffect(() => {
         if (!audioRef.current || !audioUrl) return;
 
-        // Clean up existing audio context and nodes
-        cleanup();
-
-        // Create new audio context
-        audioContext.current = new AudioContext();
-
-        // Create new audio graph
-        sourceNode.current = audioContext.current.createMediaElementSource(audioRef.current);
-        analyzerNode.current = audioContext.current.createAnalyser();
-        analyzerNode.current.fftSize = 1024;
-
-        // Connect nodes
-        sourceNode.current.connect(analyzerNode.current);
-        analyzerNode.current.connect(audioContext.current.destination);
-
-        // Initialize data array
-        if (analyzerNode.current) {
-            dataArrayRef.current = new Uint8Array(analyzerNode.current.frequencyBinCount);
-        }
-
-        const analyze = () => {
-            if (!analyzerNode.current || !dataArrayRef.current || !visualizerRef.current) return;
-
-            analyzerNode.current.getByteFrequencyData(dataArrayRef.current);
-
-            // Get bass frequencies (first 5 bins) for better beat detection
-            const bass = dataArrayRef.current.slice(0, 5);
-            const bassAverage = bass.reduce((sum: number, val: number) => sum + val, 0) / bass.length;
-            const normalized = Math.min(bassAverage / 255, 1);
-
-            // Update visualizer pulse
-            const baseSize = 2;
-            const maxSize = 15;
-            const spreadSize = 5;
-            const pulseSize = baseSize + (maxSize - baseSize) * normalized;
-
-            visualizerRef.current.style.boxShadow = `
-                0px 0px ${spreadSize}px ${pulseSize}px rgba(0, 0, 0, .5) inset
-            `;
-
-            animationFrame.current = requestAnimationFrame(analyze);
-
-            // Update beat strength
-            setBeatStrength(normalized);
-        };
-
-        // Start the visualization
-        analyze();
+        ensureAudioGraph();
+        // Each track learns its own range from scratch
+        bands.current = createBands();
 
         // Load and play the new audio
         audioRef.current.load();
@@ -112,11 +141,11 @@ export const MusicPlayer = () => {
             }
         };
 
-        audioRef.current.addEventListener('canplay', handleCanPlay);
+        const audio = audioRef.current;
+        audio.addEventListener('canplay', handleCanPlay);
 
         return () => {
-            cleanup();
-            audioRef.current?.removeEventListener('canplay', handleCanPlay);
+            audio.removeEventListener('canplay', handleCanPlay);
         };
     }, [audioUrl]);
 
@@ -189,17 +218,13 @@ export const MusicPlayer = () => {
                     )}
                     {audioUrl && <Button
                         type="text"
-                        icon={audioRef.current?.paused ? <FaPlayCircle /> : <FaPauseCircle />}
+                        icon={isPlaying ? <FaPauseCircle /> : <FaPlayCircle />}
                         onClick={togglePlayback}
                         className="music-control text-2xl"
                     />}
                 </div>
-                <audio ref={audioRef} src={audioUrl} />
+                <audio ref={audioRef} src={audioUrl} onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} />
             </div>
-
-
-            {/* For debugging beat detection */}
-            {/* <div className="beat-tracker" style={{ backgroundColor: `rgb(${Math.round(beatStrength * 255)}, 0, 0)` }} /> */}
         </>
     );
-}; 
+};

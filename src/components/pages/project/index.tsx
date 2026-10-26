@@ -17,6 +17,10 @@ const FRAMEABLE = ['/projects/', '/vendor/'];
 
 const isFrameable = (link: HTMLAnchorElement) => link.origin === window.location.origin && FRAMEABLE.some((path) => link.pathname.startsWith(path));
 
+// Links that don't load a page at all, like the `javascript:void(0)` toggles on NinjaDonut's
+// Games page, run in place. Giving them a new tab would open a blank one.
+const navigates = (link: HTMLAnchorElement) => !/^javascript:$/i.test(link.protocol);
+
 export const ProjectViewer = () => {
     const { id } = useParams();
     const project = homeProjectList.find((item) => item.id === id);
@@ -30,7 +34,7 @@ export const ProjectViewer = () => {
         // Decided per click rather than once on load, so links a page adds later are covered too.
         doc.addEventListener('click', (event) => {
             const link = (event.target as Element | null)?.closest?.('a[href]') as HTMLAnchorElement | null;
-            if (!link || link.getAttribute('href')?.startsWith('#') || isFrameable(link)) return;
+            if (!link || link.getAttribute('href')?.startsWith('#') || !navigates(link) || isFrameable(link)) return;
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
         });

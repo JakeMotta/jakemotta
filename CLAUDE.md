@@ -10,6 +10,16 @@ Jake Motta's personal website (jakemotta.com): a playful showcase of his work, m
 - **Project previews.** Projects are linked from the site, and each one should show a good preview (image, title, date, description) before the visitor clicks through.
 - **Fun over corporate.** The look is deliberately loud: a hue that cycles continuously, particle backgrounds, cheeky copy.
 
+## Documentation
+
+This file holds the rules for the whole repo. The detail lives in `docs/`:
+
+- [`docs/projects/README.md`](docs/projects/README.md): how project previews and card images work, and the checklist for adding a project. Each project has its own page beside it (`docs/projects/<card id>.md`), covering where the project came from, how its preview runs, and what was left out on purpose.
+- [`docs/music.md`](docs/music.md): the music player, its queue and shuffle, and the visualizer.
+- [`docs/modpack.md`](docs/modpack.md): publishing a Minecraft modpack release, and the rules for the downloads.
+
+**Keep the docs current as part of every change.** When a change alters behavior, a decision, a workflow or what's kept or removed, update this file or the relevant `docs/` page in the same commit; Jake has asked for this standing. If something has no home yet, such as a new project or feature, create its page and link it here. Docs live in `docs/`, never in `public/`, which is deployed.
+
 ## Commands
 
 Yarn is the package manager (`yarn.lock`, and CI runs `yarn install --frozen-lockfile`).
@@ -18,6 +28,7 @@ Yarn is the package manager (`yarn.lock`, and CI runs `yarn install --frozen-loc
 yarn dev          # CRA dev server on http://localhost:3000 (also the "dev" config in .claude/launch.json)
 yarn build        # production build into build/, then scripts/prune-build.mjs strips what must not be published
 yarn projects:convert   # regenerate the static .html pages of the PHP project sites (see Project previews)
+yarn projects:screenshot [id…]   # retake the project card images from the running previews; needs `yarn dev`
 yarn test         # Jest in watch mode (react-scripts)
 yarn test --watchAll=false src/path/to/File.test.tsx   # one test file, single run
 yarn prettier     # format everything (2 spaces, single quotes, semicolons, printWidth 200)
@@ -36,30 +47,27 @@ Create React App (react-scripts 5) + TypeScript, React 19, react-router v7, Ant 
 
 **Theme / color cycling.** `App.tsx` runs a `requestAnimationFrame` loop that rotates the hue through 360° every 30s from a random start and calls `setPrimaryColor`. `contexts/ThemeContext.tsx` derives `primaryDark` and writes both to the CSS variables `--color-primary` / `--color-primary-dark`. Tailwind's `primary` and `primary-dark` colors (`tailwind.config.js`) point at those variables, and the antd `ConfigProvider` theme in `App.tsx` is fed the same values. So use `text-primary`, `bg-primary-dark` etc. rather than fixed colors, and expect antd components to need their tokens wired in `App.tsx` to follow the cycling hue. `templates/color-shifting-background` paints the page background from `primaryColor` and is the shell every page wraps itself in.
 
-**Music and visualizer.**
-- `store/audio.ts` (zustand) holds the single `audioUrl`. Anything that wants to play a track calls `setAudioUrl`; the Welcome page's "Enter with Music" button and the `MusicTile`s on Home do this.
-- `atoms/music-player` owns the one `<audio>` element. On each `audioUrl` change it builds a Web Audio graph (`MediaElementAudioSourceNode` → `AnalyserNode` with `fftSize` 1024 → destination), then runs a rAF loop that averages the first 5 frequency bins (bass) and writes an inset `box-shadow` straight onto the `.audio-visualizer` div through a ref. That direct DOM write, instead of React state, is what keeps the visualizer in sync at frame rate; keep new visualizer work on the same path (analyser data → ref/canvas in rAF) rather than routing per-frame values through React state.
+**Music and visualizer** (full spec in [`docs/music.md`](docs/music.md)).
+- `store/audio.ts` (zustand) holds the playing `audioUrl`, the visitor's `queue` and the `shuffled` fallback. `setAudioUrl` plays a track now; each `MusicTile` has a queue button (`toggleQueued`). When a track ends, `playNext` plays the next queued track, else the next shuffled one, and reshuffles the library when that runs out, never repeating the track that just ended.
+- `atoms/music-player` owns the one `<audio>` element and builds the Web Audio graph once, on the first track: a media element can feed only one `MediaElementAudioSourceNode` for its lifetime. A rAF loop reads two adaptive bands (lows and highs) and writes the vignette's `box-shadow` straight onto `.audio-visualizer` through a ref. That direct DOM write, instead of React state, keeps the visualizer in sync at frame rate; keep per-frame work on that path.
 - Browser autoplay rules: audio can only start after a user gesture, which is why the Welcome page asks the visitor to choose before entering. `AudioContext.resume()` is called before `play()` for the same reason.
-- A media element can be attached to only one `MediaElementAudioSourceNode` for its lifetime. The player calls `createMediaElementSource` again on the same `<audio>` element each time the track changes, so switching tracks is a place to check when touching this code.
 - `realtime-bpm-analyzer` and `react-use-audio-player` are installed but not used yet.
 
 **Content data.** The music lists (`musicList`, `favoriteArtists`), the Home tabs and the project cards (`homeProjectList`) are static arrays in `common/constants.ts`. Adding a song or project means editing that file and putting its assets in `public/` (`public/music/`, `public/images/music/`, `public/images/projects/`), referenced by absolute paths like `/music/foo.mp3`.
 
-**Project previews.** Two paths that look alike and must not be mixed up:
-- `/project/:id` (singular) is an app route, `pages/project`. Cards link there with a router `<Link>`, so the music keeps playing. The viewer frames the project's `preview` from `homeProjectList` in a same-origin iframe, under a bar with Back and "Open in new tab". It opens links that leave `/projects/` in a new tab instead of inside the frame, and shows the screenshot with a note for projects that have no `preview` yet.
-- `/projects/<site>/` (plural) are the projects themselves: standalone sites served as plain files from `public/projects/` (about 1.5GB), never routes. `.htaccess` keeps them away from the SPA. In dev, CRA's fallback answers any folder path with the app, so `preview` names the page file (`…/index.html`).
+**Project previews** (how they work and how to add one: [`docs/projects/README.md`](docs/projects/README.md); one page per project beside it). Two paths that look alike and must not be mixed up:
+- `/project/:id` (singular) is an app route, `pages/project`. Cards link there with a router `<Link>`, so the music keeps playing. The viewer frames the project's `preview` from `homeProjectList`, under a bar with Back and "Open in new tab".
+  - **Link handling:** it opens links that leave `/projects/` in a new tab, leaves `javascript:` links to run in place, and shows the screenshot with a note for a project that has no `preview`.
+  - **Live sites:** `preview` can also be a live site's own address (TapSlayDie). That frame is cross-origin, and the link handling can't reach into it.
+- `/projects/<site>/` (plural) are the projects themselves: standalone sites served as plain files from `public/projects/`, never routes. `.htaccess` keeps them away from the SPA. In dev, CRA's fallback answers any folder path with the app, so `preview` names the page file (`…/index.html`).
 
-Every preview has to run as static files in the browser, with no server code:
-- **PHP sites** (`pistol-art`, `ninja-donut`, `black-chamber`) only used PHP for `include`s and `echo`s, so `scripts/convert-php-sites.mjs` renders each page to an `X.html` beside its `X.php`. It also points the old domains and `.php` links at those pages, sends the mail forms to their thank-you page instead of sending email, strips old trackers, and writes `X.static.js` copies of scripts that hold such links. It stops on any PHP it doesn't understand. The generated files are committed; rerun `yarn projects:convert` after editing a `.php` page, and add new constructs to the converter rather than hand-editing the output.
-  - `black-chamber` also used CouchCMS. Its `cms: true` entry in the converter turns the CMS hooks into no-ops and prints each `<cms:editable>` region's draft text under an "archived preview" note. Plain `.html` pages that need link fixes, like the Radio Show, are written as `X.static.html` beside the original.
-- **CS160 (Face Me)** had a real back end (Postgres, ffmpeg, OpenFace, a C++ Delaunay program), so it isn't converted. `public/projects/cs160/` has hand-written static pages beside the restored originals. `js/faceme.js` fakes the back end: any login works, and an upload adds a sample entry without reading the file. `js/faceplot.js` triangulates the real landmark data in `js/landmarks.js`, which is generated from `faceme/data_points/*.pts`. The video frames those points came from no longer exist, so the mesh draws on a plain background. `videos/out1.webm` and `out2.webm` are the original pipeline's own output.
-- **Flash** plays through Ruffle, self-hosted in `public/vendor/ruffle/` (version in `VERSION.txt`). The converter adds its script to every page with Flash.
-- **Ambii** is the static landing page copied from the `JakeMotta/ambii_landing_page` repo (`public/projects/ambii/SOURCE.txt`).
-- `public/projects/pistol-art/files/` also holds an unrelated compiled build of the Ambii web app (React, Auth0, the `hola.ambii.io` API) and an old scraper's notes. Neither is wired up.
+Every preview has to run in the browser with no server code. PHP sites are rendered to static `.html` by `scripts/convert-php-sites.mjs` (`yarn projects:convert`). The generated files are committed. Teach the converter a new construct rather than hand-editing its output. An app with a real back end gets hand-written static pages that fake it (CS160). Flash plays through Ruffle, self-hosted in `public/vendor/ruffle/`.
 
 Apart from regenerating the converted output, treat `public/projects/` as an archive: don't reformat or modify the original files. (`.cursorrules` likewise contains just `projects/`.)
 
-**Minecraft modpack page.** `/minecraft` (`pages/minecraft`) is a download page for the Progression Survival modpack. It fetches `/downloads/progression-survival/releases.json` at runtime, so new releases need no code change. `scripts/release-modpack.mjs` copies a built release folder into `public/downloads/progression-survival/releases/<version>/`, audits the archives so no world, player or admin files get published, and regenerates `releases.json`, `latest.json` and that folder's `.htaccess`. Published versions are immutable; only those pointer files change between releases.
+**Card images** are screenshots of each running preview, taken by `yarn projects:screenshot` (`scripts/screenshot-projects.mjs`) as `public/images/projects/<id>.webp`. A new project needs an entry in that script's `SHOTS` list too.
+
+**Minecraft modpack page.** `/minecraft` (`pages/minecraft`) is a download page for the Progression Survival modpack. It reads `/downloads/progression-survival/releases.json` at runtime, and `yarn modpack:release` publishes a new version. Procedure and rules: [`docs/modpack.md`](docs/modpack.md).
 
 ## Style
 
@@ -77,7 +85,7 @@ Every project card must:
 
 - be a real link (a router `<Link>` to `/project/<id>`), so keyboard focus and middle-click work and the music keeps playing, with a visible `:focus-visible` ring;
 - show a preview: the project's screenshot from `public/images/projects/`, or, when there is none, a monogram tile in the hue. Never an empty `src` or a placeholder box;
-- keep equal heights in a row: the image at a fixed 4:3 aspect ratio (the screenshots are about 257×200) and the description clamped to a few lines;
+- keep equal heights in a row: the image at a fixed 4:3 aspect ratio (the screenshots are 960×720 WebP from `yarn projects:screenshot`) and the description clamped to a few lines;
 - make it obvious the card goes somewhere (on desktop the hover reveal below; on phones the always-visible arrow).
 
 **Direction: minimal hover reveal**, built in `atoms/project-card` from the "C2" boards on the [Project Card Mockups canvas](https://claude.ai/artifact/49o5Z3bUZ81nC4gpLL5NPB). Jake picked it for being minimal; keep it that way rather than adding chrome. The cards are fed by `homeProjectList` in `common/constants.ts`: an empty `image` gives the monogram tile and an empty `description` shows none, so leave a field empty rather than writing filler.
@@ -108,15 +116,12 @@ Settled decisions about what is in the repo, what is published and what has been
 
 **Removed from the server on 2026-10-26.** The first deploy to succeed uploaded `myAdmin` and 137 `.php` files before the prune script existed. They were moved to cPanel's Trash (`/home/jakedufc/.trash`) by hand and now return 404. Don't restore them from the Trash, and don't re-upload them to "fix" a `.php` link: the fix is in the converter, which points links at the `.html` pages.
 
-**Black Chamber and CS160 were restored only in part, on 2026-10-26.** Both came back from commit `916adc1` (they had been deleted in `f1266f1`). What was left out was left out on purpose; don't restore it to fill a gap.
-- **Black Chamber:** only the six main pages, the assets they use and the Radio Show page came back. Left out: `myAdmin/` (the CMS isn't needed); `muse/` (230MB, a later export of the whole site that nothing on the main site links to); the side sites `Hackathon`, `BNBFundraiser`, `SVCED`, `Comedy`, `silentAuction`, `htdocs`, `wearecodevrhackathon`, `juneteenth`, `video1`, `video2` and `SVBCC`; `template_3-11-15.rar`; and the Radio Show's PHP mail handlers. The Radio Show's phone menu linked into `muse/`, so the converter's `redirects` send those links to the nearest main-site page instead.
-- **CS160:** left out `config.php` and `faceme/test.php` (database passwords); `faceme/faceme_privatekey.ppk` (an SSH key); `Upload.php`, `Videos.php`, `grabPoints.php`, `pupilPoints.php` and `postgres.c` (each hardcodes the class VM's `postgres`/`student` login); the older `HTML/` copy; build output and binaries; the html5lightbox library; and `CS160.zip`.
-- The database password, the remote host and the SSH key are still in history at `ae7c5c4` and `916adc1`. As with `myAdmin`, the remedy is changing them, not deleting files.
+**Black Chamber and CS160 were restored only in part, on 2026-10-26.** Both came back from commit `916adc1`, having been deleted in `f1266f1`. Whatever was left out was left out on purpose: `myAdmin`, Black Chamber's 230MB `muse/` export and side sites, and every CS160 file holding a password or key. Don't restore any of it to fill a gap. Each project's page lists what was left out and why: [`black-chamber.md`](docs/projects/black-chamber.md), [`cs160.md`](docs/projects/cs160.md). The credentials those files held are still in history at `ae7c5c4` and `916adc1`; as with `myAdmin`, the remedy is changing them, not deleting files.
+
+**TapSlayDie isn't copied into this repo.** Its card frames the live site, and only the card image lives here ([`tapslaydie.md`](docs/projects/tapslaydie.md)).
 
 **Removing a file from the site takes a manual step.** Because the deploy never deletes, a file that has been uploaded stays live until it is removed in cPanel. Removing it from the repo or adding it to `prune-build.mjs` only keeps it from being uploaded again. When something that was already deployed gets pruned, remove it in cPanel too, and prefer the Trash over a permanent delete.
 
-**Modpack downloads.** Under `public/downloads/progression-survival/`:
-- A deployed release folder is never edited, overwritten or deleted. Friends and the `latest` redirects may point at it, and the deploy would not notice a same-size change anyway. A fix goes out as a new version. `--force` is only for a version that hasn't been pushed yet.
-- Only the client `.mrpack`, the server `.zip`, `Release-Notes.md` and a `SHA256SUMS.txt` covering those two archives are published. The pack builder's other output stays in its own workspace on purpose: the custom-source ZIP (it holds local paths and test-command names), `mods.lock.json`, `package-acceptance.json` and the other verification files.
-- Third-party mod jars are never hosted here. The `.mrpack` downloads them from their publishers (Modrinth, FTB's Maven), because the mods' licences haven't been checked for redistribution.
-- `releases.json`, `latest.json` and the folder's `.htaccess` are generated by `scripts/release-modpack.mjs`; edit the script, not the output.
+**Modpack downloads.** A deployed release folder is never edited, overwritten or deleted, so a fix ships as a new version. Only the `.mrpack`, the server `.zip`, the release notes and their checksums are published. Third-party mod jars are never hosted here. The full rules are in [`docs/modpack.md`](docs/modpack.md).
+
+**Old card images.** `public/images/projects/` keeps the earlier screenshots (`ambii.png`, `pistolArt.png` and others) that the cards no longer use. They're archive, and CS160's pages use their own copy of `faceme_output.png`. Don't delete them to tidy up.

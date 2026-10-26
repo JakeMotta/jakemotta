@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FiArrowUpRight } from 'react-icons/fi';
 import './index.scss';
 
@@ -7,8 +8,8 @@ interface ProjectCardProps {
     title: string;
     date: string;
     description: string;
-    /** Full page load: the projects are standalone sites, not routes in this app */
-    href?: string;
+    /** In-app route of the project's viewer; a router link, so the music keeps playing */
+    to: string;
 }
 
 /**
@@ -16,11 +17,11 @@ interface ProjectCardProps {
  * keyboard focus slides the details panel up. On touch screens the panel is always visible
  * as a compact bar, since there is no hover to reveal it.
  */
-export const ProjectCard = ({ image, title, date, description, href }: ProjectCardProps) => {
+export const ProjectCard = ({ image, title, date, description, to }: ProjectCardProps) => {
     const monogram = title.replace(/[^A-Za-z0-9]/g, '').slice(0, 5);
 
     return (
-        <a className="project-card" href={href}>
+        <Link className="project-card" to={to}>
             {image ? (
                 <img className="project-card__image" src={image} alt="" />
             ) : (
@@ -49,6 +50,6 @@ export const ProjectCard = ({ image, title, date, description, href }: ProjectCa
                     <FiArrowUpRight />
                 </span>
             </div>
-        </a>
+        </Link>
     );
 };

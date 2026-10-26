@@ -153,8 +153,12 @@ export interface HomeProject {
     title: string;
     date: string;
     description: string;
-    /** Path to a standalone site under /projects/, opened with a full page load; omit if the card has no destination */
-    href?: string;
+    /**
+     * The project's hosted, browser-runnable copy under /projects/, which the viewer at
+     * /project/:id frames. Name the page file (index.html), not just the folder: the dev
+     * server answers a bare folder path with this app. Omit it when there is no preview yet.
+     */
+    preview?: string;
 }
 
 /** Leave `image` empty to show a monogram tile, and `description` empty to show none. */
@@ -165,7 +169,7 @@ export const homeProjectList: HomeProject[] = [
         title: 'Ambii',
         date: '2025',
         description: '',
-        href: '/projects/',
+        preview: '/projects/ambii/index.html',
     },
     {
         id: 'black-chamber',
@@ -173,7 +177,6 @@ export const homeProjectList: HomeProject[] = [
         title: 'Black Chamber',
         date: '2025',
         description: 'Members, programs and events for the Silicon Valley Black Chamber of Commerce.',
-        href: '/projects/black-chamber/index.php',
     },
     {
         id: 'pistol-art',
@@ -181,7 +184,7 @@ export const homeProjectList: HomeProject[] = [
         title: 'Pistol Art',
         date: '2025',
         description: 'Course schedules and class sign-ups for a pistol training school.',
-        href: '/projects/pistol-art/index.php',
+        preview: '/projects/pistol-art/index.html',
     },
     {
         id: 'ninjadonut',
@@ -189,7 +192,7 @@ export const homeProjectList: HomeProject[] = [
         title: 'NinjaDonut',
         date: '2025',
         description: 'Games, comics and odds and ends, starring a very serious donut.',
-        href: '/projects/ninja-donut/index.php',
+        preview: '/projects/ninja-donut/index.html',
     },
     {
         id: 'cs160',
@@ -197,6 +200,5 @@ export const homeProjectList: HomeProject[] = [
         title: 'CS160',
         date: '2016',
         description: '',
-        href: '/projects/cs160/index.php',
     },
 ]

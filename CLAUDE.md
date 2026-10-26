@@ -16,7 +16,8 @@ Yarn is the package manager (`yarn.lock`, and CI runs `yarn install --frozen-loc
 
 ```bash
 yarn dev          # CRA dev server on http://localhost:3000 (also the "dev" config in .claude/launch.json)
-yarn build        # production build into build/
+yarn build        # production build into build/, then scripts/prune-build.mjs strips what must not be published
+yarn projects:convert   # regenerate the static .html pages of the PHP project sites (see Project previews)
 yarn test         # Jest in watch mode (react-scripts)
 yarn test --watchAll=false src/path/to/File.test.tsx   # one test file, single run
 yarn prettier     # format everything (2 spaces, single quotes, semicolons, printWidth 200)
@@ -44,7 +45,17 @@ Create React App (react-scripts 5) + TypeScript, React 19, react-router v7, Ant 
 
 **Content data.** The music lists (`musicList`, `favoriteArtists`), the Home tabs and the project cards (`homeProjectList`) are static arrays in `common/constants.ts`. Adding a song or project means editing that file and putting its assets in `public/` (`public/music/`, `public/images/music/`, `public/images/projects/`), referenced by absolute paths like `/music/foo.mp3`.
 
-**Project links point outside the React app.** Each project's `to` is a path under `/projects/…` (e.g. `/projects/pistol-art/index.php`). Those are standalone sites served as plain files from `public/projects/` (old PHP/Flash/HTML sites, about 1.6GB together with the music) and are not routes in the app. `ProjectCard` is a plain `<a href>` to them, so the browser does a full page load; react-router's `navigate()` or `<Link>` would only change the URL inside the SPA, where no route matches `/projects/…`. Treat `public/projects/` as archived third-party content: don't reformat or modify it. (`.cursorrules` likewise contains just `projects/`.)
+**Project previews.** Two paths that look alike and must not be mixed up:
+- `/project/:id` (singular) is an app route, `pages/project`. Cards link there with a router `<Link>`, so the music keeps playing. The viewer frames the project's `preview` from `homeProjectList` in a same-origin iframe, under a bar with Back and "Open in new tab". It opens links that leave `/projects/` in a new tab instead of inside the frame, and shows the screenshot with a note for projects that have no `preview` yet.
+- `/projects/<site>/` (plural) are the projects themselves: standalone sites served as plain files from `public/projects/` (about 1.5GB), never routes. `.htaccess` keeps them away from the SPA. In dev, CRA's fallback answers any folder path with the app, so `preview` names the page file (`…/index.html`).
+
+Every preview has to run as static files in the browser, with no server code:
+- **PHP sites** (`pistol-art`, `ninja-donut`) only used PHP for `include`s and `echo`s, so `scripts/convert-php-sites.mjs` renders each page to an `X.html` beside its `X.php`. It also points the old domains and `.php` links at those pages, sends the mail forms to their thank-you page instead of sending email, strips old trackers, and writes `X.static.js` copies of scripts that hold such links. It stops on any PHP it doesn't understand. The generated files are committed; rerun `yarn projects:convert` after editing a `.php` page, and add new constructs to the converter rather than hand-editing the output.
+- **Flash** plays through Ruffle, self-hosted in `public/vendor/ruffle/` (version in `VERSION.txt`). The converter adds its script to every page with Flash.
+- **Ambii** is the static landing page copied from the `JakeMotta/ambii_landing_page` repo (`public/projects/ambii/SOURCE.txt`).
+- `public/projects/pistol-art/files/` also holds an unrelated compiled build of the Ambii web app (React, Auth0, the `hola.ambii.io` API) and an old scraper's notes. Neither is wired up.
+
+Apart from regenerating the converted output, treat `public/projects/` as an archive: don't reformat or modify the original files. (`.cursorrules` likewise contains just `projects/`.)
 
 **Minecraft modpack page.** `/minecraft` (`pages/minecraft`) is a download page for the Progression Survival modpack. It fetches `/downloads/progression-survival/releases.json` at runtime, so new releases need no code change. `scripts/release-modpack.mjs` copies a built release folder into `public/downloads/progression-survival/releases/<version>/`, audits the archives so no world, player or admin files get published, and regenerates `releases.json`, `latest.json` and that folder's `.htaccess`. Published versions are immutable; only those pointer files change between releases.
 
@@ -62,7 +73,7 @@ Decisions Jake has made about the look. Follow them unless he says otherwise.
 
 Every project card must:
 
-- be a real link (`<a href>`) to its `/projects/…` site, so the full page load, keyboard focus and middle-click all work, with a visible `:focus-visible` ring;
+- be a real link (a router `<Link>` to `/project/<id>`), so keyboard focus and middle-click work and the music keeps playing, with a visible `:focus-visible` ring;
 - show a preview: the project's screenshot from `public/images/projects/`, or, when there is none, a monogram tile in the hue. Never an empty `src` or a placeholder box;
 - keep equal heights in a row: the image at a fixed 4:3 aspect ratio (the screenshots are about 257×200) and the description clamped to a few lines;
 - make it obvious the card goes somewhere (on desktop the hover reveal below; on phones the always-visible arrow).
@@ -78,7 +89,7 @@ Every project card must:
 
 Pushing to `master` deploys (`.github/workflows/deploy.yml`): `yarn build`, then `lftp mirror --reverse` of `build/` to the host over FTPS. Things that follow from how it works:
 
-- **Nothing is ever deleted on the server** (no `--delete`), so the standalone `/projects/` sites and old hashed bundles survive every deploy.
+- **Nothing is ever deleted on the server** (no `--delete`), so the standalone `/projects/` sites and old hashed bundles survive every deploy. That also means a file once uploaded stays public, which is why `yarn build` prunes `pistol-art/myAdmin` (an old CMS admin whose `config.php` holds database credentials) and every `.php` under `projects/` before the upload ever sees them.
 - **Files are compared by size only** (`--ignore-time`), because CI rewrites every timestamp. A file whose contents change but whose length doesn't would never be re-uploaded. Hashed bundles are safe; `index.html`, `asset-manifest.json` and the modpack pointer files are uploaded unconditionally for this reason. Any new file that is rewritten in place under a fixed name needs the same explicit `put` in the workflow.
 - `FTP_SERVER` must not be a Cloudflare-proxied hostname (Cloudflare does not pass FTP); the workflow's preflight step checks for this.
 

@@ -1,0 +1,3 @@
+Ambii landing page, copied from https://github.com/JakeMotta/ambii_landing_page
+at commit 41bff74 (2018-10-05). Only the files the page serves are here;
+the SCSS and gulp sources stay in that repo.

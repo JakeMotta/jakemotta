@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, Minecraft, Welcome } from './components/pages';
+import { Home, Minecraft, ProjectViewer, Welcome } from './components/pages';
 import { ConfigProvider } from 'antd';
 import { ThemeProvider, useTheme, generateRandomHue } from './contexts/ThemeContext';
 import { TsParticleBackground, MusicPlayer } from './components/atoms';
@@ -67,6 +67,7 @@ const AppContent = () => {
           <Route path="/" element={<Welcome />} />
           <Route path="/home" element={<Home />} />
           <Route path="/minecraft" element={<Minecraft />} />
+          <Route path="/project/:id" element={<ProjectViewer />} />
         </Routes>
       </BrowserRouter>
 

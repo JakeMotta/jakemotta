@@ -1,0 +1,3 @@
+Ruffle 0.8.0-nightly.2026.10.12 (Flash emulator), copied from the @ruffle-rs/ruffle npm package.
+https://ruffle.rs  Licensed MIT OR Apache-2.0 (see LICENSE_*).
+To update: npm pack @ruffle-rs/ruffle@<version>, then replace ruffle.js and both .wasm files.

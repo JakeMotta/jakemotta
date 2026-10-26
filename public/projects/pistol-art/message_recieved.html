@@ -1,0 +1,231 @@
+<!doctype html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>ART</title>
+
+<link rel="stylesheet" type="text/css" href="files/maincss.css">
+<link rel="stylesheet" type="text/css" href="files/reset.css">
+<link rel="stylesheet" type="text/css" media="all" href="menu/css/styles.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet">
+
+<!--Nav Scripts-->
+<script type="text/javascript" src="menu/js/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+</head>
+
+<body>
+
+<div id="top-nav"></div>
+
+
+	<div id='lead-container'>
+	<div id='lead-nav'>
+		<div id='lead-left'><a href='/projects/pistol-art/index.html'><img id='logo' src='/projects/pistol-art/images/logo3.jpg' /></a></div>
+		<div id='lead-right'>
+		  <nav>
+			<div class='wrapper'>
+			  <ul id='menu' class='clearfix'>
+			  	<li><a href='/projects/pistol-art/register.html'>Register</a></li>
+					<li><a href='/projects/pistol-art/guest-instructors.html'>Guest Instructors</a></li>
+					<li><a href='/projects/pistol-art/courses.html'>Courses</a></li>	
+					<li><a href='/projects/pistol-art/schedule.html'>Schedule</a></li>	
+					<li><a href='/projects/pistol-art/about.html'>About</a>
+				  <ul>
+					<li><a href='/projects/pistol-art/guest-instructors.html'>The Team</a></li>
+					<li><a href='/projects/pistol-art/about.html#our-mission'>Our Mission</a></li>
+				  </ul>
+				</li>		
+				<li><a href='/projects/pistol-art/index.html'>Home</a></li>
+			  </ul>
+			</div>
+		  </nav>
+		</div>
+		<div id='lead-foot'></div>
+	</div>
+	</div>
+
+<script type="text/javascript"> <!--Used for lead-nav functionallity. Do not remove-->
+    $(function(){
+      $('a[href="#"]').on('click', function(e){
+        e.preventDefault();
+      });
+      
+      $('#menu > li').on('mouseover', function(e){
+        $(this).find("ul:first").show();
+        $(this).find('> a').addClass('active');
+      }).on('mouseout', function(e){
+        $(this).find("ul:first").hide();
+        $(this).find('> a').removeClass('active');
+      });
+      
+      $('#menu li li').on('mouseover',function(e){
+        if($(this).has('ul').length) {
+          $(this).parent().addClass('expanded');
+        }
+        $('ul:first',this).parent().find('> a').addClass('active');
+        $('ul:first',this).show();
+      }).on('mouseout',function(e){
+        $(this).parent().removeClass('expanded');
+        $('ul:first',this).parent().find('> a').removeClass('active');
+        $('ul:first', this).hide();
+      });
+    });
+</script>
+
+<div id="s-banner" style="background-image:url(images/banners/courses.jpg)">
+	<div id="s-banner-content"><span class="banner-text">Thank You</span></div>
+</div>
+
+<div id="container">
+
+	<div id="leftcolumn">
+    	
+        <div class="content"><span class="large-text bold-text">PistolArt.net - Contact Form</span></div> 
+        
+        <div align="center"><img style="width:128px; height:128px;" src="images/thankyou.gif"></div><br>
+               
+        <div class="content">
+				<span class="gen-text grey">
+                    Message Recieved!<br><br>
+                    
+                    Your message to PistolArt.net has been received. We will contact you back as soon as possible.<br><br>
+                    
+                    Thank you!
+                </span>
+        </div>
+            
+    </div>	
+    
+    
+<div id='rightcolumn'>
+    	<div class='r-column-header'><span class='med-text slim-text'>OUR 2020 CLASSES</span></div>
+        	<a href='/projects/pistol-art/courses.html'><img src='/projects/pistol-art/images/training_image.jpg' /></a><div class='r-column-gap'></div>
+        <div class='content'>
+             <div id='class_register_button' onclick='register()'>
+                 <a class='register_button_link' href='/projects/pistol-art/register.html'><span class='med-text white class_register_text'>Register</span></a>
+             </div>
+         </div>
+        <div class='r-column-header'><span class='med-text slim-text'>QUICK LINKS</span></div>
+        	<table id='r-column-table'>
+            	<tr class='r-column-tr'>
+                	<td class='r-column-td-left'></td>
+                    <td class='r-column-td-right'><a class='r-column-links small-text' href='/projects/pistol-art/index.html'>Home</a></td>
+                </tr>
+                <tr class='r-column-tr'>
+                	<td class='r-column-td-left'></td>
+                    <td class='r-column-td-right'><a class='r-column-links small-text' href='/projects/pistol-art/about.html'>About</a></td>
+                </tr>
+                <tr class='r-column-tr'>
+                	<td class='r-column-td-left'></td>
+                    <td class='r-column-td-right'><a class='r-column-links small-text' href='/projects/pistol-art/courses.html'>Courses</a></td>
+                </tr>
+                <tr class='r-column-tr'>
+                	<td class='r-column-td-left'></td>
+                    <td class='r-column-td-right'><a class='r-column-links small-text' href='/projects/pistol-art/schedule.html'>Schedule</a></td>
+                </tr>
+				<tr class='r-column-tr'>
+                	<td class='r-column-td-left'></td>
+                    <td class='r-column-td-right'><a class='r-column-links small-text' href='/projects/pistol-art/register.html'>Register</a></td>
+                </tr>
+                <tr class='r-column-tr'>
+                	<td class='r-column-td-left'></td>
+                    <td class='r-column-td-right'><a class='r-column-links small-text' href='/projects/pistol-art/testimonials.html'>Testimonials</a></td>
+                </tr>
+                <tr class='r-column-tr'>
+                	<td class='r-column-td-left'></td>
+                    <td class='r-column-td-right'><a class='r-column-links small-text' href='/projects/pistol-art/guest-instructors.html'>Guest Instructors</a></td>
+                </tr>
+                <tr class='r-column-tr'>
+                	<td class='r-column-td-left' style='border-bottom:0px solid transparent;'></td>
+                    <td class='r-column-td-right' style='border-bottom:0px solid transparent;'><a class='r-column-links small-text' href='/projects/pistol-art/contact.html'>Contact</a></td>
+                </tr>
+            </table>
+    </div>
+
+    
+    <!--Fixes auto-height for container-->
+    <div id="container-footer"></div>
+
+</div>
+
+
+	<div id='footer-container'>
+		<div id='footer-pre'>
+			<div id='footer'>
+				<div id='f-nav'>
+					<div class='f-block' style='background-color:#BB131A;'>
+						<div id='circle1'></div>
+						<div class='f-nav-text'>
+							<span class='small-text white'>QUICK CONTACT <br> Call us at 559.799.3858</span>
+						</div>
+					</div>
+					<div class='f-block' style='background-color:#850A10;'>
+						<a href='/projects/pistol-art/calendar.html'><div id='circle2'></div></a>
+						<div class='f-nav-text'>
+							<a class='box-links small-text;' href='/projects/pistol-art/calendar.html'>SCHEDULE <br> View 2020 Courses</a>
+						</div>
+					</div>
+					<div class='f-block' style='background-color:#BB131A;'>	
+						<div id='circle3'></div>
+						<div class='f-nav-text'>
+							<a class='box-links small-text;' href='/projects/pistol-art/faq.html'>FAQ <br> Our Frequently Asked Questions</a>
+						</div>
+					</div>
+				</div>
+				
+				<div id='f-content'>
+					<div class='f-column'>
+						<span class='bold-text med-text white'>OUR MISSION</span><div class='line'></div>
+						<span class='gen-text grey'>
+							I will train, rather than just instruct, students to understand the gun, how it works, how to read the gun, so they can give the gun what it needs to operate, whether it be additional ammo, clear a malfunction, or press the trigger more smoothly. Like any craftsman, the operator needs to have an intimate knowledge of his tool, its functions, and its’ potential.
+						</span>
+					</div>
+					<div class='f-column'>
+						<span class='bold-text med-text white'>REGISTER FOR A CLASS</span><div class='line'></div>
+						<span class='gen-text grey'>
+							I believe that it is the individuals’ responsibility to protect themselves and their loved ones. It is not the responsibility of their neighbor, the police, nor their elected officials. You and you alone have been blessed with the burden and responsibility to protect yourself and your family. Self-preservation is the most critical, yet basic, instinct for life.
+						</span>
+						<br><br>
+							 <div id='class_register_button' onclick='register()'>
+								 <a class='register_button_link' href='/projects/pistol-art/register.html'><span class='med-text white class_register_text'>Register</span></a>
+							 </div>
+					</div>
+					<div class='f-column'>
+						<span class='bold-text med-text white'>CONTACT INFO</span><div class='line'></div>
+						<span class='gen-text grey'>
+							Vince Lozano<br>
+							vincehuntn@gmail.com<br>
+						 	559-799-3858
+						</span>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div id='f-bot-nav'>
+					<div id='f-bot-leftcolumn'><span class='sub-text grey'>Copyright © 2015-2020 - <a class='jakemotta' href='https://www.linkedin.com/in/jacobmotta'>Website Developed by: Jake Motta</a></span></div>
+					<div id='f-bot-rightcolumn'>
+						<span class='sub-text grey'>
+							<table id='f-table'>
+								<tr>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/index.html'>Home</a></td>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/about.html'>About</a></td>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/courses.html'>Courses</a></td>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/schedule.html'>Schedule</a></td>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/guest-instructors.html'>Guest Instructors</a></td>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/contact.html'>Contact</a></td>
+									<td class='f-table-data-end'><a class='f-bot-links small-text;' href='/projects/pistol-art/faq.html'>FAQ</a></td>
+								</tr>
+							</table>
+						</span>
+					</div>
+			</div>
+			</div> <!--END FOOTER-->
+		</div> <!--END FOOTER-PRE-->
+	</div> <!--END FOOTER-CONTAINER-->
+
+
+</body>
+</html>

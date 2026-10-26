@@ -123,7 +123,7 @@ export const Home = () => {
                                         title={project.title}
                                         date={project.date}
                                         description={project.description}
-                                        href={project.href}
+                                        to={`/project/${project.id}`}
                                     />
                                 ))}
                             </div>

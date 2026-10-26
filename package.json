@@ -30,10 +30,11 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && node scripts/prune-build.mjs",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "modpack:release": "node scripts/release-modpack.mjs",
+    "projects:convert": "node scripts/convert-php-sites.mjs",
     "prettier": "prettier --write \"**/*.+(tsx|ts|jsx|js|json|css|scss|md)\" --fix",
     "reset": "rm -rf node_modules yarn.lock && yarn"
   },

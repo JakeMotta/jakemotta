@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ART</title>
+
+<link rel="stylesheet" type="text/css" href="files/maincss.css">
+<link rel="stylesheet" type="text/css" href="files/reset.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all" href="menu/css/styles.css">
+
+<!--Nav Scripts-->
+<script type="text/javascript" src="menu/js/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+</head>
+
+<body>
+
+<div id="top-nav"></div>
+
+
+	<div id='lead-container'>
+	<div id='lead-nav'>
+		<div id='lead-left'><a href='/projects/pistol-art/index.html'><img id='logo' src='/projects/pistol-art/images/logo3.jpg' /></a></div>
+		<div id='lead-right'>
+		  <nav>
+			<div class='wrapper'>
+			  <ul id='menu' class='clearfix'>
+			  	<li><a href='/projects/pistol-art/register.html'>Register</a></li>
+					<li><a href='/projects/pistol-art/guest-instructors.html'>Guest Instructors</a></li>
+					<li><a href='/projects/pistol-art/courses.html'>Courses</a></li>	
+					<li><a href='/projects/pistol-art/schedule.html'>Schedule</a></li>	
+					<li><a href='/projects/pistol-art/about.html'>About</a>
+				  <ul>
+					<li><a href='/projects/pistol-art/guest-instructors.html'>The Team</a></li>
+					<li><a href='/projects/pistol-art/about.html#our-mission'>Our Mission</a></li>
+				  </ul>
+				</li>		
+				<li><a href='/projects/pistol-art/index.html'>Home</a></li>
+			  </ul>
+			</div>
+		  </nav>
+		</div>
+		<div id='lead-foot'></div>
+	</div>
+	</div>
+
+
+<script type="text/javascript"> <!--Used for lead-nav functionallity. Do not remove-->
+    $(function(){
+      $('a[href="#"]').on('click', function(e){
+        e.preventDefault();
+      });
+      
+      $('#menu > li').on('mouseover', function(e){
+        $(this).find("ul:first").show();
+        $(this).find('> a').addClass('active');
+      }).on('mouseout', function(e){
+        $(this).find("ul:first").hide();
+        $(this).find('> a').removeClass('active');
+      });
+      
+      $('#menu li li').on('mouseover',function(e){
+        if($(this).has('ul').length) {
+          $(this).parent().addClass('expanded');
+        }
+        $('ul:first',this).parent().find('> a').addClass('active');
+        $('ul:first',this).show();
+      }).on('mouseout',function(e){
+        $(this).parent().removeClass('expanded');
+        $('ul:first',this).parent().find('> a').removeClass('active');
+        $('ul:first', this).hide();
+      });
+    });
+</script>
+
+<div id="banner" style="background-image:url(images/banners/home.jpg)">
+	<div id="banner-content"><span class="banner-text">Armed Response Training</span></div>
+</div>
+
+<div id="container" style="background-color:transparent;">
+	
+    <div class="i-row">
+    	<div class="top-bun">
+            <span class="bold-text med-text white">COURSES</span><div class="line"></div>
+            <span class="gen-text grey">Our training is designed to produce confident, competent, and capable shooters in order to , not just survive, but prevail</span>
+        </div>    
+    
+    <div id="slideshow">
+       <div id="one">
+         <img src="images/slider/one.jpg">
+       </div>
+       <div id="two">
+         <img src="images/slider/two.jpg">
+       </div>
+       <div id="three">
+         <img src="images/slider/three.jpg">
+       </div>
+       <div id="three">
+         <img src="images/slider/four.jpg">
+       </div>
+    </div>
+    
+    </div> <!--END I-ROW-->
+    
+    <br><hr><br>
+    
+   <div class="i-row" style="padding-bottom:30px; padding-top:30px;">
+    	<div align="center"><span class="bold-text banner-text grey">OUR BELIEFS</span><div class="line"></div></div> <br>      
+        <div align="center">
+            <span class="bold-text large-text red">- STAY READY SO YOU DON'T HAVE TO GET READY -</span><br>
+            <span class="bold-text med-text grey">- REALITY TRAINING FOR THE REALITY OF LIFE -</span>
+        </div>  
+   </div>
+   
+   <br><hr><br><br>
+   
+   <div class="i-row" style="padding-bottom:30px;">
+    	<div class="top-bun">
+            <span class="bold-text med-text white">TRAINERS</span><div class="line"></div>
+            <span class="gen-text grey">Vince Lozano (Lead Instructor)  —  I have been trained by some of the premier firearms instructors.  A blend of the most practical tactics are incorporated into each training session</span>
+        </div>    
+        
+        <a href="about.html"><div class="profile_preview fade" style="background-image:url(images/courses/vince_2.jpg)">
+        	<span style="position:relative; top:255px; left:0px;" class="bold-text med-text grey">Vince Lozano</span> <br>
+            <span style="position:relative; top:255px; left:0px;" class="bold-text small-text grey">Lead Instructor</span>
+        </div></a>
+        
+        <a href="guest-instructors.html#robmotta"><div class="profile_preview fade" style="background-image:url(images/courses/rob_motta.jpg)">
+        	<span style="position:relative; top:255px; left:0px;" class="bold-text med-text grey">Rob Motta</span> <br>
+            <span style="position:relative; top:255px; left:0px;" class="bold-text small-text grey">Guest Instructor</span>
+        </div></a>
+        
+        <a href="guest-instructors.html#timsmith"><div class="profile_preview fade" style="background-image:url(images/courses/tim_smith.jpg)">
+        	<span style="position:relative; top:255px; left:0px;" class="bold-text med-text grey">Tim Smith</span> <br>
+            <span style="position:relative; top:255px; left:0px;" class="bold-text small-text grey">Guest Instructor</span>
+        </div></a>
+        
+   </div> <!--END I-ROW-->
+</div>
+
+
+	<div id='footer-container'>
+		<div id='footer-pre'>
+			<div id='footer'>
+				<div id='f-nav'>
+					<div class='f-block' style='background-color:#BB131A;'>
+						<div id='circle1'></div>
+						<div class='f-nav-text'>
+							<span class='small-text white'>QUICK CONTACT <br> Call us at 559.799.3858</span>
+						</div>
+					</div>
+					<div class='f-block' style='background-color:#850A10;'>
+						<a href='/projects/pistol-art/calendar.html'><div id='circle2'></div></a>
+						<div class='f-nav-text'>
+							<a class='box-links small-text;' href='/projects/pistol-art/calendar.html'>SCHEDULE <br> View 2020 Courses</a>
+						</div>
+					</div>
+					<div class='f-block' style='background-color:#BB131A;'>	
+						<div id='circle3'></div>
+						<div class='f-nav-text'>
+							<a class='box-links small-text;' href='/projects/pistol-art/faq.html'>FAQ <br> Our Frequently Asked Questions</a>
+						</div>
+					</div>
+				</div>
+				
+				<div id='f-content'>
+					<div class='f-column'>
+						<span class='bold-text med-text white'>OUR MISSION</span><div class='line'></div>
+						<span class='gen-text grey'>
+							I will train, rather than just instruct, students to understand the gun, how it works, how to read the gun, so they can give the gun what it needs to operate, whether it be additional ammo, clear a malfunction, or press the trigger more smoothly. Like any craftsman, the operator needs to have an intimate knowledge of his tool, its functions, and its’ potential.
+						</span>
+					</div>
+					<div class='f-column'>
+						<span class='bold-text med-text white'>REGISTER FOR A CLASS</span><div class='line'></div>
+						<span class='gen-text grey'>
+							I believe that it is the individuals’ responsibility to protect themselves and their loved ones. It is not the responsibility of their neighbor, the police, nor their elected officials. You and you alone have been blessed with the burden and responsibility to protect yourself and your family. Self-preservation is the most critical, yet basic, instinct for life.
+						</span>
+						<br><br>
+							 <div id='class_register_button' onclick='register()'>
+								 <a class='register_button_link' href='/projects/pistol-art/register.html'><span class='med-text white class_register_text'>Register</span></a>
+							 </div>
+					</div>
+					<div class='f-column'>
+						<span class='bold-text med-text white'>CONTACT INFO</span><div class='line'></div>
+						<span class='gen-text grey'>
+							Vince Lozano<br>
+							vincehuntn@gmail.com<br>
+						 	559-799-3858
+						</span>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div id='f-bot-nav'>
+					<div id='f-bot-leftcolumn'><span class='sub-text grey'>Copyright © 2015-2020 - <a class='jakemotta' href='https://www.linkedin.com/in/jacobmotta'>Website Developed by: Jake Motta</a></span></div>
+					<div id='f-bot-rightcolumn'>
+						<span class='sub-text grey'>
+							<table id='f-table'>
+								<tr>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/index.html'>Home</a></td>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/about.html'>About</a></td>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/courses.html'>Courses</a></td>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/schedule.html'>Schedule</a></td>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/guest-instructors.html'>Guest Instructors</a></td>
+									<td class='f-table-data'><a class='f-bot-links small-text;' href='/projects/pistol-art/contact.html'>Contact</a></td>
+									<td class='f-table-data-end'><a class='f-bot-links small-text;' href='/projects/pistol-art/faq.html'>FAQ</a></td>
+								</tr>
+							</table>
+						</span>
+					</div>
+			</div>
+			</div> <!--END FOOTER-->
+		</div> <!--END FOOTER-PRE-->
+	</div> <!--END FOOTER-CONTAINER-->
+
+
+<script src="files/slideshow.js"></script>
+
+</body>
+</html>

@@ -7,17 +7,6 @@
 @layer tailwind-components {
     @tailwind components;
 
-    .nav-item {
-        @apply flex text-primary-dark text-2xl font-bold cursor-pointer hover:opacity-60;
-    }
-
-    .section-title {
-        @apply flex sticky top-0 z-10 text-primary-dark text-2xl font-bold pt-4 pb-1 bg-transparent transition-colors duration-200;
-    }
-
-    .section-title--stuck {
-        @apply bg-primary;
-    }
 }
 
 @layer tailwind-utilities {

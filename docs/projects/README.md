@@ -1,6 +1,6 @@
 # Projects
 
-Every project on the home page has a card (`homeProjectList` in `src/common/constants.ts`), a card image, a preview the viewer at `/project/<id>` frames, and a page here. The page is the place for anything that's only true of that project: where it came from, how its preview runs, what was left out and why.
+Every project on the board has an entry in `homeProjectList` (`src/common/constants.ts`), a card image, a preview that the viewer at `/project/<id>` frames, and a page here. The first entry, the newest, is the board's featured tile; the rest are the small screenshots in its Projects tile ([board.md](../board.md)). The page is the place for anything that's only true of that project: where it came from, how its preview runs, what was left out and why.
 
 | Card id | Preview | Notes |
 | --- | --- | --- |
@@ -41,7 +41,7 @@ The older images in `public/images/projects/` (`ambii.png`, `pistolArt.png` and 
 ## Adding a project
 
 1. Get it running as a preview: a static copy in `public/projects/<folder>/` (a new `SITES` entry if it's PHP), or the address of a live site that allows framing (check its response headers for `X-Frame-Options` and `frame-ancestors`).
-2. Add a card to `homeProjectList`, newest first: `id`, `title`, `date`, a one-sentence `description`, `preview`, and `image: '/images/projects/<id>.webp'`.
+2. Add an entry to `homeProjectList`, newest first (so a new project becomes the featured tile): `id`, `title`, `date`, a one-sentence `description`, `preview`, and `image: '/images/projects/<id>.webp'`.
 3. Add a `SHOTS` entry to `scripts/screenshot-projects.mjs`, run `yarn projects:screenshot <id>` and look at the result.
 4. Write `docs/projects/<id>.md` and add it to the table above.
 5. Open `/project/<id>` in the dev server, click around inside the frame, and check the console.

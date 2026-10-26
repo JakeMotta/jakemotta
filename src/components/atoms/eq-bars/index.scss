@@ -1,0 +1,16 @@
+.eq-bars {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: flex-end;
+    gap: 2px;
+    height: 14px;
+
+    span {
+        width: 3px;
+        height: 100%;
+        border-radius: 2px;
+        background: currentColor;
+        transform: scaleY(0.2);
+        transform-origin: 50% 100%;
+    }
+}

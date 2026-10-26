@@ -1,18 +1,16 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, Minecraft, ProjectViewer, Welcome } from './components/pages';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Home, Minecraft, MusicLibrary, ProjectViewer } from './components/pages';
 import { ConfigProvider } from 'antd';
 import { ThemeProvider, useTheme, generateRandomHue } from './contexts/ThemeContext';
 import { TsParticleBackground, MusicPlayer } from './components/atoms';
-import { useAudioStore } from './store/audio';
 
 import 'antd/dist/reset.css';
 import './global.scss';
 import './App.scss';
 
 const AppContent = () => {
-  const { randomStartHue, primaryColor, primaryDark, setPrimaryColor } = useTheme();
-  const audioUrl = useAudioStore((store) => store.audioUrl);
+  const { randomStartHue, primaryDark, setPrimaryColor } = useTheme();
 
   useEffect(() => {
     let startTime = Date.now();
@@ -44,19 +42,6 @@ const AppContent = () => {
   return (
     <ConfigProvider
       theme={{
-        components: {
-          Slider: {
-            trackBg: primaryDark,
-            trackHoverBg: primaryDark,
-          },
-          Pagination: {
-            itemActiveBg: primaryDark,
-            itemBg: primaryDark,
-            colorPrimary: primaryColor,
-            colorText: primaryColor,
-            fontWeightStrong: 600,
-          },
-        },
         token: {
           colorPrimary: primaryDark,
         }
@@ -64,10 +49,15 @@ const AppContent = () => {
     >
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Welcome />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/minecraft" element={<Minecraft />} />
-          <Route path="/project/:id" element={<ProjectViewer />} />
+          {/* The board stays mounted; each opened tile is a route drawn over it */}
+          <Route element={<Home />}>
+            <Route index element={null} />
+            <Route path="home" element={null} />
+            <Route path="music" element={<MusicLibrary />} />
+            <Route path="minecraft" element={<Minecraft />} />
+            <Route path="project/:id" element={<ProjectViewer />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
         </Routes>
       </BrowserRouter>
 

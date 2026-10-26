@@ -1,10 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useAudioStore } from '../../../store/audio';
-import { favoriteArtists, musicList } from '../../../common/constants';
-import { Button, Slider } from 'antd';
-import { FaPauseCircle, FaPlayCircle } from 'react-icons/fa';
+import { audioLevels } from './levels';
 
 import './index.scss';
+
+export { audioLevels } from './levels';
 
 // A frequency band whose level is normalized against the range the current track actually uses,
 // so quiet and loud masters both swing the visualizer from rest to full.
@@ -33,9 +33,6 @@ const CEILING_FALL_SECONDS = 4;
 
 const ease = (dt: number, seconds: number) => 1 - Math.exp(-dt / seconds);
 
-// Every track on the site, once each, for the shuffle that plays when nothing is queued
-const LIBRARY = Array.from(new Set([...musicList, ...favoriteArtists].map((item) => item.url)));
-
 const updateBand = (band: Band, data: Uint8Array, hzPerBin: number, dt: number) => {
     const from = Math.max(1, Math.floor(band.fromHz / hzPerBin));
     const to = Math.min(data.length - 1, Math.ceil(band.toHz / hzPerBin));
@@ -56,6 +53,11 @@ const updateBand = (band: Band, data: Uint8Array, hzPerBin: number, dt: number) 
     return band.level;
 };
 
+/**
+ * Owns the site's one <audio> element and the vignette visualizer. It has no buttons of its own:
+ * every control (the board's Now Playing tile, the library, the mini players) drives the element
+ * through the audio store, where this registers it.
+ */
 export const MusicPlayer = () => {
     const audioUrl = useAudioStore((store) => store.audioUrl);
     const playNext = useAudioStore((store) => store.playNext);
@@ -65,17 +67,18 @@ export const MusicPlayer = () => {
     const animationFrame = useRef<number | null>(null);
     const bands = useRef(createBands());
     const visualizerRef = useRef<HTMLDivElement>(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [volume, setVolume] = useState(1);
-    const [isHovering, setIsHovering] = useState(false);
 
-    // Tear the audio graph down on unmount
+    // Hand the element to the store, and tear the audio graph down on unmount
     useEffect(() => {
+        const element = audioRef.current;
+        if (element) element.volume = useAudioStore.getState().volume;
+        useAudioStore.setState({ audioElement: element });
         return () => {
             if (animationFrame.current) cancelAnimationFrame(animationFrame.current);
             audioContext.current?.close();
             audioContext.current = null;
             analyzerNode.current = null;
+            useAudioStore.setState({ audioElement: null, audioContext: null });
         };
     }, []);
 
@@ -98,6 +101,7 @@ export const MusicPlayer = () => {
 
         audioContext.current = context;
         analyzerNode.current = analyzer;
+        useAudioStore.setState({ audioContext: context });
 
         const data = new Uint8Array(analyzer.frequencyBinCount);
         const hzPerBin = context.sampleRate / analyzer.fftSize;
@@ -114,6 +118,8 @@ export const MusicPlayer = () => {
             analyzerNode.current.getByteFrequencyData(data);
             const lows = updateBand(bands.current.lows, data, hzPerBin, dt);
             const highs = updateBand(bands.current.highs, data, hzPerBin, dt);
+            audioLevels.lows = lows;
+            audioLevels.highs = highs;
 
             // Lows push the dark vignette in; highs flicker a tighter dark rim on top of it
             const rim = `inset 0 0 ${4 + 10 * highs}px ${1 + 4 * highs}px rgba(0, 0, 0, ${(highs * 0.45).toFixed(3)})`;
@@ -137,7 +143,7 @@ export const MusicPlayer = () => {
 
         const handleCanPlay = async () => {
             try {
-                if (audioContext.current?.state === "suspended") {
+                if (audioContext.current?.state === 'suspended') {
                     await audioContext.current.resume();
                 }
                 await audioRef.current?.play();
@@ -147,89 +153,25 @@ export const MusicPlayer = () => {
         };
 
         const audio = audioRef.current;
-        audio.addEventListener('canplay', handleCanPlay);
+        audio.addEventListener('canplay', handleCanPlay, { once: true });
 
         return () => {
             audio.removeEventListener('canplay', handleCanPlay);
         };
     }, [audioUrl]);
 
-    const togglePlayback = async () => {
-        if (!audioRef.current || !audioUrl) return;
-
-        try {
-            if (audioRef.current.paused) {
-                if (audioContext.current?.state === "suspended") {
-                    await audioContext.current.resume();
-                }
-                await audioRef.current.play();
-            } else {
-                audioRef.current.pause();
-            }
-        } catch (error) {
-            console.error("Error toggling playback:", error);
-        }
-    };
-
-    const handleVolumeChange = (value: number) => {
-        if (audioRef.current) {
-            audioRef.current.volume = value;
-            setVolume(value);
-        }
-    };
-
     return (
         <>
             {/* Visualizer */}
             <div ref={visualizerRef} className="audio-visualizer" />
 
-            {/* Player */}
-            {/* <div className="music-player">
-                <audio
-                    ref={audioRef}
-                    src={audioUrl}
-                    id="audio-element"
-                    className="hidden"
-                    key={audioUrl}
-                />
-
-                {audioUrl && <Button
-                    type="text"
-                    icon={audioRef.current?.paused ? <FaPlayCircle /> : <FaPauseCircle />}
-                    onClick={togglePlayback}
-                    className="music-control text-2xl"
-                />}
-            </div> */}
-
-            <div className="fixed bottom-4 right-6 z-50">
-                <div
-                    className="relative"
-                    onMouseEnter={() => setIsHovering(true)}
-                    onMouseLeave={() => setIsHovering(false)}
-                >
-                    {isHovering && (
-                        <div className="absolute bottom-full -right-2 p-2 rounded-lg">
-                            <Slider
-                                vertical
-                                min={0}
-                                max={1}
-                                step={0.01}
-                                value={volume}
-                                onChange={handleVolumeChange}
-                                tooltip={{ open: false }}
-                                className="h-24"
-                            />
-                        </div>
-                    )}
-                    {audioUrl && <Button
-                        type="text"
-                        icon={isPlaying ? <FaPauseCircle /> : <FaPlayCircle />}
-                        onClick={togglePlayback}
-                        className="music-control text-2xl"
-                    />}
-                </div>
-                <audio ref={audioRef} src={audioUrl} onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} onEnded={() => playNext(LIBRARY)} />
-            </div>
+            <audio
+                ref={audioRef}
+                src={audioUrl}
+                onPlay={() => useAudioStore.setState({ isPlaying: true })}
+                onPause={() => useAudioStore.setState({ isPlaying: false })}
+                onEnded={playNext}
+            />
         </>
     );
 };

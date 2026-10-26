@@ -1,0 +1,21 @@
+.project-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+
+    &--monogram {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        container-type: inline-size;
+        background: var(--color-primary-light);
+        color: var(--color-primary-dark);
+
+        span {
+            font-size: 22cqi;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+    }
+}

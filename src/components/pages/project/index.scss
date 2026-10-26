@@ -1,84 +1,135 @@
-.project-viewer {
-    display: flex;
-    height: 100vh;
-    flex-direction: column;
-    gap: 12px;
-    box-sizing: border-box;
-    // Leaves the cycling background showing round the frame, and room for the play button.
-    padding: 12px 12px 72px;
+$spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    @media (min-width: 640px) {
-        padding: 16px 24px 72px;
+.viewer {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 340px;
+
+    @media (max-width: 999px) {
+        display: block !important;
+        overflow-y: auto !important;
+    }
+
+    h2,
+    p {
+        margin: 0;
+        color: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+        outline: 3px solid var(--color-primary-light);
+        outline-offset: 2px;
+        box-shadow: 0 0 0 6px var(--color-primary-ink);
+    }
+
+    &--missing {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        flex-direction: column;
+    }
+
+    &__missing-title {
+        font-size: 30px;
+        font-weight: 900;
+    }
+
+    &__stage {
+        display: flex;
+        min-width: 0;
+        min-height: 0;
+        flex-direction: column;
+        gap: 14px;
+        padding: 20px;
     }
 
     &__bar {
         display: flex;
+        min-height: 56px;
         align-items: center;
-        gap: 12px;
-        padding: 8px;
+        gap: 8px;
+        padding: 6px;
         border-radius: 16px;
-        background: var(--color-primary-dark);
-        color: var(--color-primary-light);
+        background: rgba(0, 0, 0, 0.25);
+
+        // On a phone the overlay's close button sits at this bar's end
+        @media (max-width: 999px) {
+            margin-right: 56px;
+        }
     }
 
-    &__heading {
+    &__icon {
         display: flex;
-        flex: 1;
-        min-width: 0;
-        align-items: baseline;
-        gap: 10px;
-    }
-
-    &__title {
-        overflow: hidden;
-        margin: 0;
-        color: inherit;
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 1.2;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    &__year {
+        width: 44px;
+        height: 44px;
         flex-shrink: 0;
-        font-size: 13px;
-        font-weight: 600;
-        opacity: 0.75;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 12px;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        font-size: 22px;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+    }
+
+    &__address {
+        display: flex;
+        min-width: 0;
+        height: 44px;
+        flex: 1;
+        align-items: center;
+        gap: 8px;
+        padding: 0 14px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.25);
+        font-size: 15px;
+        font-weight: 800;
+
+        svg {
+            flex-shrink: 0;
+        }
+
+        span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 
     &__button {
         display: inline-flex;
-        min-height: 40px;
+        min-height: 44px;
         flex-shrink: 0;
         align-items: center;
+        justify-content: center;
         gap: 8px;
-        padding: 0 14px;
+        padding: 0 16px;
         border-radius: 999px;
         color: var(--color-primary-light);
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 900;
         text-decoration: none;
-        transition: background-color 0.2s;
+        transition: transform 0.3s $spring;
 
         &:hover {
-            background: rgba(255, 255, 255, 0.12);
             color: var(--color-primary-light);
-        }
-
-        &:focus-visible {
-            outline: 3px solid var(--color-primary-light);
-            outline-offset: 2px;
+            transform: rotate(-3deg) scale(1.04);
         }
 
         &--solid,
         &--solid:hover {
             background: var(--color-primary-light);
-            color: var(--color-primary-dark);
+            color: var(--color-primary-ink);
         }
     }
 
-    // Just the arrow on phones, where the bar is tight.
+    // Just the arrow on phones, where the bar is tight
     &__label {
         display: none;
 
@@ -87,34 +138,28 @@
         }
     }
 
-    &__stage {
+    &__frame {
         position: relative;
-        flex: 1;
         min-height: 0;
+        flex: 1;
         overflow: hidden;
         border-radius: 16px;
-        background: var(--color-primary-dark);
-        box-shadow: 0 20px 32px -18px rgba(0, 0, 0, 0.55);
+        background: var(--color-primary-ink);
+        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12);
 
-        &--empty {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 24px;
-            color: var(--color-primary-light);
-            text-align: center;
+        @media (max-width: 999px) {
+            height: 62vh;
+            flex: none;
         }
-    }
 
-    &__frame {
-        display: block;
-        width: 100%;
-        height: 100%;
-        border: 0;
-        // The old sites assume a white page under them.
-        background: #fff;
+        iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            // The old sites assume a white page under them.
+            background: #fff;
+        }
     }
 
     &__loading {
@@ -123,26 +168,173 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--color-primary-light);
-        font-weight: 700;
+        font-weight: 800;
+    }
+
+    &__empty {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 24px;
+        font-size: 18px;
+        font-weight: 800;
+        text-align: center;
     }
 
     &__still {
         max-width: min(560px, 100%);
-        max-height: 50%;
+        max-height: 60%;
         border-radius: 12px;
         object-fit: contain;
     }
 
-    &__note {
+    &__strip {
+        display: flex;
+        gap: 12px;
         margin: 0;
-        font-size: 18px;
-        font-weight: 700;
+        overflow-x: auto;
+        padding: 4px 2px 6px;
+        list-style: none;
+    }
+
+    &__thumb {
+        display: flex;
+        width: 128px;
+        flex-direction: column;
+        gap: 6px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 900;
+        text-align: left;
+        transition: transform 0.35s $spring;
+
+        span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &:hover {
+            transform: translateY(-4px) rotate(-2deg);
+        }
+    }
+
+    &__thumb-image {
+        border-radius: 10px;
+        opacity: 0.75;
+        transition: opacity 0.2s;
+    }
+
+    &__thumb:hover &__thumb-image,
+    &__thumb--on &__thumb-image {
+        opacity: 1;
+    }
+
+    &__thumb--on &__thumb-image {
+        box-shadow:
+            0 0 0 3px var(--color-primary-light),
+            0 0 0 6px var(--color-primary-ink);
+    }
+
+    &__side {
+        display: flex;
+        min-height: 0;
+        flex-direction: column;
+        gap: 14px;
+        overflow: auto;
+        padding: 24px;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    &__eyebrow {
+        // Level with the overlay's close button
+        display: flex;
+        min-height: 48px;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    &__title {
+        font-size: 42px;
+        font-weight: 900;
+        letter-spacing: -0.035em;
+        line-height: 1;
+        overflow-wrap: anywhere;
+    }
+
+    &__year {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: var(--color-primary-light);
+        color: var(--color-primary-ink);
+        font-size: 13px;
+        font-weight: 900;
     }
 
     &__description {
-        max-width: 48ch;
-        margin: 0;
-        opacity: 0.85;
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 1.45;
+    }
+
+    &__how {
+        display: flex;
+        gap: 10px;
+        padding: 14px;
+        border-radius: 16px;
+        background: rgba(0, 0, 0, 0.25);
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.45;
+
+        svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+            font-size: 18px;
+        }
+    }
+
+    &__steps {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__step {
+        display: flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 0 16px;
+        border: 2px solid var(--color-primary-light);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--color-primary-light);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 800;
+
+        &:hover {
+            background: var(--color-primary-light);
+            color: var(--color-primary-ink);
+        }
+    }
+
+    &__player {
+        margin-top: auto;
+        background: rgba(0, 0, 0, 0.28);
     }
 }

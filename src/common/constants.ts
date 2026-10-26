@@ -1,33 +1,11 @@
-import { TabsProps } from "antd";
-import { MusicItemProps } from "../components/atoms";
-
-export const siteSections = {
-    music: 'Music',
-    stats: 'Stats',
-    about: 'About',
-    blog: 'Blog',
-    goals: 'Goals',
-    skills: 'Skills',
-    projects: 'Projects',
-    work: 'Work',
-    contact: 'Contact'
-} as const;
-
-export const musicTabs: TabsProps['items'] = [
-    {
-        key: '1',
-        label: 'My Music',
-    },
-    {
-        key: '2',
-        label: 'Favorite Artists',
-    },
-    {
-        key: '3',
-        label: 'Recommended Music',
-    },
-];
-
+export interface MusicItemProps {
+    image: string;
+    title: string;
+    date: string;
+    /** Shown in the library's player. Leave it empty rather than writing filler. */
+    description: string;
+    url: string;
+}
 
 export const musicList: MusicItemProps[] = [
     {
@@ -68,56 +46,56 @@ export const musicList: MusicItemProps[] = [
     {
         image: '/images/music/ctrl_alt_del.jpeg',
         title: 'Anguish',
-        description: 'My first attempt at a remix',
+        description: '',
         url: '/music/anguish.mp3',
         date: '2017'
     },
     {
         image: '/images/music/ctrl_alt_del.jpeg',
         title: 'Breathe',
-        description: 'My first attempt at a remix',
+        description: '',
         url: '/music/breathe.mp3',
         date: '2017'
     },
     {
         image: '/images/music/ctrl_alt_del.jpeg',
         title: 'Fearless',
-        description: 'My first attempt at a remix',
+        description: '',
         url: '/music/fearless.mp3',
         date: '2016'
     },
     {
         image: '/images/music/hide_and_seek.jpg',
         title: 'Hide & Seek - Les Edit',
-        description: 'My first attempt at a remix',
+        description: '',
         url: '/music/hide_and_seek.mp3',
         date: '2016'
     },
     {
         image: '/images/music/transition.jpg',
         title: 'Transition',
-        description: 'My first attempt at a remix',
+        description: '',
         url: '/music/transition.mp3',
         date: '2015'
     },
     {
         image: '/images/music/ctrl_alt_del.jpeg',
         title: 'Identity',
-        description: 'My first attempt at a remix',
+        description: '',
         url: '/music/identity.mp3',
         date: '2015'
     },
     {
         image: '/images/music/ctrl_alt_del.jpeg',
         title: 'Stepping Clouds',
-        description: 'My first attempt at a remix',
+        description: '',
         url: '/music/stepping_clouds.mp3',
         date: '2015'
     },
     {
         image: '/images/music/ctrl_alt_del.jpeg',
         title: 'Innocence',
-        description: 'My first attempt at a remix',
+        description: '',
         url: '/music/innocence.mp3',
         date: '2012'
     },
@@ -125,27 +103,29 @@ export const musicList: MusicItemProps[] = [
 
 export const favoriteArtists: MusicItemProps[] = [
     {
-        image: '/images/marceline.jpg',
+        image: '/images/music/marceline.jpg',
         title: 'S3RL',
-        description: 'My second attempt at a remix',
+        description: '',
         url: '/music/marceline.mp3',
         date: '2022'
     },
     {
-        image: '/images/super_bitch.jpg',
+        image: '/images/music/super_bitch.jpg',
         title: 'WeAreCastor',
-        description: 'A valid description',
+        description: '',
         url: '/music/super_bitch.wav',
         date: '2022'
     },
-    {
-        image: '',
-        title: 'Dancin',
-        description: 'My first attempt at a remix',
-        url: '/music/dancin.mp3',
-        date: '2016'
-    },
 ]
+
+/** What "Play with sound" starts on the board. It has no cover art, so it shows a monogram. */
+export const welcomeTrack: MusicItemProps = {
+    image: '',
+    title: 'Dancin',
+    description: '',
+    url: '/music/dancin.mp3',
+    date: '2016'
+}
 
 export interface HomeProject {
     id: string;

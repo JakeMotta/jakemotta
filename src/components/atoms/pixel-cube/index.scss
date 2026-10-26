@@ -1,0 +1,21 @@
+.pixel-cube {
+    display: grid;
+    width: 68px;
+    height: 68px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    &__g {
+        background: var(--color-primary);
+    }
+
+    &__d {
+        background: var(--color-primary-dark);
+    }
+
+    &__s {
+        background: var(--color-primary-ink);
+    }
+}

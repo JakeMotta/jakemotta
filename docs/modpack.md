@@ -1,6 +1,6 @@
 # Minecraft modpack downloads
 
-`/minecraft` (`src/components/pages/minecraft`) is the download page for Progression Survival, the modpack for Jake's modded Minecraft server. The pack itself is built elsewhere, in Jake's Codex workspace (`Documents/Codex/2026-10-23/minecraft-progressive-smithing`), and only its finished releases are published here.
+`/minecraft` (`src/components/pages/minecraft`) is the download page for Progression Survival, the modpack for Jake's modded Minecraft server. It opens as an overlay on the board, from the modpack tile. The pack itself is built elsewhere, in Jake's Codex workspace (`Documents/Codex/2026-10-23/minecraft-progressive-smithing`), and only its finished releases are published here.
 
 ## Publishing a release
 
@@ -12,7 +12,7 @@
 3. Commit and push. The deploy uploads it.
 
 `scripts/release-modpack.mjs` refuses a release whose archives don't match the builder's `SHA256SUMS.txt`, or that contain worlds, player data, admin lists, `server.properties` or logs. It copies the two archives and the notes into `public/downloads/progression-survival/releases/<version>/`, writes a checksum file covering just those two archives, and regenerates:
-- **`releases.json`:** every release, newest first. The download page reads it at runtime, so a release needs no code change.
+- **`releases.json`:** every release, newest first. The download page and the board's modpack tile read it at runtime (`src/common/modpack.ts`), so a release needs no code change.
 - **`latest.json`:** the newest release on its own.
 - **`.htaccess`:** `latest.mrpack` and `latest-server.zip` answer with a 302 to the newest files, never a 301, which browsers would remember forever. It also sets `no-cache` on the JSON files and `no-store` on those redirects.
 

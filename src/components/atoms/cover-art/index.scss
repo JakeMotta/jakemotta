@@ -1,0 +1,21 @@
+.cover-art {
+    display: block;
+    object-fit: cover;
+
+    &--monogram {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        container-type: inline-size;
+        background: var(--color-primary);
+        color: var(--color-primary-ink);
+
+        span {
+            font-size: 24cqi;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+    }
+}

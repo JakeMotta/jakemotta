@@ -15,6 +15,7 @@ Jake Motta's personal website (jakemotta.com): a playful showcase of his work, m
 This file holds the rules for the whole repo. The detail lives in `docs/`:
 
 - [`docs/projects/README.md`](docs/projects/README.md): how project previews and card images work, and the checklist for adding a project. Each project has its own page beside it (`docs/projects/<card id>.md`), covering where the project came from, how its preview runs, and what was left out on purpose.
+- [`docs/board.md`](docs/board.md): the bento board, its tiles, the sound-or-silence choice, and the overlays its tiles open.
 - [`docs/music.md`](docs/music.md): the music player, its queue and shuffle, and the visualizer.
 - [`docs/modpack.md`](docs/modpack.md): publishing a Minecraft modpack release, and the rules for the downloads.
 
@@ -41,22 +42,24 @@ There are no tests in `src/` yet, and no lint script beyond the ESLint that CRA 
 
 Create React App (react-scripts 5) + TypeScript, React 19, react-router v7, Ant Design 5, Tailwind 3 alongside per-component SCSS, zustand for state.
 
-**Layout of `src/components/`** follows atomic design: `atoms/` (small pieces, including the music player and project card), `templates/` (page shells), `pages/` (routes). Each folder has an `index.ts` barrel, and new components are exported through it.
+**Layout of `src/components/`** follows atomic design: `atoms/` (small pieces: the music player, the transport and sliders, cover art, project images, the eq bars), `templates/` (page shells: the color-shifting background and the overlay), `pages/` (routes). Each folder has an `index.ts` barrel, and new components are exported through it.
+
+**The board and its overlays** (full spec in [`docs/board.md`](docs/board.md)). The whole site is one bento board, `pages/home`, at `/` (and `/home`). Its tiles open as overlays drawn over it, each a route of its own: `/music` (`pages/music`), `/project/:id` (`pages/project`) and `/minecraft` (`pages/minecraft`). In `App.tsx` the board is a layout route and the overlays render into its `<Outlet />`, so the board stays mounted, dimmed and inert, behind whichever one is open, and Back, Escape or the close button return to it. Overlays use `templates/bento-overlay`, which portals them to `<body>`. Any other path redirects to `/`.
 
 **What stays mounted across routes.** `App.tsx` renders the `<Routes>` and, beside them (outside `BrowserRouter`), `<TsParticleBackground />` and `<MusicPlayer />`. Because the player sits outside the routes it survives navigation, which is what lets music keep playing between pages. Anything else that must persist across pages belongs there too.
 
-**Theme / color cycling.** `App.tsx` runs a `requestAnimationFrame` loop that rotates the hue through 360° every 30s from a random start and calls `setPrimaryColor`. `contexts/ThemeContext.tsx` derives `primaryDark` and writes both to the CSS variables `--color-primary` / `--color-primary-dark`. Tailwind's `primary` and `primary-dark` colors (`tailwind.config.js`) point at those variables, and the antd `ConfigProvider` theme in `App.tsx` is fed the same values. So use `text-primary`, `bg-primary-dark` etc. rather than fixed colors, and expect antd components to need their tokens wired in `App.tsx` to follow the cycling hue. `templates/color-shifting-background` paints the page background from `primaryColor` and is the shell every page wraps itself in.
+**Theme / color cycling.** `App.tsx` runs a `requestAnimationFrame` loop that rotates the hue through 360° every 30s from a random start and calls `setPrimaryColor`. `contexts/ThemeContext.tsx` derives `primaryDark`, `primaryLight` and `primaryInk` and writes all four to the CSS variables `--color-primary`, `--color-primary-dark`, `--color-primary-light` and `--color-primary-ink`. Tailwind's `primary`, `primary-dark`, `primary-light` and `primary-ink` colors (`tailwind.config.js`) point at those variables, and the antd `ConfigProvider` theme in `App.tsx` is fed the same values. So use `text-primary`, `bg-primary-dark` etc. (or the variables in SCSS) rather than fixed colors. No antd components are in use any more; one added later needs its tokens wired in `App.tsx` to follow the cycling hue. `templates/color-shifting-background` paints the page background from `primaryColor` and is the shell the board wraps itself in.
 
 **Music and visualizer** (full spec in [`docs/music.md`](docs/music.md)).
-- `store/audio.ts` (zustand) holds the playing `audioUrl`, the visitor's `queue` and the `shuffled` fallback. `setAudioUrl` plays a track now; each `MusicTile` has a queue button (`toggleQueued`). When a track ends, `playNext` plays the next queued track, else the next shuffled one, and reshuffles the library when that runs out, never repeating the track that just ended.
-- `atoms/music-player` owns the one `<audio>` element and builds the Web Audio graph once, on the first track: a media element can feed only one `MediaElementAudioSourceNode` for its lifetime. A rAF loop reads two adaptive bands (lows and highs) and writes the vignette's `box-shadow` straight onto `.audio-visualizer` through a ref. That direct DOM write, instead of React state, keeps the visualizer in sync at frame rate; keep per-frame work on that path.
-- Browser autoplay rules: audio can only start after a user gesture, which is why the Welcome page asks the visitor to choose before entering. `AudioContext.resume()` is called before `play()` for the same reason.
+- `store/audio.ts` (zustand) holds the playing `audioUrl`, the visitor's `queue`, the `shuffled` fallback, a `history` for Previous, `isPlaying`, `volume` and the visitor's `entry` choice. It also holds the `<audio>` element and its `AudioContext`, which the player registers, so every control (`togglePlayback`, `playNext`, `playPrevious`, `setVolume`) drives the one element from anywhere. `setAudioUrl` plays a track now; `toggleQueued` adds or removes it from the queue. When a track ends, `playNext` plays the next queued track, else the next shuffled one. The shuffle is kept topped up, never repeating the track that just ended, so "Up next" always has something to show.
+- `atoms/music-player` owns the one `<audio>` element and has no buttons of its own. It builds the Web Audio graph once, on the first track: a media element can feed only one `MediaElementAudioSourceNode` for its lifetime. A rAF loop reads two adaptive bands (lows and highs) and writes the vignette's `box-shadow` straight onto `.audio-visualizer` through a ref. It also writes the levels to `audioLevels`, which the small `EqBars` read in their own loops. That direct DOM write, instead of React state, keeps the visualizers in sync at frame rate; keep per-frame work on that path (the seek slider follows the same rule).
+- Browser autoplay rules: audio can only start after a user gesture. That's why the board's Now Playing tile asks the visitor to choose sound or silence before anything plays, and the rest of the board waits, dimmed, until they do. `AudioContext.resume()` is called before `play()` for the same reason.
 - `realtime-bpm-analyzer` and `react-use-audio-player` are installed but not used yet.
 
-**Content data.** The music lists (`musicList`, `favoriteArtists`), the Home tabs and the project cards (`homeProjectList`) are static arrays in `common/constants.ts`. Adding a song or project means editing that file and putting its assets in `public/` (`public/music/`, `public/images/music/`, `public/images/projects/`), referenced by absolute paths like `/music/foo.mp3`.
+**Content data.** The music lists (`musicList`, `favoriteArtists`), the welcome track (`welcomeTrack`, what "Play with sound" starts) and the projects (`homeProjectList`) are static arrays in `common/constants.ts`; `common/music.ts` derives the shuffle library and looks tracks up by URL. Adding a song or project means editing that file and putting its assets in `public/` (`public/music/`, `public/images/music/`, `public/images/projects/`), referenced by absolute paths like `/music/foo.mp3`. A track's `description` shows in the library's player, so leave it empty rather than writing filler.
 
 **Project previews** (how they work and how to add one: [`docs/projects/README.md`](docs/projects/README.md); one page per project beside it). Two paths that look alike and must not be mixed up:
-- `/project/:id` (singular) is an app route, `pages/project`. Cards link there with a router `<Link>`, so the music keeps playing. The viewer frames the project's `preview` from `homeProjectList`, under a bar with Back and "Open in new tab".
+- `/project/:id` (singular) is an app route, `pages/project`: the project viewer, an overlay on the board. The board's project tiles link there with a router `<Link>`, so the music keeps playing. The viewer frames the project's `preview` from `homeProjectList` under an address bar with previous/next and "Open in new tab", with a strip of every project below it and the project's details beside it. Stepping between projects replaces the history entry, so Back closes the viewer.
   - **Link handling:** it opens links that leave `/projects/` in a new tab, leaves `javascript:` links to run in place, and shows the screenshot with a note for a project that has no `preview`.
   - **Live sites:** `preview` can also be a live site's own address (TapSlayDie). That frame is cross-origin, and the link handling can't reach into it.
 - `/projects/<site>/` (plural) are the projects themselves: standalone sites served as plain files from `public/projects/`, never routes. `.htaccess` keeps them away from the SPA. In dev, CRA's fallback answers any folder path with the app, so `preview` names the page file (`…/index.html`).
@@ -67,33 +70,38 @@ Apart from regenerating the converted output, treat `public/projects/` as an arc
 
 **Card images** are screenshots of each running preview, taken by `yarn projects:screenshot` (`scripts/screenshot-projects.mjs`) as `public/images/projects/<id>.webp`. A new project needs an entry in that script's `SHOTS` list too.
 
-**Minecraft modpack page.** `/minecraft` (`pages/minecraft`) is a download page for the Progression Survival modpack. It reads `/downloads/progression-survival/releases.json` at runtime, and `yarn modpack:release` publishes a new version. Procedure and rules: [`docs/modpack.md`](docs/modpack.md).
+**Minecraft modpack page.** `/minecraft` (`pages/minecraft`) is the modpack tile opened: the Progression Survival download page, laid out as a board of its own over the main one. It and the board's modpack tile read `/downloads/progression-survival/releases.json` at runtime (`common/modpack.ts`), and `yarn modpack:release` publishes a new version. Procedure and rules: [`docs/modpack.md`](docs/modpack.md).
 
 ## Style
 
 Decisions Jake has made about the look. Follow them unless he says otherwise.
 
-- **The color-cycling background and its UI stay.** Every page sits on `ColorShiftingBackground`, the hue keeps cycling, and the particles, the inset vignette that pulses with the bass, and the floating play button bottom-right are all part of the identity. New work goes on top of them; it doesn't replace or tone them down.
-- **All color comes from the cycling hue.** Use `primary` (`hsl(h, 40%, 60%)`) for the page ground and `primary-dark` (the same hue at lightness −30) for surfaces like cards and panels, through the Tailwind classes or the CSS variables. Don't introduce fixed hex colors for UI; they stop matching as the hue moves. The `secondary` and `brand` colors in `tailwind.config.js` are unused leftovers.
-- **Text on `primary-dark` surfaces uses `primary-light`, not `primary`.** `primary` on `primary-dark` is only about 3:1, which is fine for 24px bold section titles but too faint for body text. `primary-light` (`--color-primary-light`, `hsl(h, 45%, 94%)`, set by `ThemeContext` alongside the other two) is the pale tint for that text and for light buttons; keep `primary` for accents.
-- **Type:** the system font stack, bold weights. Section titles are `StickySectionTitle`: 24px bold `primary-dark`, sticky while their section scrolls.
-- **Tone is playful.** Small tilts, lifts and springy easing on hover are welcome; corporate polish is not the goal.
+- **The color-cycling background and its UI stay.** The board sits on `ColorShiftingBackground`, the hue keeps cycling, and the particles and the inset vignette that pulses with the bass are part of the identity. New work goes on top of them; it doesn't replace or tone them down. The player lives in the board's Now Playing tile, and wherever that tile is out of sight (in the overlays, and on phones once it scrolls away) a `MiniPlayer` pill takes over. Together they replaced the old floating play button.
+- **All color comes from the cycling hue.** Use `primary` (`hsl(h, 40%, 60%)`) for the page ground and `primary-dark` (the same hue at lightness −30) for surfaces like tiles and panels, through the Tailwind classes or the CSS variables. Don't introduce fixed hex colors for UI; they stop matching as the hue moves. The `secondary` and `brand` colors in `tailwind.config.js` are unused leftovers.
+- **Text on `primary-dark` surfaces uses `primary-light`, not `primary`.** `primary` on `primary-dark` is only about 3:1, which is fine for 24px bold titles but too faint for body text. `primary-light` (`--color-primary-light`, `hsl(h, 45%, 94%)`) is the pale tint for that text and for light buttons; keep `primary` for accents.
+- **Text straight on the ground uses `primary-ink`.** `primary-dark` on `primary` is under 3:1 too. `primary-ink` (`--color-primary-ink`, `hsl(h, 45%, 15%)`) is the near-black of the hue, for text and rims on the page ground and on `primary-light` tiles.
+- **Type:** the system font stack, bold weights: 900 for names and headings, 800 for most other text. Tiles head themselves with a small uppercase eyebrow or a bold heading; there are no sticky section titles any more.
+- **Tone is playful.** Small tilts, lifts and springy easing on hover are welcome; corporate polish is not the goal. Every tile leans its own way on hover (`--tilt`), and `prefers-reduced-motion` turns the tilts and spins off.
 
-### Project cards
+### The board
 
-Every project card must:
+**Direction: the Bento board**, built from the "2 · Bento" pages of the [jakemotta.com Layout Concepts canvas](https://claude.ai/artifact/Ppw6uZbYxKSoktKAXB6b4U). Jake picked it over five other layouts. Tile by tile it's described in [`docs/board.md`](docs/board.md); the rules that hold across it:
 
-- be a real link (a router `<Link>` to `/project/<id>`), so keyboard focus and middle-click work and the music keeps playing, with a visible `:focus-visible` ring;
-- show a preview: the project's screenshot from `public/images/projects/`, or, when there is none, a monogram tile in the hue. Never an empty `src` or a placeholder box;
-- keep equal heights in a row: the image at a fixed 4:3 aspect ratio (the screenshots are 960×720 WebP from `yarn projects:screenshot`) and the description clamped to a few lines;
-- make it obvious the card goes somewhere (on desktop the hover reveal below; on phones the always-visible arrow).
+- Desktop (1100px and up) is four columns by three rows, exactly one screen tall, with no page scroll. Tablets get two columns and phones one, and there the board scrolls.
+- A tile that does one thing is one link or button; a tile that holds several things is a `<section>` with a heading.
+- Opening a tile never leaves the board: it's an overlay route over it (see Architecture).
+- Before the visitor chooses sound or silence, only the Now Playing tile is live; the rest are dimmed and inert. The choice isn't remembered across reloads, since sound can't start without a click anyway.
 
-**Direction: minimal hover reveal**, built in `atoms/project-card` from the "C2" boards on the [Project Card Mockups canvas](https://claude.ai/artifact/49o5Z3bUZ81nC4gpLL5NPB). Jake picked it for being minimal; keep it that way rather than adding chrome. The cards are fed by `homeProjectList` in `common/constants.ts`: an empty `image` gives the monogram tile and an empty `description` shows none, so leave a field empty rather than writing filler.
+### Project tiles
 
-- At rest the card is just the screenshot, edge to edge, with a small `primary-dark` pill holding the name and year.
-- On hover or keyboard focus the pill fades and a `primary-dark` panel slides up from the bottom with the name, year, a one-line description (two lines at most) and a "Visit site ↗" pill in the pale tint. The card lifts slightly and the image zooms and dims a little.
-- Phones have no hover, so the panel is always visible as a compact bar: name, year, a one-line description that truncates, and a round arrow button. The SCSS writes this touch layout first and layers the reveal on under `@media (hover: hover) and (min-width: 640px)`, so it's chosen by whether the device can hover, not by width alone.
-- Descriptions say what the project is in one plain sentence. They don't start with "This is a project…" and aren't padded to fill space.
+Projects appear on the board as the featured tile (the first, newest entry in `homeProjectList`, marked "Newest") and as small screenshots in the Projects tile, and in the viewer's strip. Every one of them must:
+
+- be a real link (a router `<Link>` to `/project/<id>`), so keyboard focus and middle-click work and the music keeps playing, with a visible `:focus-visible` ring (pale with a dark halo, so it shows on any surface);
+- show a preview through `atoms/project-image`: the project's screenshot from `public/images/projects/`, or, when there is none, a monogram tile in the hue. Never an empty `src` or a placeholder box;
+- keep the image at a fixed 4:3 aspect ratio (the screenshots are 960×720 WebP from `yarn projects:screenshot`), names truncated and descriptions clamped to two lines;
+- make it obvious it goes somewhere: a lift and tilt on hover, and the featured tile's arrow.
+
+The tiles are fed by `homeProjectList` in `common/constants.ts`: an empty `image` gives the monogram tile and an empty `description` shows none, so leave a field empty rather than writing filler. Descriptions say what the project is in one plain sentence. They don't start with "This is a project…" and aren't padded to fill space.
 
 ## Deployment
 

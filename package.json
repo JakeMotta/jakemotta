@@ -35,6 +35,7 @@
     "eject": "react-scripts eject",
     "modpack:release": "node scripts/release-modpack.mjs",
     "projects:convert": "node scripts/convert-php-sites.mjs",
+    "projects:screenshot": "node scripts/screenshot-projects.mjs",
     "prettier": "prettier --write \"**/*.+(tsx|ts|jsx|js|json|css|scss|md)\" --fix",
     "reset": "rm -rf node_modules yarn.lock && yarn"
   },

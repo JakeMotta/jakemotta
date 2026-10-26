@@ -1,0 +1,15 @@
+#!/bin/bash
+for((i=1; i<=$1; i++)); 
+do
+	a="$3/datapoints/$2.$i"
+	a+="_det_0.pts"
+	./delaunay "$3/$2.$i.png" "$a"
+done
+
+cd /var/www/html/$3
+b="ffmpeg -framerate 30 -i '$2"
+b+=".%d.png-OUTPUTS.png' OUTPUT.avi"
+eval $b
+
+c="ffmpeg -i OUTPUT.avi OUTPUT.webm"
+eval $c

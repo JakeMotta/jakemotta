@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Face Me - SignUp</title>
+
+<!-- Static archive copy of SignUp.php. Handled by js/faceme.js; nothing is sent anywhere. -->
+<link rel="stylesheet" type="text/css" href="files/cssreset.css">
+<link rel="stylesheet" type="text/css" href="files/mainCSS.css">
+<link rel="stylesheet" type="text/css" href="files/static.css">
+</head>
+
+<body>
+    <div id="topnav">
+    	<div id="top-box-1" class="class-hover-effect"></div>
+        <div id="top-box-2" class="class-hover-effect"></div>
+        <div id="top-box-3" class="class-hover-effect"></div>
+        <div id="top-box-4" class="class-hover-effect"></div>
+        <div id="topnav-footer"></div>
+    </div>
+
+    <div id="container">
+        	<div id="header"><span class="header-text">FACE ME</span></div>
+        	<div id="content">
+            	<div id="form-holder">
+                	<div id="form-header">Sign Up</div>
+                    <div class="demo-note">Demo copy: any details work, and nothing is kept beyond this browser tab.</div>
+                    <form name="registerForm" id="register-form" action="Register.html" method="POST">
+                            <input type="text" name="firstName" placeholder="Firstname" autocomplete="off">
+                            <input type="text" name="lastName" placeholder="Lastname" autocomplete="off">
+                            <input type="text" name="Uname" placeholder="Username" autocomplete="off">
+                            <input type="password" name="Password" placeholder="Password" autocomplete="off">
+                            <input type="password" name="Password_Confirm" placeholder="Confirm Password" autocomplete="off">
+                            <input type="submit" value="Submit">
+                    </form>
+                    <div class="form-message" id="form-message" role="alert"></div>
+                    <div id="form-footer">
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <div id="footer">
+    	<span class="sub-text grey">
+			<table id="f-table">
+				<tr>
+					<td class="f-table-data"><a class="f-bot-links small-text class-hover-effect" href="index.html">Login</a></td>
+                    <td class="f-table-data-end"><a class="f-bot-links small-text class-hover-effect" href="SignUp.html">Sign Up</a></td>
+				</tr>
+			</table>
+		</span>
+    </div>
+
+<script src="js/faceme.js"></script>
+<script>
+    document.getElementById('register-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var f = this.elements;
+        // Register.php sent you back to the form when the two passwords differed.
+        if (f.Password.value !== f.Password_Confirm.value) {
+            document.getElementById('form-message').textContent = 'The passwords do not match.';
+            return;
+        }
+        FaceMe.logIn(f.Uname.value || f.firstName.value); // dummy Register.php: no database, no table
+        window.location.href = 'Register.html';
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Face Me - Login</title>
+<meta name="description" content="Face Me, a CS160 team project (2016): upload a video and get it back with a face mesh plotted on every frame.">
+
+<!-- Static archive copy of index.php. The forms are handled by js/faceme.js; nothing is sent anywhere. -->
+<link rel="stylesheet" type="text/css" href="files/cssreset.css">
+<link rel="stylesheet" type="text/css" href="files/mainCSS.css">
+<link rel="stylesheet" type="text/css" href="files/static.css">
+</head>
+
+<body>
+    <div id="topnav">
+    	<div id="top-box-1" class="class-hover-effect"></div>
+        <div id="top-box-2" class="class-hover-effect"></div>
+        <div id="top-box-3" class="class-hover-effect"></div>
+        <div id="top-box-4" class="class-hover-effect"></div>
+        <div id="topnav-footer"></div>
+    </div>
+
+    <div id="container">
+        	<div id="header"><span class="header-text">FACE ME</span></div>
+        	<div id="content" class="with-demo">
+            	<div id="form-holder">
+                	<div id="form-header">Login</div>
+                    <div class="demo-note">Demo copy: <strong>any username and password</strong> logs you in. Nothing leaves your browser.</div>
+                    <form name="logInForms" id="login-form" method="POST" action="Upload.html">
+                        <input type="text" name="Uname" placeholder="Username" autocomplete="off"><br>
+                        <input type="password" name="Password" placeholder="Password" autocomplete="off"><br>
+                        <input type="submit" class="class-hover-effect" value="Login">
+                    </form>
+
+                    <form name="singUpButton" method="GET" action="SignUp.html">
+                        <input type="submit" class="class-hover-effect" value="Sign Up">
+                    </form>
+
+                    <div class="video_container">
+                        <div class="video_div">
+                            <a href="Output.html?v=out1" class="class-hover-effect">
+                                <div class="video_div_header">Video Output 1</div>
+                                <img src="images/faceme_output.png" alt="Video Output 1: a face with the landmark mesh drawn over it">
+                            </a>
+                        </div>
+                        <div class="video_div">
+                            <a href="Output.html?v=out2" class="class-hover-effect">
+                                <div class="video_div_header">Video Output 2</div>
+                                <img src="images/faceme_output2.png" alt="Video Output 2: a face with the landmark mesh drawn over it">
+                            </a>
+                        </div>
+                        <div class="video_footer"></div>
+                    </div>
+
+                    <div id="form-footer"></div>
+                </div>
+
+                <div class="demo-holder">
+                    <div class="demo-header">Face plot</div>
+                    <div id="faceplot"></div>
+                    <div class="faceplot-caption">
+                        The project's real landmark data, re-plotted live: 68 points per frame found by OpenFace, joined by a Delaunay triangulation, the way <code>delaunay.cpp</code> drew them onto each frame.
+                        <a href="Output.html?v=landmarks">Open the result page</a>.
+                    </div>
+                    <div class="demo-footer"></div>
+                </div>
+            </div>
+    </div>
+
+    <div id="footer">
+    	<span class="sub-text grey">
+			<table id="f-table">
+				<tr>
+					<td class="f-table-data"><a class="f-bot-links small-text class-hover-effect" href="index.html">Login</a></td>
+					<td class="f-table-data-end"><a class="f-bot-links small-text class-hover-effect" href="SignUp.html">Sign Up</a></td>
+				</tr>
+			</table>
+		</span>
+    </div>
+
+<script src="js/faceme.js"></script>
+<script src="js/landmarks.js"></script>
+<script src="js/faceplot.js"></script>
+<script>
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        FaceMe.logIn(this.elements.Uname.value); // dummy authenticate.php: any login works
+        window.location.href = 'Upload.html';
+    });
+    FacePlot.mount(document.getElementById('faceplot'), { autoplay: true });
+</script>
+</body>
+</html>

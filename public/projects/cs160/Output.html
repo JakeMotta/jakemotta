@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Face Me - Output</title>
+
+<!-- New page for the static archive copy: plays what Videos.php opened in html5lightbox. Nothing is sent anywhere. -->
+<link rel="stylesheet" type="text/css" href="files/cssreset.css">
+<link rel="stylesheet" type="text/css" href="files/mainCSS.css">
+<link rel="stylesheet" type="text/css" href="files/static.css">
+</head>
+
+<body>
+    <div id="topnav">
+    	<div id="top-box-1" class="class-hover-effect"></div>
+        <div id="top-box-2" class="class-hover-effect"></div>
+        <div id="top-box-3" class="class-hover-effect"></div>
+        <div id="top-box-4" class="class-hover-effect"></div>
+        <div id="topnav-content">
+            <div id="topnav-text"></div>
+        </div>
+        <div id="topnav-footer"></div>
+    </div>
+
+    <div id="container">
+        	<div id="header"><span class="header-text">FACE ME</span></div>
+        	<div id="content">
+            	<div id="form-holder" class="wide">
+                    <div id="form-header">Output</div>
+                    <div id="form-subheader"></div>
+                    <div id="output"></div>
+                    <div class="output-meta" id="output-meta"></div>
+                    <div class="faceplot-caption" id="output-caption"></div>
+                    <div id="form-footer"></div>
+                </div>
+            </div>
+    </div>
+
+    <div id="footer">
+    	<span class="sub-text grey">
+			<table id="f-table">
+				<tr id="footer-links">
+					<td class="f-table-data"><a class="f-bot-links small-text class-hover-effect" href="Upload.html">Upload</a></td>
+                    <td class="f-table-data"><a class="f-bot-links small-text class-hover-effect" href="Videos.html">My Videos</a></td>
+					<td class="f-table-data-end"><a class="f-bot-links small-text class-hover-effect" href="logout.html">Log Out</a></td>
+				</tr>
+			</table>
+		</span>
+    </div>
+
+<script src="js/faceme.js"></script>
+<script src="js/landmarks.js"></script>
+<script src="js/faceplot.js"></script>
+<script>
+    // The sample outputs are public, like the two videos on the old login page.
+    var user = FaceMe.currentUser();
+    FaceMe.setWelcome(user);
+    if (!user) {
+        document.getElementById('footer-links').innerHTML =
+            '<td class="f-table-data"><a class="f-bot-links small-text class-hover-effect" href="index.html">Login</a></td>' +
+            '<td class="f-table-data-end"><a class="f-bot-links small-text class-hover-effect" href="SignUp.html">Sign Up</a></td>';
+    }
+    var v = FaceMe.findVideo(user, FaceMe.param('v') || 'landmarks') || FaceMe.findVideo(null, 'landmarks');
+    var out = document.getElementById('output');
+    var caption = document.getElementById('output-caption');
+    document.getElementById('form-subheader').textContent = v.name;
+    document.getElementById('output-meta').textContent = v.info || '';
+    document.title = 'Face Me - ' + v.name;
+
+    if (v.file) {
+        // One of the two OUTPUT.webm files the real server produced.
+        var video = document.createElement('video');
+        video.className = 'output-video';
+        video.controls = true;
+        video.autoplay = true;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.setAttribute('aria-label', v.name);
+        out.appendChild(video);
+        FaceMe.playVideo(video, v.file);
+        caption.innerHTML =
+            'The original output from 2016: the server split the upload into frames, found 68 landmarks per frame with OpenFace, drew the Delaunay mesh on each one with <code>delaunay.cpp</code> and stitched them back into OUTPUT.webm with ffmpeg. ' +
+            '<a href="Output.html?v=landmarks">See landmark data re-plotted live</a>.';
+    } else {
+        FacePlot.mount(out, { autoplay: true });
+        if (v.sample) {
+            caption.innerHTML =
+                "Real OpenFace output for one of the project's test videos (<code>faceme/data_points/</code>), triangulated and drawn live in your browser the way <code>delaunay.cpp</code> drew it. " +
+                'The frames of that video were not kept, so the mesh is drawn on a plain background. ' +
+                '<a href="Output.html?v=out1">Watch a real output video</a>.';
+        } else {
+            caption.innerHTML =
+                "This static copy can't process <strong></strong>, so it shows the project's sample landmark data (<code>faceme/data_points/</code>), triangulated and drawn live in your browser. " +
+                '<a href="Output.html?v=out1">Watch a real output video</a>.';
+            caption.querySelector('strong').textContent = v.name;
+        }
+    }
+</script>
+</body>
+</html>

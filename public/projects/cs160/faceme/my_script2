@@ -1,0 +1,23 @@
+#!/bin/bash
+echo "TEST!!!!!!!!"
+for((i=1; i<=$1; i++)); 
+do
+	a="$3/datapoints/$2.$i"
+	a+="_det_0.pts"
+	./delaunay "$3/$2.$i.png" "$a"
+done
+
+cd /var/www/html/$3
+# echo "/var/www/html/$3"
+# echo "      "
+b="ffmpeg -framerate 30 -i '$2"
+b+=".%d.png-OUTPUTS.png' OUTPUT.avi"
+# echo $b
+# $b
+echo "***************"
+echo "$b"
+eval $b
+
+c="ffmpeg -i OUTPUT.avi OUTPUT.webm"
+#ffmpeg -framerate 30 -i '${2}.%d.png-OUTPUTS.png' out.avi
+#ffmpeg -framerate 30 -i '1.%d.png-OUTPUTS.png' out.avi

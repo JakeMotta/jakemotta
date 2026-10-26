@@ -1,0 +1,236 @@
+body {
+	background-color:#181712;
+}
+
+/* Div Styles */
+#topnav {
+	width:100%;
+	height:30px;
+	background-color:transparent;
+	margin-top:30px;
+}
+#top-box-1, #top-box-2, #top-box-3, #top-box-4 {
+	width:50px;
+	height:30px;
+	margin-left:10px;
+	float:left;
+}
+#top-box-1 {background-color:#757671; margin-left: 20px;}
+#top-box-2 {background-color:#6ABDDB;}
+#top-box-3 {background-color:#F0F0F0;}
+#top-box-4 {background-color:#AFABA0;}
+
+#top-box-1:hover {background-color:#424240;}
+#top-box-2:hover {background-color:#2D94BB;}
+#top-box-3:hover {background-color:#AEAEAE;}
+#top-box-4:hover {background-color:#888373;}
+
+#topnav-content {
+	width: 960px;
+	height: 100%;
+	background-color: transparent;
+	margin:auto;
+}
+#topnav-text {
+	min-width:100px;
+	height: 100%;
+	background-color: transparent;
+	float: right;
+	margin:auto;
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 14px;
+	color: #F0F0F0;
+	font-weight: bold;
+	line-height: 3;
+}
+
+.class-hover-effect  {
+	-o-transition:.25s;
+	-ms-transition:.25s;
+	-moz-transition:.25s;
+	-webkit-transition:.25s;
+	/* ...and now for the proper property */
+	transition:.25s;
+}
+#topnav-footer {
+	width:100%;
+	height:5px;
+	clear:both;
+	background-color:transparent;
+}
+
+#container {
+	width:960px;
+	min-height:200px;
+	background-color:transparent;
+	margin:auto;
+	margin-top:150px;
+	font-family: 'Noto Sans', sans-serif;
+}
+#header {
+	width:100%;
+	min-height:50px;
+	background-color:transparent;
+	text-align:center;
+}
+#content {
+	width:100%;
+	min-height:300px;;
+	background-color:transparent;
+}
+#form-holder {
+	width:434px;
+	min-height:100px;
+	margin:auto;
+	background-color:transparent;
+	;
+	font-size:24px;
+	color:#F0F0F0;
+	margin-top:50px;
+}
+#form-header {
+	width:100%;
+	min-height:15px;
+	background-color:transparent;
+	text-align:center;
+	padding-bottom:5px;
+}
+#form-subheader {
+	width:100%;
+	min-height:15px;
+	background-color:transparent;
+	text-align:center;
+	padding-top:10px;
+	padding-bottom:10px;
+	font-size:18px !important;
+}
+#upload-gif-div {
+	width: 100%;
+	min-height: 10px;
+	padding-top: 30px;
+	background-color: transparent;
+	margin: auto;
+	text-align: center;
+}
+.video_div {
+	width:194.5px;
+	min-height:50px;
+	float:left;
+	background-color:transparent;
+	margin-left:15px;
+	margin-top:30px;
+	font-size: 16px;
+	text-align: center;
+}
+.video_div a, .video_div a:visited {
+	text-decoration: none;
+	color:#F0F0F0;
+}
+.video_div a:hover {
+	text-decoration: none;
+	color:#6ABDDB;
+}
+#form-footer {
+	width:100%;
+	min-height:2px;
+	padding-top:25px;
+	background-color:transparent;
+	border-bottom:1px solid #F0F0F0;
+	clear:both;
+	text-align:center;
+	margin:auto;
+}
+#footer {
+	width:100%;
+	background-color:transparent;
+	min-height:30px;
+	position: fixed;
+    bottom: 0;
+    width: 100%;
+	font-size:14px;
+	font-family: 'Noto Sans', sans-serif;
+	font-weight:bold;
+}
+#f-table {
+	min-width:10px;
+	min-height:10px;
+	background-color:transparent;
+	margin:30px 30px;
+	float:right;
+}
+.f-table-data {
+	min-width:10px;
+	min-height:10px;
+	padding-left:10px;
+	padding-right:10px;
+	display:inline-block;
+	text-align:right;
+}
+.f-table-data-end {
+	min-width:10px;
+	min-height:10px;
+	padding-left:10px;
+	display:inline-block;
+	height:auto !important;
+	height:10px;
+	text-align:right;
+}
+/* END Div Styles */
+
+/* Form Styles */ 
+input[type=text], input[type=password], select {
+    width: 100%;
+	height:30px;
+    padding: 0 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #000;
+    border-radius: 4px;
+    box-sizing: border-box;
+	font-size:14px;
+	color:#AFABA0;
+	outline:none;
+
+}
+input[type=submit] {
+    width: 110px;
+	height:30px;
+    background-color: #6ABDDB;
+    color: white;
+    padding: 0 0;
+    margin: 8px 0;
+    border: 1px solid #000;
+    border-radius: 4px;
+    cursor: pointer;
+	float:right;
+	margin-left:10px;
+	outline:none;
+	font-size:14px;
+	text-align:center;
+	font-weight: bold;
+}
+input[type=submit]:hover {
+    background-color: #2D94BB;
+}
+.button_text {
+	position:relative;
+	top:10px;
+}
+/* END Form Styles */ 
+
+/* Text Styles */ 
+.header-text {
+	font-size:96px;
+	color:#F0F0F0;
+	font-weight:bold;
+}
+.f-bot-links 
+{
+	color:#F0F0F0;
+	text-decoration:none;
+}
+.f-bot-links:hover, .f-bot-links:focus, .f-bot-links:active {
+	color:#AEAEAE;
+	text-decoration:none;
+}
+/* END Text Styles */ 

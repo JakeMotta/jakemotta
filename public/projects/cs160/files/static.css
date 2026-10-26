@@ -1,0 +1,257 @@
+/* Additions for the static archive copy (the original look is files/mainCSS.css, untouched). */
+
+body {
+	color: #F0F0F0;
+	padding-bottom: 100px; /* room for the fixed footer */
+}
+#container {
+	margin-top: 90px;
+}
+#footer {
+	background-color: #181712; /* keeps the fixed footer readable over scrolled content */
+}
+a {
+	color: #6ABDDB;
+}
+a:hover {
+	color: #2D94BB;
+}
+.demo-note {
+	font-size: 13px;
+	line-height: 1.5;
+	color: #AFABA0;
+	text-align: center;
+	padding: 6px 0 4px;
+}
+.demo-note strong {
+	color: #F0F0F0;
+}
+.section-title {
+	font-size: 18px;
+	text-align: center;
+	padding: 28px 0 10px;
+}
+.form-message {
+	font-size: 14px;
+	color: #F0B3A0;
+	min-height: 18px;
+	clear: both;
+	padding-top: 4px;
+}
+input[type=file] {
+	font-size: 14px;
+	color: #AFABA0;
+	margin: 8px 0;
+	max-width: 100%;
+}
+
+/* Landing page: login beside the live face plot. */
+#content.with-demo {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0 48px;
+	align-items: flex-start;
+}
+#content.with-demo #form-holder {
+	margin-left: 0;
+	margin-right: 0;
+}
+.demo-holder {
+	width: 434px;
+	max-width: 100%;
+	margin-top: 50px;
+	font-size: 24px;
+	color: #F0F0F0;
+}
+.demo-header {
+	text-align: center;
+	padding-bottom: 12px;
+}
+.demo-footer {
+	padding-top: 25px;
+	border-bottom: 1px solid #F0F0F0;
+}
+.faceplot-caption code {
+	font-family: Consolas, 'Courier New', monospace;
+	color: #F0F0F0;
+}
+
+/* Face plot player */
+.faceplot {
+	width: 100%;
+}
+.faceplot-canvas {
+	display: block;
+	width: 100%;
+	border-radius: 4px;
+	background: #F0F0F0;
+}
+.faceplot-controls {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding-top: 8px;
+	font-size: 13px;
+	color: #AFABA0;
+}
+.faceplot-play {
+	width: 70px;
+	height: 28px;
+	flex: none;
+	background-color: #6ABDDB;
+	color: #fff;
+	border: 1px solid #000;
+	border-radius: 4px;
+	font-weight: bold;
+	font-size: 13px;
+	cursor: pointer;
+	font-family: inherit;
+}
+.faceplot-play:hover {
+	background-color: #2D94BB;
+}
+.faceplot-scrub {
+	flex: 1;
+	min-width: 60px;
+	accent-color: #6ABDDB;
+}
+.faceplot-toggle {
+	flex: none;
+	cursor: pointer;
+	white-space: nowrap;
+}
+.faceplot-caption {
+	font-size: 13px;
+	line-height: 1.5;
+	color: #AFABA0;
+	padding-top: 8px;
+}
+
+/* Video list (My Videos and the landing page) */
+.video_container {
+	clear: both; /* sit below the floated Login / Sign Up buttons */
+}
+.video_container.wide {
+	width: auto;
+	grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+	justify-items: center;
+	padding: 15px 0;
+}
+.video_div {
+	box-sizing: content-box;
+}
+.video_div a {
+	display: block;
+	color: #F0F0F0;
+	text-decoration: none;
+}
+.video_div a:hover .video_div_header {
+	color: #6ABDDB;
+}
+.video_div img,
+.video_div canvas {
+	display: block;
+	width: 257px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 4px;
+	background: #F0F0F0;
+}
+.video_div_header {
+	padding-bottom: 6px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.video_div_info {
+	font-size: 12px;
+	color: #AFABA0;
+	text-align: center;
+	padding-top: 6px;
+}
+
+/* Upload progress (gif.php's loading gif plus the pipeline steps) */
+#upload-gif-div[hidden] {
+	display: none;
+}
+.pipeline-log {
+	font-family: Consolas, 'Courier New', monospace;
+	font-size: 12px;
+	line-height: 1.7;
+	color: #AFABA0;
+	text-align: left;
+	padding-top: 14px;
+}
+.pipeline-log li::before {
+	content: '$ ';
+	color: #6ABDDB;
+}
+
+/* Output page */
+.output-video {
+	display: block;
+	width: 100%;
+	background: #000;
+	border-radius: 4px;
+}
+.output-meta {
+	font-size: 13px;
+	color: #AFABA0;
+	text-align: center;
+	padding-top: 8px;
+}
+#form-holder.wide {
+	width: 640px;
+}
+
+/* Narrow screens: the original layout is a fixed 960px. */
+@media (max-width: 1000px) {
+	#container,
+	#topnav-content {
+		width: auto;
+		padding: 0 16px;
+	}
+	#container {
+		margin-top: 40px;
+	}
+	#form-holder,
+	#form-holder.wide {
+		width: auto;
+		max-width: 640px;
+	}
+	#content.with-demo #form-holder {
+		width: 100%;
+		max-width: 434px;
+	}
+	.header-text {
+		font-size: 64px;
+	}
+	#f-table {
+		margin: 16px;
+	}
+	.video_container,
+	.video_container.wide {
+		width: auto;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		gap: 16px;
+		padding: 15px 0;
+	}
+	.video_div {
+		width: auto;
+		min-height: 0;
+		padding: 0;
+		margin: 0;
+	}
+	.video_div img,
+	.video_div canvas {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 257 / 200;
+	}
+}
+@media (max-width: 480px) {
+	.header-text {
+		font-size: 48px;
+	}
+}

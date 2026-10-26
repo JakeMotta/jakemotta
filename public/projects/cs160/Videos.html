@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Face Me - Videos</title>
+
+<!-- Static archive copy of Videos.php. The list comes from js/faceme.js; nothing is sent anywhere. -->
+<link rel="stylesheet" type="text/css" href="files/cssreset.css">
+<link rel="stylesheet" type="text/css" href="files/mainCSS.css">
+<link rel="stylesheet" type="text/css" href="files/static.css">
+</head>
+
+<body>
+    <div id="topnav">
+    	<div id="top-box-1" class="class-hover-effect"></div>
+        <div id="top-box-2" class="class-hover-effect"></div>
+        <div id="top-box-3" class="class-hover-effect"></div>
+        <div id="top-box-4" class="class-hover-effect"></div>
+        <div id="topnav-content">
+            <div id="topnav-text"></div>
+        </div>
+        <div id="topnav-footer"></div>
+    </div>
+
+    <div id="container">
+        	<div id="header"><span class="header-text">FACE ME</span></div>
+        	<div id="content">
+            	<div id="form-holder" class="wide">
+                    <div id="form-header">My Videos</div>
+                    <div class="video_container wide" id="video-list"></div>
+                    <div id="form-footer"></div>
+                </div>
+            </div>
+    </div>
+
+    <div id="footer">
+    	<span class="sub-text grey">
+			<table id="f-table">
+				<tr>
+					<td class="f-table-data"><a class="f-bot-links small-text class-hover-effect" href="Upload.html">Upload</a></td>
+                    <td class="f-table-data"><a class="f-bot-links small-text class-hover-effect" href="Videos.html">My Videos</a></td>
+					<td class="f-table-data-end"><a class="f-bot-links small-text class-hover-effect" href="logout.html">Log Out</a></td>
+				</tr>
+			</table>
+		</span>
+    </div>
+
+<script src="js/faceme.js"></script>
+<script src="js/landmarks.js"></script>
+<script src="js/faceplot.js"></script>
+<script>
+    var user = FaceMe.requireUser();
+    FaceMe.setWelcome(user);
+    var list = document.getElementById('video-list');
+    // Dummy Videos.php: the rows of "SELECT * FROM <username>" come from js/faceme.js.
+    FaceMe.listVideos(user).forEach(function (v) {
+        var div = document.createElement('div');
+        div.className = 'video_div';
+        var a = document.createElement('a');
+        a.href = 'Output.html?v=' + encodeURIComponent(v.id);
+        a.className = 'class-hover-effect';
+        a.title = v.name;
+        var head = document.createElement('div');
+        head.className = 'video_div_header';
+        head.textContent = v.name;
+        a.appendChild(head);
+        if (v.thumb) {
+            var img = document.createElement('img');
+            img.src = v.thumb;
+            img.alt = v.name;
+            a.appendChild(img);
+        } else {
+            var c = document.createElement('canvas');
+            c.setAttribute('role', 'img');
+            c.setAttribute('aria-label', 'Face mesh thumbnail');
+            a.appendChild(c);
+            FacePlot.still(c, 120, 257, 200);
+        }
+        var info = document.createElement('div');
+        info.className = 'video_div_info';
+        info.textContent = v.info || '';
+        a.appendChild(info);
+        div.appendChild(a);
+        list.appendChild(div);
+    });
+</script>
+</body>
+</html>

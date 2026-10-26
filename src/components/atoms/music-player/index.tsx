@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useAudioStore } from '../../../store/audio';
+import { favoriteArtists, musicList } from '../../../common/constants';
 import { Button, Slider } from 'antd';
 import { FaPauseCircle, FaPlayCircle } from 'react-icons/fa';
 
@@ -32,6 +33,9 @@ const CEILING_FALL_SECONDS = 4;
 
 const ease = (dt: number, seconds: number) => 1 - Math.exp(-dt / seconds);
 
+// Every track on the site, once each, for the shuffle that plays when nothing is queued
+const LIBRARY = Array.from(new Set([...musicList, ...favoriteArtists].map((item) => item.url)));
+
 const updateBand = (band: Band, data: Uint8Array, hzPerBin: number, dt: number) => {
     const from = Math.max(1, Math.floor(band.fromHz / hzPerBin));
     const to = Math.min(data.length - 1, Math.ceil(band.toHz / hzPerBin));
@@ -54,6 +58,7 @@ const updateBand = (band: Band, data: Uint8Array, hzPerBin: number, dt: number) 
 
 export const MusicPlayer = () => {
     const audioUrl = useAudioStore((store) => store.audioUrl);
+    const playNext = useAudioStore((store) => store.playNext);
     const audioRef = useRef<HTMLAudioElement>(null);
     const audioContext = useRef<AudioContext | null>(null);
     const analyzerNode = useRef<AnalyserNode | null>(null);
@@ -223,7 +228,7 @@ export const MusicPlayer = () => {
                         className="music-control text-2xl"
                     />}
                 </div>
-                <audio ref={audioRef} src={audioUrl} onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} />
+                <audio ref={audioRef} src={audioUrl} onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} onEnded={() => playNext(LIBRARY)} />
             </div>
         </>
     );

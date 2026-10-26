@@ -177,6 +177,7 @@ export const homeProjectList: HomeProject[] = [
         title: 'Black Chamber',
         date: '2025',
         description: 'Members, programs and events for the Silicon Valley Black Chamber of Commerce.',
+        preview: '/projects/black-chamber/index.html',
     },
     {
         id: 'pistol-art',
@@ -196,9 +197,10 @@ export const homeProjectList: HomeProject[] = [
     },
     {
         id: 'cs160',
-        image: '',
+        image: '/images/projects/faceme_output.png',
         title: 'CS160',
         date: '2016',
-        description: '',
+        description: 'Face Me: upload a video and get it back with a face mesh drawn on every frame.',
+        preview: '/projects/cs160/index.html',
     },
 ]

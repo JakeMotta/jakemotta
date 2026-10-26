@@ -1,0 +1,22 @@
+/*FOR CMS*/
+h1 {
+  font: bold 36px sans-serif;
+}
+h2 {
+  font: bold 24px sans-serif;
+}
+h3 {
+  font: bold 18px sans-serif;
+}
+h4 {
+  font: bold 10px sans-serif;
+}
+strong {
+  font-weight: bold;
+}
+#bullets {
+  margin-bottom: 10px;
+  font: bold 14px sans-serif;
+  color: #000;
+  text-align: left;
+}

@@ -14,11 +14,16 @@
 // forms go straight to their thank-you page instead of sending anything, old
 // trackers are removed, and pages with Flash load Ruffle to play it.
 //
+// A site built on CouchCMS (black-chamber) has no admin or database here: its
+// hooks render as nothing and each <cms:editable> region prints the draft copy
+// written into the page as its default. Plain .html pages that need the same
+// link fixes are listed per site and written as X.static.html beside them.
+//
 // Anything PHP the converter does not understand stops it with the file and
 // the snippet, so nothing is dropped silently. Rerun it after editing a page.
 
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative, resolve } from 'node:path';
+import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const PROJECTS = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'projects');
@@ -35,6 +40,62 @@ const SITES = [
         dir: 'ninja-donut',
         origins: ['http://jakemotta.com/NinjaDonut/', 'https://jakemotta.com/NinjaDonut/', '//jakemotta.com/NinjaDonut/'],
         forms: {},
+    },
+    {
+        dir: 'black-chamber',
+        // The footer's "wwww" is a typo on the original site.
+        origins: [
+            'http://www.blackchamber.com/',
+            'https://www.blackchamber.com/',
+            'http://blackchamber.com/',
+            'https://blackchamber.com/',
+            'http://wwww.blackchamber.com/',
+        ],
+        forms: {},
+        // CouchCMS: myAdmin/ is not restored, so its hooks become no-ops.
+        cms: true,
+        // The Radio Show page is a Muse export that links back to the main
+        // site's old domain; it is written as radioshow/index.static.html.
+        pages: ['radioshow/index.html'],
+        // Links to pages that never existed in this copy, sent to the closest
+        // page that does (paths relative to the site folder). The Radio Show's
+        // phone menu was made for the later Muse version of the whole site
+        // (the muse/ folder, not restored), so its pages are missing here.
+        redirects: {
+            radioshow: 'radioshow/index.html',
+            'radioshow/abousus.html': 'AboutUs.html',
+            'radioshow/contact.html': 'AboutUs.html#Contact',
+            'radioshow/videocollection.html': 'AboutUs.html#Videos',
+            'radioshow/newsletters.html': 'http://archive.constantcontact.com/fs110/1100850105922/archive/1119971362591.html',
+            'radioshow/newslettersarchive.html': 'http://archive.constantcontact.com/fs110/1100850105922/archive/1119971362591.html',
+            'radioshow/members.html': 'Members.html',
+            'radioshow/supporters.html': 'Members.html#Sponsors',
+            'radioshow/sponsors-partners.html': 'Members.html#Sponsors',
+            'radioshow/programs.html': 'Programs&Services.html',
+            'radioshow/initiatives.html': 'Programs&Services.html',
+            'radioshow/services.html': 'Programs&Services.html#services',
+            'radioshow/giving.html': 'Donating.html',
+            'radioshow/events.html': 'Calendar.html',
+            'radioshow/calendar.html': 'Calendar.html',
+            'radioshow/radioshow.html': 'radioshow/index.html',
+            'radioshow/radioshow1.html': 'radioshow/index.html',
+            'radioshow/radioshow3.html': 'radioshow/index.html',
+            'radioshow/catalog.html': 'index.html',
+            'radioshow/productsforsale.html': 'index.html',
+            'radioshow/advertising.html': 'index.html',
+            'radioshow/communication.html': 'index.html',
+            'radioshow/mediakit.html': 'index.html',
+            'radioshow/picturegallery.html': 'index.html',
+        },
+        // Literal fixes, applied to the pages and to the scripts and stylesheets they load.
+        replace: [
+            // Every inner page points its slider's loading image at a folder that never existed.
+            ['url(Pages/images/loading.gif)', 'url(images/loading.gif)'],
+            // The IE7/8 fix in mainCSS.css asks for an empty.gif that was never uploaded.
+            ["url('empty.gif')", "url('data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==')"],
+            // Muse loads jQuery from Adobe's retired CDN on http pages; use its bundled copy.
+            ['http://musecdn.businesscatalyst.com/scripts/4.0/', 'scripts/'],
+        ],
     },
 ];
 
@@ -94,11 +155,58 @@ const anchorRelative = (html, root) =>
         isExternal(url) || /^([/#?]|[a-z]+:)/i.test(url) ? whole : `${attr}${quote}${root}${url}`,
     );
 
+// CouchCMS loads itself at the top of each page (require_once 'myAdmin/cms.php')
+// and renders it at the bottom (COUCH::invoke()). Without the CMS both do nothing.
+const COUCH_HOOK = /^\s*(?:(?:require|include)(?:_once)?\s*\(?\s*["'][^"']*myAdmin\/cms\.php["']\s*\)?|COUCH::invoke\(\s*\))\s*;?\s*$/i;
+
+// The site's CSS reset takes the margins off <p>, which would run the paragraphs together.
+const DRAFT_NOTE =
+    '<style>.cms-draft p{margin:0 0 10px}</style>\n' +
+    '<p style="margin:0 0 12px;padding:6px 10px;border-left:3px solid #c9a227;background:#faf6e8;color:#555;font:italic 12px/1.4 sans-serif">' +
+    'Archived preview: this is the draft text written into the page template. The live site loaded its copy from a CMS database that was not kept.</p>';
+
+/**
+ * A <cms:editable> region printed its default content until someone edited it in the
+ * admin, and the edits lived in the database. The defaults here are plain-text drafts,
+ * so blank lines become paragraphs and line breaks stay line breaks.
+ */
+const renderEditables = (html, where) => {
+    let first = true;
+    const out = html.replace(/<cms:editable\b[^>]*>([\s\S]*?)<\/cms:editable>/gi, (_, draft) => {
+        const blocks = draft
+            .trim()
+            .split(/\r?\n[ \t]*\r?\n/)
+            .map((block) => {
+                const parts = [];
+                let lines = [];
+                const flush = () => {
+                    if (lines.length) parts.push(`<p>${lines.join('<br>\n')}</p>`);
+                    lines = [];
+                };
+                for (const line of block.split(/\r?\n/).map((l) => l.trim()).filter(Boolean)) {
+                    if (/^(<!--.*-->|<hr\s*\/?>)$/i.test(line)) {
+                        flush();
+                        parts.push(line);
+                    } else lines.push(line);
+                }
+                flush();
+                return parts.join('\n');
+            });
+        const note = first ? `${DRAFT_NOTE}\n` : '';
+        first = false;
+        return `<div class="cms-draft">\n${note}${blocks.join('\n\n')}\n</div>`;
+    });
+    const other = out.match(/<\/?cms:[^>]*>/i);
+    if (other) fail(`${where}: cannot convert CouchCMS tag: ${other[0]}`);
+    return out;
+};
+
 /** Renders a page or partial: includes are inlined, echoes printed, plain HTML kept. */
 const render = (file, pageDir, site, seen = []) => {
     if (seen.includes(file)) fail(`include loop: ${[...seen, file].join(' -> ')}`);
     const where = relative(PROJECTS, file);
     return read(file).replace(PHP_BLOCK, (_, code) => {
+        if (site.cms && COUCH_HOOK.test(code)) return '';
         const include = code.match(/^\s*(?:include|require)(?:_once)?\s*\(?\s*["']([^"']+)["']\s*\)?\s*;?\s*$/i);
         if (include) {
             // PHP resolves relative includes against the requested page's folder first.
@@ -147,7 +255,53 @@ const stripTrackers = (text) =>
         .replace(/<script\b[^>]*\bsrc=["'][^"']*(googletagmanager|google-analytics|hitwebcounter)[^"']*["'][^>]*>\s*<\/script>/gi, '')
         .replace(/<script\b[^>]*>(?:(?!<\/script>)[\s\S])*?(gtag\(|facebook-jssdk|_gaq)[\s\S]*?<\/script>/gi, '')
         // The counter snippet has no END marker in these pages; it is the comment plus one link.
-        .replace(/<!--\s*hitwebcounter Code START\s*-->\s*<a\b[\s\S]*?<\/a>/gi, '');
+        .replace(/<!--\s*hitwebcounter Code START\s*-->\s*<a\b[\s\S]*?<\/a>/gi, '')
+        .replace(/<!--\s*Start of StatCounter Code[\s\S]*?End of StatCounter Code[^>]*-->/gi, '');
+
+/** Scripts from services that no longer exist only fail to load (Adobe's Muse web fonts). */
+const stripDeadServices = (text) => text.replace(/<script\b[^>]*\bsrc=["'][^"']*webfonts\.creativecloud\.com[^"']*["'][^>]*>\s*<\/script>/gi, '');
+
+/** The site's literal fixes (see SITES). */
+const applyReplace = (text, site) => {
+    for (const [from, to] of site.replace ?? []) text = text.split(from).join(to);
+    return text;
+};
+
+const staticName = (path) => path.replace(/\.html?$/i, '.static.html');
+
+/**
+ * Sends links to the plain .html pages that were rewritten (X.html -> X.static.html) and
+ * links to pages that never existed here to the site's chosen stand-in.
+ */
+const relink = (text, file, site) => {
+    const targets = new Map(Object.entries(site.redirects ?? {}));
+    for (const page of site.pages ?? []) targets.set(page, staticName(page));
+    if (!targets.size) return text;
+    const siteDir = join(PROJECTS, site.dir);
+    const lookup = (key) => {
+        const to = targets.get(key);
+        if (!to || isExternal(to)) return to;
+        const [path, hash = ''] = to.split('#');
+        const page = (site.pages ?? []).includes(path) ? staticName(path) : path;
+        return `/projects/${site.dir}/${page}${hash && `#${hash}`}`;
+    };
+    return text.replace(/(\bhref\s*=\s*)(["']?)([^"'\s>]+)/gi, (whole, attr, quote, url) => {
+        if (isExternal(url) || /^([#?]|[a-z]+:)/i.test(url)) return whole;
+        const [, path, rest] = url.match(/^([^?#]*)(.*)$/);
+        let decoded;
+        try {
+            decoded = decodeURIComponent(path.replace(/&amp;/g, '&'));
+        } catch {
+            return whole;
+        }
+        const target = decoded.startsWith('/') ? join(PROJECTS, '..', decoded) : resolve(dirname(file), decoded);
+        const key = relative(siteDir, target).split(sep).join('/');
+        if (key.startsWith('..')) return whole;
+        const to = lookup(key);
+        if (!to) return whole;
+        return `${attr}${quote}${to.includes('#') ? to : to + rest}`;
+    });
+};
 
 /** Fonts and libraries linked over plain http would be blocked on an https page. */
 const upgradeHttp = (text) => text.replace(/http:\/\/(fonts\.googleapis\.com|code\.jquery\.com|ajax\.googleapis\.com)/g, 'https://$1');
@@ -175,21 +329,45 @@ for (const site of SITES) {
     }
     const handlers = new Set(Object.keys(site.forms).map((name) => join(siteDir, name)));
 
-    // A script the pages load that links to the old domains or to .php gets a
-    // rewritten copy, X.static.js, and the pages load that instead.
-    const scriptCopies = new Map();
-    const scriptCopy = (path) => {
-        if (!scriptCopies.has(path)) {
+    // A script or stylesheet the pages load that links to the old domains or to
+    // .php, or that needs one of the site's fixes, gets a rewritten copy
+    // (X.static.js, X.static.css), and the pages load that instead.
+    const assetCopies = new Map();
+    const assetCopy = (path) => {
+        if (!assetCopies.has(path)) {
             const source = existsSync(path) ? read(path) : '';
-            const rewritten = rewriteLinks(source, site);
-            const copy = rewritten === source ? null : path.replace(/\.js$/, '.static.js');
+            const rewritten = applyReplace(rewriteLinks(source, site), site);
+            const copy = rewritten === source ? null : path.replace(/\.(js|css)$/, '.static.$1');
             if (copy) {
                 write(copy, rewritten);
                 scripts++;
             }
-            scriptCopies.set(path, copy);
+            assetCopies.set(path, copy);
         }
-        return scriptCopies.get(path);
+        return assetCopies.get(path);
+    };
+    // Script src and RequireJS data-main, stylesheet href; Muse adds ?crc=… to each.
+    const useAssetCopies = (html, file) =>
+        html.replace(/<(?:script|link)\b[^>]*>/gi, (tag) => {
+            if (/^<link/i.test(tag) && !/\brel\s*=\s*["']?stylesheet/i.test(tag)) return tag;
+            return tag.replace(/(\b(?:src|data-main|href)=["'])([^"'?#]+\.(?:js|css))(?=[?#"'])/gi, (whole, open, src) => {
+                if (isExternal(src)) return whole;
+                const target = src.startsWith('/') ? join(PROJECTS, '..', src) : resolve(dirname(file), src);
+                return assetCopy(target) ? `${open}${src.replace(/\.(js|css)$/, '.static.$1')}` : whole;
+            });
+        });
+
+    const finish = (html, file) => {
+        html = rewriteForms(html, site);
+        html = rewriteLinks(html, site);
+        html = relink(html, file, site);
+        html = stripTrackers(html);
+        html = stripDeadServices(html);
+        html = upgradeHttp(html);
+        html = applyReplace(html, site);
+        html = useAssetCopies(html, file);
+        if (hasFlash(html)) html = addRuffle(html);
+        return html;
     };
 
     for (const file of phpFiles) {
@@ -197,19 +375,17 @@ for (const site of SITES) {
         // A leftover partial nothing includes any more (sec_NavbarBAD.php) is not a page.
         if (!/<(!doctype|html|head|body)\b/i.test(read(file))) continue;
         let html = render(file, dirname(file), site);
-        html = rewriteForms(html, site);
-        html = rewriteLinks(html, site);
-        html = stripTrackers(html);
-        html = upgradeHttp(html);
-        html = html.replace(/(<script\b[^>]*\bsrc=["'])([^"']+\.js)(["'])/gi, (whole, open, src, close) => {
-            if (isExternal(src)) return whole;
-            const target = src.startsWith('/') ? join(PROJECTS, '..', src) : resolve(dirname(file), src);
-            return scriptCopy(target) ? `${open}${src.replace(/\.js$/, '.static.js')}${close}` : whole;
-        });
-        if (hasFlash(html)) html = addRuffle(html);
-        write(file.replace(/\.php$/, '.html'), html);
+        if (site.cms) html = renderEditables(html, relative(PROJECTS, file));
+        write(file.replace(/\.php$/, '.html'), finish(html, file));
+        pages++;
+    }
+
+    for (const page of site.pages ?? []) {
+        const file = join(siteDir, page);
+        if (!existsSync(file)) fail(`no such page: ${file}`);
+        write(join(siteDir, staticName(page)), finish(read(file), file));
         pages++;
     }
 }
 
-console.log(`convert-php-sites: wrote ${pages} pages and ${scripts} rewritten scripts`);
+console.log(`convert-php-sites: wrote ${pages} pages and ${scripts} rewritten scripts and stylesheets`);

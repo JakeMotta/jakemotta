@@ -1,0 +1,33 @@
+.minecraft-page {
+    .panel {
+        @apply flex flex-col gap-2 px-5 py-4 mb-4 bg-black/10 rounded-lg text-primary-dark text-base;
+    }
+
+    .steps {
+        @apply flex flex-col gap-1 pl-6;
+    }
+
+    ol.steps {
+        @apply list-decimal;
+    }
+
+    ul.steps {
+        @apply list-disc;
+    }
+
+    a:not(.ant-btn) {
+        @apply font-bold underline text-primary-dark hover:opacity-60;
+    }
+
+    code {
+        @apply px-1 rounded bg-black/10;
+    }
+
+    .link-box {
+        @apply px-2 py-1 break-all;
+    }
+
+    .tag {
+        @apply px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-primary-dark text-primary;
+    }
+}

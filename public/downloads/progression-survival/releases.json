@@ -1,0 +1,28 @@
+{
+  "pack": "Progression Survival",
+  "releases": [
+    {
+      "version": "1.0.0-rc.1",
+      "prerelease": true,
+      "published": "2026-10-26",
+      "minecraft": "1.21.1",
+      "neoforge": "21.1.264",
+      "java": 21,
+      "summary": "First reusable private-test release candidate. Includes the custom Progression Journal 0.7.2, independent armor/tool progression, 53 optional XP quests, mining provenance, dungeon challenges, inventory-safe armor rejection, deduplicated task/tier notifications, Improved Mobs and YUNG's Better Dungeons.",
+      "notes": "/downloads/progression-survival/releases/1.0.0-rc.1/Release-Notes.md",
+      "checksums": "/downloads/progression-survival/releases/1.0.0-rc.1/SHA256SUMS.txt",
+      "client": {
+        "name": "Progression-Survival-1.0.0-rc.1.mrpack",
+        "url": "/downloads/progression-survival/releases/1.0.0-rc.1/Progression-Survival-1.0.0-rc.1.mrpack",
+        "bytes": 304357,
+        "sha256": "4e5c52afadf45f016d9723ca900ec452966df4acd85d165026cdd32994a220fa"
+      },
+      "server": {
+        "name": "Progression-Survival-Server-1.0.0-rc.1.zip",
+        "url": "/downloads/progression-survival/releases/1.0.0-rc.1/Progression-Survival-Server-1.0.0-rc.1.zip",
+        "bytes": 301706,
+        "sha256": "f5264655c59fdae7c40d994bc84b96820f78e7b62b2ca1007793d48b933efabd"
+      }
+    }
+  ]
+}

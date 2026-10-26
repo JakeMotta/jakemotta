@@ -166,6 +166,15 @@ jobs:
             printf "put -O %s ./build/index.html\n" "$target"
             printf "put -O %s ./build/asset-manifest.json\n" "$target"
 
+            # The same goes for the modpack's release pointers: going from
+            # 1.0.0-rc.1 to 1.0.0-rc.2 changes them without changing their
+            # length. The versioned archives they point at are new paths and
+            # need no help.
+            packs="${target%/}/downloads/progression-survival/"
+            for file in releases.json latest.json .htaccess; do
+              printf "put -O %s ./build/downloads/progression-survival/%s\n" "$packs" "$file"
+            done
+
             echo bye
           } > "$RUNNER_TEMP/deploy.lftp"
 

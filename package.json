@@ -33,6 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "modpack:release": "node scripts/release-modpack.mjs",
     "prettier": "prettier --write \"**/*.+(tsx|ts|jsx|js|json|css|scss|md)\" --fix",
     "reset": "rm -rf node_modules yarn.lock && yarn"
   },

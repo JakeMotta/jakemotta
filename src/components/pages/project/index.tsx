@@ -8,7 +8,9 @@ import './index.scss';
 /**
  * Frames a project's hosted copy (see `preview` in constants) inside the site, so the
  * background, the music and the visualizer keep going while a visitor clicks around it.
- * The framed sites are same-origin files under /projects/.
+ * Most framed sites are same-origin files under /projects/. A project live on its own domain
+ * (TapSlayDie) is framed at that address instead; its document is cross-origin, so the link
+ * handling below can't reach it and its links behave as that site wrote them.
  */
 
 // Paths the framed sites may navigate to inside the frame. Anything else (another site,

@@ -154,18 +154,32 @@ export interface HomeProject {
     date: string;
     description: string;
     /**
-     * The project's hosted, browser-runnable copy under /projects/, which the viewer at
-     * /project/:id frames. Name the page file (index.html), not just the folder: the dev
-     * server answers a bare folder path with this app. Omit it when there is no preview yet.
+     * What the viewer at /project/:id frames. Either the project's browser-runnable copy under
+     * /projects/ (name the page file, index.html, not just the folder: the dev server answers a
+     * bare folder path with this app), or the full address of a project that is live on its own
+     * domain and allows framing. Omit it when there is no preview yet.
      */
     preview?: string;
 }
 
-/** Leave `image` empty to show a monogram tile, and `description` empty to show none. */
+/**
+ * Leave `image` empty to show a monogram tile, and `description` empty to show none. Card
+ * images are screenshots of each running preview, made by `yarn projects:screenshot`
+ * (scripts/screenshot-projects.mjs) as /images/projects/<id>.webp; add a new project there too.
+ * Each project's notes are in docs/projects/<id>.md.
+ */
 export const homeProjectList: HomeProject[] = [
     {
+        id: 'tapslaydie',
+        image: '/images/projects/tapslaydie.webp',
+        title: 'TapSlayDie',
+        date: '2026',
+        description: 'A hardcore fantasy clicker RPG for iOS and Android: tap to slay, loot what you kill, and die.',
+        preview: 'https://tapslaydie.com/',
+    },
+    {
         id: 'ambii',
-        image: '/images/projects/ambii.png',
+        image: '/images/projects/ambii.webp',
         title: 'Ambii',
         date: '2025',
         description: '',
@@ -173,7 +187,7 @@ export const homeProjectList: HomeProject[] = [
     },
     {
         id: 'black-chamber',
-        image: '/images/projects/blackchamber.jpg',
+        image: '/images/projects/black-chamber.webp',
         title: 'Black Chamber',
         date: '2025',
         description: 'Members, programs and events for the Silicon Valley Black Chamber of Commerce.',
@@ -181,7 +195,7 @@ export const homeProjectList: HomeProject[] = [
     },
     {
         id: 'pistol-art',
-        image: '/images/projects/pistolArt.png',
+        image: '/images/projects/pistol-art.webp',
         title: 'Pistol Art',
         date: '2025',
         description: 'Course schedules and class sign-ups for a pistol training school.',
@@ -189,7 +203,7 @@ export const homeProjectList: HomeProject[] = [
     },
     {
         id: 'ninjadonut',
-        image: '/images/projects/ninjadonut_website.png',
+        image: '/images/projects/ninjadonut.webp',
         title: 'NinjaDonut',
         date: '2025',
         description: 'Games, comics and odds and ends, starring a very serious donut.',
@@ -197,7 +211,7 @@ export const homeProjectList: HomeProject[] = [
     },
     {
         id: 'cs160',
-        image: '/images/projects/faceme_output.png',
+        image: '/images/projects/cs160.webp',
         title: 'CS160',
         date: '2016',
         description: 'Face Me: upload a video and get it back with a face mesh drawn on every frame.',

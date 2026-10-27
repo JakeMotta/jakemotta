@@ -72,7 +72,9 @@
 <script>
 (function () {
     var W = 616, H = 469;
-    var JARS = 'coloris.jar';
+    // game-speed.jar sets the speed to Greenfoot's default, 50, instead of the 67 the project was saved at, and
+    // browser-timer.jar replaces Greenfoot's busy-waiting timer with a plain sleep. See docs/projects/coloris.md.
+    var JARS = 'game-speed.jar,browser-timer.jar,coloris.jar';
     var CHEERPJ = 'https://cjrtnc.leaningtech.com/4.3/loader.js';
     var PAUSE_SITE_MUSIC = false; // Coloris has no sound, so the site's music can keep playing
     var READY_HINT = 'Press <strong>Run</strong> under the game, then walk with the arrow keys. Click the game first if the keys don’t answer.';

@@ -80,7 +80,9 @@
     // game opens on the town map and never shows its title: main.class is TrainingVille, whose constructor switches to
     // the title world, and Greenfoot 2.1.2's exported viewer ignores that switch. start-at-title.jar holds only a copy of
     // V10.jar's standalone.properties with main.class=PokemonWorld; listed first, it's the copy Greenfoot reads.
-    var JARS = 'start-at-title.jar,V10.jar';
+    // browser-timer.jar replaces Greenfoot's busy-waiting timer with a plain sleep, and closed-sign.jar skips the text
+    // that the town's buildings draw three times every act and then throw away. See docs/projects/isguy.md.
+    var JARS = 'start-at-title.jar,browser-timer.jar,closed-sign.jar,V10.jar';
     var CHEERPJ = 'https://cjrtnc.leaningtech.com/4.3/loader.js';
     var PAUSE_SITE_MUSIC = true;
     var READY_HINT = 'Press <strong>Run</strong> under the game, then <strong>Space</strong> on the title screen. Click the game first if the keys don’t answer.';

@@ -75,7 +75,8 @@
 <script>
 (function () {
     var W = 816, H = 669;
-    var JARS = 'isGuyFinal.jar';
+    // browser-timer.jar replaces Greenfoot's busy-waiting timer with a plain sleep. See docs/projects/isguy.md.
+    var JARS = 'browser-timer.jar,isGuyFinal.jar';
     var CHEERPJ = 'https://cjrtnc.leaningtech.com/4.3/loader.js';
     var PAUSE_SITE_MUSIC = true;
     var READY_HINT = 'Press <strong>Run</strong> under the game, then click <strong>Start</strong>. Click the game first if the keys don’t answer.';

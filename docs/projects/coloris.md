@@ -32,7 +32,13 @@ ColorisScroll has the most to walk around. Coloris2 also runs (it was built and 
   - `soundindex.list` is empty, since Coloris has no sounds;
   - the manifest names `greenfoot.export.GreenfootScenarioMain`, so `java -jar coloris.jar` runs it on the desktop too.
 
+Two small jars sit in front of it in the applet's `archive`, both made on 2026-10-27:
+- `game-speed.jar` (2 KB) holds `coloris.jar`'s `project.greenfoot` with one line changed, `simulation.speed=67` to `simulation.speed=50`. See Speed below.
+- `browser-timer.jar` (2 KB) is isGuy's: Greenfoot's timer without its busy-wait, explained in [isguy.md](isguy.md#speed).
+
 `poster.webp` is the starting view, captured from the game running in CheerpJ.
+
+**Speed.** ColorisScroll was saved at speed 67, where Greenfoot allows an act every 1.8 ms, so Coloris ran as fast as the browser could go: about 250 acts a second standalone (100 in the site's viewer), with the page's main thread always busy and only 20–50 frames a second drawn. Huey moves 2 pixels an act and changes walking frame every 10 acts, so at 250 he crossed the screen in about a second and his legs blurred. At Greenfoot's default speed 50 (an act every 16.2 ms) he walks about 120 pixels a second, with a step cycle of about two thirds of a second, the pace the code is written for and the speed isGuy and Pokémon run at. The 67 was most likely just where the IDE's speed slider was left. Measured standalone after the change: 53–57 acts a second, 55 frames drawn, main thread 70–78% busy; in the viewer about 46 acts and 38 frames, held back by the board ([isguy.md](isguy.md#speed)). To get the old speed back, drop `game-speed.jar` from `JARS` in the page.
 
 **The art.** The trees, grass and hills look like they come from a Pokémon tileset, and the `Sprites` folder holds Pokémon Emerald sheets. Where Huey's frames came from hasn't been checked.
 
@@ -40,7 +46,8 @@ ColorisScroll has the most to walk around. Coloris2 also runs (it was built and 
 - with `java -jar` on the desktop: the jar opens with no errors (Coloris2 the same);
 - in headless Chrome, served from `public/`: the map loads, Run starts it, walking scrolls the world, and the number keys change Huey's color;
 - at 375 px wide, after scrolling the frame sideways to the Run button;
-- inside a same-origin frame, Play leaves the parent page's music playing.
+- inside a same-origin frame, Play leaves the parent page's music playing;
+- with `game-speed.jar` and `browser-timer.jar`, on 2026-10-27: Run, walking and the scrolling, at the rates above.
 
 ## Left out on purpose
 

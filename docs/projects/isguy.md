@@ -10,7 +10,7 @@ This page also covers how all three Greenfoot games run, since they share it. Po
 
 **How the Java runs.** [CheerpJ](https://cheerpj.com/) (Leaning Technologies) runs Java 8 in the browser in WebAssembly.
 - **Loading:** nothing loads until Play. Then the page adds CheerpJ's `loader.js` (version 4.3) from `https://cjrtnc.leaningtech.com/4.3/` and calls `cheerpjInit({ status: 'none' })`. CheerpJ fetches its runtime from that CDN and then downloads the whole jar in one request; it doesn't use range requests. isGuy's jar is 40 MB, so the first load is slow.
-- **As an applet:** the jar's `greenfoot.export.GreenfootScenarioViewer` is a `JApplet`, so the page adds a `<cheerpj-applet>` with that `code`, the jar as `archive`, and 816×669, the size of the applet tag on the NinjaDonut page. It draws the game with no window frame around it. The applet route needs Java 8, CheerpJ's default.
+- **As an applet:** the jar's `greenfoot.export.GreenfootScenarioViewer` is a `JApplet`, so the page adds a `<cheerpj-applet>` with that `code`, `browser-timer.jar` and the game's jar as `archive` (see Speed), and 816×669, the size of the applet tag on the NinjaDonut page. It draws the game with no window frame around it. The applet route needs Java 8, CheerpJ's default.
 - **`codebase_lookup=false`:** without this `<param>`, CheerpJ's applet loader asks the server (a `HEAD` request) for every resource the jar doesn't have. Greenfoot looks every image up twice, so for Coloris that was about 90 requests, one at a time: ten seconds at 80 ms each.
 - **Loading message:** CheerpJ swaps the element for an `<object>` and paints the applet's window white first, then Greenfoot loads the world's images. The message stays up until a pixel a third of the way down the canvas turns from that white to the game, or for 30 seconds after the window appears.
 - **Run:** Greenfoot scenarios start paused behind a Reset / Run bar, as they did on the old sites. There's no autorun setting in the exported viewer, so the hint tells the visitor to press Run (and, here, Start on the title screen).
@@ -24,6 +24,7 @@ This page also covers how all three Greenfoot games run, since they share it. Po
 
 **Files.**
 - `isGuyFinal.jar` (39.9 MB) is `Old Computer/Documents/Greenfoot/isGuy/isGuyFinal.jar`, copied unchanged. Jake re-exported the March 2013 project from Greenfoot 3.0.4 on 2017-11-10 (Java 8 classes); its 215 images match the 2013 export. It runs as is with `java -jar` too.
+- `browser-timer.jar` (2 KB) is new, made on 2026-10-27. It holds one class, `greenfoot/util/HDTimer.class`, listed before `isGuyFinal.jar` so it replaces the jar's copy. See Speed below.
 - `poster.webp` is the title screen, captured from the game running in CheerpJ.
 
 **The music.** About 38 MB of the jar is six songs by other artists: The Orbiters, Tiesto & Allure, Adhesive Wombat, Soulero, and Trampboat & Soulero. The game credits them on its Game Info screen and the page names them. They're published as part of the jar: on 2026-10-26 Jake decided to keep them rather than ship a rebuilt, silent jar. Don't strip them unless he asks.
@@ -35,6 +36,46 @@ This page also covers how all three Greenfoot games run, since they share it. Po
 - inside a same-origin frame, Play pauses the parent page's music.
 
 Not verified: how the music sounds (the browser ran muted), levels 2 to 5, keys, doors and the ending.
+
+## Speed
+
+On 2026-10-27 all three games were reported as far too slow to play. This section covers what was measured, what was wrong and what changed, for all three; [coloris.md](coloris.md) and [greenfoot-pokemon.md](greenfoot-pokemon.md) add what's particular to each.
+
+**How it was measured.** The act rate came from a counter added for the test only: a patched `greenfoot.core.Simulation` that printed the time every 180 acts, served ahead of the game's jar through DevTools request interception, so nothing went into the repo. The pages ran under `yarn dev` in headless Chrome on Jake's desktop (i7-6700K), with other work loading the machine, so the numbers wobble by about 10%. Canvas updates were counted beside it.
+
+**What it should run at.** The exported viewer takes its speed from the jar's `project.greenfoot` (`simulation.speed`), not from `standalone.properties`, so the speed the project was saved at is the one used. isGuy and Pokémon are at 50, Greenfoot's default: at most one act every 16.2 ms, 61.6 acts a second. Coloris is at 67, see [coloris.md](coloris.md). None of the games calls `Greenfoot.setSpeed`. So the speed setting wasn't the problem.
+
+**What was wrong.** Three things, in order of size.
+- **On the site, the board shares the game's thread.** A same-origin frame runs on the parent page's main thread, and the board behind the viewer keeps that thread 30–40% busy even when nobody touches it (the dev build, idle: 280–380 ms a second). About two thirds of that is the hue cycle in `App.tsx`, which re-renders the whole app and restyles the page whenever the hue moves; most of the rest is the particles. isGuy's level 1 ran at about 23 frames a second in the viewer against 47 standalone, and at 45 in the viewer once the board's animation loops were stopped. **This isn't fixed yet:** it's a change to the board (pause the hue cycle and the particles while an overlay is open, or while a game has posted `jakemotta:media-playing`), outside these game folders.
+- **Painting is what's expensive in CheerpJ.** CheerpJ runs the Java itself quickly: Pokémon's title at speed 100 managed over 20,000 acts a second. But Greenfoot repaints the whole world after every act (when 15 ms have passed since the last paint) and draws each actor through Java2D, in software. An 800×600 world with a few actors takes about 11 ms a frame; Pokémon's town, with about 920 actors, about 25 ms. Once an act and its paint take more than 28.6 ms, Greenfoot also waits for each paint to finish, so a heavy world runs at whatever speed painting allows.
+- **Greenfoot's timer busy-waits.** To end each act's 16.2 ms precisely, `greenfoot.util.HDTimer` sleeps for most of it and then calls `Thread.yield()` and spins on `System.nanoTime()` for the rest. In CheerpJ every Java thread shares the page's one JavaScript thread, so that spin takes time away from painting.
+
+**What changed: `browser-timer.jar`.** Each game's folder has one, listed before the game's own jar. It holds `greenfoot/util/HDTimer.class` from that game's runtime (Greenfoot 3.0.4 for isGuy and Coloris, 2.1.2 for Pokémon) with one method replaced. `sleepFromTime(long nanos, long start)` now sleeps for the time left and returns:
+
+```java
+long left = nanos - (System.nanoTime() - start);
+if (left > 0) Thread.sleep(left / 1000000, (int) (left % 1000000));
+```
+
+Every other method and the constant pool are as they were. The classes were written with a one-off Python script (not kept), and each passed the desktop JVM's bytecode verifier (`-Xlog:verification`) with its game. Sleeping without the spin overshoots a little, so a speed-50 game runs at about 58 acts a second instead of 61.6; a variant that slept whole milliseconds reached 60 but kept the thread busier, which costs more on the site.
+
+Measured standalone (acts a second, and how busy the page's main thread was):
+
+| | Before | After |
+| --- | --- | --- |
+| isGuy, title | 54–58, 93–96% busy | 54–56, 70–81% busy |
+| isGuy, level 1 | about 54, 85–87% busy | about 55, 72–84% busy |
+| Coloris, standing | about 250 (speed 67), 100% busy | 53–57, 70–78% busy |
+| Pokémon, title | about 60 | about 58 |
+| Pokémon, town | 16–23, 100% busy | 18–22, 100% busy |
+
+Painting kept up better too: isGuy drew 47–56 frames a second instead of 44–50, and Coloris 55 instead of 38–50.
+
+**Tried and dropped.**
+- CheerpJ 4.3 is the newest release (4.4 and 5.0 don't exist on the CDN), and `cheerpjInit` has no option that changes how fast Java runs.
+- Application mode (`cheerpjRunMain` with `GreenfootScenarioMain`) instead of the applet: Pokémon's town ran at about 27 acts a second instead of 21, on Java 8 or 17 alike. It wasn't worth it: it adds a window frame and CheerpJ's Community Edition banner, and on Java 17 the battle music didn't play.
+- `javaProperties: ['awt.nativeDoubleBuffering=true']`, to skip Swing's back buffer: CheerpJ then sent every draw call to the canvas (7,700–9,300 `putImageData` calls a second) and the town got slower.
+- A lower frame cap that doesn't wait for paints (`Simulation`'s `MAX_FRAME_RATE` and `MIN_FRAME_RATE`): the acts got ahead, but painting starved to 3 frames a second.
 
 ## Left out on purpose
 

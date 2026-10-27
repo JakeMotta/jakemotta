@@ -118,9 +118,9 @@ export const FeaturedTile = () => {
     );
 };
 
-/** What plays next: the next few tracks of the shuffle */
+/** What plays next: every song left in the shuffle, scrolling inside the tile */
 export const UpNextTile = () => {
-    const upNext = useAudioStore((store) => store.shuffled).slice(0, 4);
+    const upNext = useAudioStore((store) => store.shuffled);
     const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
 
     return (

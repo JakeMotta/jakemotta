@@ -21,7 +21,7 @@ export const MusicLibrary = () => {
     const audioUrl = useAudioStore((store) => store.audioUrl);
     const track = findTrack(audioUrl);
     const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
-    const upNext = useAudioStore((store) => store.shuffled).slice(0, 5);
+    const upNext = useAudioStore((store) => store.shuffled);
 
     // Each tab has its own subtitle under the heading
     const tabs: { key: Tab; label: string; count?: number; subtitle: string }[] = [
@@ -76,7 +76,7 @@ export const MusicLibrary = () => {
                 {tab === 'recent' ? (
                     <div id='library-grid' role='tabpanel' aria-labelledby='library-tab-recent' className='library__lately'>
                         <NowPlaying className='library__now' />
-                        <Lately pageSize={12} />
+                        <Lately pageSize={100} />
                     </div>
                 ) : (
                     <div id='library-grid' role='tabpanel' aria-labelledby={`library-tab-${tab}`} className='library__grid'>

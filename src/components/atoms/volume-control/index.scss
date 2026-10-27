@@ -21,8 +21,8 @@
         }
     }
 
-    // A vertical slider standing off the button. Hidden until the control is hovered, focused or tapped open;
-    // the padding on the button's side bridges the gap, so the pointer can travel to it.
+    // The card, standing off the button. Hidden until the control is hovered, focused or tapped open;
+    // the transparent padding on the button's side bridges the gap, so the pointer can travel to it.
     &__pop {
         position: absolute;
         z-index: 10;
@@ -32,43 +32,71 @@
         transition:
             opacity 0.2s,
             transform 0.3s var(--spring);
+    }
 
-        .range-slider {
-            display: block;
-            width: 120px;
-            // Turned upright: the slider is laid out 120px wide, then rotated into a 44 × 120 box
-            margin: 48px -38px;
-            transform: rotate(-90deg);
+    &__card {
+        display: flex;
+        width: 52px;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 14px 0 10px;
+        border: 2px solid rgba(255, 255, 255, 0.14);
+        border-radius: 26px;
+        background: var(--color-primary-dark);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+        color: var(--color-primary-light);
+    }
+
+    // Upright: laid out 110px wide, then turned, into a 48 × 110 box
+    &__slider.range-slider {
+        display: block;
+        width: 110px;
+        margin: 43px -31px;
+        transform: rotate(-90deg);
+
+        &::-webkit-slider-runnable-track {
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, var(--color-primary-light) var(--fill), rgba(255, 255, 255, 0.18) var(--fill));
         }
 
-        &::before {
-            position: absolute;
-            z-index: -1;
-            border-radius: 22px;
-            background: var(--color-primary-ink);
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-            content: '';
+        &::-moz-range-track {
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, var(--color-primary-light) var(--fill), rgba(255, 255, 255, 0.18) var(--fill));
         }
+
+        &::-webkit-slider-thumb {
+            width: 18px;
+            height: 18px;
+            margin-top: -5px;
+            box-shadow: 0 0 0 3px var(--color-primary-dark);
+        }
+
+        &::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            box-shadow: 0 0 0 3px var(--color-primary-dark);
+        }
+    }
+
+    &__level {
+        font-size: 12px;
+        font-weight: 900;
+        font-variant-numeric: tabular-nums;
     }
 
     &--up &__pop {
         bottom: 100%;
         padding-bottom: 6px;
         transform: translate(-50%, 8px);
-
-        &::before {
-            inset: 0 0 6px;
-        }
     }
 
     &--down &__pop {
         top: 100%;
         padding-top: 6px;
         transform: translate(-50%, -8px);
-
-        &::before {
-            inset: 6px 0 0;
-        }
     }
 
     &:hover &__pop,

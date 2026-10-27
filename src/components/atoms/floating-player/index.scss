@@ -87,8 +87,8 @@
     }
 
     // Open to the width of the wrapper rather than the collapsed pill's own parent
-    .mini-player--collapsed:hover,
-    .mini-player--collapsed:focus-within {
+    .mini-player--collapsed.mini-player--open,
+    .mini-player--collapsed:has(:focus-visible) {
         width: 320px;
         max-width: 100%;
     }

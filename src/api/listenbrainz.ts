@@ -111,7 +111,8 @@ export const getPlayingNow = async (user: string) => {
 };
 
 /** The latest finished plays, newest first */
-export const getRecentListens = async (user: string, count = 50) => {
+// The last 100 plays: the library's Recent listens tab shows them all
+export const getRecentListens = async (user: string, count = 100) => {
     const data = await getJson<{ payload: { listens: RawListen[] } }>(`/user/${encodeURIComponent(user)}/listens?count=${count}`);
     return data?.payload.listens.map(toListen) ?? [];
 };

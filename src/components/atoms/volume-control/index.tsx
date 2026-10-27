@@ -11,8 +11,8 @@ interface VolumeControlProps {
 }
 
 /**
- * A speaker button whose vertical volume slider shows on hover or focus, or on a tap, since touch
- * screens can't hover. The icon follows the volume.
+ * A speaker button whose volume card, an upright slider with the level under it, shows on hover or
+ * focus, or on a tap, since touch screens can't hover. The icon follows the volume.
  */
 export const VolumeControl = ({ direction = 'up', className = '' }: VolumeControlProps) => {
     const volume = useAudioStore((store) => store.volume);
@@ -25,7 +25,12 @@ export const VolumeControl = ({ direction = 'up', className = '' }: VolumeContro
                 <Icon aria-hidden />
             </button>
             <div className='volume-control__pop'>
-                <VolumeSlider />
+                <div className='volume-control__card'>
+                    <VolumeSlider className='volume-control__slider' />
+                    <span className='volume-control__level' aria-hidden>
+                        {Math.round(volume * 100)}
+                    </span>
+                </div>
             </div>
         </div>
     );

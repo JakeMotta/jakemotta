@@ -189,7 +189,7 @@ Done on 2026-10-26, once the bento redesign had settled. Jake picked the placeme
    - On a desktop the tile is a fixed height, so a short screen shows fewer rows: one that doesn't fit is hidden whole, never cut.
    - Before the first answer it says "Tuning in…"; with nothing to show, "Quiet in here for now."
 2. **The library tab:** its **Lately ↗** opens the library on its Recent listens tab (`/library?tab=recent`, `pages/music`).
-   - At the top is the full `NowPlaying` card, which links out and carries the listen-along button. Under it is `Lately`, twelve rows at a time, in two columns on a wide screen.
+   - At the top is the full `NowPlaying` card, which links out and carries the listen-along button. Under it is `Lately`, all at once: the last 100 plays (`getRecentListens` fetches 100), or the top 50 songs, albums or artists, in two columns on a wide screen, scrolling.
    - This was its own overlay at `/listening` until 2026-10-27, when Jake had it folded into the library. `/listening` redirects to the tab, so old links still work.
 3. **Listen-along:** `<ListenAlong />` is mounted in `App.tsx`, right after `<MusicPlayer />`, outside the routes, so it survives navigation the way the player does. Until the Worker is deployed, `/api/listening/now` gets the app's own page back instead of JSON, so the button never shows.
 4. **The music player hears the capture** (`atoms/music-player/index.tsx`):

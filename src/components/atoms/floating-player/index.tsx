@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { MiniPlayer } from '../mini-player';
 import './index.scss';
@@ -37,14 +37,36 @@ const dockAt = (x: number, y: number): Dock => {
 };
 
 /**
- * The music, wherever the Now Playing tile is out of sight: a circle of the cover that opens into the
- * full controls on hover or focus. Drag it by the cover to any corner or edge middle; it snaps there
- * and stays there on later visits.
+ * The music, wherever the Now Playing tile is out of sight: a circle of the cover, ringed with the
+ * song's progress, that a click opens into the full controls and a click anywhere else closes. Drag it
+ * by the cover to any corner or edge middle; it snaps there and stays there on later visits.
  */
 export const FloatingPlayer = () => {
     const [dock, setDock] = useState<Dock>(savedDock);
     const [offset, setOffset] = useState<{ x: number; y: number } | null>(null);
+    const [open, setOpen] = useState(false);
     const press = useRef<{ x: number; y: number; dragging: boolean } | null>(null);
+    // A drag ends in a click on the cover; this lets that click through without toggling
+    const justDragged = useRef(false);
+    const rootRef = useRef<HTMLDivElement>(null);
+
+    // Open, a click anywhere else closes it
+    useEffect(() => {
+        if (!open) return;
+        const onPointerDown = (event: PointerEvent) => {
+            if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+        };
+        document.addEventListener('pointerdown', onPointerDown);
+        return () => document.removeEventListener('pointerdown', onPointerDown);
+    }, [open]);
+
+    const toggle = () => {
+        if (justDragged.current) {
+            justDragged.current = false;
+            return;
+        }
+        setOpen(!open);
+    };
 
     const place = (next: Dock) => {
         setDock(next);
@@ -56,13 +78,11 @@ export const FloatingPlayer = () => {
     };
 
     const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-        // The buttons and the volume slider keep their own clicks; anywhere else picks the player up
-        if ((event.target as Element).closest('button, input')) return;
+        // The controls keep their own clicks; the cover and anywhere else on the pill pick the player up
+        if ((event.target as Element).closest('.mini-player__play, .mini-player__next, .volume-control')) return;
         // No text selection or native image drag, either of which would cancel the pointer mid-drag
         event.preventDefault();
         press.current = { x: event.clientX, y: event.clientY, dragging: false };
-        // Captured on the pill, since the wrapper itself lets the pointer through
-        (event.currentTarget.firstElementChild as HTMLElement | null)?.setPointerCapture(event.pointerId);
     };
 
     const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -71,14 +91,24 @@ export const FloatingPlayer = () => {
         const x = event.clientX - start.x;
         const y = event.clientY - start.y;
         if (!start.dragging && Math.hypot(x, y) < DRAG_THRESHOLD) return;
-        start.dragging = true;
+        if (!start.dragging) {
+            start.dragging = true;
+            // Captured only once it's a drag, so a plain click still lands on the cover button. On the pill,
+            // since the wrapper itself lets the pointer through.
+            (event.currentTarget.firstElementChild as HTMLElement | null)?.setPointerCapture(event.pointerId);
+        }
         setOffset({ x, y });
     };
 
     const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
         const start = press.current;
         press.current = null;
-        if (start?.dragging) place(dockAt(event.clientX, event.clientY));
+        if (start?.dragging) {
+            // The click that may follow lands on the pill or the cover; either way it's gone by the next task
+            justDragged.current = true;
+            setTimeout(() => (justDragged.current = false));
+            place(dockAt(event.clientX, event.clientY));
+        }
         setOffset(null);
     };
 
@@ -92,13 +122,14 @@ export const FloatingPlayer = () => {
 
     return createPortal(
         <div
+            ref={rootRef}
             className={`floating-player floating-player--${dock}${offset ? ' floating-player--dragging' : ''}`}
             style={offset ? ({ '--drag-x': `${offset.x}px`, '--drag-y': `${offset.y}px` } as React.CSSProperties) : undefined}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerCancel}>
-            <MiniPlayer collapsed volume={upward ? 'up' : 'down'} className='floating-player__player' />
+            <MiniPlayer collapsed open={open} onToggle={toggle} volume={upward ? 'up' : 'down'} className='floating-player__player' />
         </div>,
         document.body,
     );

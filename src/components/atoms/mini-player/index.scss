@@ -51,8 +51,38 @@
         background: rgba(255, 255, 255, 0.14) !important;
     }
 
-    // Just the cover, as a circle, until hovered or tabbed into: then the pill slides out to full width.
-    // The rest stays in place but transparent, so keyboard focus can still reach it and open the pill.
+    // The cover, in a disc that's a button when collapsed; the ring of progress sits round it
+    &__disc {
+        position: relative;
+        display: flex;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        padding: 0;
+    }
+
+    &__ring {
+        position: absolute;
+        inset: -5px;
+        width: 54px;
+        height: 54px;
+        fill: none;
+        pointer-events: none;
+        stroke-width: 3;
+        transform: rotate(-90deg);
+    }
+
+    &__ring-track {
+        stroke: rgba(255, 255, 255, 0.18);
+    }
+
+    &__ring-fill {
+        stroke: var(--color-primary-light);
+        stroke-linecap: round;
+    }
+
+    // Just the cover, as a circle, until it's clicked open (or tabbed into with the keyboard): then the pill
+    // slides out to full width. The rest stays in place but transparent, so the keyboard can still reach it.
     &--collapsed {
         width: 60px;
         max-width: 100%;
@@ -60,17 +90,17 @@
         padding: 0 8px;
         transition: width 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
 
-        > :not(.mini-player__cover) {
+        > :not(.mini-player__disc) {
             opacity: 0;
             transition: opacity 0.15s;
         }
 
-        &:hover,
-        &:focus-within {
+        &.mini-player--open,
+        &:has(:focus-visible) {
             width: 100%;
             overflow: visible;
 
-            > :not(.mini-player__cover) {
+            > :not(.mini-player__disc) {
                 opacity: 1;
                 transition-delay: 0.12s;
             }

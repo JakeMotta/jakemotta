@@ -1,0 +1,421 @@
+$spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// A board of its own, like the modpack's: the page ground with an ink rim, its tiles in the usual surfaces
+.devlog {
+    gap: 14px;
+    // 16px down, so the header's first line is level with the close button
+    padding: 16px 20px 20px;
+    border: 3px solid var(--color-primary-ink);
+    background: var(--color-primary) !important;
+    color: var(--color-primary-ink) !important;
+
+    @media (max-width: 1099px) {
+        overflow-y: auto !important;
+    }
+
+    h2,
+    h3,
+    h4,
+    p,
+    ol,
+    ul,
+    dl,
+    dd,
+    figure {
+        margin: 0;
+        color: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    li:focus-visible {
+        outline: 3px solid var(--color-primary-light);
+        outline-offset: 2px;
+        box-shadow: 0 0 0 6px var(--color-primary-ink);
+    }
+
+    &__grid {
+        display: grid;
+        min-height: 0;
+        flex: 1;
+        gap: 14px;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+
+        @media (max-width: 1099px) {
+            flex: none;
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-rows: none;
+        }
+    }
+
+    &__tile {
+        display: flex;
+        min-width: 0;
+        min-height: 0;
+        flex-direction: column;
+        gap: 12px;
+        overflow: auto;
+        overscroll-behavior: contain;
+        padding: 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.45;
+        transition:
+            transform 0.45s $spring,
+            box-shadow 0.3s;
+
+        &:hover {
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+            transform: rotate(var(--tilt, -0.4deg)) translateY(-3px);
+        }
+
+        @media (max-width: 1099px) {
+            overflow: visible;
+        }
+
+        &--posts {
+            --tilt: -0.4deg;
+            gap: 22px;
+            background: var(--color-primary-light);
+
+            @media (min-width: 1100px) {
+                grid-row: 1 / span 2;
+            }
+        }
+
+        &--claude {
+            --tilt: 0.5deg;
+            background: var(--color-primary-dark);
+            color: var(--color-primary-light);
+        }
+
+        &--commits {
+            --tilt: -0.6deg;
+            gap: 8px;
+            border: 3px solid var(--color-primary-ink);
+        }
+    }
+
+    &__eyebrow {
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    &__pill {
+        padding: 2px 10px;
+        border-radius: 999px;
+        background: var(--color-primary-ink);
+        color: var(--color-primary-light);
+        font-size: 12px;
+        font-weight: 900;
+    }
+
+    &__numbers {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        dt {
+            font-size: 12px;
+            font-weight: 800;
+            opacity: 0.85;
+        }
+
+        dd {
+            font-size: 36px;
+            font-weight: 900;
+            line-height: 1.05;
+            font-variant-numeric: tabular-nums;
+        }
+    }
+
+    &__note,
+    &__updated {
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    &__updated {
+        opacity: 0.8;
+    }
+
+    &__projects {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        strong {
+            font-weight: 900;
+        }
+
+        span:last-child {
+            margin-left: auto;
+            font-variant-numeric: tabular-nums;
+        }
+    }
+
+    &__swatch {
+        width: 12px;
+        height: 12px;
+        flex-shrink: 0;
+        border-radius: 3px;
+    }
+
+    &__commits {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: inherit;
+            font-weight: 800;
+            text-decoration: none;
+
+            &:hover {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            svg {
+                display: inline;
+                margin-left: 4px;
+                vertical-align: -2px;
+            }
+        }
+    }
+
+    &__commit-meta {
+        font-size: 12px;
+        font-weight: 800;
+        opacity: 0.75;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &__tile:hover {
+            transform: none;
+        }
+    }
+}
+
+// The projects' colours, all from the hue, in the order the projects first show up; on the dark tile
+.devlog-swatch--0 {
+    background: var(--color-primary-light);
+}
+
+.devlog-swatch--1 {
+    background: var(--color-primary);
+}
+
+.devlog-swatch--2 {
+    background: color-mix(in srgb, var(--color-primary-light) 45%, var(--color-primary-dark));
+}
+
+.devlog-swatch--3 {
+    background: color-mix(in srgb, var(--color-primary) 40%, var(--color-primary-dark));
+}
+
+.devlog-post {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    & + & {
+        padding-top: 22px;
+        border-top: 2px dashed color-mix(in srgb, var(--color-primary-ink) 30%, transparent);
+    }
+
+    &__meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    &__title {
+        font-size: 24px;
+        font-weight: 900;
+        line-height: 1.15;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.55;
+
+        h4 {
+            margin-top: 6px;
+            font-size: 17px;
+            font-weight: 900;
+        }
+
+        ul {
+            padding-left: 20px;
+            list-style: disc;
+        }
+
+        a {
+            color: inherit;
+            font-weight: 900;
+            text-decoration: underline;
+        }
+
+        code {
+            padding: 0 4px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            border-radius: 14px;
+        }
+    }
+}
+
+.devlog-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &__bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    &__toggle {
+        display: flex;
+        gap: 4px;
+        padding: 3px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.2);
+
+        button {
+            height: 28px;
+            padding: 0 12px;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            color: inherit;
+            cursor: pointer;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 900;
+
+            &[aria-pressed='true'] {
+                background: var(--color-primary-light);
+                color: var(--color-primary-ink);
+            }
+        }
+    }
+
+    &__peak {
+        font-size: 12px;
+        font-weight: 800;
+        opacity: 0.85;
+    }
+
+    &__plot {
+        position: relative;
+        height: 120px;
+        border-bottom: 2px solid color-mix(in srgb, var(--color-primary-light) 35%, transparent);
+    }
+
+    &__columns {
+        display: flex;
+        height: 100%;
+        align-items: flex-end;
+        gap: 2px;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: flex;
+            height: 100%;
+            min-width: 0;
+            flex: 1;
+            align-items: flex-end;
+            border-radius: 4px 4px 0 0;
+            outline-offset: 0 !important;
+
+            &.is-active {
+                background: rgba(255, 255, 255, 0.08);
+            }
+        }
+    }
+
+    &__stack {
+        display: flex;
+        width: 100%;
+        flex-direction: column-reverse;
+        gap: 2px;
+        overflow: hidden;
+        border-radius: 4px 4px 0 0;
+        // A day with any work at all stays visible
+        min-height: 0;
+
+        span {
+            min-height: 2px;
+            flex-basis: 0;
+        }
+    }
+
+    &__tip {
+        position: absolute;
+        bottom: calc(100% + 6px);
+        z-index: 2;
+        display: flex;
+        min-width: 160px;
+        flex-direction: column;
+        padding: 8px 10px;
+        border-radius: 10px;
+        background: var(--color-primary-light);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+        color: var(--color-primary-ink);
+        font-size: 12px;
+        font-weight: 800;
+        pointer-events: none;
+        transform: translateX(-50%);
+        white-space: nowrap;
+
+        strong {
+            font-weight: 900;
+        }
+    }
+
+    &__axis {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        font-weight: 800;
+        opacity: 0.8;
+    }
+}

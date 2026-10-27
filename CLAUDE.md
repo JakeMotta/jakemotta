@@ -19,6 +19,7 @@ This file holds the rules for the whole repo. The detail lives in `docs/`:
 - [`docs/music.md`](docs/music.md): the music player, its shuffle, and the visualizer.
 - [`docs/listening.md`](docs/listening.md): what Jake's listening to on Spotify and YouTube Music, read from ListenBrainz; listen-along and its Cloudflare Worker; the iPhone sync and the history imports; setup, and how to hook it all up.
 - [`docs/modpack.md`](docs/modpack.md): publishing a Minecraft modpack release, and the rules for the downloads.
+- [`docs/devlog.md`](docs/devlog.md): the dev log (`/devlog`): writing a post, refreshing the Claude usage numbers and the commits, and what is and isn't published from them.
 
 **Keep the docs current as part of every change.** When a change alters behavior, a decision, a workflow or what's kept or removed, update this file or the relevant `docs/` page in the same commit; Jake has asked for this standing. If something has no home yet, such as a new project or feature, create its page and link it here. Docs live in `docs/`, never in `public/`, which is deployed.
 
@@ -36,6 +37,7 @@ yarn test         # Jest in watch mode (react-scripts)
 yarn test --watchAll=false src/path/to/File.test.tsx   # one test file, single run
 yarn prettier     # format everything (2 spaces, single quotes, semicolons, printWidth 200)
 yarn modpack:release <release-folder> [--force]       # publish a Minecraft modpack release, see below
+yarn devlog:stats # refresh the dev log's Claude usage and commits (src/devlog/stats.json) from this machine; commit the result
 ```
 
 There are no tests in `src/` yet, and no lint script beyond the ESLint that CRA runs during `dev`/`build`. Type errors surface through the CRA build.
@@ -46,7 +48,7 @@ Create React App (react-scripts 5) + TypeScript, React 19, react-router v7, Ant 
 
 **Layout of `src/components/`** follows atomic design: `atoms/` (small pieces: the music player, the transport and sliders, cover art, project images, the eq bars), `templates/` (page shells: the color-shifting background and the overlay), `pages/` (routes). Each folder has an `index.ts` barrel, and new components are exported through it.
 
-**The board and its overlays** (full spec in [`docs/board.md`](docs/board.md)). The whole site is one bento board, `pages/home`, at `/` (and `/home`). Its tiles open as overlays drawn over it, each a route of its own: `/library` (`pages/music`), `/project` (all projects, `pages/project-gallery`), `/project/:id` (`pages/project`) and `/minecraft` (`pages/minecraft`). A tile that holds several things opens through an expand link in its header, like the Now Playing tile's Library. In `App.tsx` the board is a layout route and the overlays render into its `<Outlet />`, so the board stays mounted, dimmed and inert, behind whichever one is open, and Back, Escape or the close button return to it. Overlays use `templates/bento-overlay`, which portals them to `<body>`, and head themselves with `templates/overlay-header`: one shared header (Jake asked that they all match), whose first line holds the title level with the close button, anything that belongs beside it (the library's tabs), with a subtitle under it. A panel starts it 16px down so the title lines up with the button. Any other path redirects to `/`. An overlay's path must never match a folder in `public/` (`downloads`, `images`, `music`, `projects`, `vendor`): the server serves the folder instead of the app, so the library is at `/library`, not `/music`.
+**The board and its overlays** (full spec in [`docs/board.md`](docs/board.md)). The whole site is one bento board, `pages/home`, at `/` (and `/home`). Its tiles open as overlays drawn over it, each a route of its own: `/library` (`pages/music`), `/project` (all projects, `pages/project-gallery`), `/project/:id` (`pages/project`), `/minecraft` (`pages/minecraft`) and `/devlog` (`pages/devlog`, linked from the Hero). A tile that holds several things opens through an expand link in its header, like the Now Playing tile's Library. In `App.tsx` the board is a layout route and the overlays render into its `<Outlet />`, so the board stays mounted, dimmed and inert, behind whichever one is open, and Back, Escape or the close button return to it. Overlays use `templates/bento-overlay`, which portals them to `<body>`, and head themselves with `templates/overlay-header`: one shared header (Jake asked that they all match), whose first line holds the title level with the close button, anything that belongs beside it (the library's tabs), with a subtitle under it. A panel starts it 16px down so the title lines up with the button. Any other path redirects to `/`. An overlay's path must never match a folder in `public/` (`downloads`, `images`, `music`, `projects`, `vendor`): the server serves the folder instead of the app, so the library is at `/library`, not `/music`.
 
 **What stays mounted across routes.** `App.tsx` renders the `<Routes>` and, beside them (outside `BrowserRouter`), `<TsParticleBackground />` and `<MusicPlayer />`. Because the player sits outside the routes it survives navigation, which is what lets music keep playing between pages. Anything else that must persist across pages belongs there too.
 
@@ -92,9 +94,16 @@ Apart from regenerating the converted output, treat `public/projects/` as an arc
 - **Before the app runs:** `public/index.html` holds the tab title, the meta description, the Open Graph and `twitter:` tags for shared links, and a schema.org `Person` (name, site, GitHub). The shared-link image is `public/images/og.jpg`, 1200×630: a screenshot of the board after "Play with sound", taken in a 1600×840 window. Retake it when the board changes a lot.
 - **Per page:** `usePageMeta()` (`common/seo.ts`, called by the board) sets the tab title (`Projects · Jake Motta`, `TapSlayDie (2026) · Jake Motta`), the description and a canonical link for the open overlay. Its board description must match the one in `index.html`, and a new overlay route needs an entry in its `OVERLAYS`.
 - **Sitemap:** `yarn build` writes `build/sitemap.xml` (`scripts/write-sitemap.mjs`): the board, the overlays and one `/project/<id>` per entry in `homeProjectList`, read from `constants.ts`. `public/robots.txt` points at it. A new overlay route goes in its `paths` too. The standalone sites under `/projects/` aren't listed; each is reached through its viewer page.
-- **The site never mentions Claude:** not in visible text, page metadata or the shipped code. Comments in the source call the muted preview setup "the preview server".
+- **Claude is named only in the dev log.** Jake chose on 2026-10-27 to show his Claude usage openly there (`/devlog`, its page metadata and its posts). Everywhere else the site still doesn't mention Claude, and comments in the source still call the muted preview setup "the preview server".
 
 **Minecraft modpack page.** `/minecraft` (`pages/minecraft`) is the modpack tile opened: the Progression Survival download page, laid out as a board of its own over the main one. It and the board's modpack tile read `/downloads/progression-survival/releases.json` at runtime (`common/modpack.ts`), and `yarn modpack:release` publishes a new version. Procedure and rules: [`docs/modpack.md`](docs/modpack.md).
+
+**Dev log** (full spec in [`docs/devlog.md`](docs/devlog.md)). `/devlog` (`pages/devlog`), opened from the Hero's Dev log chip, holds three things:
+- **Posts:** Markdown files in `src/devlog/posts/` (`YYYY-MM-DD-slug.md`, a `title` and optional `project` up top). `common/devlog.ts` finds them with `require.context`, and `atoms/markdown` renders them as elements, never as HTML. Adding a post means adding a file, in Jake's voice.
+- **Claude usage:** hours, tokens and sessions, by day and by project.
+- **Latest commits.**
+
+The usage and the commits come from `src/devlog/stats.json`, which `yarn devlog:stats` (`scripts/devlog-stats.mjs`) writes on Jake's machine from `~/.claude/projects/` and the sibling repositories. CI can't run it, so the file is committed. Only totals are published, never transcript text. A project folder that isn't in the script's `PROJECTS` counts as "Other". Commit subjects are published only for public repositories (`commits: true`).
 
 ## Style
 

@@ -33,6 +33,7 @@
     "build": "react-scripts build && node scripts/prune-build.mjs && node scripts/write-sitemap.mjs",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "devlog:stats": "node scripts/devlog-stats.mjs",
     "modpack:release": "node scripts/release-modpack.mjs",
     "projects:convert": "node scripts/convert-php-sites.mjs",
     "projects:ambii": "node scripts/build-ambii-demos.mjs",

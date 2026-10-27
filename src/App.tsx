@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Home, Minecraft, MusicLibrary, ProjectGallery, ProjectViewer } from './components/pages';
+import { Devlog, Home, Minecraft, MusicLibrary, ProjectGallery, ProjectViewer } from './components/pages';
 import { ConfigProvider } from 'antd';
 import { ThemeProvider, useTheme, generateRandomHue } from './contexts/ThemeContext';
 import { TsParticleBackground, MusicPlayer, ListenAlong } from './components/atoms';
@@ -58,6 +58,7 @@ const AppContent = () => {
             {/* The listening page became the library's Recent listens tab; old links land there */}
             <Route path="listening" element={<Navigate to="/library?tab=recent" replace />} />
             <Route path="minecraft" element={<Minecraft />} />
+            <Route path="devlog" element={<Devlog />} />
             {/* /project, singular: /projects/ is the standalone sites' folder, which the server keeps from the app */}
             <Route path="project" element={<ProjectGallery />} />
             <Route path="project/:id" element={<ProjectViewer />} />

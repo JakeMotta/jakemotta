@@ -1,3 +1,4 @@
+export * from './devlog';
 export * from './home';
 export * from './minecraft';
 export * from './music';

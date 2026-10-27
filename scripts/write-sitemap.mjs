@@ -30,7 +30,7 @@ if (!ids.length) {
     process.exit(1);
 }
 
-const paths = ['/', '/project', '/library', '/minecraft', ...ids.map((id) => `/project/${id}`)];
+const paths = ['/', '/project', '/library', '/minecraft', '/devlog', ...ids.map((id) => `/project/${id}`)];
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${paths.map((path) => `  <url><loc>${SITE_URL}${path}</loc></url>`).join('\n')}

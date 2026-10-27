@@ -1,0 +1,325 @@
+{
+  "generatedAt": "2026-10-27T22:52:54.605Z",
+  "since": "2026-08-06",
+  "totals": {
+    "minutes": 1234,
+    "sessions": 21,
+    "replies": 8724,
+    "tokens": {
+      "input": 18202,
+      "output": 8213069,
+      "cacheWrite": 34089976,
+      "cacheRead": 2243410742
+    }
+  },
+  "models": [
+    {
+      "name": "Opus 5.5",
+      "tokens": 2056938663
+    },
+    {
+      "name": "Opus 5",
+      "tokens": 228793326
+    }
+  ],
+  "days": [
+    {
+      "date": "2026-08-06",
+      "project": "TapSlayDie",
+      "minutes": 71,
+      "replies": 127,
+      "sessions": 1,
+      "tokens": {
+        "input": 571,
+        "output": 68234,
+        "cacheWrite": 331792,
+        "cacheRead": 20229127
+      }
+    },
+    {
+      "date": "2026-08-07",
+      "project": "TapSlayDie",
+      "minutes": 177,
+      "replies": 224,
+      "sessions": 1,
+      "tokens": {
+        "input": 419,
+        "output": 127394,
+        "cacheWrite": 2701598,
+        "cacheRead": 80645786
+      }
+    },
+    {
+      "date": "2026-08-08",
+      "project": "TapSlayDie",
+      "minutes": 8,
+      "replies": 42,
+      "sessions": 1,
+      "tokens": {
+        "input": 78,
+        "output": 14993,
+        "cacheWrite": 971482,
+        "cacheRead": 20439600
+      }
+    },
+    {
+      "date": "2026-08-09",
+      "project": "TapSlayDie",
+      "minutes": 43,
+      "replies": 92,
+      "sessions": 1,
+      "tokens": {
+        "input": 172,
+        "output": 32694,
+        "cacheWrite": 1099942,
+        "cacheRead": 50325157
+      }
+    },
+    {
+      "date": "2026-09-14",
+      "project": "TapSlayDie",
+      "minutes": 29,
+      "replies": 55,
+      "sessions": 1,
+      "tokens": {
+        "input": 110,
+        "output": 106113,
+        "cacheWrite": 235634,
+        "cacheRead": 9879996
+      }
+    },
+    {
+      "date": "2026-09-17",
+      "project": "TapSlayDie",
+      "minutes": 61,
+      "replies": 51,
+      "sessions": 1,
+      "tokens": {
+        "input": 102,
+        "output": 111133,
+        "cacheWrite": 405573,
+        "cacheRead": 19665252
+      }
+    },
+    {
+      "date": "2026-09-20",
+      "project": "TapSlayDie",
+      "minutes": 49,
+      "replies": 125,
+      "sessions": 1,
+      "tokens": {
+        "input": 250,
+        "output": 101973,
+        "cacheWrite": 241046,
+        "cacheRead": 21057105
+      }
+    },
+    {
+      "date": "2026-09-24",
+      "project": "TapSlayDie",
+      "minutes": 1,
+      "replies": 8,
+      "sessions": 1,
+      "tokens": {
+        "input": 16,
+        "output": 4139,
+        "cacheWrite": 83948,
+        "cacheRead": 794463
+      }
+    },
+    {
+      "date": "2026-10-26",
+      "project": "jakemotta.com",
+      "minutes": 507,
+      "replies": 4923,
+      "sessions": 9,
+      "tokens": {
+        "input": 10184,
+        "output": 5159632,
+        "cacheWrite": 18056554,
+        "cacheRead": 1277205999
+      }
+    },
+    {
+      "date": "2026-10-26",
+      "project": "Other",
+      "minutes": 25,
+      "replies": 32,
+      "sessions": 1,
+      "tokens": {
+        "input": 70,
+        "output": 104642,
+        "cacheWrite": 224479,
+        "cacheRead": 6010119
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "project": "jakemotta.com",
+      "minutes": 289,
+      "replies": 3044,
+      "sessions": 11,
+      "tokens": {
+        "input": 6228,
+        "output": 2380774,
+        "cacheWrite": 9736774,
+        "cacheRead": 737046026
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "project": "Other",
+      "minutes": 0,
+      "replies": 1,
+      "sessions": 1,
+      "tokens": {
+        "input": 2,
+        "output": 1348,
+        "cacheWrite": 1154,
+        "cacheRead": 112112
+      }
+    }
+  ],
+  "commits": [
+    {
+      "project": "jakemotta.com",
+      "hash": "4bf38a5",
+      "date": "2026-10-27T16:31:01-06:00",
+      "subject": "Give every grouped project its own card",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/4bf38a5268766d7c61cd91c087309b7b796663c8"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "e669222",
+      "date": "2026-10-27T16:05:26-06:00",
+      "subject": "Show 100 listens and the whole shuffle, and open the floating player on click",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/e6692220d45706f8c3e7a156eea15ac7149f802a"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "42c6ab9",
+      "date": "2026-10-27T15:55:36-06:00",
+      "subject": "Stop the Personal Site preview from scrolling sideways",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/42c6ab9c3391b0c1e857d5ac6b150876084be9fe"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "2d030b1",
+      "date": "2026-10-27T15:18:12-06:00",
+      "subject": "Apply the site review: SEO, a shared player and header, and a floating music button",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/2d030b1889b2cddc490d4d83398c2d5b4fc0c2f3"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "bedc9c5",
+      "date": "2026-10-27T12:22:18-06:00",
+      "subject": "Publish Progression Survival 1.0.0-rc.6",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/bedc9c531b407dc1390aef1c3f89bdffc0fe3d7c"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "824e742",
+      "date": "2026-10-27T00:36:57-06:00",
+      "subject": "Keep the open project in view in the viewer's strip",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/824e742eb9fd05908d163a1f68787abb16e2ef0b"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "69c4de1",
+      "date": "2026-10-27T00:22:47-06:00",
+      "subject": "Say where the Ambii apps' source is backed up: a jakemotta-demo branch in each private repo",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/69c4de15fba0bf9dc2d5ed5078e521d253a7b796"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "808ac68",
+      "date": "2026-10-26T23:56:10-06:00",
+      "subject": "Put what Jake's listening to on the board, in Surprise me's place",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/808ac68db5185172ed44f80a1cd484dc578d737a"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "f67ac2a",
+      "date": "2026-10-26T22:19:30-06:00",
+      "subject": "Let the Ambii media script run without the apps' private source",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/f67ac2aee2bfd694bc496eb1fb17b9b7a4439fec"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "1f45bc0",
+      "date": "2026-10-26T22:13:35-06:00",
+      "subject": "Pause the music by message from every preview, and let Escape close their pictures",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/1f45bc00a69d1d913dffae5b6ed999e0aacedc65"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "da6456f",
+      "date": "2026-10-26T21:52:25-06:00",
+      "subject": "Add 16 projects from the archive, the Ambii Business demos and listening",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/da6456f124d557cc9a1ebf84461fb8e7db612ba1"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "21aea01",
+      "date": "2026-10-26T19:11:56-06:00",
+      "subject": "Add a privacy page for the YouTube Music sync's Google app",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/21aea0161e284f4159e6cb58c59d00f495568fd3"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "db02179",
+      "date": "2026-10-26T18:37:16-06:00",
+      "subject": "Move the music library to /library, off the music folder's path",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/db021793e3c408d02d71f209b34e748d24d1dbc5"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "530d10a",
+      "date": "2026-10-26T18:24:28-06:00",
+      "subject": "Open every board tile that has more behind it, and list all projects",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/530d10a76dda87d94a6260814589dd21e4bdb486"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "a7e04e2",
+      "date": "2026-10-26T17:57:31-06:00",
+      "subject": "Rebuild the site as one bento board",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/a7e04e27413ac87eb75c3bc7b2e39461ea1763bd"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "70ccb34",
+      "date": "2026-10-26T15:56:00-06:00",
+      "subject": "Split the docs: per-project pages, music and modpack",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/70ccb342b4f4e4bc8f6f86552536e69556addb84"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "4989c15",
+      "date": "2026-10-26T15:55:57-06:00",
+      "subject": "Add TapSlayDie to the projects, and point the cards at the new images",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/4989c1587b5df74fac0dec5a0de8ac1383081d67"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "4698415",
+      "date": "2026-10-26T15:55:55-06:00",
+      "subject": "Screenshot each running preview for sharp project cards",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/4698415f084775402423888f50c6c4d32529020e"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "00afbc8",
+      "date": "2026-10-26T15:37:39-06:00",
+      "subject": "Record what the Black Chamber and CS160 restores left out",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/00afbc861a4ee0d57c5de681cce654fe07339b3b"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "e2a7cb7",
+      "date": "2026-10-26T15:24:57-06:00",
+      "subject": "Link the Black Chamber and CS160 cards to their previews",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/e2a7cb71bf21e76edd014541a646cf19e42f1ea0"
+    }
+  ]
+}

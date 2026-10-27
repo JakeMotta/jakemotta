@@ -20,7 +20,7 @@ On a desktop the tiles sit like this:
 
 ## The tiles
 
-- **Hero** (`HeroTile`): on an opaque surface mixed from `primary` and `primary-light` (mostly the ground), with the ink outline, the name, the one-line tagline and links to Music (`/library`), Projects (`/project`) and Minecraft (`/minecraft`). It holds the page's only `<h1>`.
+- **Hero** (`HeroTile`): on an opaque surface mixed from `primary` and `primary-light` (mostly the ground), with the ink outline, the name, the one-line tagline and links to Music (`/library`), Projects (`/project`), Minecraft (`/minecraft`) and Dev log (`/devlog`, added 2026-10-27). It holds the page's only `<h1>`.
 - **Now Playing** (`NowPlayingTile`): the player. Cover, title, byline, a seek slider, previous/play/next and a speaker button whose vertical volume slider shows on hover, plus **Library ↗**. It also holds the sound-or-silence choice (below), and when the visitor chose silence it offers to start the welcome track.
 - **Featured project** (`FeaturedTile`): the first entry in `homeProjectList`, which is the newest, marked "Newest". The whole tile links to its viewer.
 - **Up next** (`UpNextTile`): every song left in the shuffle, scrolling inside the tile. Clicking one plays it now. **All songs ↗** opens the library.
@@ -52,6 +52,7 @@ A tile opens as an overlay route drawn over the board, which stays mounted behin
 | `/listening` | (redirect) | Sends old links to `/library?tab=recent`. It was its own overlay until Jake had it removed on 2026-10-27, since the library's tab shows the same. |
 | `/project` | `pages/project-gallery` | Every project, newest first, as cards with screenshot, name, year and description. It's at `/project`, singular, because `/projects/` is the folder of standalone sites, which `.htaccess` keeps from the app. |
 | `/project/:id` | `pages/project` | The project viewer (see [projects/README.md](projects/README.md)). Opened from the all-projects overlay, it closes back to it; opened from the board, back to the board. The frame fills the left edge to edge, with "Open in a new tab" on its bottom right corner; the side panel has the title, the year and `tags` pills, the description, then Back and Forward at its foot (the previous and next project, replacing the history entry so the browser's Back closes the viewer). The address bar and the strip of every project were removed on 2026-10-27. |
+| `/devlog` | `pages/devlog` | The dev log, opened from the Hero's Dev log chip: Jake's posts, his Claude usage by day and project, and the latest commits, as a board of its own (see [devlog.md](devlog.md)). |
 | `/minecraft` | `pages/minecraft` | The modpack download page as a board of its own: Download, Install, Playing, Updating and Older releases tiles (Older releases replaced Troubleshooting on 2026-10-27), written for players, with one line for self-hosters (see [modpack.md](modpack.md)). |
 
 Each uses `templates/bento-overlay`, which:

@@ -36,6 +36,9 @@ export const HeroTile = () => {
                 <Link className='chip' to='/minecraft'>
                     Minecraft
                 </Link>
+                <Link className='chip' to='/devlog'>
+                    Dev log
+                </Link>
             </nav>
         </section>
     );

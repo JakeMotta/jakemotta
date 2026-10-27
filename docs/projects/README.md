@@ -15,7 +15,6 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `scott-pilgrim` | `/projects/cs134/scott-pilgrim.html` (a recorded clip) | [scott-pilgrim.md](scott-pilgrim.md) |
 | `fooder` | `/projects/fooder/index.html` (a case study) | [fooder.md](fooder.md) |
 | `survivor` | `/projects/survivor/index.html` (a case study) | [survivor.md](survivor.md) |
-| `arena-king` | `/projects/survivor/arena-king.html` (a write-up of the rules) | [arena-king.md](arena-king.md) |
 | `cs160` | `/projects/cs160/index.html` | [cs160.md](cs160.md) |
 | `personal-site` | `/projects/personal-site/index%20(2).static.html` | [personal-site.md](personal-site.md) |
 | `dan-james` | `/projects/dan-james/index.static.html` | [dan-james.md](dan-james.md) |
@@ -54,7 +53,7 @@ A preview has to run in the browser with no server code: the host is static, and
 - **Flash** plays through Ruffle, self-hosted in `public/vendor/ruffle/`.
 - **Java desktop games** (isGuy, Pokémon, Coloris) run as the original jars through CheerpJ, which loads only when the visitor presses Play. CheerpJ's free Community License covers a personal site only while it loads from `cjrtnc.leaningtech.com` and the page credits it; self-hosting it would need a paid license. How the three pages work is in [isguy.md](isguy.md).
 - **Godot games** (Asteroids) are Godot's own web export, with threads off so the static host needs no special headers ([asteroids.md](asteroids.md)).
-- **Games that can't run in a browser** get a short recorded clip (The Floor is Lava and Scott Pilgrim, recorded from the original jars) or a case study of their design and art (Survivor, Arena King, Fooder).
+- **Games that can't run in a browser** get a short recorded clip (The Floor is Lava and Scott Pilgrim, recorded from the original jars) or a case study of their design and art (Survivor, Fooder).
 - **Live sites** on their own domain (TapSlayDie) are framed at their address. Their document is cross-origin, so the viewer's link handling can't reach inside them.
 
 **Embedded third-party forms stay live.** JotForm embeds (Dan James's contact page, Pistol Art's register page, the 2012 high school page and its NinjaDonut copy) still submit for real. Jake decided on 2026-10-26 to leave them, along with his old contact details on the 2012 pages. Only the sites' own mail handlers are rerouted, because they'd need the PHP that isn't published.

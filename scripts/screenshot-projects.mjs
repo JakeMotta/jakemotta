@@ -55,7 +55,8 @@ const SHOTS = [
     // The old phone number and email stay on the page but not on the card, which shows on the board itself
     { id: 'highschool-portfolio', url: '/projects/highschool/oldSite/index.html', settle: 2500, run: "document.getElementById('contact').style.visibility = 'hidden'" },
     { id: 'sketchbook', url: '/projects/sketchbook/index.html', settle: 1500 },
-    { id: 'flash', url: '/projects/flash/index.html', settle: 1500 },
+    // Its thumbnails load lazily, which a background tab never gets round to
+    { id: 'flash', url: '/projects/flash/index.html', settle: 1500, run: "document.querySelectorAll('img[loading]').forEach((img) => (img.loading = 'eager'))" },
     // The poster frame, with the film's title on the wall
     { id: 'escaping-confinement', url: '/projects/escaping-confinement/index.html', settle: 1500 },
     // Down past the three wide ones, onto the grid of smaller GIFs mid-animation
@@ -64,7 +65,6 @@ const SHOTS = [
     { id: 'scott-pilgrim', url: '/projects/cs134/scott-pilgrim.html', settle: 2500 },
     { id: 'fooder', url: '/projects/fooder/index.html', settle: 1500 },
     { id: 'survivor', url: '/projects/survivor/index.html', settle: 1500 },
-    { id: 'arena-king', url: '/projects/survivor/arena-king.html', settle: 1500 },
     // On the slideshow's first slide
     { id: 'team-safe', url: '/projects/motorsport/team-safe/About.html', settle: 2500 },
     { id: 'worxxx', url: '/projects/motorsport/worxxx/index.static.html', settle: 2500 },

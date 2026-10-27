@@ -272,15 +272,6 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/survivor/index.html',
     },
     {
-        id: 'arena-king',
-        image: '/images/projects/arena-king.webp',
-        title: 'Arena King',
-        date: '2017',
-        tags: ['Tabletop Game', 'School'],
-        description: 'A dice-and-card dueling game where you buy buffs and hoard the good ones so nobody else gets them.',
-        preview: '/projects/survivor/arena-king.html',
-    },
-    {
         id: 'cs160',
         image: '/images/projects/cs160.webp',
         title: 'CS160',
@@ -366,8 +357,8 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/flash.webp',
         title: 'Flash',
         date: '2012',
-        tags: ['Flash', 'Animation', 'Game'],
-        description: 'Cartoons, caricatures of my friends and a side-scrolling shooter.',
+        tags: ['Flash', 'Animation'],
+        description: 'Cartoons and caricatures of my friends.',
         preview: '/projects/flash/index.html',
     },
     {

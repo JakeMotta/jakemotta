@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FiArrowUpRight, FiChevronLeft, FiChevronRight, FiInfo, FiLock } from 'react-icons/fi';
 import { BentoOverlay } from '../../templates';
@@ -34,12 +34,25 @@ export const ProjectViewer = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const frameRef = useRef<HTMLIFrameElement>(null);
+    const stripRef = useRef<HTMLUListElement>(null);
+    const stripPlaced = useRef(false);
     const [loadedId, setLoadedId] = useState<string>();
     const index = homeProjectList.findIndex((item) => item.id === id);
     const project = homeProjectList[index];
     // Opened from the all-projects overlay, closing goes back there; opened from the board, back to the board
     const fromGallery = (location.state as { from?: string } | null)?.from === 'gallery';
     const close = () => navigate(fromGallery ? '/project' : '/');
+
+    // The strip holds more projects than fit, so it centres the open one: at once on opening, then gliding as the visitor steps
+    useEffect(() => {
+        const strip = stripRef.current;
+        const current = strip?.querySelector<HTMLElement>('[aria-current]');
+        if (!strip || !current) return;
+        const left = strip.scrollLeft + current.getBoundingClientRect().left - strip.getBoundingClientRect().left - (strip.clientWidth - current.offsetWidth) / 2;
+        const glide = stripPlaced.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        strip.scrollTo({ left, behavior: glide ? 'smooth' : 'auto' });
+        stripPlaced.current = true;
+    }, [id]);
 
     if (!project) {
         return (
@@ -105,7 +118,7 @@ export const ProjectViewer = () => {
                     )}
                 </div>
 
-                <ul className='viewer__strip' aria-label='All projects'>
+                <ul ref={stripRef} className='viewer__strip' aria-label='All projects'>
                     {homeProjectList.map((item) => (
                         <li key={item.id}>
                             <button

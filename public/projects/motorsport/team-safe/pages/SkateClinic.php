@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Team SAFE Racing</title>
+
+<!--Style Sheet-->
+<link rel="stylesheet" href="../files/cssReset.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../files/mainCss.css">
+
+<!--Font and JQuery-->
+<script src="../files/jquery-3.4.1.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab|Marmelad|Domine' rel='stylesheet' type='text/css'>
+
+<!--NavBar-->
+<link rel="stylesheet" href="../lavalamp/lavalamp_test.css" type="text/css" media="screen">
+<script type="text/javascript" src="../lavalamp/jquery.lavalamp.js"></script>
+<script type="text/javascript" src="../lavalamp/jquery.lavalamp.min.js"></script>
+<script type="text/javascript" src="../lavalamp/jquery.easing.min.js"></script>
+<script type="text/javascript">
+        $(function() {
+            $("#1").lavaLamp({
+                fx: "backout", 
+                speed: 700,
+                click: function(event, menuItem) {
+                }
+            });
+        });
+    </script>
+        
+
+<!--SlideShow-->
+<link rel="stylesheet" href="../files/responsiveslides.css">
+<link rel="stylesheet" href="../files/slideCss.css">
+  <script src="../files/responsiveslides.min.js"></script>
+  <script>
+    // You can also use "$(window).load(function() {"
+    $(function () {
+
+      // Slideshow 4
+      $("#slider4").responsiveSlides({
+        auto: true,
+        pager: false,
+        nav: false,
+        speed: 500,
+        namespace: "callbacks",
+        before: function () {
+          $('.events').append("<li>before event fired.</li>");
+        },
+        after: function () {
+          $('.events').append("<li>after event fired.</li>");
+        }
+      });
+    });
+  </script>
+
+
+<!--[if lt IE 9]>
+<script src="files/html5shiv.js"></script>
+<![endif]-->
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</head>
+
+<body>
+
+
+
+<div id="container">
+   <section id="topNav">
+        <span id="largeTextShadow">
+      	    Team SAFE Racing
+        </span>
+        <section id="contact">
+            <span id="smallText"><span id="whiteText">
+                    Email: teamsaferacing@yahoo.com
+            </span></span>
+        </section> <!--End Contact-->
+   </section> <!--End topNav-->
+   
+<header id="head">
+<section id="slideDiv">
+
+<!-- Slideshow 4 -->
+   <div class="callbacks_container">
+      <ul class="rslides" id="slider4">
+        <li>
+          <img src="../images/slide/1.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/2.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/3.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/4.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/5.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+      </ul>
+    </div>
+
+</section> <!--End slideDiv-->
+
+<nav id="headNav">
+    <span id="navLinkText">
+    	<ul class="lavaLampWithImage" id="1">
+                <?php
+						include("../files/sec_topNav.php");
+				?>
+       	</ul>     
+	</span>
+</nav> <!--End headNav-->
+</header> <!--End Head-->
+
+
+<section id="content">
+<br>
+
+<aside id="leftColumn">
+<div align="center"><span id="medText" >Team SAFE Hosts Skate Clinic</span><span id="smallText" ></span></div>
+<hr />
+
+<section id="mainContent">
+<span id="pText">
+
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <span id="redText">2014 is here</span> and Team SAFE Racing is <span id="redText">not wasting any time</span>.  Team SAFE hosted a <span id="redText">clinic</span> on the beautiful Monterey Peninsula during the weekend of January 3rd, 4th and 5th.  <br><br>
+
+In <span id="redText">attendance</span> were several Team SAFE skaters: Rob Motta, Chris Rojo, Linus Harth, John Crysdale, Mark Randle, <span id="redText">Team Owner</span> Paul Sargenti and a short appearance by Paul Lomangino.  Also in attendance was Brent Leaman, Coach Deb Alpers and four <span id="redText">young and very talented</span> skaters: Jacob (20 yrs. Old), Cameron (9 yrs. Old), Malav (8 or 9 yrs. Old) and Grace (8 or 9 yrs. Old). These four younger skaters were so much fun to have with us. They kept the <span id="redText">energy</span> high!<br><br>
+
+We were <span id="redText">fortunate</span> to have Deb Alpers coaching.  Deb brings a <span id="redText">wealth of knowledge</span> and has a fun coaching style.  She worked well with <span id="redText">all of the skaters</span> and had something to offer every skater at <span id="redText">every level</span>.  <br><br>
+
+The <span id="redText">main focus</span> of the clinic was “<span id="redText">back to basics</span>”.  No matter the sport or level at which anyone competes, if you don’t have a <span id="redText">solid base</span> you don’t have anything.  We worked both <span id="redText">on and off</span> skate drills all three days.  We also did a fun <span id="redText">group skate</span> along the world famous 17 mile drive inside Pebble Beach.  <br><br>
+
+All of the skaters had a <span id="redText">great time</span> and took home something they can use to help them have a season this year.  <br><br>
+
+<img src="../images/mains/clinic.jpg" id="bioPic" /><br>
+<br>
+<br>
+<br>
+<br>
+
+
+<br>
+<br>
+
+</span>
+</section> <!--End mainContent-->
+</aside> <!--End leftColumn-->
+
+<aside id="rightColumn">
+<br>
+    <aside id="sponsorImages" align="center">
+        	<?php
+					include("../files/sec_sideBar.php");
+			?>
+    </aside>
+</aside> <!--End rightColumn-->
+</section> <!--End content-->
+
+
+<footer id="foot">
+
+	<footer id="footContact">
+    	<span id="smallerText">
+        	<?php
+					include("../files/sec_Links.php");
+			?>	
+        </span>
+    </footer>
+    
+    <footer id="footContent">
+        <span id="smallerText">
+            Copyright © 2014 Team SAFE Racing. All rights reserved. Website Design By <span id="whiteText"><a href="jakeMotta.php">Jacob Motta</a> </span><br>
+        </span>
+    </footer>
+
+    <div id="bottomSkater" align="right">
+    	<img src="../images/logos/skater2.gif" />&nbsp&nbsp&nbsp&nbsp
+    	<img src="../images/logos/skater.gif" />
+    </div>
+</footer> <!--End foot-->
+
+
+</div> <!--End Container-->
+
+</body>
+</html>

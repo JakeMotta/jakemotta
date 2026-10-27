@@ -1,0 +1,84 @@
+body
+{
+	background-color:#1F1F1F;
+	background-image:url(Images/newbg.jpg);
+	background-repeat:repeat-x;
+}
+#container
+{
+	width:960px;
+	min-height:50px;
+	height:auto !important;
+	height:50px;
+	background-color:transparent;
+	background-image:url(Images/Flag4.gif);
+	margin:auto;
+	margin-top:50px;
+}
+#head
+{
+	width:960px;
+	min-height:100px;
+	height:auto !important;
+	height:100px;
+	background-color:transparent;
+	background-image:url(Images/head.gif);
+	background-repeat:no-repeat;
+	margin:auto;
+}
+#foot
+{
+	width:960px;
+	background-color:#000;
+	margin:auto;
+}
+h1.headText
+{
+	text-align:center;
+	font-size:108px;
+	font-family: 'Monda', sans-serif;
+	color:#000;
+}
+p.text
+{
+	font-size:16px;
+	text-align:center;
+	font-family: 'Monda', sans-serif;
+	color:#000;
+}
+p.title
+{
+	font-size:25px;
+	text-align:center;
+	font-family: 'Monda', sans-serif;
+	color:#000;
+}
+p.links
+{
+	font-size:25px;
+	text-align:center;
+	font-family: 'Monda', sans-serif;
+	color:#fff;
+}
+p.links a
+{
+	color:#fff;
+	text-decoration:none;
+}
+p.links a:hover
+{
+	color:#FF8000;
+	text-decoration:none;
+}
+p.links a:visited
+{
+	color:#fff;
+	text-decoration:none;
+}
+/*
+font-family: 'Rambla', sans-serif;
+font-family: 'Share Tech', sans-serif;
+font-family: 'Monda', sans-serif;
+font-family: 'Mouse Memoirs', sans-serif;
+font-family: 'Sanchez', serif;
+*/

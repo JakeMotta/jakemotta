@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Ambii Music for Business · mobile app demo</title>
+    <meta name="description" content="The Ambii Music for Business phone app (React Native, 2021), running in the browser with demo data." />
+    <link rel="icon" href="ambii-logo.png" />
+    <!--
+      DEMO: hand-written page around the react-native-web build of the Ambii mobile app
+      (demos/ambii/music-app/web/frame/index.html, copied here by `npm run demo:build`).
+      It draws a phone around app/index.html, provides the tap that lets the app start audio,
+      and carries the demo badge (the app runs installAmbiiDemo with badge: false).
+    -->
+    <style>
+      :root {
+        --deep: #2c2033;
+        --deeper: #1c1521;
+        --pink: #d04283;
+        --violet: #c178ff;
+        --text: #f4eef7;
+        --muted: #b9adc2;
+        --phone-w: 418px;
+        --phone-h: 872px;
+        --scale: 1;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        background: radial-gradient(120% 80% at 50% 0%, #3b2a47 0%, var(--deep) 45%, var(--deeper) 100%);
+        color: var(--text);
+        font: 15px/1.4 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        overflow: hidden;
+      }
+      a,
+      button {
+        font: inherit;
+        color: inherit;
+      }
+      .stage {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 16px;
+      }
+      .slot {
+        width: calc(var(--phone-w) * var(--scale));
+        height: calc(var(--phone-h) * var(--scale));
+        flex: none;
+      }
+      .phone {
+        position: relative;
+        width: var(--phone-w);
+        height: var(--phone-h);
+        padding: 14px;
+        border-radius: 62px;
+        background: #0b0a0d;
+        box-shadow:
+          0 0 0 2px #3a3540,
+          0 0 0 4px #17151a,
+          0 30px 80px rgba(0, 0, 0, 0.55),
+          0 0 120px rgba(208, 66, 131, 0.18);
+        transform: scale(var(--scale));
+        transform-origin: top left;
+      }
+      .phone::before,
+      .phone::after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        border-radius: 2px;
+        background: #2a262e;
+      }
+      .phone::before {
+        left: -6px;
+        top: 170px;
+        height: 64px;
+        box-shadow: 0 84px 0 #2a262e;
+      }
+      .phone::after {
+        right: -6px;
+        top: 220px;
+        height: 96px;
+      }
+      .screen {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 48px;
+        overflow: hidden;
+        background: var(--deeper);
+        isolation: isolate;
+      }
+      .screen iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: var(--deeper);
+      }
+      .statusbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 26px;
+        padding: 0 30px 0 34px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        mix-blend-mode: difference;
+        pointer-events: none;
+        z-index: 2;
+      }
+      .statusbar svg {
+        display: block;
+        fill: currentColor;
+      }
+      .statusbar .icons {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+      .island {
+        position: absolute;
+        top: 6px;
+        left: 50%;
+        width: 92px;
+        height: 22px;
+        margin-left: -46px;
+        border-radius: 11px;
+        background: #000;
+        pointer-events: none;
+        z-index: 3;
+      }
+      .cover {
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 40px 32px;
+        border: 0;
+        background:
+          radial-gradient(90% 55% at 50% 38%, rgba(193, 120, 255, 0.22), transparent 70%),
+          var(--deeper);
+        cursor: pointer;
+        text-align: center;
+        transition: opacity 0.35s ease;
+      }
+      .cover.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .cover img {
+        width: 84px;
+        height: 84px;
+        margin-bottom: 6px;
+      }
+      .cover .name {
+        font-size: 22px;
+        font-weight: 700;
+      }
+      .cover .what {
+        max-width: 260px;
+        color: var(--muted);
+      }
+      .cover .start {
+        margin-top: 22px;
+        padding: 13px 30px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--violet), var(--pink));
+        color: #fff;
+        font-weight: 700;
+        font-size: 17px;
+        box-shadow: 0 10px 30px rgba(208, 66, 131, 0.45);
+        animation: pulse 2.2s ease-in-out infinite;
+      }
+      .cover .code {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .code b,
+      .bar b {
+        color: #fff;
+        letter-spacing: 1.5px;
+      }
+      .cover:focus-visible .start {
+        outline: 3px solid #fff;
+        outline-offset: 4px;
+      }
+      @keyframes pulse {
+        50% {
+          transform: scale(1.05);
+        }
+      }
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 6px 18px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .bar a,
+      .bar button {
+        padding: 6px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .bar a:hover,
+      .bar button:hover {
+        border-color: var(--pink);
+      }
+      .bar a:focus-visible,
+      .bar button:focus-visible,
+      .info:focus-visible {
+        outline: 2px solid var(--pink);
+        outline-offset: 2px;
+      }
+      .bar .local {
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        opacity: 0.8;
+      }
+      .info {
+        display: none;
+      }
+
+      /* Phones: the app fills the screen, without a drawn phone. */
+      @media (max-width: 500px) {
+        body {
+          background: var(--deeper);
+        }
+        .stage {
+          padding: 0;
+          display: block;
+        }
+        .slot {
+          position: fixed;
+          inset: 0;
+          width: auto;
+          height: auto;
+        }
+        .phone {
+          width: 100%;
+          height: 100%;
+          padding: 0;
+          border-radius: 0;
+          box-shadow: none;
+          transform: none;
+        }
+        .phone::before,
+        .phone::after,
+        .statusbar,
+        .island {
+          display: none;
+        }
+        .screen {
+          border-radius: 0;
+        }
+        .bar {
+          display: none;
+          position: fixed;
+          left: 12px;
+          right: 12px;
+          top: 44px;
+          z-index: 10;
+          padding: 14px;
+          border-radius: 16px;
+          background: rgba(28, 21, 33, 0.97);
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        }
+        body.started.show-info .bar,
+        body:not(.started) .bar {
+          display: flex;
+        }
+        body:not(.started) .bar {
+          top: auto;
+          bottom: 16px;
+          background: transparent;
+          box-shadow: none;
+        }
+        /* Kept inside the status-bar strip the app leaves at the top, so it stays clear of the
+           WebView bar's Login/Logout button. */
+        body.started .info {
+          display: block;
+          position: fixed;
+          top: 2px;
+          right: 6px;
+          z-index: 11;
+          width: 22px;
+          height: 22px;
+          padding: 0;
+          font-size: 13px;
+          line-height: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.35);
+          border-radius: 50%;
+          background: rgba(28, 21, 33, 0.75);
+          color: #fff;
+          font-weight: 700;
+          font-family: Georgia, serif;
+          cursor: pointer;
+        }
+        .cover .name {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="stage">
+      <div class="slot">
+        <div class="phone">
+          <div class="screen">
+            <iframe id="app" src="app/index.html" title="Ambii Music for Business app" allow="autoplay"></iframe>
+            <div class="statusbar" aria-hidden="true">
+              <span id="clock">9:41</span>
+              <span class="icons">
+                <svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1" /><rect x="4.5" y="5" width="3" height="6" rx="1" /><rect x="9" y="2.5" width="3" height="8.5" rx="1" /><rect x="13.5" y="0" width="3" height="11" rx="1" /></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 2.2c2.2 0 4.2.8 5.7 2.2l1.1-1.2A10 10 0 0 0 7.5.5 10 10 0 0 0 .7 3.2l1.1 1.2a8.3 8.3 0 0 1 5.7-2.2Zm0 3.3c1.3 0 2.5.5 3.4 1.3l1.1-1.2a6.6 6.6 0 0 0-9 0l1.1 1.2c.9-.8 2.1-1.3 3.4-1.3Zm0 3.3c.5 0 .9.2 1.2.5L7.5 10.6 6.3 9.3c.3-.3.7-.5 1.2-.5Z" /></svg>
+                <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3" fill="none" stroke="currentColor" opacity=".45" /><rect x="2" y="2" width="16" height="8" rx="1.8" /><path d="M23 4v4c.8-.3 1.3-1.1 1.3-2S23.8 4.3 23 4Z" opacity=".5" /></svg>
+              </span>
+            </div>
+            <div class="island" aria-hidden="true"></div>
+            <button class="cover" id="cover" type="button" aria-label="Start the Ambii Music for Business demo">
+              <img src="ambii-logo.png" alt="" />
+              <span class="name">Ambii Music for Business</span>
+              <span class="what">The phone app that played licensed background music in stores, here with demo data.</span>
+              <span class="start">Tap to start</span>
+              <span class="code">Store code <b>LBEAN7</b></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="bar" id="bar">
+        <span>Pair with store code <b>LBEAN7</b></span>
+        <a href="/projects/ambii-business/index.html">All Ambii apps</a>
+        <button type="button" id="reset">Reset demo</button>
+        <span class="local">Demo data lives in this browser only.</span>
+      </div>
+      <button class="info" id="info" type="button" aria-label="About this demo" aria-expanded="false" aria-controls="bar">i</button>
+    </main>
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var app = document.getElementById('app');
+        var cover = document.getElementById('cover');
+        var info = document.getElementById('info');
+
+        // Scale the drawn phone (418 x 872 CSS px around a 390 x 844 screen) to fit the window.
+        // Only a transform changes, so the app inside keeps its 390 x 844 layout.
+        function fit() {
+          if (window.matchMedia('(max-width: 500px)').matches) {
+            root.style.setProperty('--scale', '1');
+            return;
+          }
+          var bar = document.getElementById('bar').offsetHeight || 0;
+          var scale = Math.min(1, (window.innerWidth - 32) / 418, (window.innerHeight - 32 - 14 - bar) / 872);
+          root.style.setProperty('--scale', String(Math.max(0.3, scale)));
+        }
+        window.addEventListener('resize', fit);
+        fit();
+
+        function tick() {
+          var now = new Date();
+          var hours = now.getHours() % 12 || 12;
+          document.getElementById('clock').textContent = hours + ':' + String(now.getMinutes()).padStart(2, '0');
+        }
+        tick();
+        setInterval(tick, 15000);
+
+        // The tap is the user gesture browsers want before a page may play sound. The app frame is
+        // same-origin, so its audio is unlocked inside this click (Safari needs that).
+        cover.addEventListener('click', function () {
+          try {
+            if (app.contentWindow && app.contentWindow.ambiiUnlockAudio) app.contentWindow.ambiiUnlockAudio();
+          } catch (err) {}
+          cover.classList.add('hidden');
+          document.body.classList.add('started');
+          setTimeout(function () {
+            cover.hidden = true;
+            try {
+              app.contentWindow.focus();
+            } catch (err) {}
+          }, 350);
+        });
+
+        info.addEventListener('click', function () {
+          var open = document.body.classList.toggle('show-info');
+          info.setAttribute('aria-expanded', String(open));
+        });
+
+        // Reset demo: the same keys as the mock server's resetDemo() (demos/ambii/README.md), then reload.
+        document.getElementById('reset').addEventListener('click', function () {
+          var prefixes = ['ambii-demo:', 'ambii-business:', 'ambii-player:', 'ambii-music:'];
+          var done = false;
+          function reload() {
+            if (done) return;
+            done = true;
+            window.location.reload();
+          }
+          // Close the app first, so it cannot write its keys back and its IndexedDB connection
+          // does not block the delete.
+          app.addEventListener('load', function () {
+            [window.localStorage, window.sessionStorage].forEach(function (store) {
+              try {
+                for (var i = store.length - 1; i >= 0; i--) {
+                  var key = store.key(i);
+                  if (key && prefixes.some(function (prefix) { return key.indexOf(prefix) === 0; })) store.removeItem(key);
+                }
+              } catch (err) {}
+            });
+            try {
+              var request = window.indexedDB.deleteDatabase('ambii-demo');
+              request.onsuccess = request.onerror = request.onblocked = reload;
+            } catch (err) {
+              reload();
+            }
+            setTimeout(reload, 1500);
+          });
+          app.src = 'about:blank';
+        });
+      })();
+    </script>
+  </body>
+</html>

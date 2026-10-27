@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Team SAFE Racing</title>
+
+<!--Style Sheet-->
+<link rel="stylesheet" href="../files/cssReset.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../files/mainCss.css">
+
+<!--Font and JQuery-->
+<script src="../files/jquery-3.4.1.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab|Marmelad|Domine' rel='stylesheet' type='text/css'>
+
+<!--NavBar-->
+<link rel="stylesheet" href="../lavalamp/lavalamp_test.css" type="text/css" media="screen">
+<script type="text/javascript" src="../lavalamp/jquery.lavalamp.js"></script>
+<script type="text/javascript" src="../lavalamp/jquery.lavalamp.min.js"></script>
+<script type="text/javascript" src="../lavalamp/jquery.easing.min.js"></script>
+<script type="text/javascript">
+        $(function() {
+            $("#1").lavaLamp({
+                fx: "backout", 
+                speed: 700,
+                click: function(event, menuItem) {
+                }
+            });
+        });
+    </script>
+        
+
+<!--SlideShow-->
+<link rel="stylesheet" href="../files/responsiveslides.css">
+<link rel="stylesheet" href="../files/slideCss.css">
+  <script src="../files/responsiveslides.min.js"></script>
+  <script>
+    // You can also use "$(window).load(function() {"
+    $(function () {
+
+      // Slideshow 4
+      $("#slider4").responsiveSlides({
+        auto: true,
+        pager: false,
+        nav: false,
+        speed: 500,
+        namespace: "callbacks",
+        before: function () {
+          $('.events').append("<li>before event fired.</li>");
+        },
+        after: function () {
+          $('.events').append("<li>after event fired.</li>");
+        }
+      });
+    });
+  </script>
+
+
+<!--[if lt IE 9]>
+<script src="files/html5shiv.js"></script>
+<![endif]-->
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</head>
+
+<body>
+
+
+
+<div id="container">
+   <section id="topNav">
+        <span id="largeTextShadow">
+      	    Team SAFE Racing
+        </span>
+        <section id="contact">
+            <span id="smallText"><span id="whiteText">
+                    Email: teamsaferacing@yahoo.com
+            </span></span>
+        </section> <!--End Contact-->
+   </section> <!--End topNav-->
+   
+<header id="head">
+<section id="slideDiv">
+
+<!-- Slideshow 4 -->
+   <div class="callbacks_container">
+      <ul class="rslides" id="slider4">
+        <li>
+          <img src="../images/slide/1.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/2.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/3.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/4.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/5.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+      </ul>
+    </div>
+
+</section> <!--End slideDiv-->
+
+<nav id="headNav">
+    <span id="navLinkText">
+    	<ul class="lavaLampWithImage" id="1">
+                <?php
+						include("../files/sec_topNav.php");
+				?>
+       	</ul>     
+	</span>
+</nav> <!--End headNav-->
+</header> <!--End Head-->
+
+
+<section id="content">
+<br>
+
+<aside id="leftColumn">
+<div align="center"><span id="medText" >Bont</span></div>
+<hr />
+<section id="mainContent">
+<span id="pText">
+
+
+<span id="boldText">Bont was founded</span><br>
+ in Sydney in 1975 when Inze Bont, a recreational speed skater decided to fiberglass the back of his leather speed skates to gain more support. From there, the innovations just kept on flowing. Bont was the first footwear manufacturer to use exotic material like fiberglass in 1974, Kevlar in 1986 and Carbon Fiber in 1989, and the first to use heat moldable resins and thermoplastics. Bont invented heat moldable boots, and was the first company to make skates where the blade and frame could be adjusted on the boot. Bont was also the first company to use lace covers, no void frames, velcro, and aerodynamic skates. From our humble beginnings we have grown the company into the world’s largest producer of hand made speed skates. We now sell our skates in 56 countries around the world. Our dedication to innovation, quality, and service have kept us at the for front of the skating scene since our conception.<br><br>
+ 
+<span id="boldText">A History Of Success</span><br>
+Bont continues to dominate the inline industry with numerous World Champions, Olympic Champions, and World Inline Cups. This domination is derived from a combination of innovation and a drive to succeed.<br><br>
+ 
+Bont finished 1st in the 2008 World Inline Cup as well as 1st 2nd and 3rd in the individual competition
+Design
+A one piece shoe is a lot harder to design and manufacture than a two piece shoe because the outer skin must be sewn onto the internals of the shoe and the design needs to work around the functionality. We always need to keep in mind that even though we produce these shoes in large numbers, they are hand made. We are dedicated to improving the look and functionality of the shoes.
+ <br><br>
+ 
+<span id="boldText">Manufacturing</span><br>
+
+Every Bont skate is made using the same hand made process. Bonts' manufacturing is unlike any other brand. Instead of making the base first and then gluing the liner and upper to the base, we manufacture from the inside out. This results in a much stronger product. Where as most companies boot stitching are purely cosmetic, we use stitching to sew the outer skin to the boot. We call this manufacturing 'one piece' manufacturing because the skate becomes one piece and the carbon base can never be removed from the rest of the boot.
+Our production line was engineered by Mr Inze Bont and it is not something that customers will ever get the chance to see, but it is a work of art. At every station there are one or two inventions that make the production of the shoes faster and easier. Rather than using generic vacuum boxes for curing the carbon, Mr. Inze Bont developed our own form of pressure wrap and baking that is unlike any other industry. Our pressure wrap system applies a lot more pressure than vacuuming can with removes a lot more excess resin and results in a lighter skate. It is the innovation in manufacturing as well as the product innovation that sets Bont apart from the other brands.<br><br>
+
+As our shoes are hand built around the last, our manufacturing is done without the use of any molds. This keeps costs low and offsets some of the additional labor costs involved in our manufacturing. It also alows us to make improvements on the fly. As soon as an improvement is discovered we can implement a change immediately.<br><br>
+ 
+<span id="boldText">Bont Apparel</span><br>
+
+In 2004, Bont launched an Apparel company based on high end sportswear. The clothing can now be found in over 350 shops across Australia. In 2007 Bont licensed the brand to another Australian company who is the current brand manager.<br><br>
+ 
+<span id="boldText">Innovation</span><br>
+
+With new innovations like 3 point mounting to eliminate boot flex and molding socks that allowed skaters to make their own custom molds at home, Bont will always stay 1 step ahead of the competition. Our company motto is 'Lighter, Stronger, Faster' and each innovation that we make creates lighter, stronger and faster products.
+Sometimes a concept will work and sometimes it won’t. But the important thing is that we never stop innovating.<br><br>
+ 
+ 
+<span id="boldText">Inze Bont</span><br>
+
+Born in Holland, Mr. Bont moved to Sydney when he was 2 years old. Mr. Bont is a maverick, visionary engineering genius, a man with little respect for the traditional ways products are made and an overwhelming enthusiasm to create and improve products. Mr. Bont has an innate ability to just know if things will work before prototyping. Every modern speed skate is based on Mr. Bonts’ original inventions in the 1970’s. Also, a number of modern sneaker designs such as using Velcro on footwear, allowing customers to choose colors and add their name to their skates, the use of lace covers and many others were all invented by Mr. Bont. Spend a few hours with Mr. Bont and he will explain to you a better way to build an F1 car or a new helicopter rotor blade that he just invented. He loves to build things. He is presently building a 35 foot catamaran in his back yard. Mr. Bont is still in charge of R&D and is still excited by the idea of working on new cycling shoe projects.
+ <br><br>
+ 
+<span id="boldText">Sara Bont</span><br>
+
+Sara Bont ran her own clothing company before the Bont skating business grew to the point where she sold her company and took over the job of running Bont. She has a love of sport and until recently still coached kids at the local ice rinks. She was masters world champion on numerous occasions in the sport of inline speed skating. Sara currently looks after the training of staff in the Bont’s Chinese office and manages part of the accounting.<br><br>
+
+ 
+<span id="boldText">Alexander Bont</span><br>
+
+Alexander has been skating since the age of 2 and started working in the family company at the age of 14. Like his father, Alex has a passion for sport and product manufacturing. Alex spent 7 years on the Australian short track team and spent many winters living in Europe and Canada. He also spent some time racing crits on Friday nights with the local cycling club. Alex is the company’s CEO and looks after project management including new product developments.<br><br>
+
+ 
+<span id="boldText">Soo Yeon Bont</span><br>
+
+Soo Yeon started working with Bont since 2004 as a marketing manager for Korea. She would love our sport to be in Olympics. Her position in the company at the moment varies from marketing, product development, to staff training, to accounting. She likes to design skates and cycling shoes with her father-in-law Inze Bont based on Bont’s technology.
+<br><br>
+
+
+
+
+
+       
+</span>
+
+</section> <!--End mainContent-->
+</aside> <!--End leftColumn-->
+
+<aside id="rightColumn">
+<br>
+    <aside id="sponsorImages" align="center">
+        <?php
+					include("../files/sec_sideBar.php");
+			?>
+    </aside>
+</aside> <!--End rightColumn-->
+</section> <!--End content-->
+
+<footer id="foot">
+
+	<footer id="footContact">
+    	<span id="smallerText">
+        	 <?php
+					include("../files/sec_Links.php");
+			?>
+<br>
+        </span>
+    </footer>
+    
+    <footer id="footContent">
+        <span id="smallerText">
+            Copyright © 2014 Team SAFE Racing. All rights reserved. Website Design By <span id="whiteText"><a href="jakeMotta.php">Jacob Motta</a> </span><br>
+        </span>
+    </footer>
+
+    <div id="bottomSkater" align="right">
+    	<img src="../images/logos/skater2.gif" />&nbsp&nbsp&nbsp&nbsp
+    	<img src="../images/logos/skater.gif" />
+    </div>
+</footer> <!--End foot-->
+
+
+</div> <!--End Container-->
+
+</body>
+</html>

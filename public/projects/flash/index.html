@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: the Flash pieces Jake picked from his archive, 2012-2019, played
+     through the site's self-hosted Ruffle. See docs/projects/flash.md for what came from where. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flash</title>
+<style>
+    html, body { margin: 0; background: #16161a; color: #eee; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 32px 16px 48px; }
+    main { max-width: 1100px; margin: 0 auto; }
+    h1 { font-size: 34px; font-weight: 900; margin: 0; }
+    .lede { margin: 4px 0 8px; color: #aaa; }
+    h2 { font-size: 20px; font-weight: 800; margin: 28px 0 12px; }
+    h2 span { font-weight: 400; color: #888; font-size: 15px; margin-left: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .piece { display: block; width: 100%; padding: 0; text-align: left; font: inherit; color: inherit; background: #222228; border: 2px solid #33333c; border-radius: 10px; overflow: hidden; cursor: pointer; transition: transform .18s cubic-bezier(.3, 1.6, .5, 1), border-color .15s; }
+    .piece:hover, .piece:focus-visible { transform: translateY(-3px) rotate(-.6deg); border-color: #ff5a1f; outline: none; }
+    .piece img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #111; }
+    .piece .name { display: block; font-weight: 800; padding: 8px 10px 0; }
+    .piece .year { display: block; color: #999; font-size: 14px; padding: 0 10px 10px; }
+    dialog { padding: 0; border: 2px solid #33333c; border-radius: 12px; background: #000; color: #eee; overflow: hidden; }
+    dialog::backdrop { background: rgba(0, 0, 0, .8); }
+    .stage { display: block; }
+    .stage > * { display: block; width: 100%; height: 100%; }
+    .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 12px; background: #16161a; }
+    .bar strong { font-weight: 800; }
+    .bar button { font: inherit; font-weight: 700; color: #16161a; background: #eee; border: 0; border-radius: 999px; padding: 4px 14px; cursor: pointer; }
+</style>
+<script src="/vendor/ruffle/ruffle.js"></script>
+</head>
+<body>
+<main>
+    <h1>Flash</h1>
+    <p class="lede">Cartoons, a game and a lot of my friends' faces, made in Flash and playing again through Ruffle. Click one to play it.</p>
+
+    <h2>Game<span>click inside it to play</span></h2>
+    <div class="grid">
+        <button type="button" class="piece" data-swf="shootorial" data-w="600" data-h="300"><img src="thumbs/shootorial.webp" alt=""><span class="name">Shootorial</span><span class="year">2012</span></button>
+    </div>
+
+    <h2>Cartoons</h2>
+    <div class="grid">
+        <button type="button" class="piece" data-swf="pacman-ghost" data-w="900" data-h="500"><img src="thumbs/pacman-ghost.webp" alt=""><span class="name">Pac-Man Ghost</span><span class="year">2012</span></button>
+        <button type="button" class="piece" data-swf="ninjadonut" data-w="900" data-h="500"><img src="thumbs/ninjadonut.webp" alt="" loading="lazy"><span class="name">NinjaDonut</span><span class="year">2012</span></button>
+        <button type="button" class="piece" data-swf="ninjadonut-2" data-w="1024" data-h="768"><img src="thumbs/ninjadonut-2.webp" alt="" loading="lazy"><span class="name">NinjaDonut 2</span><span class="year">2012</span></button>
+        <button type="button" class="piece" data-swf="rocket-kyle" data-w="1024" data-h="768"><img src="thumbs/rocket-kyle.webp" alt="" loading="lazy"><span class="name">The Adventures of Rocket Kyle</span><span class="year">2012</span></button>
+        <button type="button" class="piece" data-swf="kyle" data-w="1024" data-h="768"><img src="thumbs/kyle.webp" alt="" loading="lazy"><span class="name">Kyle</span><span class="year">2012</span></button>
+        <button type="button" class="piece" data-swf="epic-kyle" data-w="1024" data-h="768"><img src="thumbs/epic-kyle.webp" alt="" loading="lazy"><span class="name">Epic Kyle</span><span class="year">2012</span></button>
+        <button type="button" class="piece" data-swf="pokeball" data-w="550" data-h="400"><img src="thumbs/pokeball.webp" alt="" loading="lazy"><span class="name">Pokéball</span><span class="year">2012</span></button>
+        <button type="button" class="piece" data-swf="dinosaur" data-w="1024" data-h="768"><img src="thumbs/dinosaur.webp" alt="" loading="lazy"><span class="name">Dinosaur</span><span class="year">2015</span></button>
+        <button type="button" class="piece" data-swf="light-switch" data-w="1024" data-h="768"><img src="thumbs/light-switch.webp" alt="" loading="lazy"><span class="name">Light Switch</span><span class="year">2017</span></button>
+        <button type="button" class="piece" data-swf="samus" data-w="1024" data-h="768"><img src="thumbs/samus.webp" alt="" loading="lazy"><span class="name">Samus</span><span class="year">2019</span></button>
+    </div>
+
+    <h2>Friends<span>affectionately</span></h2>
+    <div class="grid">
+        <button type="button" class="piece" data-swf="benny" data-w="1280" data-h="1024"><img src="thumbs/benny.webp" alt="" loading="lazy"><span class="name">Benny</span><span class="year">2012</span></button>
+        <button type="button" class="piece" data-swf="peter" data-w="550" data-h="400"><img src="thumbs/peter.webp" alt="" loading="lazy"><span class="name">Peter</span><span class="year">2012</span></button>
+        <button type="button" class="piece" data-swf="m3" data-w="1024" data-h="768"><img src="thumbs/m3.webp" alt="" loading="lazy"><span class="name">M3</span><span class="year">2012</span></button>
+        <button type="button" class="piece" data-swf="medina" data-w="1024" data-h="768"><img src="thumbs/medina.webp" alt="" loading="lazy"><span class="name">Medina</span><span class="year">2013</span></button>
+        <button type="button" class="piece" data-swf="andrew" data-w="550" data-h="400"><img src="thumbs/andrew.webp" alt="" loading="lazy"><span class="name">Andrew</span><span class="year">2014</span></button>
+        <button type="button" class="piece" data-swf="chu-chu" data-w="550" data-h="400"><img src="thumbs/chu-chu.webp" alt="" loading="lazy"><span class="name">Chu-Chu</span><span class="year">2015</span></button>
+        <button type="button" class="piece" data-swf="kev" data-w="550" data-h="400"><img src="thumbs/kev.webp" alt="" loading="lazy"><span class="name">Kev</span><span class="year">2015</span></button>
+        <button type="button" class="piece" data-swf="thereon" data-w="550" data-h="400"><img src="thumbs/thereon.webp" alt="" loading="lazy"><span class="name">thereon</span><span class="year">2017</span></button>
+    </div>
+</main>
+
+<dialog id="player" aria-label="Flash player">
+    <div class="stage" id="stage"></div>
+    <div class="bar"><strong id="playing"></strong><button type="button" id="close">Close</button></div>
+</dialog>
+<script>
+    // One Ruffle player at a time, made when a piece is opened and thrown away when it's closed,
+    // so nothing keeps running (or making noise) in the background.
+    var dialog = document.getElementById('player');
+    var stage = document.getElementById('stage');
+
+    var open = function (piece) {
+        var w = Number(piece.dataset.w), h = Number(piece.dataset.h);
+        // As big as fits: 92% of the window's width, or of its height less the bar, whichever is tighter
+        var scale = Math.min((innerWidth * 0.92) / w, (innerHeight * 0.92 - 48) / h);
+        stage.style.width = Math.round(w * scale) + 'px';
+        stage.style.height = Math.round(h * scale) + 'px';
+        document.getElementById('playing').textContent = piece.querySelector('.name').textContent;
+
+        // The site's music plays in the page around this frame; pause it so the two don't overlap
+        try {
+            if (window.parent !== window) window.parent.document.querySelectorAll('audio').forEach(function (audio) { audio.pause(); });
+        } catch (e) {}
+
+        var player = window.RufflePlayer.newest().createPlayer();
+        stage.replaceChildren(player);
+        (player.ruffle ? player.ruffle() : player).load({
+            url: 'swf/' + piece.dataset.swf + '.swf',
+            autoplay: 'on',
+            unmuteOverlay: 'hidden',
+            splashScreen: false,
+            letterbox: 'on',
+        });
+        dialog.showModal();
+        player.focus();
+    };
+
+    document.querySelectorAll('.piece').forEach(function (piece) {
+        piece.addEventListener('click', function () { open(piece); });
+    });
+    document.getElementById('close').addEventListener('click', function () { dialog.close(); });
+    // The close event arrives a moment late; if another piece was opened meanwhile, keep its player
+    dialog.addEventListener('close', function () { if (!dialog.open) stage.replaceChildren(); });
+</script>
+</body>
+</html>

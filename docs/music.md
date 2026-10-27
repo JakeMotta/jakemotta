@@ -35,6 +35,10 @@ When the shuffle runs out, the whole library is shuffled again, leaving out the 
 
 **Autoplay:** browsers only allow audio after a user gesture. That's why the Now Playing tile asks the visitor to choose sound or silence first, and why `togglePlayback` resumes the `AudioContext` inside the click that called it, before `play()`. After that first gesture, moving on to the next track is allowed.
 
+**Previews with sound:** most previews that make their own sound pause the music when they start, and it stays paused until the visitor presses play again. Not all do yet: NinjaDonut's Flash games play over it. A preview pauses the music in one of the two ways below, and either way the player's `onPause` handler keeps `isPlaying` and the buttons in step.
+- **The message:** `MusicPlayer` pauses when a page from the site's own origin posts `{ type: 'jakemotta:media-playing' }` to it. The Ambii Business demos post it to `window.top` whenever one of them starts a song, an announcement or a preview, two frames deep in the phone app's case ([projects/ambii-business.md](projects/ambii-business.md)). Use this for new previews: it works however deeply the page is framed, and the page doesn't need to know how the site plays its music.
+- **Reaching into the parent:** Escaping Confinement's film page (when the film plays), the Flash gallery (when a piece opens), Asteroids (on the first click or key press in its frame) and the Ambii story page (when a video with sound plays) call `pause()` on the parent page's `<audio>` directly. Details are in [projects/escaping-confinement.md](projects/escaping-confinement.md).
+
 ## The visualizer
 
 `src/components/atoms/music-player` owns the one `<audio>` element.
@@ -43,3 +47,12 @@ When the shuffle runs out, the whole library is shuffled again, leaving out the 
 - **Drawing:** the lows push the dark inset vignette in, and the highs flicker a tighter rim. Both are written straight onto `.audio-visualizer`'s `box-shadow` through a ref.
 - **Eq bars:** the same loop writes both levels (0 to 1) to `audioLevels` (`music-player/levels.ts`). Each `EqBars` runs its own small loop that reads them and scales its bars: the first follows the lows, the last the highs, the ones between blend the two. So the bars on the tiles bounce with the real track, and rest when it's paused.
 - **Keep per-frame values off React state.** Anything that changes every frame goes analyser → ref or canvas, inside an animation loop. The seek slider works the same way: it writes its position onto the input each frame.
+
+## Silent while Claude previews
+
+The dev server Claude starts (the `dev` config in `.claude/launch.json`) sets `REACT_APP_MUTE_AUDIO=1`, and everything it serves plays without sound. Jake asked for this so the site's music and the projects' sound don't play over whatever he's doing while Claude looks around. A `yarn dev` run by hand stays loud.
+- **How:** `src/muteAudio.js` runs first in every page. `src/index.tsx` loads it into the app, and `src/setupProxy.js` inlines it at the top of every `.html` page under `public/` as it serves it, leaving the files on disk alone. It never reaches the build.
+- **What it does:** `<audio>` and `<video>` elements are really muted as they load or play, while the page still reads back whatever it set `muted` to, so its own mute buttons work. Every `AudioContext` renders to no device (`sinkId: { type: 'none' }`, Chromium 110+), which covers Ruffle's Flash and the games.
+- **The visualizer still moves.** Chromium applies an element's `muted` before the Web Audio graph, so an element that feeds a graph (the music player's) is left unmuted and goes silent at the context's sink instead. The analyser still gets the signal, and the vignette and eq bars react as usual.
+- **Not covered:** cross-origin frames (the YouTube, SoundCloud and Vimeo embeds in the old sites, and listen-along's YouTube player) can't be reached from the page. None of the embeds autoplay, so they only make sound if something clicks play.
+- **To hear it:** remove `REACT_APP_MUTE_AUDIO` from `.claude/launch.json`, or run `yarn dev` yourself. The screenshot script is muted separately, by its browser's `--mute-audio`.

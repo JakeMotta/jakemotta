@@ -144,6 +144,10 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         &--playing {
             --tilt: -1deg;
             border: 3px solid var(--color-primary-ink);
+
+            @media (min-width: 1100px) {
+                grid-row: 1 / span 2;
+            }
         }
 
         &--updating {
@@ -156,11 +160,11 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             gap: 4px;
             background: var(--color-primary-dark);
             color: var(--color-primary-light);
-        }
 
-        &--server {
-            --tilt: -0.8deg;
-            background: rgba(0, 0, 0, 0.12);
+            // The odd tile out of two columns takes the whole last row
+            @media (min-width: 640px) and (max-width: 1099px) {
+                grid-column: 1 / -1;
+            }
         }
     }
 
@@ -324,6 +328,14 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         background: var(--color-primary);
     }
 
+    // For the odd visitor running a server rather than joining one, kept to the foot of the Install tile
+    &__hosting {
+        margin-top: auto !important;
+        padding-top: 10px;
+        border-top: 2px dashed rgba(0, 0, 0, 0.2);
+        font-size: 13px;
+    }
+
     &__key {
         display: flex;
         align-items: center;
@@ -379,12 +391,6 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
     &__answer {
         padding: 0 10px 8px;
-    }
-
-    &__row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
     }
 
     &__older {

@@ -2,6 +2,10 @@
 
 `/minecraft` (`src/components/pages/minecraft`) is the download page for Progression Survival, the modpack for Jake's modded Minecraft server. It opens as an overlay on the board, from the modpack tile. The pack itself is built elsewhere, in Jake's Codex workspace (`Documents/Codex/2026-10-23/minecraft-progressive-smithing`), and only its finished releases are published here.
 
+The page is written for players: its readers are the public, not people hosting a server. It links each release's `.mrpack` and release notes, and nothing else. Jake had the Server files tile (the server template and the checksum file) taken off it on 2026-10-26; the server `.zip` is still published with each release (see Rules), just not linked from the page.
+
+Self-hosters get one line at the foot of the Install tile instead: the `.mrpack` works with server tools that can install from one, and they should set `difficulty=hard` in `server.properties`. That's enough because the `.mrpack` is a complete server definition: the same mods as the server `.zip`, all marked as needed on the server, and its `server-overrides` hold the same configs, quests and KubeJS files as the zip's payload. What it lacks is `server.properties` (the release script refuses one), so a server built from it starts on Easy. The zip's extras are Windows-only PowerShell setup scripts and Jake's settings, written for friends he hosts with.
+
 ## Publishing a release
 
 1. Build the release in the pack workspace. It produces a folder such as `outputs/Progression-Survival-1.0.0-rc.2/` holding `mods.lock.json`, `SHA256SUMS.txt`, `Release-Notes.md`, one `.mrpack` and one `Progression-Survival-Server-*.zip`.

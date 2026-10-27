@@ -180,6 +180,16 @@ jobs:
               printf "put -O %s ./build/downloads/progression-survival/%s\n" "$packs" "$file"
             done
 
+            # The Ambii Business demos are prebuilt apps under projects/, and
+            # each app's index.html names its hashed bundles the same way
+            # build/index.html does, so a rebuild can change it without
+            # changing its length. The hub page is edited by hand. Upload all
+            # of them every time too.
+            ambii="${target%/}/projects/ambii-business"
+            for file in index.html dashboard/index.html player/index.html mobile/index.html mobile/app/index.html; do
+              printf "put -O %s ./build/projects/ambii-business/%s\n" "$(dirname "$ambii/$file")/" "$file"
+            done
+
             echo bye
           } > "$RUNNER_TEMP/deploy.lftp"
 

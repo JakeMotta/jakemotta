@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: Jake's 2012 Maya short, re-encoded from its last export (Try5.mpeg)
+     as H.264 with the pillarbox bars cropped off. See docs/projects/escaping-confinement.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escaping Confinement</title>
+<style>
+    html, body { margin: 0; background: #141414; color: #eee; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; box-sizing: border-box; }
+    /* As wide as fits, but never so wide the film gets taller than 78% of the window */
+    main { width: min(100%, 820px, calc(78vh * 772 / 768)); }
+    video { display: block; width: 100%; aspect-ratio: 772 / 768; background: #000; border-radius: 10px; }
+    h1 { font-size: 26px; font-weight: 800; margin: 18px 0 2px; }
+    .meta { color: #999; margin: 0; }
+    .credits { color: #bbb; margin: 10px 0 0; font-size: 15px; }
+</style>
+</head>
+<body>
+<main>
+    <video id="film" controls playsinline preload="metadata" poster="poster.jpg" src="escaping-confinement.mp4"></video>
+    <h1>Escaping Confinement</h1>
+    <p class="meta">Maya short, April 2012 · 5 minutes · sound on</p>
+    <p class="credits">A desk fan comes to life and tries to escape. Directed, produced, modeled, colored, animated, rendered "and everything else" by me.</p>
+</main>
+<script>
+    // The site's music keeps playing in the page around this frame. Pause it when the film starts,
+    // so the two don't play over each other. Same-origin only; standalone there's nothing to pause.
+    document.getElementById('film').addEventListener('play', function () {
+        try {
+            if (window.parent !== window) window.parent.document.querySelectorAll('audio').forEach(function (audio) { audio.pause(); });
+        } catch (e) {}
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+import React, { useEffect } from 'react';
+import { FiArrowUpRight, FiHeadphones } from 'react-icons/fi';
+import { LISTENBRAINZ_USER, listenedAgo } from '../../../common/listening';
+import { useListenAlongStore } from '../../../store/listen-along';
+import { useListeningStore, useLiveListening } from '../../../store/listening';
+import { ListenCover, SourceIcon, sourceName } from '../listen-cover';
+import './index.scss';
+
+/**
+ * What Jake is listening to right now on Spotify or YouTube Music, or else the last thing he played.
+ * The card links out to the track. While he's on Spotify, and the listening Worker is up, it also
+ * offers to listen along: the YouTube copy, in sync, in atoms/listen-along.
+ */
+export const NowPlaying = ({ className = '' }: { className?: string }) => {
+    useLiveListening();
+    const nowPlaying = useListeningStore((store) => store.nowPlaying);
+    const last = useListeningStore((store) => store.recent[0]);
+    const listenAlongReady = useListenAlongStore((store) => store.available);
+    const listeningAlong = useListenAlongStore((store) => store.active);
+    const { probe, start, stop } = useListenAlongStore.getState();
+    const listen = nowPlaying ?? last;
+    const onSpotify = nowPlaying?.source === 'spotify';
+
+    // Only ask whether the Worker is there once there's something to listen along with
+    useEffect(() => {
+        if (onSpotify) probe();
+    }, [onSpotify, probe]);
+
+    if (!LISTENBRAINZ_USER || !listen) return null;
+
+    const live = !!nowPlaying;
+    const service = sourceName[listen.source];
+    const label = live ? 'Now spinning' : `Last spun · ${listen.listenedAt ? listenedAgo(listen.listenedAt) : 'a while ago'}`;
+
+    return (
+        <div className={`now-playing${listen.link ? ' now-playing--link' : ''} ${className}`}>
+            <ListenCover title={listen.title} cover={listen.cover} spotifyUrl={listen.spotifyUrl} className='now-playing__cover' />
+            <span className='now-playing__text'>
+                <span className='now-playing__label'>
+                    {live && <span className='now-playing__dot' aria-hidden />}
+                    {label}
+                </span>
+                {/* The title is the link, stretched over the whole card, so the button beside it stays its own control */}
+                {listen.link ? (
+                    <a
+                        className='now-playing__title now-playing__stretch'
+                        href={listen.link}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        aria-label={`${label}: ${listen.title} by ${listen.artist}${service ? `. Opens ${service} in a new tab` : ''}`}>
+                        {listen.title}
+                    </a>
+                ) : (
+                    <span className='now-playing__title'>{listen.title}</span>
+                )}
+                <span className='now-playing__artist'>{listen.artist}</span>
+            </span>
+            <SourceIcon source={listen.source} className='now-playing__source' />
+            {onSpotify && listenAlongReady && (
+                <button type='button' className='now-playing__along' aria-pressed={listeningAlong} onClick={() => (listeningAlong ? stop() : start())}>
+                    <FiHeadphones aria-hidden /> {listeningAlong ? 'Listening' : 'Listen along'}
+                </button>
+            )}
+            {listen.link && (
+                <span className='now-playing__go' aria-hidden>
+                    <FiArrowUpRight />
+                </span>
+            )}
+        </div>
+    );
+};

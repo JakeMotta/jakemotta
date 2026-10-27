@@ -10,24 +10,31 @@ export interface MusicItemProps {
 export const musicList: MusicItemProps[] = [
     {
         image: '/images/music/ctrl_alt_del.jpeg',
+        title: 'She wants my package',
+        description: '',
+        url: '/music/she_wants_my_package.mp3',
+        date: '2021'
+    },
+    {
+        image: '/images/music/ctrl_alt_del.jpeg',
         title: 'Uprising',
         description: 'Feeling like the first song I had created from scratch in a long while.',
         url: '/music/uprising.mp3',
-        date: '2022'
+        date: '2021'
     },
     {
         image: '/images/music/marceline.jpg',
         title: 'S3RL feat. Sara - Marceline the Vampire Queen (A Bad Remix)',
         description: 'My second attempt at a remix. Was really happy with how this turned out.',
         url: '/music/marceline.mp3',
-        date: '2022'
+        date: '2021'
     },
     {
         image: '/images/music/super_bitch.jpg',
         title: 'Super Bitch (ft. Anzu)',
         description: "Made in one night with no purpose.",
         url: '/music/super_bitch.wav',
-        date: '2022'
+        date: '2021'
     },
     {
         image: '/images/music/alone.jpg',
@@ -107,14 +114,14 @@ export const favoriteArtists: MusicItemProps[] = [
         title: 'S3RL',
         description: '',
         url: '/music/marceline.mp3',
-        date: '2022'
+        date: '2021'
     },
     {
         image: '/images/music/super_bitch.jpg',
         title: 'WeAreCastor',
         description: '',
         url: '/music/super_bitch.wav',
-        date: '2022'
+        date: '2021'
     },
 ]
 
@@ -158,12 +165,20 @@ export const homeProjectList: HomeProject[] = [
         preview: 'https://tapslaydie.com/',
     },
     {
+        id: 'asteroids',
+        image: '/images/projects/asteroids.webp',
+        title: 'Asteroids',
+        date: '2026',
+        description: 'The arcade classic rebuilt in Godot, with UFOs, screen shake and my own music.',
+        preview: '/projects/asteroids/index.html',
+    },
+    {
         id: 'ambii',
         image: '/images/projects/ambii.webp',
         title: 'Ambii',
         date: '2025',
         description: '',
-        preview: '/projects/ambii/index.html',
+        preview: '/projects/ambii/story/index.html',
     },
     {
         id: 'black-chamber',
@@ -190,11 +205,131 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/ninja-donut/index.html',
     },
     {
+        id: 'ambii-business',
+        image: '/images/projects/ambii-business.webp',
+        title: 'Ambii Business',
+        date: '2022',
+        description: 'Background music for cafés and shops, with its dashboard, web player and phone app working again in your browser.',
+        preview: '/projects/ambii-business/index.html',
+    },
+    {
+        id: 'cs134',
+        image: '/images/projects/cs134.webp',
+        title: 'CS 134 Games',
+        date: '2017',
+        description: 'Two Java and OpenGL games: a miner racing rising lava, and a Scott Pilgrim side-scroller.',
+        preview: '/projects/cs134/index.html',
+    },
+    {
+        id: 'fooder',
+        image: '/images/projects/fooder.webp',
+        title: 'Fooder',
+        date: '2017',
+        description: 'A team Android app that deals out nearby restaurants one card at a time, swipe-style.',
+        preview: '/projects/fooder/index.html',
+    },
+    {
+        id: 'survivor',
+        image: '/images/projects/survivor.webp',
+        title: 'Survivor & Arena King',
+        date: '2017',
+        description: 'A prison-escape platformer and a dice-and-card dueling game, designed for a game design class.',
+        preview: '/projects/survivor/index.html',
+    },
+    {
         id: 'cs160',
         image: '/images/projects/cs160.webp',
         title: 'CS160',
         date: '2016',
         description: 'Face Me: upload a video and get it back with a face mesh drawn on every frame.',
         preview: '/projects/cs160/index.html',
+    },
+    {
+        id: 'personal-site',
+        image: '/images/projects/personal-site.webp',
+        title: 'Personal Site',
+        date: '2016',
+        description: 'My old portfolio, with drifting clouds and balloons tied to its hello.',
+        preview: '/projects/personal-site/index.static.html',
+    },
+    {
+        id: 'dan-james',
+        image: '/images/projects/dan-james.webp',
+        title: 'Dan James',
+        date: '2016',
+        description: 'A site for a music producer and mixing engineer, with a beat store and his mixing services.',
+        preview: '/projects/dan-james/index.static.html',
+    },
+    {
+        id: 'motorsport',
+        image: '/images/projects/motorsport.webp',
+        title: 'Motorsport Sites',
+        date: '2014',
+        description: 'Websites for an inline speed-skating team, a motorcycle race shop and a young kart racer.',
+        preview: '/projects/motorsport/index.html',
+    },
+    {
+        id: 'coloris',
+        image: '/images/projects/coloris.webp',
+        title: 'Coloris',
+        date: '2014',
+        description: 'An unfinished top-down RPG: walk Huey through a scrolling forest and change his color with the number keys.',
+        preview: '/projects/coloris/index.html',
+    },
+    {
+        id: 'isguy',
+        image: '/images/projects/isguy.webp',
+        title: 'The Adventures of isGuy',
+        date: '2013',
+        description: 'A five-level platformer with lasers, ladders, keys and doors, running again as the original Java game.',
+        preview: '/projects/isguy/index.html',
+    },
+    {
+        id: 'sketchbook',
+        image: '/images/projects/sketchbook.webp',
+        title: 'Sketchbook',
+        date: '2012',
+        description: 'Digital drawings of NinjaDonut, a few logos and some characters.',
+        preview: '/projects/sketchbook/index.html',
+    },
+    {
+        id: 'flash',
+        image: '/images/projects/flash.webp',
+        title: 'Flash',
+        date: '2012',
+        description: 'Cartoons, caricatures of friends and a side-scrolling shooter, playing again through Ruffle.',
+        preview: '/projects/flash/index.html',
+    },
+    {
+        id: 'highschool',
+        image: '/images/projects/highschool.webp',
+        title: 'High School Sites',
+        date: '2012',
+        description: 'A Flash homepage with a Pac-Man in it, and a portfolio with a parallax city skyline.',
+        preview: '/projects/highschool/index.html',
+    },
+    {
+        id: 'greenfoot-pokemon',
+        image: '/images/projects/greenfoot-pokemon.webp',
+        title: 'Pokémon: Green Foot Edition',
+        date: '2012',
+        description: 'A Pokémon fan game Logan Lovell and I made for a programming class: pick a starter and explore TrainingVille.',
+        preview: '/projects/greenfoot-pokemon/index.html',
+    },
+    {
+        id: 'escaping-confinement',
+        image: '/images/projects/escaping-confinement.webp',
+        title: 'Escaping Confinement',
+        date: '2012',
+        description: 'A five-minute Maya short about a desk fan that comes to life and tries to escape.',
+        preview: '/projects/escaping-confinement/index.html',
+    },
+    {
+        id: 'pivot',
+        image: '/images/projects/pivot.webp',
+        title: 'Pivot Animations',
+        date: '2008',
+        description: 'Stick-figure fights, sword moves, skate tricks and Goku versus Vegeta.',
+        preview: '/projects/pivot/index.html',
     },
 ]

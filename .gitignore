@@ -22,3 +22,14 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Ambii demos: the three apps' own source stays on Jake's machine, because their upstream
+# repositories are private and this one is public (docs/projects/ambii-business.md)
+/demos/ambii/business-web/
+/demos/ambii/web-player/
+/demos/ambii/music-app/
+
+# Ambii demos: dependencies and intermediate builds (the published output lives in public/projects/)
+/demos/**/node_modules
+/demos/**/build
+/demos/**/dist

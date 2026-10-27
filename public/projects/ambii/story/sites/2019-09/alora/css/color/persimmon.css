@@ -1,0 +1,43 @@
+@charset "UTF-8";
+.rev_slider_wrapper .text-bg, .vc_tta-color-grey.vc_tta-style-classic .vc_tta-panel.vc_active .vc_tta-panel-title > a, .services .vc_icon_element-inner span {
+  color: #e15f00 !important;
+}
+.mega-menu > li.opn-active-menu > a, .header-v2 .mega-menu > li a:hover, .contact-info > ul > li > a:hover, .load-more .fa-spinner, .loadmore .fa-spinner, .app_screenshot .screen-default h3, .comments-area .reply a:hover, .time-desc .letter, .time-desc .hours, .name_author, .tagcloud a:hover, .widget_post_blog .blog-item:hover .post-name a, .button-readmore a, .blog-main:hover .title_blog a, .event-2 .load-more a, .event-2 .row-event:hover .event_post_content .title-eventpost a, .event-2 .row-event:hover .event_post_date, .event-2 .row-event:hover .event_post_content .detail, .header-sticky .main-navigation ul li > a:hover, a:hover, .scroll-to-top, .pricing-content:hover h3, .pricing-sign .btn, .pricing-list li.erro i, .pricing-content .price-center span, .load-more a, .row-event:hover .event_post_date, .row-event:hover .event_post_content .detail {
+  color: #e15f00;
+}
+.mega-menu > li > a::before, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus, .btn-primary:active:focus, .btn-primary:focus:active, .btn.btn-icon:hover, .btn.btn-icon:focus, .btn.btn-icon:active, .btn.btn-icon:active:focus, .btn.btn-icon:focus:active, .app_screenshot .tp-bullet:hover, .app_screenshot .tp-bullet.selected, .app_screenshot .apps-default::before, .app_screenshot .screen-default a, .app_screenshot .screen-default h3::after, .calendar-time, .header-v2, .gallery button.default:hover, .character_description blockquote::after, .scrollbar-inner.scrollbar-comment > .scroll-element .scroll-bar, .form-submit .btn-primary, .pagination li:hover .page-numbers, .pagination li .page-numbers.current, .footer-v2, .contact-2 .btn, .event-2 .row-event:hover .event_post_date::before, .blog-style:hover, .btn-primary, .pricing-content:hover .pricing-sign .btn, .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default:active:focus, .btn-default:focus:active, .row-event:hover .event_post_date::before, .amount-content .img-icon {
+  background-color: #e15f00;
+}
+table tr th, .header-v1, .slotholder::before, .avatar_author::before, .footer-v1::after, .member-content:hover .member-img::before, .vc_tta-color-grey.vc_tta-style-classic .vc_tta-panel .vc_tta-panel-heading, .vc_tta-panel.vc_active::before, .bg-gradient::before {
+  background: rgba(0, 0, 0, 0) linear-gradient(135deg, #ca5500 0%, #e15f00 100%, #e15f00 100%) repeat scroll 0 0;
+}
+.side-breadcrumb::after {
+  background: rgba(0, 0, 0, 0) linear-gradient(135deg, #e15f00 0%, #ca5500 100%, #ca5500 100%) repeat scroll 0 0;
+}
+.app_screenshot .screen-default h3::before, .comments-area .reply a:hover, .form-submit .btn-primary, .footer-v3 .blog-item:hover .blog-img, .pagination li:hover .page-numbers, .tagcloud a:hover, .pagination li .page-numbers.current, .button-readmore a, .contact-2 .btn, .event-2 .row-event:hover .event_post_content, .blog-style:hover, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:focus, .btn-primary:focus:active, .btn-primary, .pricing-sign .btn {
+  border: 1px solid #e15f00;
+}
+.app_screenshot .apps-default.active::after, .btn.btn-icon:hover, .btn.btn-icon:focus, .btn.btn-icon:active, .btn.btn-icon:active:focus, .btn.btn-icon:focus:active {
+  border: 1px solid #e15f00 !important;
+}
+.scroll-to-top, .event-2 .row-event:hover .event_post_content {
+  border: 2px solid #e15f00;
+}
+.mega-menu > li > ul{
+  border-top: 2px solid #e15f00;
+}
+.event-2 .event-content:nth-child(2n) .row-event:hover .event_post_content .event-thumb::after, .event-content:nth-child(2n) .row-event:hover .event_post_content .event-thumb::after {
+  border-right-color: #e15f00;
+}
+.event-2 .row-event:hover .event_post_content .event-thumb::after, .row-event:hover .event_post_content .event-thumb::after {
+  border-left-color: #e15f00;
+}
+.btn-primary:hover, .app_screenshot .screen-default a:hover {
+  background: #ca5500;
+}
+.btn-primary:hover {
+  border: 1px solid #ca5500;
+}
+.load-more a:hover {
+  color: #ca5500;
+}

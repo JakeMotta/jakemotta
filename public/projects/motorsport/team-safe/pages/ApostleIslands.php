@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Team SAFE Racing</title>
+
+<!--Style Sheet-->
+<link rel="stylesheet" href="../files/cssReset.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../files/mainCss.css">
+
+<!--Font and JQuery-->
+<script src="../files/jquery-3.4.1.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab|Marmelad|Domine' rel='stylesheet' type='text/css'>
+
+<!--NavBar-->
+<link rel="stylesheet" href="../lavalamp/lavalamp_test.css" type="text/css" media="screen">
+<script type="text/javascript" src="../lavalamp/jquery.lavalamp.js"></script>
+<script type="text/javascript" src="../lavalamp/jquery.lavalamp.min.js"></script>
+<script type="text/javascript" src="../lavalamp/jquery.easing.min.js"></script>
+<script type="text/javascript">
+        $(function() {
+            $("#1").lavaLamp({
+                fx: "backout", 
+                speed: 700,
+                click: function(event, menuItem) {
+                }
+            });
+        });
+    </script>
+        
+
+<!--SlideShow-->
+<link rel="stylesheet" href="../files/responsiveslides.css">
+<link rel="stylesheet" href="../files/slideCss.css">
+  <script src="../files/responsiveslides.min.js"></script>
+  <script>
+    // You can also use "$(window).load(function() {"
+    $(function () {
+
+      // Slideshow 4
+      $("#slider4").responsiveSlides({
+        auto: true,
+        pager: false,
+        nav: false,
+        speed: 500,
+        namespace: "callbacks",
+        before: function () {
+          $('.events').append("<li>before event fired.</li>");
+        },
+        after: function () {
+          $('.events').append("<li>after event fired.</li>");
+        }
+      });
+    });
+  </script>
+
+
+<!--[if lt IE 9]>
+<script src="files/html5shiv.js"></script>
+<![endif]-->
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</head>
+
+<body>
+
+
+
+<div id="container">
+   <section id="topNav">
+        <span id="largeTextShadow">
+      	    Team SAFE Racing
+        </span>
+        <section id="contact">
+            <span id="smallText"><span id="whiteText">
+                    Email: teamsaferacing@yahoo.com
+            </span></span>
+        </section> <!--End Contact-->
+   </section> <!--End topNav-->
+   
+<header id="head">
+<section id="slideDiv">
+
+<!-- Slideshow 4 -->
+   <div class="callbacks_container">
+      <ul class="rslides" id="slider4">
+        <li>
+          <img src="../images/slide/1.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/2.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/3.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/4.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/5.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+      </ul>
+    </div>
+
+</section> <!--End slideDiv-->
+
+<nav id="headNav">
+    <span id="navLinkText">
+    	<ul class="lavaLampWithImage" id="1">
+                <?php
+						include("../sec_pages_topNav.php");
+				?>
+       	</ul>     
+	</span>
+</nav> <!--End headNav-->
+</header> <!--End Head-->
+
+
+<section id="content">
+<br>
+
+<aside id="leftColumn">
+
+<section id="mainContent">
+<span id="pText">
+
+<div align="center"><span id="medText" >Apostle Islands Race</span><span id="smallText" ></span></div>
+<hr />
+
+<span id="pText">
+
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Once again the new <span id="redText">outdoor season</span> is upon us.  Team <span id="redText">SAFE Racing</span> is looking forward to a <span id="redText">fun and fast</span> year.  First on the agenda is <span id="redText">Apostle Islands</span> on <span id="redText">June 14, 2014</span>.  Team SAFE Racing will be well represented with <span id="redText">6 skaters</span> (Rob Motta, Chris Rojo, John Crysdale, Mark Randle, Ryan McGee, and Brittney Schultz).  
+For those of you who are not familiar with Apostle Islands it is a small group of islands on Lake Superior.  Here is a description of the course.  The Apostle Islands Races will be held on an <span id="redText">8.7 mile looped course</span> of town roads & a county highway.  The marathon will be <span id="redText">three laps</span> of this course.  The course offers a scenic <span id="redText">mix of flats</span>, curves and straight-aways.  This a <span id="redText">beautiful course</span> offering extraordinary glimpses of the beautiful <span id="redText">Lake Superior shoreline</span> and the majority of the course takes place on <span id="redText">new pavement</span>.  The course offers two <span id="redText">hair pin turns</span>, various curves and flats and skaters of <span id="redText">all levels</span> will be able to participate in this event.   Most of the course includes pavement that was new in 2009 so this should be a <span id="redText">very smooth</span> and fast course.  
+
+<br>
+<br>
+
+</span>
+</section> <!--End mainContent-->
+</aside> <!--End leftColumn-->
+
+<aside id="rightColumn">
+<br>
+    <aside id="sponsorImages" align="center">
+        	<?php
+					include("../sec_pages_sideBar.php");
+			?>
+    </aside>
+</aside> <!--End rightColumn-->
+</section> <!--End content-->
+
+
+<footer id="foot">
+
+	<footer id="footContact">
+    	<span id="smallerText">
+        	<?php
+					include("../sec_pages_Links.php");
+			?>	
+        </span>
+    </footer>
+    
+    <footer id="footContent">
+        <span id="smallerText">
+            Copyright © 2014 Team SAFE Racing. All rights reserved. Website Design By <span id="whiteText"><a href="jakeMotta.php">Jacob Motta</a> </span><br>
+        </span>
+    </footer>
+
+    <div id="bottomSkater" align="right">
+    	<img src="../images/logos/skater2.gif" />&nbsp&nbsp&nbsp&nbsp
+    	<img src="../images/logos/skater.gif" />
+    </div>
+</footer> <!--End foot-->
+
+
+</div> <!--End Container-->
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: Jake's two CS 108 games (SJSU, spring 2017). Survivor was a GameMaker
+     Studio 2 platformer whose finished project didn't survive, so this shows its design mockup and sprites
+     (the original PNGs). Arena King is a tabletop game, written up from its rules and playtest report.
+     See docs/projects/survivor.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Survivor and Arena King</title>
+<style>
+    html, body { margin: 0; background: #fbd969; color: #1d1a14; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 28px 16px 48px; }
+    main { max-width: 1100px; margin: 0 auto; }
+    .kicker { margin: 0; font-size: 14px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6d5a1e; }
+    h1 { font-size: 34px; font-weight: 900; margin: 2px 0 4px; letter-spacing: -.5px; }
+    .lede { margin: 0 0 24px; max-width: 720px; }
+    h2 { font-size: 28px; font-weight: 900; margin: 0; }
+    h3 { font-size: 18px; font-weight: 900; margin: 26px 0 10px; }
+    .meta { margin: 0 0 12px; color: #6d5a1e; font-size: 14px; font-weight: 600; }
+    section { margin-bottom: 44px; }
+    .panel { background: #fffaf0; border: 3px solid #1d1a14; border-radius: 12px; box-shadow: 6px 6px 0 #1d1a14; }
+    .pixel { image-rendering: pixelated; }
+
+    /* Survivor */
+    .split { display: grid; grid-template-columns: 3fr 2fr; gap: 28px; align-items: start; }
+    .mock { margin: 0; }
+    .mock img { display: block; width: 100%; height: auto; border: 3px solid #1d1a14; border-radius: 12px; box-shadow: 6px 6px 0 #1d1a14; transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); }
+    .mock img:hover { transform: rotate(-.8deg) translateY(-3px); }
+    .mock figcaption { font-size: 14px; margin-top: 10px; color: #4d4120; }
+    .facts { margin: 10px 0 0; padding-left: 20px; }
+    .facts li { margin: 3px 0; }
+    .runner { display: flex; align-items: flex-end; gap: 18px; margin-top: 16px; }
+    .runner img { width: 48px; height: 96px; }
+    .runner span { font-size: 14px; color: #4d4120; }
+    .parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+    .part { margin: 0; padding: 12px; text-align: center; }
+    .part .box { height: 112px; display: flex; align-items: center; justify-content: center; background: #fbd969; border-radius: 8px; }
+    .part img { width: 96px; height: auto; }
+    .part figcaption { font-weight: 800; margin-top: 8px; font-size: 15px; }
+    .part.wide { grid-column: span 2; }
+    .barrier { display: flex; }
+    .barrier img { width: 20%; max-width: 64px; height: auto; }
+    .note { font-size: 14px; color: #4d4120; margin-top: 16px; }
+
+    /* Arena King */
+    .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+    .rules .panel { padding: 14px 18px; }
+    .rules h4 { margin: 0 0 6px; font-size: 16px; font-weight: 900; }
+    .rules p, .rules ul, .rules ol { margin: 4px 0; }
+    .rules ul, .rules ol { padding-left: 20px; }
+    .table-wrap { overflow-x: auto; padding: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 15px; }
+    th, td { text-align: left; padding: 8px 14px; border-bottom: 1px solid #e4d9b8; vertical-align: top; }
+    th { font-weight: 900; }
+    tr:last-child td { border-bottom: 0; }
+    td:first-child { font-weight: 800; white-space: nowrap; }
+    .lasts { white-space: nowrap; }
+    .tag { display: inline-block; padding: 0 8px; border-radius: 999px; font-size: 13px; font-weight: 800; }
+    .match { background: #cfe0ff; color: #12306b; }
+    .once { background: #ffd2c7; color: #7a1a06; }
+    .log { padding: 14px 18px 14px 38px; margin: 0; }
+    .log li { margin: 6px 0; }
+
+    @media (max-width: 760px) {
+        .split { grid-template-columns: 1fr; }
+        .part.wide { grid-column: 1 / -1; }
+    }
+    /* On a phone each buff becomes a little card: name and tag on top, what it does underneath */
+    @media (max-width: 560px) {
+        thead { display: none; }
+        tr { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 14px; border-bottom: 1px solid #e4d9b8; }
+        tr:last-child { border-bottom: 0; }
+        td { padding: 0; border: 0; }
+        td.lasts { grid-column: 2; grid-row: 1; }
+        td:nth-child(2) { grid-column: 1 / -1; }
+    }
+</style>
+</head>
+<body>
+<main>
+    <p class="kicker">SJSU CS 108 · spring 2017</p>
+    <h1>Survivor &amp; Arena King</h1>
+    <p class="lede">Two games I designed for a game design class: a platformer about breaking out of prison, and a dice-and-card duel for the table.</p>
+
+    <section id="survivor">
+        <h2>Survivor</h2>
+        <p class="meta">GameMaker Studio 2 platformer · March–April 2017 · with a classmate, Elias</p>
+        <div class="split">
+            <figure class="mock">
+                <img src="sprites/design.png" width="768" height="576" alt="Design mockup: a yellow room with black floor blocks, an elevator at each side, a timer reading 275, and the prisoner on a small moving platform over a row of spikes">
+                <figcaption>The design mockup: the clock in the corner, an elevator on each side, and the prisoner riding a moving platform over a spike pit.</figcaption>
+            </figure>
+            <div>
+                <p>An innocent prisoner, locked up for a crime he didn't commit, has to break out of a detention center before he's caught. The prison is wired with everything it takes to keep him in: moving platforms, electric barriers, fake floors, elevators and spikes.</p>
+                <ul class="facts">
+                    <li>The arrow keys run and jump.</li>
+                    <li>One life, with room for a little damage.</li>
+                    <li>Each level is one screen: get from the left side to the right.</li>
+                    <li>Five levels, each a little meaner.</li>
+                    <li>One clock for the whole escape. When it runs out, he's back in his cell.</li>
+                </ul>
+                <div class="runner" aria-hidden="true">
+                    <img class="pixel" src="sprites/right_run.png" data-frames="sprites/right_run.png sprites/right_run2.png" width="32" height="64" alt="">
+                    <img class="pixel" src="sprites/left_run.png" data-frames="sprites/left_run.png sprites/left_run2.png" width="32" height="64" alt="">
+                    <span>He's mostly stripes.</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>The parts box</h3>
+        <div class="parts">
+            <figure class="part panel wide">
+                <div class="box barrier" role="img" aria-label="Electric barrier between two emitter blocks, crackling">
+                    <img class="pixel" src="sprites/block_left_laser.png" alt="">
+                    <img class="pixel" src="sprites/elec_left_start1.png" data-frames="sprites/elec_left_start1.png sprites/elec_left_start2.png" alt="">
+                    <img class="pixel" src="sprites/elec1.png" data-frames="sprites/elec1.png sprites/elec2.png sprites/elec3.png" data-ms="110" alt="">
+                    <img class="pixel" src="sprites/elec_right_start_1.png" data-frames="sprites/elec_right_start_1.png sprites/elec_right_start_2.png" alt="">
+                    <img class="pixel" src="sprites/block_right_laser.png" alt="">
+                </div>
+                <figcaption>Electric barrier</figcaption>
+            </figure>
+            <figure class="part panel"><div class="box"><img class="pixel" src="sprites/elevator.png" width="64" height="64" alt="Elevator doors"></div><figcaption>Elevator</figcaption></figure>
+            <figure class="part panel"><div class="box"><img class="pixel" src="sprites/ladder.png" width="64" height="64" alt="Wooden ladder"></div><figcaption>Ladder</figcaption></figure>
+            <figure class="part panel"><div class="box"><img class="pixel" src="sprites/spike.png" width="64" height="64" alt="Floor spike"></div><figcaption>Spike</figcaption></figure>
+            <figure class="part panel"><div class="box"><img class="pixel" src="sprites/spike2.png" width="64" height="64" alt="Ceiling spike"></div><figcaption>Ceiling spike</figcaption></figure>
+            <figure class="part panel"><div class="box"><img class="pixel" src="sprites/floor_block.png" width="64" height="64" alt="Black floor block"></div><figcaption>Floor block</figcaption></figure>
+            <figure class="part panel"><div class="box"><img class="pixel" src="sprites/moving_tile.png" width="64" height="16" alt="Thin moving platform"></div><figcaption>Moving platform</figcaption></figure>
+        </div>
+        <p class="note">The finished game didn't make it: the only GameMaker project left is an early test room, so there's nothing to play. This is the plan and the art.</p>
+    </section>
+
+    <section id="arena-king">
+        <h2>Arena King</h2>
+        <p class="meta">Tabletop dice-and-card game · February 2017 · 2–4 players</p>
+        <p class="lede">A game about dueling warriors. Fight with your character cards, buy buffs, and keep the good buffs away from everyone else, but don't spend your money too fast.</p>
+
+        <div class="rules">
+            <div class="panel">
+                <h4>In the box</h4>
+                <ul>
+                    <li>12 character cards, each with HP, ATK and DEF</li>
+                    <li>2 or 3 dice</li>
+                    <li>Silver and copper coins (1 silver = 5 copper)</li>
+                    <li>A buff sheet, and a log sheet for each player</li>
+                </ul>
+                <h4 style="margin-top: 12px">Setup</h4>
+                <p>Everyone draws 3 character cards at random and starts with 5 silver.</p>
+            </div>
+            <div class="panel">
+                <h4>A match</h4>
+                <p>One card from each player fights until only one is left standing. Each round:</p>
+                <ol>
+                    <li>Pick a card to fight with, face down.</li>
+                    <li>Roll the dice. In that order, each player may buy one buff.</li>
+                    <li>Reveal the cards, apply the buffs and write everything on your log sheet.</li>
+                    <li>Fight, taking turns in the same order: pick an enemy and attack.</li>
+                </ol>
+                <p>Then go back to step 2 until one card is left.</p>
+            </div>
+            <div class="panel">
+                <h4>Fighting</h4>
+                <p>Damage is your ATK minus their DEF. If that's zero or less, they take nothing.</p>
+                <p>Kill a card and you claim it, plus 1 silver. Claimed cards never fight again; the survivor can, and heals 1 HP for each match it sits out.</p>
+                <h4 style="margin-top: 12px">Winning</h4>
+                <p>Whoever has claimed the most cards wins.</p>
+            </div>
+        </div>
+
+        <h3>Buffs</h3>
+        <p>Each buff is a single item in the store: only one player can have it, and it goes back once it's used. One buy per player per round, and no sharing money. Hold on to a buff (anything but ATK or DEF) to spring it later, or just to keep it from someone else. ATK and DEF go on at the start of a round, and once one's been used in a match nobody else gets it that match.</p>
+        <div class="panel table-wrap">
+            <table>
+                <thead><tr><th>Buff</th><th>What it does</th><th>Lasts</th></tr></thead>
+                <tbody>
+                    <tr><td>ATK +1 / +3 / +5</td><td>Raises attack</td><td class="lasts"><span class="tag match">the match</span></td></tr>
+                    <tr><td>DEF +1 / +3 / +5</td><td>Raises defense</td><td class="lasts"><span class="tag match">the match</span></td></tr>
+                    <tr><td>HP +1 / +3 / +5</td><td>Restores HP, never past the card's starting HP</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                    <tr><td>Poison</td><td>1 damage to one opponent at the start of every turn</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                    <tr><td>Dodge</td><td>Halves the damage you take, rounded down</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                    <tr><td>Block</td><td>Blocks all damage from one opponent</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                    <tr><td>Heal</td><td>Cures poison, but restores no HP</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                    <tr><td>Stab</td><td>2 damage to an opponent</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                    <tr><td>Reflect</td><td>Turns an opponent's attack back on them this round. You can't attack in the same turn.</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="note">In the playtest, the +1, +3 and +5 buffs cost 1, 2 and 3 copper.</p>
+
+        <h3>Playtest: me against one playtester, five matches</h3>
+        <ol class="log panel">
+            <li><b>Steven</b> (6 HP, 2 ATK, 5 DEF) against <b>Another Steven</b> (10 HP, 3 ATK, 4 DEF). I stacked ATK +3 and +5 for a 6-damage hit, and Reflect turned it around: 5 damage back, leaving Steven on 1 HP. An HP +3 kept him going, and he won.</li>
+            <li><b>Big Ass Sword</b> (5 HP, 8 ATK, 3 DEF) took <b>Square</b> in two hits.</li>
+            <li><b>Not A Square</b> against <b>Guy with A Lot of HP</b> (15 HP). With DEF buffs on both sides, nobody could do damage, so my Poison won it a point at a time over 14 turns of swinging for nothing.</li>
+            <li>Big Ass Sword came back for the last two: Steven in one hit, then Not A Square in two.</li>
+        </ol>
+        <p class="note">Final count: the playtester 3 cards, me 2. One heavy hitter decided three of the five matches, and high defense could stall a fight until something like Poison broke it.</p>
+    </section>
+</main>
+<script>
+    // Sprites with data-frames flip through their frames. The originals are separate PNGs, kept as they were.
+    if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+        document.querySelectorAll('img[data-frames]').forEach(function (img) {
+            var frames = img.getAttribute('data-frames').split(' '), i = 0;
+            frames.forEach(function (src) { new Image().src = src; });
+            setInterval(function () { i = (i + 1) % frames.length; img.src = frames[i]; }, Number(img.getAttribute('data-ms')) || 180);
+        });
+    }
+</script>
+</body>
+</html>

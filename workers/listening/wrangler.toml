@@ -1,0 +1,37 @@
+# The listening API: what Jake is playing on Spotify right now, to the second, and the YouTube copy
+# of it that visitors can listen along with. docs/listening.md explains where it fits.
+#
+# It runs on Cloudflare, which already sits in front of jakemotta.com, so /api/listening is answered
+# before a request ever reaches the Namecheap host. It isn't part of the FTP deploy: deploy it from
+# this folder with `npx wrangler deploy`.
+#
+# Secrets, set once with `npx wrangler secret put <NAME>` (never in this file, the repo is public):
+#
+#   SPOTIFY_CLIENT_ID       the Spotify developer app's client ID
+#   SPOTIFY_CLIENT_SECRET   its secret
+#   SPOTIFY_REFRESH_TOKEN   from `node scripts/spotify-auth.mjs`, run once
+#   YOUTUBE_API_KEY         a YouTube Data API v3 key from Google Cloud
+#
+# For `npx wrangler dev`, put the same four in a .dev.vars file here; it's gitignored.
+
+name = "jakemotta-listening"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+routes = [
+  { pattern = "jakemotta.com/api/listening*", zone_name = "jakemotta.com" },
+  { pattern = "www.jakemotta.com/api/listening*", zone_name = "jakemotta.com" },
+]
+
+# Holds Spotify's access token between requests, a refresh token if Spotify rotates it, and the
+# YouTube match for each Spotify track. Create it with `npx wrangler kv namespace create LISTENING`
+# and paste the id it prints here.
+[[kv_namespaces]]
+binding = "LISTENING"
+id = "PASTE_THE_KV_NAMESPACE_ID_HERE"
+
+[vars]
+# Artists or tracks never to offer listen-along for, comma-separated and case-insensitive: an artist
+# ("Some Artist") or one track ("Some Artist - Some Song"). They still show on ListenBrainz, which
+# is public; this only keeps them off the site's live card.
+HIDDEN = ""

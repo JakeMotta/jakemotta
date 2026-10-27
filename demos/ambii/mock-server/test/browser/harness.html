@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ambii mock harness</title>
+<style>
+  body { font: 14px/1.4 system-ui, sans-serif; margin: 16px; background: #faf7fb; color: #2c2033; }
+  .pass { color: #1b7f3b; } .fail { color: #b3123b; font-weight: 600; }
+  pre { white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h1>Ambii mock: browser harness</h1>
+<p>Serve <code>public/</code> at <code>/</code> and <code>demos/</code> at <code>/demos/</code>
+(<code>node demos/ambii/mock-server/test/browser/serve.mjs</code> does), open this page with <code>?run=1</code>, or call
+<code>runSuite()</code>. <code>?axios=&lt;url&gt;,&lt;url&gt;</code> picks the axios dist builds (default: the dashboard's
+0.19 and the web player's 0.21, from their node_modules).</p>
+<pre id="log"></pre>
+<script type="module" src="harness.js"></script>
+</body>
+</html>

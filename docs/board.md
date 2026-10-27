@@ -52,7 +52,7 @@ A tile opens as an overlay route drawn over the board, which stays mounted behin
 | `/library` | `pages/music` | The library: the big player, volume and the queue on the left; My music and Favorite artists as cover tiles on the right, each with play and a queue toggle. |
 | `/project` | `pages/project-gallery` | Every project, newest first, as cards with screenshot, name, year and description. It's at `/project`, singular, because `/projects/` is the folder of standalone sites, which `.htaccess` keeps from the app. |
 | `/project/:id` | `pages/project` | The project viewer (see [projects/README.md](projects/README.md)). Opened from the all-projects overlay, it closes back to it; opened from the board, back to the board. Its side panel links to all projects too. |
-| `/minecraft` | `pages/minecraft` | The modpack download page as a board of its own: Download, Install, Playing, Updating, Troubleshooting and Server files tiles (see [modpack.md](modpack.md)). |
+| `/minecraft` | `pages/minecraft` | The modpack download page as a board of its own: Download, Install, Playing, Updating and Troubleshooting tiles, written for players, with one line for self-hosters (see [modpack.md](modpack.md)). |
 
 Each uses `templates/bento-overlay`, which:
 - portals the panel to `<body>`, over a scrim, under the visualizer's vignette;

@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ambii Business</title>
+    <meta name="description" content="Working demos of the Ambii Business dashboard, web player and phone app, running in your browser." />
+    <link rel="icon" href="media/brand/ambii-logo-120.jpg" />
+    <!--
+      The hub the jakemotta.com project card frames: what Ambii Business was, and a way into each demo.
+      Hand-written, not built. How the demos work: demos/ambii/README.md and docs/projects/ambii-business.md.
+      The tile images are screenshots of the running demos (media/hub/).
+    -->
+    <style>
+      :root {
+        --ground: #1c1521;
+        --surface: #2a1f31;
+        --surface-hi: #352840;
+        --line: rgba(255, 255, 255, 0.09);
+        --text: #f6f0f8;
+        --muted: #bdaec8;
+        --pink: #d04283;
+        --violet: #b46fe0;
+        --radius: 18px;
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--ground);
+        /* Phones' text inflation would otherwise blow up the long paragraphs */
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        font: 16px/1.55 system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background:
+          radial-gradient(1100px 520px at 12% -10%, rgba(208, 66, 131, 0.28), transparent 60%),
+          radial-gradient(900px 520px at 100% 0%, rgba(180, 111, 224, 0.22), transparent 60%),
+          var(--ground);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 40px 20px 56px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.15;
+      }
+
+      /* Hero */
+
+      .hero {
+        display: flex;
+        gap: 22px;
+        align-items: flex-start;
+      }
+
+      .hero__logo {
+        flex: none;
+        width: 72px;
+        height: 72px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(208, 66, 131, 0.35);
+      }
+
+      .eyebrow {
+        margin: 0 0 6px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        font-size: clamp(32px, 5vw, 46px);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+      }
+
+      h1 span {
+        background: linear-gradient(90deg, var(--pink), var(--violet));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .lede {
+        max-width: 680px;
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .note {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        margin: 28px 0 0;
+        padding: 16px 18px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .note p {
+        margin: 0;
+      }
+
+      .dot {
+        flex: none;
+        width: 10px;
+        height: 10px;
+        margin-top: 8px;
+        border-radius: 50%;
+        background: var(--pink);
+        box-shadow: 0 0 0 4px rgba(208, 66, 131, 0.25);
+      }
+
+      /* The three apps */
+
+      .apps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin: 32px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .app {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        text-decoration: none;
+        transition:
+          transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+      .app:hover,
+      .app:focus-visible {
+        transform: translateY(-4px) rotate(-0.4deg);
+        border-color: rgba(208, 66, 131, 0.6);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .app:focus-visible,
+      .button:focus-visible,
+      .try a:focus-visible {
+        outline: 3px solid var(--text);
+        outline-offset: 3px;
+      }
+
+      .app img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .app__body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        gap: 8px;
+        padding: 18px 18px 20px;
+      }
+
+      .app h2 {
+        font-size: 21px;
+        font-weight: 900;
+      }
+
+      .app p {
+        flex: 1;
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .app__go {
+        align-self: flex-start;
+        margin-top: 6px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        /* Darker than the brand pink, so the pale label clears 4.5:1 */
+        background: linear-gradient(90deg, #b8336f, #9c3a8a);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      /* Sections below the apps */
+
+      .columns {
+        display: grid;
+        grid-template-columns: 1.35fr 1fr;
+        gap: 18px;
+        margin: 18px 0 0;
+      }
+
+      .panel {
+        padding: 24px 24px 22px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+      }
+
+      .panel h2 {
+        margin-bottom: 14px;
+        font-size: 20px;
+        font-weight: 900;
+      }
+
+      .try ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: step;
+      }
+
+      .try li {
+        position: relative;
+        padding: 0 0 14px 42px;
+        color: var(--muted);
+        counter-increment: step;
+      }
+
+      .try li:last-child {
+        padding-bottom: 0;
+      }
+
+      .try li::before {
+        content: counter(step);
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--surface-hi);
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .try strong {
+        color: var(--text);
+      }
+
+      .try a {
+        color: var(--text);
+        text-decoration-color: var(--pink);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
+      }
+
+      .codes {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+      }
+
+      .codes div {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 2px 14px;
+        align-items: center;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: var(--surface-hi);
+      }
+
+      .codes dt {
+        grid-row: span 2;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background: var(--ground);
+        font: 800 16px/1 ui-monospace, 'Cascadia Mono', Consolas, Menlo, monospace;
+        letter-spacing: 0.14em;
+      }
+
+      .codes dd {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .codes dd:first-of-type {
+        color: var(--text);
+        font-weight: 800;
+      }
+
+      .different {
+        margin: 18px 0 0;
+      }
+
+      .different ul {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px 28px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .different li {
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .different strong {
+        display: block;
+        color: var(--text);
+      }
+
+      footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 24px;
+        align-items: center;
+        justify-content: space-between;
+        margin: 28px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      footer p {
+        margin: 0;
+      }
+
+      .reset {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .button {
+        padding: 10px 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--surface-hi);
+        color: var(--text);
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+
+      .button:hover {
+        background: #44344f;
+      }
+
+      .reset output {
+        min-height: 1.5em;
+      }
+
+      @media (max-width: 900px) {
+        .apps {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .apps li:last-child {
+          grid-column: 1 / -1;
+        }
+
+        .apps li:last-child .app {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr;
+        }
+
+        .apps li:last-child img {
+          height: 100%;
+          border-right: 1px solid var(--line);
+          border-bottom: 0;
+        }
+
+        .columns {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        main {
+          padding: 28px 16px 40px;
+        }
+
+        .hero {
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .hero__logo {
+          width: 56px;
+          height: 56px;
+          border-radius: 16px;
+        }
+
+        .lede {
+          font-size: 16px;
+        }
+
+        .apps {
+          grid-template-columns: 1fr;
+        }
+
+        .apps li:last-child .app {
+          display: flex;
+        }
+
+        .apps li:last-child img {
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .panel {
+          padding: 20px 18px;
+        }
+
+        .different ul {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .app {
+          transition: none;
+        }
+
+        .app:hover,
+        .app:focus-visible {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <img class="hero__logo" src="media/brand/ambii-logo-250.jpg" alt="Ambii logo" width="72" height="72" />
+        <div>
+          <p class="eyebrow">2019–2022 · Background music for business</p>
+          <h1>Ambii <span>Business</span></h1>
+          <p class="lede">
+            Music for cafés, shops and restaurants. The owner picked stations, schedules and announcements in a dashboard, and the player in each store, a web page or a
+            phone app, played them.
+          </p>
+        </div>
+      </header>
+
+      <div class="note">
+        <span class="dot" aria-hidden="true"></span>
+        <p>
+          The servers behind it are long gone, so these are the real apps running on a stand-in for the old API that lives in your browser. You're signed in as Maya, who
+          runs the three stores of Bean &amp; Beat Coffee Co. Change whatever you like: it's saved in this browser only, and nothing leaves it.
+        </p>
+      </div>
+
+      <ul class="apps" aria-label="The apps">
+        <li>
+          <a class="app" href="dashboard/index.html#/stations">
+            <img src="media/hub/dashboard.webp" alt="The dashboard's Stations page" width="960" height="600" />
+            <div class="app__body">
+              <h2>Dashboard</h2>
+              <p>Where a business chose its stations, built schedules, recorded announcements and kept an eye on every store.</p>
+              <span class="app__go">Open the dashboard →</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="app" href="player/index.html#/LBEAN7">
+            <img src="media/hub/player.webp" alt="The web player playing Uprising" width="960" height="600" />
+            <div class="app__body">
+              <h2>Web player</h2>
+              <p>The player a store ran on any computer: type the store's code and it plays. This link opens on Downtown Café.</p>
+              <span class="app__go">Open the player →</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="app" href="mobile/index.html">
+            <img src="media/hub/mobile.webp" alt="The phone app playing, in a phone frame" width="960" height="600" />
+            <div class="app__body">
+              <h2>Phone app</h2>
+              <p>The same player as an iPhone and Android app, with the dashboard built in. Here it runs in a phone frame.</p>
+              <span class="app__go">Open the phone app →</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+
+      <div class="columns">
+        <section class="panel try" aria-labelledby="try-title">
+          <h2 id="try-title">Things to try</h2>
+          <ol>
+            <li><strong>Play a store.</strong> Open the <a href="player/index.html#/LBEAN7">web player</a> for Downtown Café and press play.</li>
+            <li>
+              <strong>Change what it plays.</strong> In the dashboard's <a href="dashboard/index.html#/stations">Stations</a>, open one and assign it to Downtown Café. The player
+              switches when the song ends, as it did with the real server.
+            </li>
+            <li>
+              <strong>Make an announcement.</strong> Under <a href="dashboard/index.html#/announcements">Announcements</a>, type one, pick a voice, set it to play today two minutes
+              from now and assign it to Downtown Café. Press skip in the web player so it picks the new one up. At that minute the music fades down and your browser reads it
+              out.
+            </li>
+            <li><strong>Steal the store.</strong> Pair the <a href="mobile/index.html">phone app</a> with LBEAN7 while the web player is on it, and watch them hand over.</li>
+            <li>
+              <strong>Drop to the free plan.</strong> Cancel the subscription under <a href="dashboard/index.html#/choose-plan">Upgrade</a>, the crown in the dashboard's menu: ads
+              play between songs and the extra stores switch off. Subscribe again there to bring them back.
+            </li>
+          </ol>
+        </section>
+
+        <section class="panel" aria-labelledby="codes-title">
+          <h2 id="codes-title">Store codes</h2>
+          <dl class="codes">
+            <div>
+              <dt>LBEAN7</dt>
+              <dd>Downtown Café</dd>
+              <dd>Plays a station</dd>
+            </div>
+            <div>
+              <dt>LMKT42</dt>
+              <dd>Market Street Kiosk</dd>
+              <dd>Runs a schedule; another device has it</dd>
+            </div>
+            <div>
+              <dt>LGATE3</dt>
+              <dd>Airport Pop-up</dd>
+              <dd>Switched off, so players are turned away</dd>
+            </div>
+          </dl>
+        </section>
+      </div>
+
+      <section class="panel different" aria-labelledby="different-title">
+        <h2 id="different-title">What's different from the real thing</h2>
+        <ul>
+          <li><strong>The music</strong>My own tracks stand in for the catalogue the stations used to draw from.</li>
+          <li><strong>The voices</strong>Announcements you make are read by your browser's voices instead of Google's. The four that come with the demo are recordings.</li>
+          <li><strong>Payments</strong>Nothing is charged and no card details are asked for. Subscribing uses a sample card.</li>
+          <li><strong>Sign-in</strong>You're already signed in. Signing out and back in takes one click, no password.</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>Made a mess? Put everything back the way it started.</p>
+        <div class="reset">
+          <button class="button" type="button" id="reset">Reset the demo</button>
+          <output id="reset-status" aria-live="polite"></output>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      // Puts the demo back to how it started, as the apps' own "Reset demo" does (resetDemo() in
+      // demos/ambii/mock-server/index.js): the keys under these prefixes (RESET_PREFIXES in its
+      // config.js) and the uploads database, under the same lock the apps write with.
+      (function () {
+        var PREFIXES = ['ambii-demo:', 'ambii-business:', 'ambii-player:', 'ambii-music:'];
+        var button = document.getElementById('reset');
+        var status = document.getElementById('reset-status');
+
+        // Takes a getter: reading window.localStorage itself throws when the browser blocks storage
+        function clear(getStorage) {
+          try {
+            var storage = getStorage();
+            Object.keys(storage).forEach(function (key) {
+              if (PREFIXES.some(function (prefix) { return key.indexOf(prefix) === 0; })) storage.removeItem(key);
+            });
+          } catch (error) {
+            // Storage blocked: there is nothing to clear
+          }
+        }
+
+        function deleteUploads() {
+          return new Promise(function (resolve) {
+            try {
+              var request = indexedDB.deleteDatabase('ambii-demo');
+              // Blocked means another tab still has it open; it is deleted once that tab lets go
+              request.onsuccess = request.onerror = request.onblocked = function () { resolve(); };
+            } catch (error) {
+              resolve();
+            }
+          });
+        }
+
+        function reset() {
+          clear(function () { return window.localStorage; });
+          clear(function () { return window.sessionStorage; });
+          return deleteUploads();
+        }
+
+        function finish() {
+          status.textContent = 'Done. Apps that are already open start over when you reload them.';
+          button.disabled = false;
+        }
+
+        button.addEventListener('click', function () {
+          button.disabled = true;
+          try { speechSynthesis.cancel(); } catch (error) { /* no speech to stop */ }
+          var done;
+          try {
+            // The locks API refuses where storage is blocked; then there is nothing shared to guard
+            done = navigator.locks ? navigator.locks.request('ambii-demo-db', reset).catch(reset) : reset();
+          } catch (error) {
+            done = Promise.resolve();
+          }
+          done.then(finish, finish);
+        });
+      })();
+    </script>
+  </body>
+</html>

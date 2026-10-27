@@ -82,6 +82,16 @@ export const MusicPlayer = () => {
         };
     }, []);
 
+    // A project framed by the viewer that makes its own sound (the Ambii Business demos) posts
+    // this when it starts, so the site's track pauses instead of playing over it
+    useEffect(() => {
+        const onMessage = (event: MessageEvent) => {
+            if (event.origin === window.location.origin && event.data?.type === 'jakemotta:media-playing') audioRef.current?.pause();
+        };
+        window.addEventListener('message', onMessage);
+        return () => window.removeEventListener('message', onMessage);
+    }, []);
+
     // The <audio> element can only ever feed one MediaElementAudioSourceNode, so the graph is
     // built once on the first track and reused for every track after it.
     const ensureAudioGraph = () => {

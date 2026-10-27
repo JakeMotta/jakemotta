@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Team SAFE Racing</title>
+
+<!--Style Sheet-->
+<link rel="stylesheet" href="../files/cssReset.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../files/mainCss.css">
+
+<!--Font and JQuery-->
+<script src="../files/jquery-3.4.1.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab|Marmelad|Domine' rel='stylesheet' type='text/css'>
+
+<!--NavBar-->
+<link rel="stylesheet" href="../lavalamp/lavalamp_test.css" type="text/css" media="screen">
+<script type="text/javascript" src="../lavalamp/jquery.lavalamp.js"></script>
+<script type="text/javascript" src="../lavalamp/jquery.lavalamp.min.js"></script>
+<script type="text/javascript" src="../lavalamp/jquery.easing.min.js"></script>
+<script type="text/javascript">
+        $(function() {
+            $("#1").lavaLamp({
+                fx: "backout", 
+                speed: 700,
+                click: function(event, menuItem) {
+                }
+            });
+        });
+    </script>
+        
+
+<!--SlideShow-->
+<link rel="stylesheet" href="../files/responsiveslides.css">
+<link rel="stylesheet" href="../files/slideCss.css">
+  <script src="../files/responsiveslides.min.js"></script>
+  <script>
+    // You can also use "$(window).load(function() {"
+    $(function () {
+
+      // Slideshow 4
+      $("#slider4").responsiveSlides({
+        auto: true,
+        pager: false,
+        nav: false,
+        speed: 500,
+        namespace: "callbacks",
+        before: function () {
+          $('.events').append("<li>before event fired.</li>");
+        },
+        after: function () {
+          $('.events').append("<li>after event fired.</li>");
+        }
+      });
+    });
+  </script>
+
+
+<!--[if lt IE 9]>
+<script src="files/html5shiv.js"></script>
+<![endif]-->
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</head>
+
+<body>
+
+
+
+<div id="container">
+   <section id="topNav">
+        <span id="largeTextShadow">
+      	    Team SAFE Racing
+        </span>
+        <section id="contact">
+            <span id="smallText"><span id="whiteText">
+                    Email: teamsaferacing@yahoo.com
+            </span></span>
+        </section> <!--End Contact-->
+   </section> <!--End topNav-->
+   
+<header id="head">
+<section id="slideDiv">
+
+<!-- Slideshow 4 -->
+   <div class="callbacks_container">
+      <ul class="rslides" id="slider4">
+        <li>
+          <img src="../images/slide/1.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/2.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/3.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/4.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="../images/slide/5.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+      </ul>
+    </div>
+
+</section> <!--End slideDiv-->
+
+<nav id="headNav">
+    <span id="navLinkText">
+    	<ul class="lavaLampWithImage" id="1">
+                <?php
+						include("../sec_pages_topNav.php");
+				?>
+       	</ul>     
+	</span>
+</nav> <!--End headNav-->
+</header> <!--End Head-->
+
+
+<section id="content">
+<br>
+
+<aside id="leftColumn">
+<div align="center"><span id="medText" >EzeeFit Sports</span></div>
+<hr />
+<section id="mainContent">
+<span id="pText">
+
+<span id="boldText">It all started with...
+New <span id="redText">speedskating boots</span>, my first marathon and some really <span id="redText">trashed feet</span>!</span>
+<br>
+<br>
+
+I <span id="redText">wrapped my feet</span> with sport tape and hoped for the best <span id="redText">but</span>...
+my feet sweat, so the tape slipped and I got <span id="redText">massive sores and blisters</span>, yikes! <br><br>
+
+This is <span id="redText">not the way</span> I envisioned this sport to go so after trying moleskin and all of the commercial blisterpads with <span id="redText">no real relief</span>, I started cutting foam neoprene and elastic and <span id="redText">sewed my first version</span> of the Ankle Bootie. After <span id="redText">many designs</span>, I came up with the current style. After wearing them to a few group skates, other skaters <span id="redText">wanted to know</span> where I got them and then, if I could <span id="redText">make some to sell</span>. After three years of making a few for friends and everyone they encountered, I decided to go into production with <span id="redText">three thicknesses</span> to suit <span id="redText">different fit issues</span>. <br><br>
+
+My girlfriend, who shows her horse, wanted to try them in her tall equestrian boots. She found the 3mm helped in keeping her heels down. <br><br>
+
+Then <span id="redText">several skaters</span> asked for a <span id="redText">rain and wind resistant cover</span>. After a rainy 2004 Athens to Atlanta, Kim Perkins gave them a thumbs up for <span id="redText">saving her brand new</span> Bont boots. Barry Publow <span id="redText">wore them</span> to his <span id="redText">victory</span> in the 2005 <span id="redText">US National Marathon Championships</span>. <br><br>
+
+In 2007 we took our products to ISPO in Munich Germany and quickly became a staple in Germany and Switzerland. We <span id="redText">now sell</span> to shops <span id="redText">throughout Europe</span> including <span id="redText">Russia</span> and the <span id="redText">Netherlands</span> as well as <span id="redText">Australia</span>, <span id="redText">New Zealand</span>, <span id="redText">South Africa</span> and <span id="redText">Asia</span>.<br><br>
+
+We introduced an <span id="redText">Ultra-thin full foot bootie</span> for watersports but quickly found customers using them for skiing and derby because they <span id="redText">also keep your feet warm</span>.<br><br>
+
+Our <span id="redText">most recent addition</span> is the all tan version of the Ultra- thin and 2-mm ankle booties <span id="redText">requested by dancers</span> and our new <span id="redText">anti-friction toe cover</span> for toe blisters.<br><br>
+
+<span id="boldText">Susan and Bob</span><br><br>
+ 
+
+
+
+
+       
+</span>
+
+</section> <!--End mainContent-->
+</aside> <!--End leftColumn-->
+
+<aside id="rightColumn">
+<br>
+    <aside id="sponsorImages" align="center">
+        <?php
+					include("../sec_pages_sideBar.php");
+			?>
+    </aside>
+</aside> <!--End rightColumn-->
+</section> <!--End content-->
+
+<footer id="foot">
+
+	<footer id="footContact">
+    	<span id="smallerText">
+        	<?php
+					include("../sec_pages_Links.php");
+			?>	
+        </span>
+    </footer>
+    
+    <footer id="footContent">
+        <span id="smallerText">
+            Copyright © 2014 Team SAFE Racing. All rights reserved. Website Design By <span id="whiteText"><a href="jakeMotta.php">Jacob Motta</a> </span><br>
+        </span>
+    </footer>
+
+    <div id="bottomSkater" align="right">
+    	<img src="../images/logos/skater2.gif" />&nbsp&nbsp&nbsp&nbsp
+    	<img src="../images/logos/skater.gif" />
+    </div>
+</footer> <!--End foot-->
+
+</div> <!--End Container-->
+
+</body>
+</html>

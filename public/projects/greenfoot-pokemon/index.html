@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: Jake and Logan Lovell's 2012 Greenfoot fan game. V10.jar and jl1.0.1.jar are their own
+     export, copied unchanged, and run as the Java applet they were built as, through CheerpJ. start-at-title.jar, made in 2026,
+     holds one file that starts it on its title screen. See docs/projects/greenfoot-pokemon.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pokémon: Green Foot Edition</title>
+<style>
+    html, body { margin: 0; background: #141414; color: #eee; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 20px 16px 32px; box-sizing: border-box; }
+    main { width: min(100%, 816px); margin: 0 auto; }
+    h1 { font-size: 26px; font-weight: 800; line-height: 1.2; margin: 0 0 2px; }
+    h2 { font-size: 18px; font-weight: 800; margin: 26px 0 8px; }
+    p { margin: 0; }
+    a { color: #fff; }
+    .meta { color: #999; margin-bottom: 14px; }
+    /* The applet is a fixed 816×669; on a narrower screen the stage is scaled down to fit */
+    .frame { position: relative; width: 100%; aspect-ratio: 816 / 669; background: #000; border-radius: 10px; overflow: hidden; }
+    .stage { position: absolute; left: 0; top: 0; width: 816px; height: 669px; transform-origin: 0 0; }
+    .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+    .play {
+        position: absolute; inset: 0; margin: auto; width: 150px; height: 150px; border: 0; border-radius: 50%;
+        background: #fff; color: #141414; font: 800 22px/1 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, .6); transition: transform .25s cubic-bezier(.34, 1.56, .64, 1);
+    }
+    .play::before { content: ''; border-style: solid; border-width: 18px 0 18px 30px; border-color: transparent transparent transparent currentColor; margin-left: 8px; }
+    .play:hover { transform: scale(1.07) rotate(-4deg); }
+    .play:focus-visible { outline: 3px solid #fff; outline-offset: 5px; }
+    .frame.live { aspect-ratio: auto; overflow-x: auto; overflow-y: hidden; }
+    .stage > object, .stage > cheerpj-applet { position: absolute; left: 0; top: 0; }
+    .loading { position: absolute; inset: 0; z-index: 2; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 24px; font-size: 18px; font-weight: 700; }
+    .loading small { font-size: 14px; font-weight: 400; color: #aaa; max-width: 34em; }
+    .spinner { width: 34px; height: 34px; border: 4px solid #444; border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hint { margin-top: 12px; padding: 10px 14px; background: #222; border-radius: 8px; color: #ccc; font-size: 15px; }
+    .hint strong { color: #fff; }
+    dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+    dt { font-weight: 700; white-space: nowrap; }
+    dd { margin: 0; color: #ccc; }
+    kbd { display: inline-block; min-width: 1.4em; padding: 1px 6px; border: 1px solid #555; border-bottom-width: 2px; border-radius: 5px; background: #222; font: 600 14px/1.4 ui-monospace, Consolas, monospace; text-align: center; color: #fff; }
+    .note { margin-top: 22px; color: #999; font-size: 14px; }
+    .note p + p { margin-top: 8px; }
+</style>
+</head>
+<body>
+<main>
+    <h1>Pokémon: Green Foot Edition</h1>
+    <p class="meta">Greenfoot fan game · May 2012 · by Jacob Motta &amp; Logan Lovell · sound on</p>
+
+    <div class="frame" id="frame">
+        <div class="stage" id="stage">
+            <img class="poster" src="poster.webp" alt="">
+            <button class="play" id="play" type="button">Play</button>
+        </div>
+    </div>
+    <p class="hint" id="hint">The original Java game, about a 14&nbsp;MB download. It needs a keyboard.</p>
+
+    <h2>Controls</h2>
+    <dl>
+        <dt><kbd>Space</kbd></dt><dd>Enter the game from the title screen</dd>
+        <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Pick your starter Pokémon, then <kbd>Enter</kbd> to choose it</dd>
+        <dt><kbd>←</kbd> <kbd>↑</kbd> <kbd>→</kbd> <kbd>↓</kbd></dt><dd>Walk around TrainingVille, diagonals too</dd>
+        <dt><kbd>Shift</kbd></dt><dd>Run</dd>
+        <dt><kbd>Enter</kbd></dt><dd>Clear a pop-up, or pick from the battle menu</dd>
+        <dt><kbd>S</kbd></dt><dd>Hold to see your stats</dd>
+    </dl>
+
+    <div class="note">
+        <p>Logan Lovell and I made this as our final project for a computer programming class in 2012. Walk into the tall grass to meet a wild Pokémon; the battles only got as far as showing your moves and running away. Pokémon and its sprites belong to Nintendo and Game Freak; this is a fan game.</p>
+        <p>This is the original 2012 Java game, exported from Greenfoot, running in your browser as the applet it was built as. Java runs through <a href="https://cheerpj.com/" target="_blank" rel="noopener">CheerpJ</a> by Leaning Technologies, which loads from its own servers when you press Play. On a phone it will load, but you'll need a keyboard to play.</p>
+    </div>
+</main>
+<script>
+(function () {
+    var W = 816, H = 669;
+    // V10.jar is the 2012 export; its manifest pulls in jl1.0.1.jar, the MP3 decoder for the battle music. Exported, the
+    // game opens on the town map and never shows its title: main.class is TrainingVille, whose constructor switches to
+    // the title world, and Greenfoot 2.1.2's exported viewer ignores that switch. start-at-title.jar holds only a copy of
+    // V10.jar's standalone.properties with main.class=PokemonWorld; listed first, it's the copy Greenfoot reads.
+    var JARS = 'start-at-title.jar,V10.jar';
+    var CHEERPJ = 'https://cjrtnc.leaningtech.com/4.3/loader.js';
+    var PAUSE_SITE_MUSIC = true;
+    var READY_HINT = 'Press <strong>Run</strong> under the game, then <strong>Space</strong> on the title screen. Click the game first if the keys don’t answer.';
+
+    var frame = document.getElementById('frame');
+    var stage = document.getElementById('stage');
+    var hint = document.getElementById('hint');
+    var started = false;
+
+    // Before Play, scale the poster down to the width there is; never up, which would blur it. Once the game runs it
+    // stays at its own size, and a narrow frame scrolls sideways instead: CheerpJ doesn't map clicks through a CSS
+    // transform, so a scaled game couldn't be clicked (its Run button included).
+    function fit() {
+        var scale = started ? 1 : Math.min(1, frame.clientWidth / W);
+        stage.style.transform = scale < 1 ? 'scale(' + scale + ')' : '';
+    }
+    fit();
+    window.addEventListener('resize', fit);
+
+    // The site's music keeps playing in the page around this frame. Pause it when the game starts,
+    // so the two don't play over each other. Same-origin only; standalone there's nothing to pause.
+    function pauseSiteMusic() {
+        try {
+            if (window.parent !== window) window.parent.document.querySelectorAll('audio').forEach(function (audio) { audio.pause(); });
+        } catch (e) {}
+    }
+
+    function loadScript(src) {
+        return new Promise(function (resolve, reject) {
+            var script = document.createElement('script');
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = function () { reject(new Error('could not load ' + src)); };
+            document.head.appendChild(script);
+        });
+    }
+
+    // CheerpJ swaps the applet for an <object> and draws its window on canvases, white at first. Greenfoot then
+    // takes a while to load the world's images. Keep the loading message up until a pixel in the world turns
+    // from that blank white to the game, or for 30 more seconds at most.
+    function painted() {
+        var canvases = stage.querySelectorAll('.cjWindow canvas');
+        for (var i = 0; i < canvases.length; i++) {
+            var canvas = canvases[i], context = null;
+            try { context = canvas.getContext('2d'); } catch (e) {}
+            if (!context || !canvas.width) continue;
+            try {
+                var pixel = context.getImageData(Math.floor(canvas.width / 2), Math.floor(canvas.height / 3), 1, 1).data;
+                if (pixel[3] && (pixel[0] < 250 || pixel[1] < 250 || pixel[2] < 250)) return true;
+            } catch (e) { return true; }
+        }
+        return false;
+    }
+
+    function waitForGame() {
+        var windowSince = 0;
+        var timer = setInterval(function () {
+            if (!stage.querySelector('.cjWindow')) return;
+            windowSince = windowSince || Date.now();
+            if (!painted() && Date.now() - windowSince < 30000) return;
+            clearInterval(timer);
+            var loading = frame.querySelector('.loading');
+            if (loading) loading.remove();
+            hint.innerHTML = READY_HINT + (frame.clientWidth < W ? ' The game is wider than this screen: scroll it sideways.' : '');
+            document.documentElement.classList.add('game-ready');
+        }, 500);
+    }
+
+    function start() {
+        if (started) return;
+        started = true;
+        if (PAUSE_SITE_MUSIC) pauseSiteMusic();
+        stage.innerHTML = '';
+        frame.classList.add('live');
+        frame.style.height = H + 'px';
+        fit();
+        frame.insertAdjacentHTML('beforeend', '<div class="loading"><div class="spinner"></div>Starting Java…<small>CheerpJ is loading a Java runtime into your browser, then the game. The first time can take a minute or two.</small></div>');
+        hint.textContent = 'Loading…';
+
+        loadScript(CHEERPJ)
+            .then(function () { return cheerpjInit({ status: 'none' }); })
+            .then(function () {
+                var applet = document.createElement('cheerpj-applet');
+                applet.setAttribute('archive', JARS);
+                applet.setAttribute('code', 'greenfoot.export.GreenfootScenarioViewer');
+                applet.setAttribute('width', W);
+                applet.setAttribute('height', H);
+                // Don't ask the server for every resource missing from the jar; there's nothing else there
+                var param = document.createElement('param');
+                param.setAttribute('name', 'codebase_lookup');
+                param.setAttribute('value', 'false');
+                applet.appendChild(param);
+                stage.appendChild(applet);
+                waitForGame();
+            })
+            .catch(function (error) {
+                var loading = frame.querySelector('.loading');
+                if (loading) loading.innerHTML = 'Java didn’t start in this browser.<small>' + String(error && error.message || error).replace(/</g, '&lt;') + '</small>';
+                hint.textContent = 'Try a desktop browser such as Chrome, Edge, Firefox or Safari.';
+            });
+    }
+
+    document.getElementById('play').addEventListener('click', start);
+
+    // Arrow keys and Space shouldn't scroll the page while the game is up
+    window.addEventListener('keydown', function (event) {
+        if (started && [' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(event.key) >= 0 && !stage.contains(event.target)) event.preventDefault();
+    });
+
+    // #play starts it without a click, for the card screenshot (yarn projects:screenshot)
+    if (location.hash === '#play') start();
+})();
+</script>
+</body>
+</html>

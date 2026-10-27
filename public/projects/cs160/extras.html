@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Face Me - Extras</title>
+
+<!-- New page for the static archive copy: the five Fireworks concept mockups and the two demo videos.
+     Three mockups are in extras/, the other two and the videos were already restored (concept/, videos/).
+     See docs/projects/cs160.md. -->
+<link rel="stylesheet" type="text/css" href="files/cssreset.css">
+<link rel="stylesheet" type="text/css" href="files/mainCSS.css">
+<link rel="stylesheet" type="text/css" href="files/static.css">
+<style>
+    #form-holder.extras { width: auto; max-width: 900px; }
+    .extras-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; padding-top: 4px; }
+    .extras-grid.videos { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .extras-grid figure a { display: block; border-radius: 4px; transition: transform .25s; }
+    .extras-grid figure a:hover, .extras-grid figure a:focus-visible { transform: translateY(-3px); outline: 2px solid #6ABDDB; outline-offset: 3px; }
+    .extras-grid img { display: block; width: 100%; height: auto; aspect-ratio: 1280 / 768; border-radius: 4px; box-shadow: 0 0 0 1px #4A4840; /* the mockups are drawn on the same dark ground as this page */ }
+    .extras-grid video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 4px; }
+    .extras-grid figcaption { font-size: 14px; padding-top: 8px; text-align: center; }
+    .extras-grid figcaption span { display: block; font-size: 12px; color: #AFABA0; }
+    dialog { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 96vh; outline: none; font-family: 'Noto Sans', sans-serif; }
+    dialog::backdrop { background: rgba(10, 10, 8, .85); }
+    dialog img { display: block; max-width: 96vw; max-height: 88vh; border-radius: 4px; box-shadow: 0 0 0 1px #4A4840; }
+    dialog p { font-size: 14px; color: #F0F0F0; text-align: center; padding-top: 8px; }
+</style>
+</head>
+
+<body>
+    <div id="topnav">
+    	<div id="top-box-1" class="class-hover-effect"></div>
+        <div id="top-box-2" class="class-hover-effect"></div>
+        <div id="top-box-3" class="class-hover-effect"></div>
+        <div id="top-box-4" class="class-hover-effect"></div>
+        <div id="topnav-content">
+            <div id="topnav-text"></div>
+        </div>
+        <div id="topnav-footer"></div>
+    </div>
+
+    <div id="container">
+        	<div id="header"><span class="header-text">FACE ME</span></div>
+        	<div id="content">
+            	<div id="form-holder" class="extras">
+                    <div id="form-header">Extras</div>
+                    <div class="demo-note">The concept mockups the site was drawn from, and two videos the finished pipeline made.</div>
+
+                    <div class="section-title">Concept mockups</div>
+                    <div class="extras-grid" id="mockups">
+                        <figure><a href="extras/login.fw.png"><img src="extras/login.fw.png" alt="Mockup of the Login page" width="1280" height="768"></a><figcaption>Login</figcaption></figure>
+                        <figure><a href="extras/Signup.fw.png"><img src="extras/Signup.fw.png" alt="Mockup of the Sign Up page" width="1280" height="768"></a><figcaption>Sign Up</figcaption></figure>
+                        <figure><a href="concept/Register.fw.png"><img src="concept/Register.fw.png" alt="Mockup of the Registration Complete page" width="1280" height="768"></a><figcaption>Registration Complete</figcaption></figure>
+                        <figure><a href="concept/Upload.fw.png"><img src="concept/Upload.fw.png" alt="Mockup of the Upload page" width="1280" height="768"></a><figcaption>Upload</figcaption></figure>
+                        <figure><a href="extras/My_Videos.fw.png"><img src="extras/My_Videos.fw.png" alt="Mockup of the My Videos page" width="1280" height="768"></a><figcaption>My Videos</figcaption></figure>
+                    </div>
+                    <div class="faceplot-caption">Drawn in Fireworks in December 2016. The built pages kept the look: the four color boxes, the big FACE ME and the blue buttons. Click one for the full size.</div>
+
+                    <div class="section-title">Demo videos</div>
+                    <div class="extras-grid videos">
+                        <figure><video id="demo-1" controls muted loop playsinline autoplay preload="metadata" poster="images/faceme_output.png" aria-label="Demo video 1: a face with the landmark mesh drawn on every frame"></video><figcaption>Video Output 1<span>1280 × 720 · 7.1 s · no sound</span></figcaption></figure>
+                        <figure><video id="demo-2" controls muted loop playsinline autoplay preload="metadata" poster="images/faceme_output2.png" aria-label="Demo video 2: a face with the landmark mesh drawn on every frame"></video><figcaption>Video Output 2<span>1280 × 720 · 0.8 s · no sound</span></figcaption></figure>
+                    </div>
+                    <div class="faceplot-caption">The pipeline's own OUTPUT.webm files: OpenFace found 68 landmarks on each frame, <code>delaunay.cpp</code> drew the mesh in blue and the points in red, and ffmpeg stitched the frames back together. <a href="Output.html?v=landmarks">See the landmark data re-plotted live</a>.</div>
+
+                    <div id="form-footer"></div>
+                </div>
+            </div>
+    </div>
+
+    <div id="footer">
+    	<span class="sub-text grey">
+			<table id="f-table">
+				<tr id="footer-links">
+					<td class="f-table-data"><a class="f-bot-links small-text class-hover-effect" href="index.html">Login</a></td>
+					<td class="f-table-data-end"><a class="f-bot-links small-text class-hover-effect" href="SignUp.html">Sign Up</a></td>
+				</tr>
+			</table>
+		</span>
+    </div>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+<script src="js/faceme.js"></script>
+<script>
+    var user = FaceMe.currentUser();
+    FaceMe.setWelcome(user);
+    if (user) {
+        document.getElementById('footer-links').innerHTML =
+            '<td class="f-table-data"><a class="f-bot-links small-text class-hover-effect" href="Upload.html">Upload</a></td>' +
+            '<td class="f-table-data"><a class="f-bot-links small-text class-hover-effect" href="Videos.html">My Videos</a></td>' +
+            '<td class="f-table-data-end"><a class="f-bot-links small-text class-hover-effect" href="logout.html">Log Out</a></td>';
+    }
+
+    // The videos have no sound track, so they play muted on a loop, like the Output page.
+    FaceMe.playVideo(document.getElementById('demo-1'), 'videos/out1.webm');
+    FaceMe.playVideo(document.getElementById('demo-2'), 'videos/out2.webm');
+
+    // Each mockup is a plain link to its file; with JS it opens in place instead, and a click anywhere closes it.
+    var zoom = document.getElementById('zoom');
+    document.getElementById('mockups').addEventListener('click', function (event) {
+        var link = event.target.closest('a');
+        if (!link) return;
+        event.preventDefault();
+        zoom.querySelector('img').src = link.getAttribute('href');
+        zoom.querySelector('img').alt = link.querySelector('img').alt;
+        zoom.querySelector('p').textContent = link.parentNode.querySelector('figcaption').textContent;
+        zoom.showModal();
+    });
+    zoom.addEventListener('click', function () { zoom.close(); });
+</script>
+</body>
+</html>

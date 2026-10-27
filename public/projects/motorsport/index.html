@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: three client sites that never shared a front page. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motorsport sites</title>
+<style>
+    html, body { margin: 0; min-height: 100%; background: #111; color: #eee; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; display: flex; align-items: center; justify-content: center; padding: 32px 16px; box-sizing: border-box; min-height: 100vh; }
+    main { width: 100%; max-width: 640px; }
+    .flag { height: 12px; width: 96px; margin-bottom: 14px; border-radius: 2px; background: repeating-conic-gradient(#eee 0 25%, #111 0 50%) 0 0 / 12px 12px; transform: skewX(-12deg); }
+    h1 { font-size: 28px; font-weight: 800; margin: 0 0 4px; }
+    .lede { color: #aaa; margin: 0 0 28px; }
+    a.site { display: block; text-decoration: none; color: inherit; background: #1d1d1d; border: 2px solid #333; border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; transition: transform .15s cubic-bezier(.3, 1.6, .5, 1), border-color .15s; }
+    a.site:hover, a.site:focus-visible { transform: translateX(4px) rotate(-.4deg); border-color: #ff5a1f; outline: none; }
+    .name { font-size: 20px; font-weight: 800; }
+    .year { color: #ff5a1f; font-weight: 700; margin-left: 8px; font-size: 14px; }
+    .what { color: #bbb; margin-top: 4px; }
+    .go { float: right; font-weight: 800; color: #ff5a1f; }
+</style>
+</head>
+<body>
+<main>
+    <div class="flag" aria-hidden="true"></div>
+    <h1>Motorsport sites</h1>
+    <p class="lede">Sites I built for people who race: a skating team, a race shop and a kart driver.</p>
+
+    <a class="site" href="team-safe/About.html">
+        <span class="go">&rarr;</span>
+        <span class="name">Team SAFE Racing</span><span class="year">2014</span>
+        <div class="what">An inline speed-skating team sponsored by SAFE Security. Every skater has a bio page, and the menu's highlight slides after your mouse.</div>
+    </a>
+
+    <a class="site" href="worxxx/index.static.html">
+        <span class="go">&rarr;</span>
+        <span class="name">Worxxx PM</span><span class="year">2013</span>
+        <div class="what">A motorcycle race shop in Lemoore, California: service rates, pit stop kits and &Ouml;hlins suspension. The About page is still full of placeholder trivia.</div>
+    </a>
+
+    <a class="site" href="noah-garza/index.static.html">
+        <span class="go">&rarr;</span>
+        <span class="name">Noah Garza Racing</span><span class="year">2012</span>
+        <div class="what">A one-page site for a young kart racer, with his wins, the season's schedule and a photo gallery.</div>
+    </a>
+</main>
+</body>
+</html>

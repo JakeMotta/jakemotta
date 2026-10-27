@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dan James</title>
+
+<link rel="stylesheet" type="text/css" href="files/master.css">
+<link rel="stylesheet" type="text/css" href="files/animate.css">
+<script src="files/jquery-3.0.0.min.js"></script>
+<script src="files/smoothScroll.js"></script>
+
+<!--Preload images to avoid image-flashes-->
+<style>body:after{ display:none;content:url(images/page-loader3.gif) url(images/logos/download.png) url(images/logos/download-hover.png) url(images/logos/paypal.png) url(images/logos/paypal-hover.png) url(images/logos/play_button.png) url(images/logos/play_button-hover.png) url(images/logos/soundcloud.png) url(images/logos/soundcloud-hover.png) url(images/logos/facebook.png) url(images/logos/facebook-hover.png) url(images/logos/youtube.png) url(images/logos/youtube-hover.png) url(images/logos/instagram.png) url(images/logos/instagram-hover.png) url(images/logos/up-arrow.png) url(images/logos/up-arrow-hover.png) url(images/logos/soundcloud_logo.png) url(images/logos/soundcloud_logo-hover.png);}</style>
+
+<!--CSS Slider-->
+<link href="files/bootstrap.min.css" rel="stylesheet"> 
+<link href="files/full-slider.css" rel="stylesheet">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<!--Google Fonts-->
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,900italic|Khula:800,700,400" rel="stylesheet" type="text/css">
+
+<!--Loading screen-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(window).load(function() {
+	$(".loader").fadeOut("slow");
+});
+</script>
+</head>
+
+<body>
+<div class="loader"></div>
+	<!-- Top Navbar -->
+	<div id="top-nav" class="animated">
+        <div id="top-nav-content">
+        		<a href="index.html"><img src="images/logos/dan_james_logo_white.png" class="top-nav-logo"></a>
+                <table id="top-nav-table">
+                    <tr>
+                        <td class="top-nav-table"><a class="active-page-link" href="#">Home</a></td>
+                        <td class="top-nav-table"><a class="top-nav-link" href="#">About</a></td>
+                        <td class="top-nav-table"><a class="top-nav-link" href="#">Mixing</a></td>
+                        <td class="top-nav-table"><a class="top-nav-link" href="#">Shop</a></td>
+                        <td class="top-nav-table-end"><a class="top-nav-link" href="#">Contact</a></td>
+                    </tr>
+                </table>     
+        </div>
+    </div>
+    
+    <!-- Fade Navbar -->
+    <div id="mid-nav" class="animated" style="opacity:0">
+    	<div id="mid-nav-content">
+        		<a href="index.html"><img src="images/logos/dan_james_logo_grey.png" class="mid-nav-logo"></a>
+                <table id="mid-nav-table">
+                    <tr>
+                        <td class="mid-nav-table"><a class="active-page-link" href="#">Home</a></td>
+                        <td class="mid-nav-table"><a class="mid-nav-link" href="#">About</a></td>
+                        <td class="mid-nav-table"><a class="mid-nav-link" href="#">Mixing</a></td>
+                        <td class="mid-nav-table"><a class="mid-nav-link" href="#">Shop</a></td>
+                        <td class="mid-nav-table-end"><a class="mid-nav-link" href="#">Contact</a></td>
+                    </tr>
+                </table>     
+        </div>
+    </div>
+    
+    <div id="marker"></div>
+    
+<!-- Full Page Image Background Carousel Header -->
+    <header id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!-- Set the first background image using inline CSS below. -->
+                <div class="fill" style="background-image:url(images/slider/slide1.jpg);"></div>
+                <div class="carousel-caption animated fadeInUp" style="opacity:0; animation-delay: .7s;">
+                    <span class="mid-text roboto">Find me on SoundCloud</span><br>
+                    <span class="super-text bold-text khula">Dan James</span><br><br>
+                    <a href="https://soundcloud.com/danielrabaut"><div id="soundcloud"></div></a>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" style="background-image:url(images/slider/slide2.jpg)"></div>
+                <div class="carousel-caption animated fadeInUp" style="opacity:0; animation-delay: .7s;">
+                    <span class="large-text roboto">The only thing we cannot be is hopeless</span><br>
+                    <span class="mid-text bold-text khula">- Unknown</span><br><br>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image:url(images/slider/slide3.jpg)"></div>
+                <div class="carousel-caption animated fadeInUp" style="opacity:0; animation-delay: .7s;">
+                    <span class="large-text roboto">'Tis but a scratch</span><br>
+                    <span class="mid-text bold-text khula">- The Black Knight</span><br><br>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+    </header>
+    
+    <!-- Bootstrap Core JavaScript -->
+    <script src="files/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+    
+<div id="container">
+    
+    <div id="content-wrapper">
+        <div id="content">
+            <div id="player-header">
+                <span class="large-text roboto bold-text">Instant Beat Store</span><br>
+                <span class="mid-text roboto">Browse & purchase high quality instrumentals.</span>
+            </div>
+            
+        	<iframe id="mfs_html5" src="//www.myflashstore.net/widgets/html5/?uid=124282&config=215831" width="900" height="600" frameborder="0" scrolling="no"></iframe>
+                        
+        	<div id="marker-2"></div>
+            
+        	<div id="player-footer">
+            	<div id="left-column" class="animated" style="opacity:0;">
+                	<div id="play_button"></div>
+                	<span class="roboto small-text small-break">Select Your Beats</span>
+                    <p class="grey-text">
+                    	Click the + icon on the beat you wish to purchase. 
+                        Then, select the type of lease you'd like to add it to your cart.
+                    </p>
+                </div>
+                <div id="center-column" class="animated" style="opacity:0; animation-delay:.5s;">
+                	<div id="paypal_button"></div>
+                	<span class="roboto small-text small-break">Secure Checkout via PayPal</span>
+                    <p class="grey-text">
+                    	When you're ready to checkout, click the "Buy Now" button on the 
+                        top right of the player to be taken to PayPal.
+                    </p>
+                </div>
+                <div id="right-column" class="animated" style="opacity:0; animation-delay:1s;">
+                    <div id="download_button"></div>
+                    <span class="roboto small-text small-break">Download Your Beats</span>        
+                    <p class="grey-text">
+                    	Once checkout has completed, your beats will instantly be emailed to you. 
+                        Thank you for your business!
+                    </p>
+                </div>
+            </div> <!--end of player-footer-->
+            
+        </div> <!--end of content-->
+    </div> <!--end of content-wrapper-->
+    
+    <div id="footer-wrapper">
+        <div id="footer-content">
+            <div id="footer-left-column"><span class="tiny-text grey-text">Copyright 2016 DanJamesProductions</span></div>
+            <div id="footer-right-column">
+            	<a href="#top-nav"><div id="top-arrow"></div></a>
+            	<div id="instagram_button"></div>
+				<div id="youtube_button"></div>
+                <a href="https://soundcloud.com/danielrabaut"><div id="soundcloud_button"></div></a>
+                <a href="https://www.facebook.com/daniel.smith.5243817?fref=ts"><div id="facebook_button"></div></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<!--Javascript at bottom to avoid conflict with slideshow's autoplay-->
+<script src="files/jquery.waypoints.min.js"></script>
+<script src="files/waypoints.js"></script>
+
+<!--Google Analytics-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-80705223-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body>
+</html>

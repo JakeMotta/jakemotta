@@ -18,6 +18,8 @@
 // hooks render as nothing and each <cms:editable> region prints the draft copy
 // written into the page as its default. Plain .html pages that need the same
 // link fixes are listed per site and written as X.static.html beside them.
+// A page whose content only ever lived in a CMS database can be skipped, and a
+// partial that was not kept can be given a stand-in (team-safe has both).
 //
 // Anything PHP the converter does not understand stops it with the file and
 // the snippet, so nothing is dropped silently. Rerun it after editing a page.
@@ -95,6 +97,139 @@ const SITES = [
             ["url('empty.gif')", "url('data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==')"],
             // Muse loads jQuery from Adobe's retired CDN on http pages; use its bundled copy.
             ['http://musecdn.businesscatalyst.com/scripts/4.0/', 'scripts/'],
+        ],
+    },
+    // The sites below are plain HTML with no PHP: only their listed pages are rewritten.
+    {
+        dir: 'highschool',
+        origins: [],
+        forms: {},
+        // The Flash homepage needs Ruffle to play.
+        pages: ['flashIndex/FlashIndex.html'],
+        // The movie is pinned at 1280x768 and runs off the edge of anything smaller, like the
+        // viewer's frame. Resizing the player doesn't work: the movie changes its own scale
+        // mode once it's clicked and shrinks into a corner. So the player keeps its size and
+        // the page scales the whole thing down to fit, centred.
+        replace: [
+            ['#flashContent { width:100%; height:100%; }', '#flashContent { width:1280px; height:768px; position:absolute; transform-origin:0 0; }'],
+            [
+                '</body>',
+                '<script>\n(function () {\n' +
+                    "    var player = document.getElementById('flashContent');\n" +
+                    '    var fit = function () {\n' +
+                    '        var scale = Math.min(1, innerWidth / 1280, innerHeight / 768);\n' +
+                    "        player.style.left = (innerWidth - 1280 * scale) / 2 + 'px';\n" +
+                    "        player.style.top = (innerHeight - 768 * scale) / 2 + 'px';\n" +
+                    "        player.style.transform = 'scale(' + scale + ')';\n" +
+                    '    };\n' +
+                    "    addEventListener('resize', fit);\n" +
+                    '    fit();\n' +
+                    '})();\n</script>\n</body>',
+            ],
+        ],
+    },
+    {
+        dir: 'personal-site',
+        origins: [],
+        forms: {},
+        // index.htm loads a second jQuery over plain http; the other two link back to it.
+        pages: ['index.htm', 'about.html', 'projects.html'],
+        // The projects page links to two sites that have their own previews here now.
+        replace: [
+            ['http://jakemotta.com/DanJames/', '/projects/dan-james/index.static.html'],
+            ['http://blackchamber.com/', '/projects/black-chamber/index.html'],
+        ],
+    },
+    // Motorsport sites: three client sites behind one hand-written hub (motorsport/index.html).
+    {
+        dir: 'motorsport/team-safe',
+        // Jake's own page links back to the live domain.
+        origins: ['https://www.teamsaferacing.net/', 'http://www.teamsaferacing.net/', 'http://teamsaferacing.net/', 'https://teamsaferacing.net/'],
+        forms: {},
+        // The home page is a CouchCMS template: its posts lived in the CMS database and its list
+        // view in couch/ (the admin, not kept), so there is nothing here to render it from.
+        skip: ['index.php'],
+        // Links to it go to About, the page that welcomes visitors.
+        redirects: { 'index.html': 'About.html' },
+        replace: [
+            // The menu's Home link has an empty href, which only reloads the page it's on.
+            ['<a href=>Home</a>', '<a href=/projects/motorsport/team-safe/About.html>Home</a>'],
+            // The 2019 move to jQuery 3.4.1 stopped the header slideshow: the plugin calls
+            // .size(), which jQuery 3 removed.
+            ['e.size()', 'e.length'],
+        ],
+        // The pages/ subfolder included copies of the partials made for its ../ paths, and those
+        // copies were not kept. The site-root partials stand in, anchored to the site root.
+        includes: {
+            'sec_pages_topNav.php': 'files/sec_topNav.php',
+            'sec_pages_sideBar.php': 'files/sec_sideBar.php',
+            'sec_pages_Links.php': 'files/sec_Links.php',
+        },
+    },
+    {
+        dir: 'motorsport/worxxx',
+        origins: [],
+        forms: {},
+        // The pit stop kit's menu links into Kits/ to pages that are one folder up, which
+        // makes every page that leads to it a listed page too.
+        pages: [
+            'index.html',
+            'Products.html',
+            'Storage.html',
+            'Reviews.html',
+            'About.html',
+            'Contact.html',
+            'CustomWork.html',
+            'JacobMotta.html',
+            'Links.html',
+            'Public.html',
+            'Kits/Kits.html',
+            'Kits/DumbKit.html',
+            'Kits/PitStopKit.html',
+            'Kits/rearStandKit.html',
+            'Kits/sideKit.html',
+        ],
+        redirects: {
+            'Kits/index.html': 'index.html',
+            'Kits/Products.html': 'Products.html',
+            'Kits/Storage.html': 'Storage.html',
+            'Kits/About.html': 'About.html',
+            'Kits/Contact.html': 'Contact.html',
+        },
+    },
+    {
+        dir: 'motorsport/noah-garza',
+        origins: [],
+        forms: {},
+        // Its Google Fonts stylesheet is loaded over plain http.
+        pages: ['index.html'],
+    },
+    {
+        dir: 'dan-james',
+        origins: [],
+        forms: {},
+        // The home page holds the dead widget below, and the others link back to it.
+        pages: ['index.html', 'about.html', 'mixing.html', 'contact.html'],
+        replace: [
+            // The beat store was a MyFlashStore widget; the service is gone, and its frame
+            // would show the browser's error page in the middle of the site.
+            [
+                '<iframe id="mfs_html5" src="//www.myflashstore.net/widgets/html5/?uid=124282&config=215831" width="900" height="600" frameborder="0" scrolling="no"></iframe>',
+                '<p style="margin:24px auto;max-width:600px;padding:6px 10px;border-left:3px solid #c9a227;background:#faf6e8;color:#555;font:italic 12px/1.4 sans-serif">' +
+                    'Archived preview: the beat store here was a MyFlashStore widget, and that service no longer exists.</p>',
+            ],
+        ],
+    },
+    {
+        dir: 'ambii/story/sites/2019-02',
+        origins: [],
+        forms: {},
+        pages: ['index.html'],
+        replace: [
+            // The subscribe form still posts to the website template's own demo Mailchimp list, not
+            // Ambii's, so a visitor's address would go to a stranger. Renamed, js/main.js no longer
+            // binds it, and it submits nowhere.
+            ['<form id="mc-form" class="group mc-form" novalidate="true">', '<form id="mc-form-off" class="group mc-form" novalidate="true" onsubmit="return false">'],
         ],
     },
 ];
@@ -201,6 +336,16 @@ const renderEditables = (html, where) => {
     return out;
 };
 
+/** A missing partial the site names a stand-in for (see `includes` in SITES). */
+const standIn = (path, site) => {
+    const siteDir = join(PROJECTS, site.dir);
+    const to = site.includes?.[relative(siteDir, path).split(sep).join('/')];
+    if (!to) return undefined;
+    const target = join(siteDir, to);
+    if (!existsSync(target)) fail(`no such stand-in partial: ${target}`);
+    return target;
+};
+
 /** Renders a page or partial: includes are inlined, echoes printed, plain HTML kept. */
 const render = (file, pageDir, site, seen = []) => {
     if (seen.includes(file)) fail(`include loop: ${[...seen, file].join(' -> ')}`);
@@ -210,7 +355,7 @@ const render = (file, pageDir, site, seen = []) => {
         const include = code.match(/^\s*(?:include|require)(?:_once)?\s*\(?\s*["']([^"']+)["']\s*\)?\s*;?\s*$/i);
         if (include) {
             // PHP resolves relative includes against the requested page's folder first.
-            const target = [resolve(pageDir, include[1]), resolve(dirname(file), include[1])].find(existsSync);
+            const target = [resolve(pageDir, include[1]), resolve(dirname(file), include[1])].find(existsSync) ?? standIn(resolve(pageDir, include[1]), site);
             if (target) return anchorRelative(render(target, pageDir, site, [...seen, file]), `/projects/${site.dir}/`);
             // PHP's include warns and carries on, so the live page rendered without it too.
             console.warn(`convert-php-sites: ${where}: include not found, left out as PHP did: ${include[1]}`);
@@ -328,6 +473,7 @@ for (const site of SITES) {
         }
     }
     const handlers = new Set(Object.keys(site.forms).map((name) => join(siteDir, name)));
+    const skipped = new Set((site.skip ?? []).map((page) => join(siteDir, page)));
 
     // A script or stylesheet the pages load that links to the old domains or to
     // .php, or that needs one of the site's fixes, gets a rewritten copy
@@ -371,7 +517,7 @@ for (const site of SITES) {
     };
 
     for (const file of phpFiles) {
-        if (included.has(file) || handlers.has(file)) continue;
+        if (included.has(file) || handlers.has(file) || skipped.has(file)) continue;
         // A leftover partial nothing includes any more (sec_NavbarBAD.php) is not a page.
         if (!/<(!doctype|html|head|body)\b/i.test(read(file))) continue;
         let html = render(file, dirname(file), site);

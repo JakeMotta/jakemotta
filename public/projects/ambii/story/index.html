@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: Ambii's story in pieces. The sites under sites/ are unchanged copies
+     of the 2019 folders; the videos and designs are copies from Jake's Ambii drive.
+     See docs/projects/ambii.md for where each piece came from and what was left out. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ambii</title>
+<style>
+    html, body { margin: 0; background: #17131c; color: #eee; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 40px 16px 64px; }
+    main { max-width: 1040px; margin: 0 auto; }
+    a { color: #e58fd0; }
+    h1 { font-size: 40px; font-weight: 900; margin: 0; letter-spacing: -.5px; background: linear-gradient(90deg, #d04283, #c178ff); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+    .lede { color: #bdb3c6; margin: 6px 0 0; max-width: 640px; }
+    section { margin-top: 52px; }
+    h2 { font-size: 24px; font-weight: 800; margin: 0; }
+    .when { display: block; font-size: 13px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #c178ff; margin-bottom: 2px; }
+    .intro { color: #bdb3c6; margin: 4px 0 18px; max-width: 680px; }
+
+    /* Site cards */
+    .sites { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 20px; }
+    a.site { display: block; text-decoration: none; color: inherit; background: #221c29; border: 2px solid #33293d; border-radius: 14px; overflow: hidden; transition: transform .18s cubic-bezier(.3, 1.6, .5, 1), border-color .18s; }
+    a.site:hover, a.site:focus-visible { transform: translateY(-3px) rotate(-.5deg); border-color: #d04283; outline: none; }
+    a.site img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: #000; }
+    .site .text { padding: 12px 16px 16px; }
+    .site .name { font-weight: 800; font-size: 18px; }
+    .site .name::after { content: ' \2192'; color: #d04283; }
+    .site .year { color: #c178ff; font-weight: 700; font-size: 14px; margin-left: 6px; }
+    .site .what { color: #bdb3c6; font-size: 15px; margin-top: 4px; }
+    .also { color: #bdb3c6; font-size: 15px; margin: 14px 0 0; }
+
+    /* Videos */
+    video { display: block; width: 100%; height: auto; background: #000; border-radius: 12px; }
+    .feature { max-width: 860px; }
+    .clips { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; align-items: start; }
+    figure { margin: 0; }
+    figcaption { margin-top: 8px; font-weight: 800; }
+    figcaption span { font-weight: 400; color: #9d92a8; margin-left: 6px; font-size: 14px; }
+    figcaption p { margin: 2px 0 0; font-weight: 400; color: #bdb3c6; font-size: 15px; }
+
+    /* Design gallery */
+    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+    .gallery a { display: block; background: #0e0b12; border-radius: 10px; overflow: hidden; border: 2px solid #2a2232; transition: transform .2s cubic-bezier(.3, 1.6, .5, 1), border-color .2s; }
+    .gallery figure:nth-child(odd) a { transform: rotate(-.6deg); }
+    .gallery figure:nth-child(even) a { transform: rotate(.5deg); }
+    .gallery a:hover, .gallery a:focus-visible { transform: rotate(0) translateY(-4px) scale(1.03); border-color: #c178ff; outline: none; }
+    .gallery img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: contain; }
+    .gallery a.tall img { object-fit: cover; object-position: top; }
+    .gallery figcaption { font-size: 15px; }
+    .gallery figcaption span { font-size: 13px; }
+
+    dialog { border: 0; border-radius: 10px; padding: 8px; max-width: 96vw; max-height: 96vh; background: #221c29; color: #eee; }
+    dialog::backdrop { background: rgba(10, 6, 14, .82); }
+    dialog img { display: block; max-width: 94vw; max-height: 86vh; }
+    dialog.tall img { max-height: none; width: min(94vw, 1100px); }
+    dialog p { margin: 0; padding: 8px 4px 2px; font-weight: 800; }
+</style>
+</head>
+<body>
+<main>
+    <h1>Ambii</h1>
+    <p class="lede">The startup I worked on from 2017 to 2021: a music app for listening together, where everyone in the room gets a say in what plays next. Here it is in pieces: its websites, two videos, and the designs along the way.</p>
+
+    <section>
+        <span class="when">2018 – 2019</span>
+        <h2>The websites</h2>
+        <p class="intro">The landing page went up in 2018. Two more sites followed: one started on a template and never finished, and the 2019 site that went with the apps.</p>
+        <div class="sites">
+            <a class="site" href="../index.html">
+                <img src="thumbs/landing-2018.jpg" alt="The 2018 landing page: Play Music Together">
+                <div class="text">
+                    <span class="name">Play Music Together</span><span class="year">2018</span>
+                    <div class="what">The first ambii.io landing page: socialize, influence, discover.</div>
+                </div>
+            </a>
+            <a class="site" href="sites/2019-02/index.static.html">
+                <img src="thumbs/site-2019-02.jpg" alt="Join the Party!, a site built on a template" loading="lazy">
+                <div class="text">
+                    <span class="name">Join the Party!</span><span class="year">2018</span>
+                    <div class="what">A new site begun on a Colorlib template. The top half is Ambii's; further down it's still the template's placeholder copy. Saved in February 2019.</div>
+                </div>
+            </a>
+            <a class="site" href="sites/2019-09/alora/index.html">
+                <img src="thumbs/site-2019.jpg" alt="Your Music. Everywhere., the 2019 site" loading="lazy">
+                <div class="text">
+                    <span class="name">Your Music. Everywhere.</span><span class="year">2019</span>
+                    <div class="what">The 2019 site, with the app features, an about page, an FAQ and a contact page. Saved in September 2019.</div>
+                </div>
+            </a>
+        </div>
+        <p class="also">The September 2019 folder also kept <a href="sites/2019-09/index.html">the landing page as it stood then</a>, with its <a href="sites/2019-09/privacy.html">privacy policy</a>.</p>
+    </section>
+
+    <section>
+        <span class="when">October 2019</span>
+        <h2>The Techstars intro</h2>
+        <p class="intro">The team's one-minute introduction for Techstars. Sound on.</p>
+        <figure class="feature">
+            <video controls playsinline preload="metadata" data-sound poster="videos/techstars-intro.jpg" src="videos/techstars-intro.mp4" width="1280" height="720"></video>
+        </figure>
+    </section>
+
+    <section>
+        <span class="when">2020</span>
+        <h2>Ambii for Business</h2>
+        <p class="intro">By 2020 Ambii was free music for businesses: stations for a shop's speakers, played from a web player and run from a phone. These are screen recordings from that spring, with no sound.</p>
+        <div class="clips">
+            <figure>
+                <video controls playsinline muted preload="metadata" poster="videos/mobile-and-web.jpg" src="videos/mobile-and-web.mp4" width="1280" height="800"></video>
+                <figcaption>The web player and the phone app<span>May 2020</span><p>A store's web player paired with the mobile app by its store code.</p></figcaption>
+            </figure>
+            <figure>
+                <video controls playsinline muted preload="metadata" poster="videos/ambii-io.jpg" src="videos/ambii-io.mp4" width="800" height="422"></video>
+                <figcaption>ambii.io<span>April 2020</span><p>The business site, with its COVID-19 resources for small businesses.</p></figcaption>
+            </figure>
+            <figure>
+                <video controls playsinline muted preload="metadata" poster="videos/business-ambii-io.jpg" src="videos/business-ambii-io.mp4" width="800" height="420"></video>
+                <figcaption>business.ambii.io<span>April 2020</span><p>Browsing stations, then the player at phone size.</p></figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section>
+        <span class="when">2018 – 2019</span>
+        <h2>Design history</h2>
+        <p class="intro">Mockups, app screens, a poster and the logo, from the team and its designers, in order. Click one for the full size.</p>
+        <div class="gallery">
+            <figure><a href="designs/v2-party.jpg"><img src="designs/v2-party.jpg" alt="Ambii 2.0, web: a party and its video" loading="lazy"></a><figcaption>Ambii 2.0, web<span>2018</span></figcaption></figure>
+            <figure><a href="designs/poster.jpg"><img src="designs/poster.jpg" alt="Event poster: Join the party!" loading="lazy"></a><figcaption>Event poster<span>2018</span></figcaption></figure>
+            <figure><a href="designs/logo-spec.jpg"><img src="designs/logo-spec.jpg" alt="Logo spec: colors and sizes" loading="lazy"></a><figcaption>Logo spec<span>2018</span></figcaption></figure>
+            <figure><a href="designs/v3-home.jpg"><img src="designs/v3-home.jpg" alt="Ambii 3.0, web: join or create a party" loading="lazy"></a><figcaption>Ambii 3.0, web<span>2018</span></figcaption></figure>
+            <figure><a href="designs/v3-invite.jpg"><img src="designs/v3-invite.jpg" alt="Ambii 3.0, web: invite friends" loading="lazy"></a><figcaption>Ambii 3.0, invites<span>2018</span></figcaption></figure>
+            <figure><a href="designs/v3-party.jpg"><img src="designs/v3-party.jpg" alt="Ambii 3.0, web: a party" loading="lazy"></a><figcaption>Ambii 3.0, a party<span>2018</span></figcaption></figure>
+            <figure><a href="designs/v3-color-guide.jpg"><img src="designs/v3-color-guide.jpg" alt="Ambii 3.0, color legend and mobile screens" loading="lazy"></a><figcaption>Ambii 3.0, color legend<span>2018</span></figcaption></figure>
+            <figure><a href="designs/v3-paper.jpg"><img src="designs/v3-paper.jpg" alt="Ambii 3.0 web prototypes, printed" loading="lazy"></a><figcaption>Ambii 3.0, printed prototypes<span>2018</span></figcaption></figure>
+            <figure><a href="designs/android-2018.jpg"><img src="designs/android-2018.jpg" alt="Android app: a party" loading="lazy"></a><figcaption>Android app<span>2018</span></figcaption></figure>
+            <figure><a href="designs/ios-2018-party.jpg"><img src="designs/ios-2018-party.jpg" alt="iOS app: a party" loading="lazy"></a><figcaption>iOS app, a party<span>2018</span></figcaption></figure>
+            <figure><a href="designs/ios-2018-onboarding.jpg"><img src="designs/ios-2018-onboarding.jpg" alt="iOS app: onboarding" loading="lazy"></a><figcaption>iOS app, onboarding<span>2018</span></figcaption></figure>
+            <figure><a href="designs/radio-start.jpg"><img src="designs/radio-start.jpg" alt="Ambii Radio: built for the moment" loading="lazy"></a><figcaption>Ambii Radio<span>2019</span></figcaption></figure>
+            <figure><a href="designs/radio-station.jpg"><img src="designs/radio-station.jpg" alt="Ambii Radio: a station just for you" loading="lazy"></a><figcaption>Ambii Radio, a station<span>2019</span></figcaption></figure>
+            <figure><a href="designs/ios-2019-party.jpg"><img src="designs/ios-2019-party.jpg" alt="iOS app: a party" loading="lazy"></a><figcaption>iOS app, a party<span>2019</span></figcaption></figure>
+            <figure><a href="designs/ipad-2019-join.jpg"><img src="designs/ipad-2019-join.jpg" alt="iPad app: join a party" loading="lazy"></a><figcaption>iPad app<span>2019</span></figcaption></figure>
+            <figure><a class="tall" href="designs/v4-splash.jpg"><img src="designs/v4-splash.jpg" alt="Ambii 4.0: marketing site" loading="lazy"></a><figcaption>Ambii 4.0, marketing site<span>2019</span></figcaption></figure>
+            <figure><a href="designs/v4-web-home.jpg"><img src="designs/v4-web-home.jpg" alt="Ambii 4.0, web: parties near you" loading="lazy"></a><figcaption>Ambii 4.0, web<span>2019</span></figcaption></figure>
+            <figure><a href="designs/v4-web-party.jpg"><img src="designs/v4-web-party.jpg" alt="Ambii 4.0, web: a party" loading="lazy"></a><figcaption>Ambii 4.0, a party<span>2019</span></figcaption></figure>
+            <figure><a href="designs/v4-mobile-connect.jpg"><img src="designs/v4-mobile-connect.jpg" alt="Ambii 4.0, mobile: connect Spotify or YouTube" loading="lazy"></a><figcaption>Ambii 4.0, mobile<span>2019</span></figcaption></figure>
+            <figure><a href="designs/v4-mobile-party.jpg"><img src="designs/v4-mobile-party.jpg" alt="Ambii 4.0, mobile: a party" loading="lazy"></a><figcaption>Ambii 4.0, mobile party<span>2019</span></figcaption></figure>
+        </div>
+    </section>
+</main>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+<script>
+    // Each design is a plain link to its file; with JS it opens in place instead, and a click anywhere closes it.
+    var zoom = document.getElementById('zoom');
+    document.querySelector('.gallery').addEventListener('click', function (event) {
+        var link = event.target.closest('a');
+        if (!link) return;
+        event.preventDefault();
+        var img = link.querySelector('img');
+        zoom.className = link.classList.contains('tall') ? 'tall' : '';
+        zoom.querySelector('img').src = link.getAttribute('href');
+        zoom.querySelector('img').alt = img.alt;
+        zoom.querySelector('p').textContent = img.alt;
+        zoom.showModal();
+        zoom.scrollTop = 0;
+    });
+    zoom.addEventListener('click', function () { zoom.close(); });
+
+    // One video at a time. The site's music keeps playing in the page around this frame, so a video
+    // with sound pauses it too. Same-origin only; standalone there's nothing to pause.
+    var videos = document.querySelectorAll('video');
+    videos.forEach(function (video) {
+        video.addEventListener('play', function () {
+            videos.forEach(function (other) { if (other !== video) other.pause(); });
+            if (!video.hasAttribute('data-sound')) return;
+            try {
+                if (window.parent !== window) window.parent.document.querySelectorAll('audio').forEach(function (audio) { audio.pause(); });
+            } catch (e) {}
+        });
+    });
+</script>
+</body>
+</html>

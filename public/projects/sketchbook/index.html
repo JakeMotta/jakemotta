@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: drawings from Jake's 2012 digital sketchbook. The originals are
+     TIFFs, which browsers can't show; these are JPEG copies of the most finished version of each. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sketchbook</title>
+<style>
+    html, body { margin: 0; background: #efebe3; color: #2b2925; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 32px 16px 48px; }
+    main { max-width: 1100px; margin: 0 auto; }
+    h1 { font-size: 34px; font-weight: 900; margin: 0; }
+    .lede { margin: 4px 0 28px; color: #6b665c; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+    figure { margin: 0; }
+    figure a { display: block; background: #fff; padding: 8px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0, 0, 0, .15); transition: transform .2s cubic-bezier(.3, 1.6, .5, 1); }
+    figure:nth-child(odd) a { transform: rotate(-.6deg); }
+    figure:nth-child(even) a { transform: rotate(.5deg); }
+    figure a:hover, figure a:focus-visible { transform: rotate(0) translateY(-4px) scale(1.02); outline: none; box-shadow: 0 8px 20px rgba(0, 0, 0, .2); }
+    figure img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #fff; }
+    figcaption { font-weight: 800; margin-top: 8px; }
+    figcaption span { font-weight: 400; color: #8a8478; margin-left: 6px; font-size: 14px; }
+    dialog { border: 0; border-radius: 6px; padding: 8px; max-width: 96vw; max-height: 96vh; background: #fff; }
+    dialog::backdrop { background: rgba(20, 18, 15, .75); }
+    dialog img { display: block; max-width: 94vw; max-height: 88vh; }
+    dialog p { margin: 0; padding: 6px 4px 0; font-weight: 800; }
+</style>
+</head>
+<body>
+<main>
+    <h1>Sketchbook</h1>
+    <p class="lede">Digital drawings from 2012: NinjaDonut, a few logos and some characters. Click one for the full size.</p>
+
+    <div class="grid">
+        <figure><a href="drawings/ninjadonut-space.jpg"><img src="drawings/ninjadonut-space.jpg" alt="NinjaDonut in space"></a><figcaption>NinjaDonut in space<span>Aug 2012</span></figcaption></figure>
+        <figure><a href="drawings/ninjadonut-frame.jpg"><img src="drawings/ninjadonut-frame.jpg" alt="NinjaDonut" loading="lazy"></a><figcaption>NinjaDonut<span>Oct 2012</span></figcaption></figure>
+        <figure><a href="drawings/ninjadonut-moon.jpg"><img src="drawings/ninjadonut-moon.jpg" alt="NinjaDonut and the moon" loading="lazy"></a><figcaption>NinjaDonut and the moon<span>Aug 2012</span></figcaption></figure>
+        <figure><a href="drawings/technonoob.jpg"><img src="drawings/technonoob.jpg" alt="TechnoNoob" loading="lazy"></a><figcaption>TechnoNoob<span>Dec 2012</span></figcaption></figure>
+        <figure><a href="drawings/myself.jpg"><img src="drawings/myself.jpg" alt="Myself" loading="lazy"></a><figcaption>Myself<span>Nov 2012</span></figcaption></figure>
+        <figure><a href="drawings/sutherland.jpg"><img src="drawings/sutherland.jpg" alt="Sutherland the Conqueror" loading="lazy"></a><figcaption>Sutherland the Conqueror<span>Aug 2012</span></figcaption></figure>
+        <figure><a href="drawings/batman.jpg"><img src="drawings/batman.jpg" alt="Batman" loading="lazy"></a><figcaption>Batman<span>Sep 2012</span></figcaption></figure>
+        <figure><a href="drawings/castor.jpg"><img src="drawings/castor.jpg" alt="Castor" loading="lazy"></a><figcaption>Castor<span>Aug 2012</span></figcaption></figure>
+        <figure><a href="drawings/kyak.jpg"><img src="drawings/kyak.jpg" alt="Kyak" loading="lazy"></a><figcaption>Kyak<span>Aug 2012</span></figcaption></figure>
+        <figure><a href="drawings/hero.jpg"><img src="drawings/hero.jpg" alt="Hero" loading="lazy"></a><figcaption>Hero<span>Dec 2012</span></figcaption></figure>
+        <figure><a href="drawings/girl-hoodie.jpg"><img src="drawings/girl-hoodie.jpg" alt="Girl in a hoodie" loading="lazy"></a><figcaption>Girl in a hoodie<span>Dec 2012</span></figcaption></figure>
+        <figure><a href="drawings/girl.jpg"><img src="drawings/girl.jpg" alt="Girl" loading="lazy"></a><figcaption>Girl<span>Dec 2012</span></figcaption></figure>
+        <figure><a href="drawings/kyle.jpg"><img src="drawings/kyle.jpg" alt="Kyle" loading="lazy"></a><figcaption>Kyle<span>Sep 2012</span></figcaption></figure>
+        <figure><a href="drawings/elipse.jpg"><img src="drawings/elipse.jpg" alt="Elipse" loading="lazy"></a><figcaption>Elipse<span>Dec 2012</span></figcaption></figure>
+    </div>
+</main>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+<script>
+    // Each drawing is a plain link to its file; with JS it opens in place instead, and a click anywhere closes it.
+    var zoom = document.getElementById('zoom');
+    document.querySelector('.grid').addEventListener('click', function (event) {
+        var link = event.target.closest('a');
+        if (!link) return;
+        event.preventDefault();
+        zoom.querySelector('img').src = link.getAttribute('href');
+        zoom.querySelector('img').alt = link.querySelector('img').alt;
+        zoom.querySelector('p').textContent = link.querySelector('img').alt;
+        zoom.showModal();
+    });
+    zoom.addEventListener('click', function () { zoom.close(); });
+</script>
+</body>
+</html>

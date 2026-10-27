@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: a gallery of the GIFs Jake exported from Pivot Stickfigure Animator in 2008. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pivot animations</title>
+<style>
+    html, body { margin: 0; background: #fff; color: #111; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 32px 16px 48px; }
+    main { max-width: 1100px; margin: 0 auto; }
+    h1 { font-size: 34px; font-weight: 900; margin: 0; letter-spacing: -.5px; }
+    .lede { margin: 4px 0 28px; color: #555; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .wide { grid-column: 1 / -1; }
+    figure { margin: 0; }
+    figure a { display: block; border: 3px solid #111; border-radius: 10px; overflow: hidden; background: #fff; transition: transform .2s cubic-bezier(.3, 1.6, .5, 1); }
+    figure a:hover, figure a:focus-visible { transform: rotate(-1deg) translateY(-3px); outline: none; box-shadow: 4px 4px 0 #111; }
+    figure img { display: block; width: 100%; height: auto; }
+    figcaption { font-weight: 800; margin-top: 6px; }
+    figcaption span { font-weight: 400; color: #777; margin-left: 6px; font-size: 14px; }
+    dialog { border: 3px solid #111; border-radius: 10px; padding: 0; max-width: 96vw; max-height: 96vh; }
+    dialog::backdrop { background: rgba(0, 0, 0, .7); }
+    dialog img { display: block; max-width: 94vw; max-height: 90vh; }
+    dialog p { margin: 0; padding: 6px 12px; font-weight: 800; }
+</style>
+</head>
+<body>
+<main>
+    <h1>Pivot animations</h1>
+    <p class="lede">Stick-figure fights, sword moves and skate tricks I animated in Pivot in 2008. Click one for the full size.</p>
+
+    <div class="grid">
+        <figure class="wide"><a href="animations/ULTAMATE%20FIGHTER..gif"><img src="animations/ULTAMATE%20FIGHTER..gif" width="1100" height="700" alt="ULTAMATE FIGHTER"></a><figcaption>ULTAMATE FIGHTER<span>Sep 2008</span></figcaption></figure>
+        <figure class="wide"><a href="animations/GokuAndVegeta.gif"><img src="animations/GokuAndVegeta.gif" width="1700" height="800" alt="Goku and Vegeta" loading="lazy"></a><figcaption>Goku and Vegeta<span>Sep 2008</span></figcaption></figure>
+        <figure class="wide"><a href="animations/jacobs%20fight.gif"><img src="animations/jacobs%20fight.gif" width="1700" height="800" alt="Jacob's Fight" loading="lazy"></a><figcaption>Jacob's Fight<span>Aug 2008</span></figcaption></figure>
+        <figure><a href="animations/sword%20slash.gif"><img src="animations/sword%20slash.gif" width="1100" height="800" alt="Sword Slash" loading="lazy"></a><figcaption>Sword Slash<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/Sword%20Stab.gif"><img src="animations/Sword%20Stab.gif" width="1100" height="800" alt="Sword Stab" loading="lazy"></a><figcaption>Sword Stab<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/body%20breaker.gif"><img src="animations/body%20breaker.gif" width="1100" height="800" alt="Body Breaker" loading="lazy"></a><figcaption>Body Breaker<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/throw1.gif"><img src="animations/throw1.gif" width="1100" height="800" alt="Throw" loading="lazy"></a><figcaption>Throw<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/throw2.gif"><img src="animations/throw2.gif" width="1100" height="800" alt="Throw 2" loading="lazy"></a><figcaption>Throw 2<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/raining%20men.gif"><img src="animations/raining%20men.gif" width="1100" height="800" alt="Raining Men" loading="lazy"></a><figcaption>Raining Men<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/flower.gif"><img src="animations/flower.gif" width="1100" height="800" alt="Flower" loading="lazy"></a><figcaption>Flower<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/Flower2.gif"><img src="animations/Flower2.gif" width="1100" height="800" alt="Flower 2" loading="lazy"></a><figcaption>Flower 2<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/skate%20park%20on%20gif.gif"><img src="animations/skate%20park%20on%20gif.gif" width="1125" height="625" alt="Skate Park" loading="lazy"></a><figcaption>Skate Park<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/kickflipgif.gif"><img src="animations/kickflipgif.gif" width="1120" height="620" alt="Kickflip" loading="lazy"></a><figcaption>Kickflip<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/shovitgif.gif"><img src="animations/shovitgif.gif" width="1120" height="620" alt="Shove-it" loading="lazy"></a><figcaption>Shove-it<span>Sep 2008</span></figcaption></figure>
+        <figure><a href="animations/shovit%20and%20kickflipgif.gif"><img src="animations/shovit%20and%20kickflipgif.gif" width="1120" height="620" alt="Shove-it and Kickflip" loading="lazy"></a><figcaption>Shove-it and Kickflip<span>Sep 2008</span></figcaption></figure>
+    </div>
+</main>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+<script>
+    // Each piece is a plain link to its file; with JS it opens in place instead, and a click anywhere closes it.
+    var zoom = document.getElementById('zoom');
+    document.querySelector('.grid').addEventListener('click', function (event) {
+        var link = event.target.closest('a');
+        if (!link) return;
+        event.preventDefault();
+        zoom.querySelector('img').src = link.getAttribute('href');
+        zoom.querySelector('img').alt = link.querySelector('img').alt;
+        zoom.querySelector('p').textContent = link.querySelector('img').alt;
+        zoom.showModal();
+    });
+    zoom.addEventListener('click', function () { zoom.close(); });
+</script>
+</body>
+</html>

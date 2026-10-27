@@ -85,6 +85,22 @@ export const Minecraft = () => {
                             <a className='modpack__button' href={latest.notes} target='_blank' rel='noreferrer'>
                                 Release notes <FiArrowUpRight />
                             </a>
+                            {releases && releases.length > 1 && (
+                                <>
+                                    <h3 className='modpack__eyebrow modpack__eyebrow--sub'>Older releases</h3>
+                                    {releases.slice(1).map((release) => (
+                                        <p key={release.version} className='modpack__older'>
+                                            <b>{release.version}</b> <span>{formatDate(release.published)}</span>
+                                            <a href={release.client.url} download>
+                                                Pack
+                                            </a>
+                                            <a href={release.notes} target='_blank' rel='noreferrer'>
+                                                Notes
+                                            </a>
+                                        </p>
+                                    ))}
+                                </>
+                            )}
                             <div className='modpack__latest'>
                                 <label htmlFor='modpack-latest-link'>Always-latest link</label>
                                 <div>
@@ -125,6 +141,10 @@ export const Minecraft = () => {
                         </li>
                     </ol>
                     <p className='modpack__callout'>Launch the imported instance itself. Copying the mods into another Minecraft profile won't work.</p>
+                    <p className='modpack__hosting'>
+                        <b>Hosting your own server?</b> The same <code>.mrpack</code> works with server tools that can install from one. Set <code>difficulty=hard</code> in{' '}
+                        <code>server.properties</code> to play it as intended.
+                    </p>
                 </section>
 
                 <section className='modpack__tile modpack__tile--playing' aria-labelledby='modpack-playing'>
@@ -187,42 +207,6 @@ export const Minecraft = () => {
                             </div>
                         );
                     })}
-                </section>
-
-                <section className='modpack__tile modpack__tile--server' aria-labelledby='modpack-server'>
-                    <h3 id='modpack-server' className='modpack__eyebrow'>
-                        Server files
-                    </h3>
-                    <p>Only needed if you're hosting your own copy of the server. Players just need the pack.</p>
-                    {latest && (
-                        <div className='modpack__row'>
-                            <a className='modpack__button' href={latest.server.url} download>
-                                Server template ({formatSize(latest.server.bytes)})
-                            </a>
-                            <a className='modpack__button' href={latest.checksums} target='_blank' rel='noreferrer'>
-                                SHA-256 checksums
-                            </a>
-                        </div>
-                    )}
-                    {releases && releases.length > 1 && (
-                        <>
-                            <h3 className='modpack__eyebrow modpack__eyebrow--sub'>Older releases</h3>
-                            {releases.slice(1).map((release) => (
-                                <p key={release.version} className='modpack__older'>
-                                    <b>{release.version}</b> <span>{formatDate(release.published)}</span>
-                                    <a href={release.client.url} download>
-                                        Pack
-                                    </a>
-                                    <a href={release.server.url} download>
-                                        Server
-                                    </a>
-                                    <a href={release.notes} target='_blank' rel='noreferrer'>
-                                        Notes
-                                    </a>
-                                </p>
-                            ))}
-                        </>
-                    )}
                 </section>
             </div>
         </BentoOverlay>

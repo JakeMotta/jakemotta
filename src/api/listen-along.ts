@@ -1,0 +1,47 @@
+/**
+ * Talks to the listening Worker (workers/listening): what Jake's Spotify is playing, to the second,
+ * and the YouTube copy of it. Unlike ListenBrainz this needs Spotify's keys, which only the Worker
+ * holds. See docs/listening.md.
+ */
+
+const NOW = '/api/listening/now';
+
+export interface NowPlayingTrack {
+    id: string;
+    title: string;
+    artists: string[];
+    album?: string;
+    durationMs: number;
+    cover?: string;
+    url?: string;
+}
+
+export interface NowAnswer {
+    playing: {
+        isPlaying: boolean;
+        progressMs: number;
+        // The Worker's clock when Spotify answered
+        fetchedAt: number;
+        track: NowPlayingTrack;
+    } | null;
+    // Present when asked for. null: no YouTube copy could be found (or the day's search quota is spent).
+    // synced: the copy has the same audio as Spotify's, so it can join mid-song.
+    youtube?: { videoId: string; synced: boolean } | null;
+}
+
+/**
+ * The Worker's answer, or undefined when it isn't there: not deployed yet, or `yarn dev` running
+ * without it, where CRA answers the path with the app's own HTML.
+ */
+export const getNow = async (withYoutube: boolean): Promise<NowAnswer | undefined> => {
+    try {
+        const response = await fetch(withYoutube ? `${NOW}?youtube=1` : NOW, { signal: AbortSignal.timeout(10_000) });
+        if (!response.ok || !response.headers.get('Content-Type')?.includes('application/json')) return undefined;
+        return await response.json();
+    } catch {
+        return undefined;
+    }
+};
+
+/** Where Jake is in the song now, in seconds, allowing for how old the answer is */
+export const positionNow = (playing: NonNullable<NowAnswer['playing']>) => (playing.progressMs + (playing.isPlaying ? Date.now() - playing.fetchedAt : 0)) / 1000;

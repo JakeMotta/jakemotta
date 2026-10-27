@@ -1,0 +1,10 @@
+{
+  "name": "ambii-demo-mock-server",
+  "private": true,
+  "description": "In-browser mock of the Ambii Business API shared by the three demo apps. No dependencies.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test \"test/*.test.js\""
+  }
+}

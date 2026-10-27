@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Team SAFE Racing</title>
+
+<!--Style Sheet-->
+<link rel="stylesheet" href="files/cssReset.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="files/mainCss.css">
+
+<!--Font and JQuery-->
+<script src="files/jquery-3.4.1.min.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Roboto+Slab|Marmelad|Domine' rel='stylesheet' type='text/css'>
+
+<!--NavBar-->
+<link rel="stylesheet" href="lavalamp/lavalamp_test.css" type="text/css" media="screen">
+<script type="text/javascript" src="lavalamp/jquery.lavalamp.js"></script>
+<script type="text/javascript" src="lavalamp/jquery.lavalamp.min.js"></script>
+<script type="text/javascript" src="lavalamp/jquery.easing.min.js"></script>
+<script type="text/javascript">
+        $(function() {
+            $("#1").lavaLamp({
+                fx: "backout", 
+                speed: 700,
+                click: function(event, menuItem) {
+                }
+            });
+        });
+    </script>
+        
+
+<!--SlideShow-->
+<link rel="stylesheet" href="files/responsiveslides.css">
+<link rel="stylesheet" href="files/slideCss.css">
+  <script src="files/responsiveslides.min.static.js"></script>
+  <script>
+    // You can also use "$(window).load(function() {"
+    $(function () {
+
+      // Slideshow 4
+      $("#slider4").responsiveSlides({
+        auto: true,
+        pager: false,
+        nav: false,
+        speed: 500,
+        namespace: "callbacks",
+        before: function () {
+          $('.events').append("<li>before event fired.</li>");
+        },
+        after: function () {
+          $('.events').append("<li>after event fired.</li>");
+        } 
+      });
+    });
+  </script>
+
+
+<!--[if lt IE 9]>
+<script src="files/html5shiv.js"></script>
+<![endif]-->
+
+<div id="fb-root"></div>
+
+
+</head>
+
+<body>
+
+
+
+<div id="container">
+   <section id="topNav">
+        <span id="largeTextShadow">
+      	    Team SAFE Racing
+        </span>
+        <section id="contact">
+            <span id="smallText"><span id="whiteText">
+                    Email: teamsaferacing@yahoo.com
+            </span></span>
+        </section> <!--End Contact-->
+   </section> <!--End topNav-->
+   
+<header id="head">
+<section id="slideDiv">
+
+<!-- Slideshow 4 -->
+   <div class="callbacks_container">
+      <ul class="rslides" id="slider4">
+        <li>
+          <img src="images/slide/1.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="images/slide/2.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="images/slide/3.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="images/slide/4.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+        <li>
+          <img src="images/slide/5.jpg" alt="">
+          <p class="caption">Team SAFE Racing</p>
+        </li>
+      </ul>
+    </div>
+
+</section> <!--End slideDiv-->
+
+<nav id="headNav">
+    <span id="navLinkText">
+    	<ul class="lavaLampWithImage" id="1">
+                
+<li><a href=/projects/motorsport/team-safe/About.html>Home</a></li><li><a href=/projects/motorsport/team-safe/About.html>About</a></li><li><a href=/projects/motorsport/team-safe/Athletes.html>Athletes</a></li><li><a href=/projects/motorsport/team-safe/Featured.html>Featured</a></li><li><a href=https://www.facebook.com/TeamSafeRacing?sk=photos_albums>Gallery</a></li><li><a href=/projects/motorsport/team-safe/Events.html>Events</a></li>
+
+
+                
+                
+                
+                
+                
+       	</ul>     
+	</span>
+</nav> <!--End headNav-->
+</header> <!--End Head-->
+
+<section id="content">
+<br>
+
+<aside id="leftColumn">
+<div align="center"><span id="medText" >Skating Events - 2014</span></div>
+<hr />
+
+<section id="mainContent">
+<span id="pText">
+
+<table id="eventTable">
+		<tr>
+            <td id="eventTableText"></td>
+            <td><span id="boldText">Event:</span></td>
+            <td><span id="boldText">Location:</span></td>
+            <td><span id="boldText">Date:</span></td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://raceonthebase.com/"><img src="images/logos/Events/RaceonBase.gif"></a></td>
+            <td id="eventTableText"><a href="http://raceonthebase.com/">Race on the Base</a></td>
+            <td id="eventTableText">Los Alamitos, CA</td>
+            <td id="eventTableText">Feburary 22, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://www.speedskater-kriterium.de/"><img src="images/logos/Events/Gross-Gerau.gif"></a></td>
+            <td id="eventTableText"><a href="http://www.speedskater-kriterium.de/">Gross-Gerau</a></td>
+            <td id="eventTableText">Germany</td>
+            <td id="eventTableText">April 25-27, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://community.acsevents.org/site/TR?fr_id=56228&pg=entry"><img src="images/logos/Events/WalknRoll.gif"></a></td>
+            <td id="eventTableText"><a href="http://community.acsevents.org/site/TR?fr_id=56228&pg=entry">Walk and Roll 10K</a></td>
+            <td id="eventTableText">Lake Michigan, MI</td>
+            <td id="eventTableText">April 26, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://www.apostleislandsinline.com/"><img src="images/logos/Events/Apostile.gif"></a></td>
+            <td id="eventTableText"><a href="http://www.apostleislandsinline.com/">Apostle Island</a></td>
+            <td id="eventTableText">Ashlan, WI</td>
+            <td id="eventTableText">June 14, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://www.skateoftheunion.org/"><img src="images/logos/Events/SkateUnion.gif"></a></td>
+            <td id="eventTableText"><a href="http://www.skateoftheunion.org/">Skate of the Union</a></td>
+            <td id="eventTableText">Washington, DC</td>
+            <td id="eventTableText">June 27 – 29, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://www.cora.org/2014NapaIM.htm"><img src="images/logos/napab.png"></a></td>
+            <td id="eventTableText"><a href="http://www.cora.org/2014NapaIM.htm">Napa inline race marathon</a></td>
+            <td id="eventTableText">Napa, CA</td>
+            <td id="eventTableText">July 13, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://allcommunityevents.com/gfasf/chicagoland_inline_marathon.html"><img src="images/logos/chicagoland.jpg"></a></td>
+            <td id="eventTableText"><a href="http://allcommunityevents.com/gfasf/chicagoland_inline_marathon.html">Chicagoland Inline Marathon</a></td>
+            <td id="eventTableText">Chicago, IL</td>
+            <td id="eventTableText">July 20, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://www.minnesotahalfmarathon.com/"><img src="images/logos/Events/Minasota.gif"></a></td>
+            <td id="eventTableText"><a href="http://www.minnesotahalfmarathon.com/">Minnesota ½ marathon</a></td>
+            <td id="eventTableText">Saint Paul, MN</td>
+            <td id="eventTableText">August 2, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://www.rollinontheriver-inline.com/"><img src="images/logos/Events/WalknRoll.gif"></a></td>
+            <td id="eventTableText"><a href="http://www.rollinontheriver-inline.com/">Rollin on the River</a></td>
+            <td id="eventTableText">Buxton, ND</td>
+            <td id="eventTableText">August 16, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://northshoreinline.com/"><img src="images/logos/Events/Northshore.gif"></a></td>
+            <td id="eventTableText"><a href="http://northshoreinline.com/">NSIM</a></td>
+            <td id="eventTableText">Duluth, MN</td>
+            <td id="eventTableText">September 13, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="https://www.facebook.com/BattleAtBearCreek"><img src="images/logos/Events/BearCreek.gif"></a></td>
+            <td id="eventTableText"><a href="https://www.facebook.com/BattleAtBearCreek">Battle at Bear Creek</a></td>
+            <td id="eventTableText">Houston, Texas </td>
+            <td id="eventTableText">November 8, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://www.kozevents.com/Running_Events/Silver_Strand_Half_Marathon___5K/Race_Information.htm"><img src="images/logos/logo.gif"></a></td>
+            <td id="eventTableText"><a href="http://www.kozevents.com/Running_Events/Silver_Strand_Half_Marathon___5K/Race_Information.htm">Silver Strand ½ marathon</a></td>
+            <td id="eventTableText">Coronado, CA</td>
+            <td id="eventTableText">November 16, 2014</td>
+        </tr>
+        
+        <tr>
+            <td align="center" id="eventTableText"><a href="http://www.tinseltriathlon.com/skate.html"><img src="images/logos/Soboba_Small.png"></a></td>
+            <td id="eventTableText"><a href="http://www.tinseltriathlon.com/skate.html">Hemet Marathon</a></td>
+            <td id="eventTableText">Hemet, CA</td>
+            <td id="eventTableText">December 14, 2014</td>
+        </tr>
+</table>
+<br>
+<br>
+
+</span>
+</section> <!--End mainContent-->
+</aside> <!--End leftColumn-->
+
+<aside id="rightColumn">
+<br>
+    <aside id="sponsorImages" align="center">
+        <a href=http://www.safesecurity.com/sf/index.aspx><img src=/projects/motorsport/team-safe/images/logos/One.jpg /></a> <br><br><br><a href=http://www.ezeefitsports.com/><img src=/projects/motorsport/team-safe/images/logos/ezfit3.jpg /></a> <br><br><br><a href=http://www.bont.com/index.html><img src=/projects/motorsport/team-safe/images/logos/bont3.jpg /></a> <br><br><br><a href=http://www.funroll.com/glennsmerchandise/mdse.html><img src=/projects/motorsport/team-safe/images/logos/Glenn.gif /></a> <br><br><br><div class=fb-like data-href=https://www.facebook.com/TeamSafeRacing data-send=false data-layout=box_count data-width=450 data-show-faces=true data-font=arial></div> <br><br><br>
+
+    </aside>
+</aside> <!--End rightColumn-->
+</section> <!--End content-->
+
+
+
+<footer id="foot">
+
+	<section id="footContact">
+    	<span id="smallerText">
+        	<a href=/projects/motorsport/team-safe/Contact.html>Contact Us  | </a><a href=/projects/motorsport/team-safe/webLinks.html>Web Links  | </a><a href=/projects/motorsport/team-safe/Sponsors.html>Sponsors </a>
+
+        </span>
+    </section>
+    
+    <section id="footContent">
+        <span id="smallerText">
+            Copyright © 2014 Team SAFE Racing. All rights reserved. Website Design By <span id="whiteText"><a href="pages/jakeMotta.html">Jacob Motta</a> </span><br>
+        </span>
+    </section>
+
+    <div id="bottomSkater" align="right">
+    	<img src="images/logos/skater2.gif" />&nbsp&nbsp&nbsp&nbsp
+    	<img src="images/logos/skater.gif" />
+    </div>
+</footer> <!--End foot-->
+
+</div> <!--End Container-->
+
+</body>
+</html>

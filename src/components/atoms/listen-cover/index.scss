@@ -1,0 +1,28 @@
+.listen-cover {
+    display: block;
+    flex: none;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+
+    &--monogram {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        container-type: inline-size;
+        background: var(--color-primary);
+        color: var(--color-primary-dark);
+
+        span {
+            font-size: 40cqi;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+    }
+}
+
+.listen-source {
+    flex: none;
+    color: var(--color-primary-light);
+}

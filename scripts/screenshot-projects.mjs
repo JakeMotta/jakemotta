@@ -34,13 +34,39 @@ const QUALITY = 85;
 // `width` narrows the viewport for a fixed-width site that would otherwise sit in empty
 // margins; `scroll` moves the page down first, for a site whose best view isn't at the top.
 const SHOTS = [
+    // The 2018 landing page rather than the story page in front of it
     { id: 'ambii', url: '/projects/ambii/index.html', settle: 2500 },
     { id: 'black-chamber', url: '/projects/black-chamber/index.html', settle: 2500, width: 1140 },
     { id: 'pistol-art', url: '/projects/pistol-art/index.html', settle: 2000 },
     { id: 'ninjadonut', url: '/projects/ninja-donut/index.html', settle: 5000, width: 960 },
+    // The hub, with a tile for each of the three apps
+    { id: 'ambii-business', url: '/projects/ambii-business/index.html', settle: 1500 },
     // Mid-animation, so the face mesh is drawn
     { id: 'cs160', url: '/projects/cs160/index.html', settle: 3500 },
     { id: 'tapslaydie', url: 'https://tapslaydie.com/', settle: 4000 },
+    // The title screen, with its attract-mode asteroids drifting; the engine takes a few seconds to load
+    { id: 'asteroids', url: '/projects/asteroids/index.html', settle: 8000 },
+    // The clouds and balloons bounce in over the first couple of seconds
+    { id: 'personal-site', url: '/projects/personal-site/index.static.html', settle: 3000 },
+    // After its loader clears, on the slider's first slide
+    { id: 'dan-james', url: '/projects/dan-james/index.static.html', settle: 4000 },
+    // The Flash index rather than the hub page in front of it
+    { id: 'highschool', url: '/projects/highschool/flashIndex/FlashIndex.static.html', settle: 5000 },
+    { id: 'sketchbook', url: '/projects/sketchbook/index.html', settle: 1500 },
+    { id: 'flash', url: '/projects/flash/index.html', settle: 1500 },
+    // The poster frame, with the film's title on the wall
+    { id: 'escaping-confinement', url: '/projects/escaping-confinement/index.html', settle: 1500 },
+    // Down past the three wide ones, onto the grid of smaller GIFs mid-animation
+    { id: 'pivot', url: '/projects/pivot/index.html', settle: 3000, scroll: 2010 },
+    { id: 'cs134', url: '/projects/cs134/index.html', settle: 2500 },
+    { id: 'fooder', url: '/projects/fooder/index.html', settle: 1500 },
+    { id: 'survivor', url: '/projects/survivor/index.html', settle: 1500 },
+    // Team SAFE's welcome page rather than the text-only hub, on the slideshow's first slide
+    { id: 'motorsport', url: '/projects/motorsport/team-safe/About.html', settle: 2500 },
+    // The Java games: their pages before Play, with the title-screen poster (the game itself is black until Run)
+    { id: 'coloris', url: '/projects/coloris/index.html', settle: 2000 },
+    { id: 'isguy', url: '/projects/isguy/index.html', settle: 2000 },
+    { id: 'greenfoot-pokemon', url: '/projects/greenfoot-pokemon/index.html', settle: 2000 },
 ];
 
 const fail = (message) => {
@@ -77,6 +103,8 @@ const launch = (executable, profile) =>
             '--no-default-browser-check',
             '--hide-scrollbars',
             '--mute-audio',
+            // Without a click, Ruffle would wait behind its play button instead of starting the movie
+            '--autoplay-policy=no-user-gesture-required',
             'about:blank',
         ]);
         let log = '';
@@ -150,6 +178,8 @@ const shoot = async (cdp, shot) => {
         await loaded;
         if (shot.scroll) await cdp.send('Runtime.evaluate', { expression: `window.scrollTo(0, ${shot.scroll})` }, sessionId);
         await sleep(shot.settle);
+        // The clip is measured from the top of the document, so it starts where the page scrolled to
+        const { result: scrolled } = await cdp.send('Runtime.evaluate', { expression: 'window.scrollY' }, sessionId);
 
         // The dev server answers a missing page with this site's React app instead of a 404
         if (!/^https?:/.test(shot.url)) {
@@ -159,7 +189,7 @@ const shoot = async (cdp, shot) => {
 
         const { data } = await cdp.send(
             'Page.captureScreenshot',
-            { format: 'webp', quality: QUALITY, clip: { x: 0, y: 0, ...viewport, scale: OUTPUT_WIDTH / viewport.width }, captureBeyondViewport: false },
+            { format: 'webp', quality: QUALITY, clip: { x: 0, y: scrolled.value, ...viewport, scale: OUTPUT_WIDTH / viewport.width }, captureBeyondViewport: false },
             sessionId,
         );
         const file = join(OUT_DIR, `${shot.id}.webp`);

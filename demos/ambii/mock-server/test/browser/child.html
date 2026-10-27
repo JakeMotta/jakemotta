@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ambii mock harness: framed document</title>
+</head>
+<body>
+<p>Framed demo document: plays audio so the parent can check the media-playing message.</p>
+<audio id="in-dom" src="/projects/ambii-business/media/announcements/happy-hour.mp3" preload="auto"></audio>
+<script type="module">
+  import { installAmbiiDemo } from '../../index.js';
+  installAmbiiDemo({ app: 'harness-child', badge: false });
+  window.playInDom = function () { return document.getElementById('in-dom').play(); };
+  window.playDetached = function () { return new Audio('/projects/ambii-business/media/ads/ambii-ad.mp3').play(); };
+  window.childReady = true;
+</script>
+</body>
+</html>

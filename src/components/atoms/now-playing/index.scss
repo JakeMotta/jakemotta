@@ -1,0 +1,174 @@
+.now-playing {
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px 10px 10px;
+    border-radius: 20px;
+    background: var(--color-primary-dark);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+    color: var(--color-primary-light);
+    transition: transform 0.35s var(--spring);
+
+    &--link:hover {
+        transform: translateY(-3px) rotate(-1deg);
+    }
+
+    // The title's link covers the whole card, and its focus ring goes round the card
+    &__stretch {
+        color: inherit;
+
+        &::after {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            content: '';
+        }
+
+        &:focus-visible {
+            outline: none;
+
+            &::after {
+                outline: 3px solid var(--color-primary-light);
+                outline-offset: 3px;
+            }
+        }
+    }
+
+    &__cover {
+        width: 64px;
+        border-radius: 12px;
+    }
+
+    &__text {
+        display: flex;
+        min-width: 0;
+        flex: 1;
+        flex-direction: column;
+    }
+
+    &__label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        opacity: 0.85;
+        text-transform: uppercase;
+    }
+
+    &__title,
+    &__artist {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__title {
+        font-size: 16px;
+        font-weight: 800;
+    }
+
+    &__artist {
+        font-size: 14px;
+        font-weight: 600;
+        opacity: 0.85;
+    }
+
+    // A ping like a "live" light: ListenBrainz says it's playing, not how loud, so this doesn't pretend to be a visualizer
+    &__dot {
+        position: relative;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-primary);
+
+        &::after {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            animation: now-playing-ping 1.6s ease-out infinite;
+            background: var(--color-primary);
+            content: '';
+        }
+    }
+
+    &__source {
+        align-self: flex-start;
+        margin-top: 2px;
+        font-size: 18px;
+    }
+
+    // Sits above the stretched link, so it's a control of its own
+    &__along {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex: none;
+        align-items: center;
+        gap: 5px;
+        padding: 7px 12px;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.25);
+        color: var(--color-primary-light);
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 800;
+        transition: transform 0.3s var(--spring);
+
+        &:hover {
+            transform: translateY(-2px) rotate(-2deg);
+        }
+
+        &:focus-visible {
+            outline: 3px solid var(--color-primary-light);
+            outline-offset: 2px;
+        }
+
+        &[aria-pressed='true'] {
+            background: var(--color-primary-light);
+            color: var(--color-primary-dark);
+        }
+    }
+
+    &__go {
+        display: flex;
+        width: 36px;
+        height: 36px;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--color-primary-light);
+        color: var(--color-primary-dark);
+        font-size: 20px;
+        transition: transform 0.3s var(--spring);
+    }
+
+    &--link:hover &__go {
+        transform: translate(2px, -2px) scale(1.08);
+    }
+}
+
+@keyframes now-playing-ping {
+    from {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(2.6);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .now-playing__dot::after {
+        animation: none;
+    }
+}

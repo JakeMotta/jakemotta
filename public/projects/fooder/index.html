@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: a case study of Fooder, a team Android app from SJSU CS 161 (spring 2017).
+     An Android app can't run in a browser, so this page shows its concept art, a screenshot of the first
+     working build and how it worked. See docs/projects/fooder.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fooder</title>
+<link rel="icon" href="icon.png">
+<style>
+    html, body { margin: 0; background: #fff6ec; color: #2b1b14; }
+    body { font: 16px/1.55 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 28px 16px 56px; }
+    main { max-width: 1060px; margin: 0 auto; }
+    a { color: #d6200f; }
+
+    header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; }
+    h1 { margin: 0; line-height: 0; }
+    h1 img { width: 250px; max-width: 64vw; height: auto; }
+    .tagline { font-size: 26px; font-weight: 900; margin: 0; }
+    .meta { margin: 2px 0 0; color: #7d6253; }
+    .note { display: inline-block; margin: 14px 0 26px; padding: 8px 14px; border-radius: 999px; background: #ffe2c7; font-size: 15px; }
+
+    /* The phones: concept art (frame drawn in) and a real screenshot (frame drawn here) */
+    .screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 26px 22px; }
+    figure { margin: 0; }
+    figure a { display: block; background: #fff6ec; /* the backdrop the concept art multiplies onto */ transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); }
+    figure:nth-child(odd) a { transform: rotate(-1.4deg); }
+    figure:nth-child(even) a { transform: rotate(1.2deg); }
+    figure a:hover, figure a:focus-visible { transform: rotate(0) translateY(-6px) scale(1.03); outline: none; }
+    figure a:focus-visible img, figure a:focus-visible .bezel { box-shadow: 0 0 0 3px #fff6ec, 0 0 0 6px #ff7a00; }
+    figure img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 2; mix-blend-mode: multiply; /* the concept art is drawn on white */ }
+    .bezel { width: 94%; margin: 0 auto; aspect-ratio: 47 / 100; /* as tall as the 1:2 concept phones */ background: #1d1d1f; border-radius: 13% / 6.5%; display: flex; align-items: center; justify-content: center; }
+    .bezel img { width: 86%; aspect-ratio: 9 / 16; border-radius: 3px; mix-blend-mode: normal; }
+    figcaption { margin-top: 10px; font-weight: 800; line-height: 1.35; }
+    figcaption span { display: block; font-weight: 400; font-size: 14px; color: #7d6253; }
+    .tag { display: inline-block; margin-right: 6px; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 800; color: #fff; background: #ff7a00; vertical-align: 2px; }
+    .tag.real { background: #e8150c; }
+
+    .details { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px 48px; margin-top: 40px; }
+    h2 { font-size: 22px; font-weight: 900; margin: 22px 0 6px; }
+    p { margin: 0 0 10px; }
+    ol { margin: 0; padding-left: 22px; }
+    li { margin-bottom: 6px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 4px 0 0; list-style: none; }
+    .pills li { margin: 0; padding: 3px 10px; border-radius: 999px; background: #fff; border: 2px solid #ffd0a6; font-size: 14px; font-weight: 700; }
+    .mine { display: flex; gap: 14px; align-items: flex-start; }
+    .mine img { width: 64px; height: 64px; flex: none; border-radius: 14px; }
+    .cut li { list-style: '\2702\FE0E  '; }
+
+    dialog { border: 0; border-radius: 8px; padding: 8px; max-width: 96vw; max-height: 96vh; background: #fff; }
+    dialog::backdrop { background: rgba(43, 27, 20, .78); }
+    dialog img { display: block; max-width: 92vw; max-height: 86vh; }
+    dialog p { margin: 0; padding: 6px 4px 0; font-weight: 800; }
+</style>
+</head>
+<body>
+<main>
+    <header>
+        <h1><img src="logo.png" alt="Fooder" width="425" height="196"></h1>
+        <div>
+            <p class="tagline">Tinder, but it's food.</p>
+            <p class="meta">Android app · SJSU CS 161 · spring 2017 · team QWERTY</p>
+        </div>
+    </header>
+    <p class="note">Fooder is an Android app, so it can't run in your browser. Here's what it was instead.</p>
+
+    <div class="screens">
+        <figure><a href="screens/first-demo.jpg"><div class="bezel"><img src="screens/first-demo.jpg" alt="The first working build: a swipe card for a pizza place, with X, map pin and heart buttons" width="1080" height="1920"></div></a><figcaption><i class="tag real">real app</i>First demo<span>March 2017, dealing cards from a short sample list before the Yelp search was hooked up</span></figcaption></figure>
+        <figure><a href="screens/concept-how-about.png"><img src="screens/concept-how-about.png" alt="Concept: How about Chipotle? with X, map and heart buttons" width="360" height="720"></a><figcaption><i class="tag">concept</i>How about…<span>One restaurant at a time</span></figcaption></figure>
+        <figure><a href="screens/concept-settings.png"><img src="screens/concept-settings.png" alt="Concept: settings for location, maximum distance, minimum stars and price" width="360" height="719"></a><figcaption><i class="tag">concept</i>Settings<span>Distance, stars and price</span></figcaption></figure>
+        <figure><a href="screens/concept-bucket-list.png"><img src="screens/concept-bucket-list.png" alt="Concept: the bucket list of saved restaurants" width="360" height="719"></a><figcaption><i class="tag">concept</i>Bucket list<span>Everywhere you swiped right on</span></figcaption></figure>
+    </div>
+
+    <div class="details">
+        <section>
+            <h2>The idea</h2>
+            <p>"What do you want to eat?" "I don't know." Fooder turns that into a game of swipes. It finds restaurants near you and shows them one card at a time: swipe left (or tap ✕) to pass, swipe right (or tap ♥) to save it to your bucket list, or tap the pin to open it in Google Maps and go right now.</p>
+
+            <h2>How it worked</h2>
+            <ol>
+                <li>Sign in with your Google account.</li>
+                <li>Pick how far you'll go (up to 20 miles), a star rating and which prices, $ to $$$$.</li>
+                <li>Fooder searches Yelp around your phone's location (San José State's campus if it can't get one) and deals the results as swipeable cards with a photo, price and distance.</li>
+                <li>Every ♥ is saved to your bucket list in a Firebase database, so it's still there next time you sign in.</li>
+            </ol>
+        </section>
+        <section>
+            <h2>My part</h2>
+            <div class="mine">
+                <img src="icon.png" alt="The Fooder app icon" width="192" height="192">
+                <p>A team of four built it: Alex, Brendan, Jason and me. I was a co-lead programmer and the team's graphic designer: the logo, the app icon and the concept art are mine, and I built the sign-in page, Google Sign-In through Firebase.</p>
+            </div>
+
+            <h2>Built with</h2>
+            <ul class="pills">
+                <li>Java</li><li>Android Studio</li><li>Yelp Fusion API</li><li>Retrofit + OkHttp</li><li>Firebase Auth</li><li>Firebase Realtime Database</li><li>Google Sign-In</li><li>Google Maps</li><li>Glide</li><li>PlaceHolderView swipe cards</li>
+            </ul>
+
+            <h2>Left on the cutting board</h2>
+            <ul class="cut">
+                <li><b>Chives</b>, a little bot with a new place to try every day.</li>
+                <li><b>TakeOut</b>, which would match you with someone craving the same food for a food date.</li>
+                <li>Facebook login, and a blacklist so a place you'd swiped away wouldn't come back.</li>
+            </ul>
+        </section>
+    </div>
+</main>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+<script>
+    // Each screen is a plain link to its file; with JS it opens in place instead, and a click anywhere closes it.
+    var zoom = document.getElementById('zoom');
+    document.querySelector('.screens').addEventListener('click', function (event) {
+        var link = event.target.closest('a');
+        if (!link) return;
+        event.preventDefault();
+        var img = link.querySelector('img');
+        zoom.querySelector('img').src = link.getAttribute('href');
+        zoom.querySelector('img').alt = img.alt;
+        zoom.querySelector('p').textContent = link.closest('figure').querySelector('figcaption').firstChild.nextSibling.textContent;
+        zoom.showModal();
+    });
+    zoom.addEventListener('click', function () { zoom.close(); });
+</script>
+</body>
+</html>

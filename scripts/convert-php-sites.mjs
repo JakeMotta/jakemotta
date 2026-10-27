@@ -132,18 +132,44 @@ const SITES = [
         dir: 'personal-site',
         origins: [],
         forms: {},
-        // index.htm loads a second jQuery over plain http; the other two link back to it.
-        pages: ['index.htm', 'about.html', 'projects.html'],
-        // The projects page links to two sites that have their own previews here now.
+        // The home page is index (2).htm, the later of the two: scrolling past the clouds slides in
+        // About, Projects, Music and Contact. index.htm (a menu of dead # links instead) is left as
+        // it was, and About's Home link goes to the scroll-down page. Both load jQuery over http.
+        pages: ['index (2).htm', 'about.html', 'projects.html'],
+        redirects: { 'index.htm': 'index (2).htm' },
         replace: [
+            // The projects page links to two sites that have their own previews here now.
             ['http://jakemotta.com/DanJames/', '/projects/dan-james/index.static.html'],
             ['http://blackchamber.com/', '/projects/black-chamber/index.html'],
-            // On the home page the second cloud and the balloons are nudged right to about 950px,
-            // and "I'm Jake" is a full-width line that pulses to 105% forever, so anything
-            // narrower than a 2016 desktop, like the viewer's frame, scrolls sideways and keeps
-            // flickering a scrollbar. They're decoration, so the page clips them. (About and
-            // Projects are fixed 960px layouts whose text runs that wide, so they keep scrolling.)
-            ['<div id="ich">', '<style>html { overflow-x: hidden; }</style>\n    <div id="ich">'],
+            // Only About was ever linked from the home page; Projects goes to its page too.
+            ['<span class="large jockey center" style="color:#FBFDFF;">Projects</span>', '<span class="large jockey center" style="color:#FBFDFF;"><a href="projects.static.html">Projects</a></span>'],
+            // On the home page the clouds and balloons are nudged right to about 950px, "Scroll
+            // Down!" pulses a full-width line to 105% forever, and Projects and Contact slide in
+            // from (and back out to) the right. That's all decoration, so the page clips it
+            // rather than scroll sideways and keep flickering a scrollbar.
+            ['<div id="ich">', '<style>html { overflow-x: hidden; }</style>\n\t\t<div id="ich">'],
+            // All three pages are laid out 960px wide for a 2016 desktop, so in anything narrower,
+            // like the viewer's frame, they scale down to fit instead. The zoom goes on <body>: on
+            // <html> it changes the window's reported size too, and the home page's slide-ins then
+            // trigger past the end of the page. Those slide-ins also measure where they trigger
+            // only once, while "Scroll Down!" is still rising into place (and before the fonts
+            // have loaded), so they triggered about 240px too late, past the end of a tall
+            // window's scroll. They're measured again whenever an entrance animation ends.
+            [
+                '</body>',
+                '<script>\n(function () {\n' +
+                    '    var fit = function () {\n' +
+                    '        document.body.style.zoom = Math.min(1, document.documentElement.clientWidth / 980);\n' +
+                    '    };\n' +
+                    "    addEventListener('resize', fit);\n" +
+                    '    fit();\n' +
+                    '    var remeasure = function () {\n' +
+                    '        if (window.Waypoint) Waypoint.refreshAll();\n' +
+                    '    };\n' +
+                    "    addEventListener('animationend', remeasure);\n" +
+                    '    if (document.fonts) document.fonts.ready.then(remeasure);\n' +
+                    '})();\n</script>\n</body>',
+            ],
         ],
     },
     // Three motorsport client sites, each its own card: Team SAFE, Worxxx and Noah Garza.

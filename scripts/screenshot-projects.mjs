@@ -48,7 +48,7 @@ const SHOTS = [
     // The title screen, with its attract-mode asteroids drifting; the engine takes a few seconds to load
     { id: 'asteroids', url: '/projects/asteroids/index.html', settle: 8000 },
     // The clouds and balloons bounce in over the first couple of seconds
-    { id: 'personal-site', url: '/projects/personal-site/index.static.html', settle: 3000 },
+    { id: 'personal-site', url: '/projects/personal-site/index%20(2).static.html', settle: 3000 },
     // After its loader clears, on the slider's first slide
     { id: 'dan-james', url: '/projects/dan-james/index.static.html', settle: 4000 },
     { id: 'jakes-index', url: '/projects/highschool/flashIndex/FlashIndex.static.html', settle: 5000 },

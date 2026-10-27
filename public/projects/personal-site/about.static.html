@@ -49,7 +49,7 @@ window.onload = function(){
        <div class="general-container">
 		<div id="top-nav" class="animated fadeInDown  normalText" style="color:#31363B;">
 			<ul id="gooeymenu3" class="underlinemenu small normalText">
-				<li><a href="/projects/personal-site/index.static.html" class="selected">Home</a></li>
+				<li><a href="/projects/personal-site/index (2).static.html" class="selected">Home</a></li>
 				<li><a href="#">About</a></li>
 				<li><a href="#">Code</a></li>
 				<li><a href="#">Music</a></li>
@@ -76,5 +76,19 @@ window.onload = function(){
 	<div class="general-footer"></div>
 
 
+<script>
+(function () {
+    var fit = function () {
+        document.body.style.zoom = Math.min(1, document.documentElement.clientWidth / 980);
+    };
+    addEventListener('resize', fit);
+    fit();
+    var remeasure = function () {
+        if (window.Waypoint) Waypoint.refreshAll();
+    };
+    addEventListener('animationend', remeasure);
+    if (document.fonts) document.fonts.ready.then(remeasure);
+})();
+</script>
 </body>
 </html>

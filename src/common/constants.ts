@@ -296,7 +296,7 @@ export const homeProjectList: HomeProject[] = [
         date: '2016',
         tags: ['Website'],
         description: 'My old portfolio, with drifting clouds and balloons tied to its hello.',
-        preview: '/projects/personal-site/index.static.html',
+        preview: '/projects/personal-site/index%20(2).static.html',
     },
     {
         id: 'dan-james',

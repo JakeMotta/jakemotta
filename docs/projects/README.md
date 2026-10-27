@@ -17,7 +17,7 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `survivor` | `/projects/survivor/index.html` (a case study) | [survivor.md](survivor.md) |
 | `arena-king` | `/projects/survivor/arena-king.html` (a write-up of the rules) | [arena-king.md](arena-king.md) |
 | `cs160` | `/projects/cs160/index.html` | [cs160.md](cs160.md) |
-| `personal-site` | `/projects/personal-site/index.static.html` | [personal-site.md](personal-site.md) |
+| `personal-site` | `/projects/personal-site/index%20(2).static.html` | [personal-site.md](personal-site.md) |
 | `dan-james` | `/projects/dan-james/index.static.html` | [dan-james.md](dan-james.md) |
 | `team-safe` | `/projects/motorsport/team-safe/About.html` | [team-safe.md](team-safe.md) |
 | `coloris` | `/projects/coloris/index.html` (Java, through CheerpJ) | [coloris.md](coloris.md) |

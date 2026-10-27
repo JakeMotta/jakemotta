@@ -132,5 +132,19 @@ body:after{ display:none;content:url(files/images/blackchamber.jpg) url(files/im
 
 </div>
 
+<script>
+(function () {
+    var fit = function () {
+        document.body.style.zoom = Math.min(1, document.documentElement.clientWidth / 980);
+    };
+    addEventListener('resize', fit);
+    fit();
+    var remeasure = function () {
+        if (window.Waypoint) Waypoint.refreshAll();
+    };
+    addEventListener('animationend', remeasure);
+    if (document.fonts) document.fonts.ready.then(remeasure);
+})();
+</script>
 </body>
 </html>

@@ -16,7 +16,7 @@ On a desktop the tiles sit like this:
 | --- | --- | --- | --- | --- |
 | Row 1 | Hero | Hero | Now Playing | Featured project |
 | Row 2 | Projects | Projects | Now Playing | Up next |
-| Row 3 | Modpack | Favorite artists | Surprise me | Say hi |
+| Row 3 | Modpack | Favorite artists | In Jake's ears | Say hi |
 
 ## The tiles
 
@@ -27,12 +27,12 @@ On a desktop the tiles sit like this:
 - **Projects** (`ProjectsTile`): every other project as a small 4:3 screenshot with its name and year, each linking to its viewer. The screenshots scroll inside the tile once there are more than fit; **All *n* ↗** opens all of them.
 - **Modpack** (`ModpackTile`): links to `/minecraft`, and shows the latest version from `releases.json`.
 - **Favorite artists** (`ArtistsTile`): the names in `favoriteArtists`; clicking one plays its track. **Library ↗** opens the library on its Favorite artists tab (`/library?tab=favorites`).
-- **Surprise me** (`SurpriseTile`): plays a random track that isn't the one playing.
+- **In Jake's ears** (`EarsTile`): what Jake is listening to on Spotify, from ListenBrainz. It shows the song playing now (or the last one, "Spun 40m ago") as a card that links to it, then the plays before it, as many as fit. **Lately ↗** opens `/listening`. It took the cell of **Surprise me** (a random-track button), which Jake removed on 2026-10-26; the placement came from the [Listening Tile Placement canvas](https://claude.ai/artifact/JvNbfMdMFpPAmT4A1rWdgW). How it works: [listening.md](listening.md).
 - **Say hi** (`SayHiTile`): Jake's GitHub.
 
 ### Opening a tile
 
-A tile with more behind it opens into an overlay. A tile that is one thing (the featured project, the modpack) is a link as a whole. A tile that holds several things has an expand link in its header (`ExpandLink`, styled `.tile-expand`): Library, Queue, All *n*. Hero, Surprise me and Say hi have nothing more to show, so they don't open.
+A tile with more behind it opens into an overlay. A tile that is one thing (the featured project, the modpack) is a link as a whole. A tile that holds several things has an expand link in its header (`ExpandLink`, styled `.tile-expand`): Library, Queue, All *n*, Lately. Hero and Say hi have nothing more to show, so they don't open.
 
 ## Sound or silence
 
@@ -50,6 +50,7 @@ A tile opens as an overlay route drawn over the board, which stays mounted behin
 | Route | Page | What it is |
 | --- | --- | --- |
 | `/library` | `pages/music` | The library: the big player, volume and the queue on the left; My music and Favorite artists as cover tiles on the right, each with play and a queue toggle. |
+| `/listening` | `pages/listening` | In Jake's ears opened: the song Jake has on now (or had on last), big, with "Open in Spotify" and listen-along, beside his recent plays and top songs, albums and artists (see [listening.md](listening.md)). |
 | `/project` | `pages/project-gallery` | Every project, newest first, as cards with screenshot, name, year and description. It's at `/project`, singular, because `/projects/` is the folder of standalone sites, which `.htaccess` keeps from the app. |
 | `/project/:id` | `pages/project` | The project viewer (see [projects/README.md](projects/README.md)). Opened from the all-projects overlay, it closes back to it; opened from the board, back to the board. Its side panel links to all projects too. |
 | `/minecraft` | `pages/minecraft` | The modpack download page as a board of its own: Download, Install, Playing, Updating and Troubleshooting tiles, written for players, with one line for self-hosters (see [modpack.md](modpack.md)). |

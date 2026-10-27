@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useAudioStore } from '../../../store/audio';
+import { useListenAlongStore } from '../../../store/listen-along';
 import { audioLevels } from './levels';
 
 import './index.scss';
@@ -61,6 +62,8 @@ const updateBand = (band: Band, data: Uint8Array, hzPerBin: number, dt: number) 
 export const MusicPlayer = () => {
     const audioUrl = useAudioStore((store) => store.audioUrl);
     const playNext = useAudioStore((store) => store.playNext);
+    // The visitor's own tab sound, shared during listen-along (atoms/listen-along), or null
+    const capture = useListenAlongStore((store) => store.capture);
     const audioRef = useRef<HTMLAudioElement>(null);
     const audioContext = useRef<AudioContext | null>(null);
     const analyzerNode = useRef<AnalyserNode | null>(null);
@@ -106,8 +109,11 @@ export const MusicPlayer = () => {
         analyzer.minDecibels = -90;
         analyzer.maxDecibels = -10;
 
-        context.createMediaElementSource(audioRef.current).connect(analyzer);
-        analyzer.connect(context.destination);
+        // The track goes to the speakers, and the analyser listens beside them rather than in front,
+        // so a second input (the listen-along capture below) can feed it without reaching the speakers
+        const source = context.createMediaElementSource(audioRef.current);
+        source.connect(context.destination);
+        source.connect(analyzer);
 
         audioContext.current = context;
         analyzerNode.current = analyzer;
@@ -139,6 +145,26 @@ export const MusicPlayer = () => {
 
         animationFrame.current = requestAnimationFrame(analyze);
     };
+
+    // While the visitor shares this tab's sound during listen-along, the vignette follows the YouTube
+    // player. The capture only ever reaches the analyser: the tab is already playing it out loud.
+    useEffect(() => {
+        if (!capture) return;
+        ensureAudioGraph();
+        const context = audioContext.current;
+        const analyzer = analyzerNode.current;
+        if (!context || !analyzer) return;
+
+        context.resume().catch(() => {});
+        const input = context.createMediaStreamSource(capture);
+        input.connect(analyzer);
+        bands.current = createBands();
+
+        return () => {
+            input.disconnect();
+            bands.current = createBands();
+        };
+    }, [capture]);
 
     // Effect to handle audio URL changes
     useEffect(() => {

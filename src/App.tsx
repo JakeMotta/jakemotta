@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Home, Minecraft, MusicLibrary, ProjectGallery, ProjectViewer } from './components/pages';
+import { Home, Listening, Minecraft, MusicLibrary, ProjectGallery, ProjectViewer } from './components/pages';
 import { ConfigProvider } from 'antd';
 import { ThemeProvider, useTheme, generateRandomHue } from './contexts/ThemeContext';
-import { TsParticleBackground, MusicPlayer } from './components/atoms';
+import { TsParticleBackground, MusicPlayer, ListenAlong } from './components/atoms';
 
 import 'antd/dist/reset.css';
 import './global.scss';
@@ -55,6 +55,7 @@ const AppContent = () => {
             <Route path="home" element={null} />
             {/* Not /music: public/music/ is a real folder, and the server would serve it instead of the app */}
             <Route path="library" element={<MusicLibrary />} />
+            <Route path="listening" element={<Listening />} />
             <Route path="minecraft" element={<Minecraft />} />
             {/* /project, singular: /projects/ is the standalone sites' folder, which the server keeps from the app */}
             <Route path="project" element={<ProjectGallery />} />
@@ -69,6 +70,9 @@ const AppContent = () => {
 
       {/* Music player */}
       <MusicPlayer />
+
+      {/* Listen along: the YouTube copy of what Jake has on Spotify. Beside the player, so it survives navigation too */}
+      <ListenAlong />
 
     </ConfigProvider >
   );

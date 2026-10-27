@@ -1,12 +1,14 @@
 import React, { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FiArrowUpRight, FiDownload, FiShuffle } from 'react-icons/fi';
+import { FiArrowUpRight, FiDownload } from 'react-icons/fi';
 import { MdPlayArrow } from 'react-icons/md';
 import { useAudioStore } from '../../../store/audio';
+import { useListeningStore } from '../../../store/listening';
 import { favoriteArtists, homeProjectList, welcomeTrack } from '../../../common/constants';
-import { findTrack, LIBRARY, trackByline } from '../../../common/music';
+import { listenedAgo } from '../../../common/listening';
+import { findTrack, trackByline } from '../../../common/music';
 import { useReleases } from '../../../common/modpack';
-import { CoverArt, EqBars, PixelCube, ProjectImage, TrackProgress, Transport } from '../../atoms';
+import { CoverArt, EqBars, NowPlaying, PixelCube, ProjectImage, sourceName, TrackProgress, Transport, useNowListening } from '../../atoms';
 
 /** A tile's way to open itself up: the link in its header to the overlay with the rest of it */
 const ExpandLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
@@ -247,21 +249,59 @@ export const ArtistsTile = () => {
     );
 };
 
-export const SurpriseTile = () => {
-    const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
-
-    const surprise = () => {
-        const { audioUrl } = useAudioStore.getState();
-        const choices = LIBRARY.filter((url) => url !== audioUrl);
-        setAudioUrl(choices[Math.floor(Math.random() * choices.length)]);
-    };
+/**
+ * What Jake has on, from ListenBrainz (docs/listening.md): the song playing now, or else the last
+ * one, then the few before it. Lately opens the rest.
+ */
+export const EarsTile = () => {
+    const { listen } = useNowListening();
+    const playingNow = useListeningStore((store) => !!store.nowPlaying);
+    const recent = useListeningStore((store) => store.recent);
+    const loaded = useListeningStore((store) => store.loaded);
+    // The card shows the last play when nothing's playing, so the list starts after it
+    const from = playingNow ? 0 : 1;
+    const before = recent.slice(from, from + 3);
 
     return (
-        <section className='tile tile-rand tile--dashed' aria-label='Surprise me'>
-            <button type='button' className='tile-rand__button' onClick={surprise}>
-                <FiShuffle /> Surprise me
-            </button>
-            <p className='tile-rand__hint'>Random song. No refunds.</p>
+        <section className='tile tile-ears tile--light' aria-labelledby='ears-title'>
+            <div className='tile-ears__head'>
+                <h2 id='ears-title' className='eyebrow'>
+                    In Jake's ears
+                </h2>
+                <ExpandLink to='/listening'>Lately</ExpandLink>
+            </div>
+            {listen ? (
+                <>
+                    <NowPlaying compact className='tile-ears__card' />
+                    <ol className='tile-ears__before' aria-label='Before that'>
+                        {before.map((play, i) => {
+                            const ago = play.listenedAt ? listenedAgo(play.listenedAt).replace(/ ago$/, '') : '';
+                            const row = (
+                                <>
+                                    <span className='tile-ears__name'>
+                                        <strong>{play.title}</strong> · {play.artist}
+                                    </span>
+                                    <span className='tile-ears__ago'>{ago}</span>
+                                </>
+                            );
+                            const service = sourceName[play.source];
+                            return (
+                                <li key={`${play.listenedAt}-${i}`}>
+                                    {play.link ? (
+                                        <a href={play.link} target='_blank' rel='noopener noreferrer' aria-label={`${play.title} by ${play.artist}, ${ago}${service ? `. Opens ${service} in a new tab` : ''}`}>
+                                            {row}
+                                        </a>
+                                    ) : (
+                                        <span>{row}</span>
+                                    )}
+                                </li>
+                            );
+                        })}
+                    </ol>
+                </>
+            ) : (
+                <p className='tile-ears__empty'>{loaded ? 'Quiet in here for now.' : 'Tuning in…'}</p>
+            )}
         </section>
     );
 };

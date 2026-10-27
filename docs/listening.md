@@ -2,9 +2,9 @@
 
 The site shows what Jake is listening to on Spotify and YouTube Music: the track playing right now (or the last one), his latest plays, and his top songs, albums and artists. Visitors can also **listen along**: play the YouTube copy of whatever he has on Spotify, in sync with him.
 
-**Status (2026-10-26):** all of it is built and tested, but none of it is live:
+**Status (2026-10-26):** built, tested and on the board, though not deployed yet:
 
-- **Not mounted:** nothing is on the board yet. Placing the card and the panel, and the two small hook-up edits in [Hooking it up](#hooking-it-up), wait for the bento redesign to settle.
+- **On the board:** the "In Jake's ears" tile and the `/listening` overlay it opens ([How it's hooked up](#how-its-hooked-up)). Listen-along is mounted too, but stays hidden until the Worker is deployed.
 - **ListenBrainz is connected:** the account is [draymothisk](https://listenbrainz.org/user/draymothisk/) (`LISTENBRAINZ_USER`), linked to Spotify on 2026-10-26.
   - Nothing came through for about 2 hours. Plays started minutes after Jake disconnected and reconnected Spotify in ListenBrainz, so if it ever stalls, reconnect first.
   - Spotify also makes the link expire every 6 months, and ListenBrainz emails a reminder before it does.
@@ -41,7 +41,9 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
 - **`atoms/now-playing`** is the card: "Now spinning" with a pulsing dot, or "Last spun · 3h ago".
   - The dot is a "live" light, not a visualizer: ListenBrainz says what's playing, not how loud.
   - The title is a link stretched over the whole card, so the "Listen along" button beside it stays a control of its own.
-  - That button shows only while Jake is on Spotify and the Worker answers.
+  - That button (`ListenAlongButton`) shows only while Jake is on Spotify and the Worker answers.
+  - `useNowListening()` is what the card shows, shared with the overlay: the current listen (or the last), its label, and the listen-along state.
+  - `compact` is the board's version: no arrow, no listen-along button, a smaller cover, and the short label "Spun 3h ago", since the tile is one column wide.
 - **`atoms/lately`** is the panel: Recent, Songs, Albums and Artists, with This month, This year and All time for the top lists.
   - ListenBrainz recalculates statistics now and then, and a range it hasn't counted answers 204. Until the visitor picks a range, the panel steps on to the next one that's ready. If they pick one that isn't, it says so.
 - **`atoms/listen-row` and `atoms/listen-cover`** are the pieces both use. Rows link out and have no play button, so they can't be mistaken for the library's songs.
@@ -109,14 +111,15 @@ The YouTube player is a cross-origin frame, so the site's analyser can't hear it
 >   - Jake's PC, as a scheduled task.
 >   - TapSlayDie's VM, which has a reserved IP; Jake signs in through it once. The catch: a full Google session sits on an internet-facing box.
 >   - No sync at all: Google Takeout exports imported by hand with `import_takeout.py`, which needs no sign-in.
+> - **The workflow is gone.** `.github/workflows/ytmusic-sync.yml` was removed on 2026-10-26, so the schedule stops once that change is on `master`. Restore it from commit `da6456f` if the sync comes back.
 > - **Left behind, now unused:**
->   - `ytmusic-sync.yml` and `setup_secrets.py`, which only fit the OAuth route;
+>   - `setup_secrets.py`, which only fits the OAuth route;
 >   - the published "jakemotta" OAuth app in Google Cloud;
 >   - the privacy page's line about a GitHub secret.
 >
 > What follows describes the sync as it was built.
 
-iOS doesn't let any app see what YouTube Music is playing, so nothing can scrobble the iPhone app live. Instead, `.github/workflows/ytmusic-sync.yml` runs `scripts/ytmusic-sync/sync.py` at :07 and :37 past each hour. It uses [ytmusicapi](https://ytmusicapi.readthedocs.io) (unofficial, pinned in `requirements.txt`) to read the account's YouTube Music history, which holds every device's plays, and submits the ones ListenBrainz doesn't have yet.
+iOS doesn't let any app see what YouTube Music is playing, so nothing can scrobble the iPhone app live. Instead, a GitHub Actions workflow, `.github/workflows/ytmusic-sync.yml` (now removed), ran `scripts/ytmusic-sync/sync.py` at :07 and :37 past each hour. It uses [ytmusicapi](https://ytmusicapi.readthedocs.io) (unofficial, pinned in `requirements.txt`) to read the account's YouTube Music history, which holds every device's plays, and submits the ones ListenBrainz doesn't have yet.
 
 - **What counts as new:** items on the history's "Today" and "Yesterday" shelves whose video isn't already in ListenBrainz from the last 72 hours, whether Web Scrobbler sent it or an earlier run did. That's how web plays aren't counted twice.
 - **What it can't know:**
@@ -165,7 +168,7 @@ What Jake does once, in this order. Nothing secret goes in the repository.
      - signs in to YouTube Music, and checks both the history and the token work;
      - hands GitHub the four secrets: `LISTENBRAINZ_TOKEN`, `YTMUSIC_CLIENT_ID`, `YTMUSIC_CLIENT_SECRET` and `YTMUSIC_OAUTH_JSON`.
    - **How the secrets get to GitHub:** with the GitHub CLI signed in, the script sets them itself. Otherwise it copies each to the clipboard and opens GitHub's new-secret page to paste into. Nothing is printed or saved.
-   - **The schedule** only runs once the workflow is on `master`.
+   - **The schedule** only runs once the workflow is on `master`, and the workflow has since been removed (see above).
 3. **Spotify app:** a developer app at developer.spotify.com, which needs Premium on the owner's account since February 2026, with the redirect URI `http://127.0.0.1:8888/callback`.
 4. **YouTube key:** a YouTube Data API v3 key in the same Google Cloud project, restricted to that API.
 5. **The Worker**, from `workers/listening`:
@@ -177,24 +180,30 @@ What Jake does once, in this order. Nothing secret goes in the repository.
    - `npx wrangler deploy`
 6. **Past history:** the two imports above.
 
-## Hooking it up
+## How it's hooked up
 
-Wait for the bento redesign, then:
+Done on 2026-10-26, once the bento redesign had settled. Jake picked the placement from the [Listening Tile Placement canvas](https://claude.ai/artifact/JvNbfMdMFpPAmT4A1rWdgW): of the three options there, he had the tile take the cell of "Surprise me", which he removed.
 
-1. **Place `<NowPlaying />` and `<Lately />` on the board.** Both are self-contained `primary-dark` surfaces, and render nothing until `LISTENBRAINZ_USER` is set.
-2. **Mount `<ListenAlong />` in `App.tsx`**, right after `<MusicPlayer />`, outside the routes, so it survives navigation the way the player does.
-3. **Let the music player hear the capture**, in `atoms/music-player/index.tsx`:
-   - **Split the chain.** Replace `createMediaElementSource(…).connect(analyzer)` followed by `analyzer.connect(context.destination)` with a source connected to both the destination and the analyser. The analyser then listens beside the speakers rather than in front of them.
-   - **Read the capture:** `const capture = useListenAlongStore((store) => store.capture);`
-   - **Feed it to the analyser:** an effect that, while `capture` is set:
-     - calls `ensureAudioGraph()`;
-     - resumes the context;
-     - connects `context.createMediaStreamSource(capture)` to the analyser, and never to the destination;
-     - resets `bands`;
-     - and on cleanup disconnects it and resets `bands` again.
-4. **Update the docs:** `docs/music.md` (the analyser's two inputs, and that the vignette rests during listen-along unless the visitor opts in), and the "Music and visualizer" part of `CLAUDE.md`.
+1. **The tile:** `EarsTile` in `pages/home/tiles.tsx`, "In Jake's ears", in row 3 under the Now Playing tile ([board.md](board.md)).
+   - It holds the compact `NowPlaying` card and the plays before it, each linking out.
+   - On a desktop the tile is a fixed height, so a short screen shows fewer rows: one that doesn't fit is hidden whole, never cut.
+   - Before the first answer it says "Tuning in…"; with nothing to show, "Quiet in here for now."
+2. **The overlay:** its **Lately ↗** opens `/listening` (`pages/listening`).
+   - On the left is the current listen, big, with "Open in Spotify" and the listen-along button. On the right is `Lately`, ten rows at a time, in two columns on a wide screen.
+   - The path is safe because `public/` has no `listening` folder.
+3. **Listen-along:** `<ListenAlong />` is mounted in `App.tsx`, right after `<MusicPlayer />`, outside the routes, so it survives navigation the way the player does. Until the Worker is deployed, `/api/listening/now` gets the app's own page back instead of JSON, so the button never shows.
+4. **The music player hears the capture** (`atoms/music-player/index.tsx`):
+   - **The chain is split:** the `<audio>` source connects to the speakers and, separately, to the analyser, which listens beside the speakers rather than in front of them.
+   - **While `capture` is set:** an effect connects `context.createMediaStreamSource(capture)` to the analyser, never to the speakers, and resets the bands. It also builds the graph if no track has played yet and resumes the context.
+   - **On cleanup:** it disconnects the stream and resets the bands again.
 
-Steps 2 and 3 were tested together on the bento board, using a fake Worker and a synthetic stream:
+Checked on 2026-10-26 in the dev server:
+
+- **The board:** at 1440×900, 1100×760 and on a phone.
+- **The overlay:** it opens, Escape closes it, and focus goes back to Lately.
+- **The music:** it still drives the vignette after the split.
+
+Earlier, listen-along and the capture were tested together on the bento board, with a fake Worker and a synthetic stream:
 
 - **Sync:** the player stayed within a second of Spotify's position and followed a skip to the next song.
 - **The site's music:** listen-along paused it and closing resumed it. Starting the site's music ended listen-along.

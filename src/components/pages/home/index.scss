@@ -250,7 +250,7 @@ $phone: 639px;
         grid-row: 3;
     }
 
-    .tile-rand {
+    .tile-ears {
         grid-column: 3;
         grid-row: 3;
     }
@@ -839,40 +839,96 @@ $phone: 639px;
     }
 }
 
-.tile-rand {
+// In Jake's ears: the song he has on (atoms/now-playing, compact) and the few before it
+.tile-ears {
     --tilt: -1deg;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
+    gap: 10px;
+    padding: 18px 18px 14px;
 
-    &__button {
+    &__head {
         display: flex;
-        width: 150px;
-        height: 150px;
-        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        gap: 6px;
-        border: 0;
-        border-radius: 50%;
-        background: var(--color-primary-ink);
-        color: var(--color-primary-light);
-        cursor: pointer;
-        font-size: 17px;
-        font-weight: 900;
-        transition: transform 0.45s $spring;
+        justify-content: space-between;
+        gap: 8px;
+        margin: -8px -8px -2px 0;
+    }
 
-        svg {
-            font-size: 30px;
+    // The card's title link covers the card and draws its own ring round it, so the board's ring stays off the title
+    .now-playing__stretch:focus-visible {
+        outline: none;
+        box-shadow: none;
+    }
+
+    // On a desktop the tile is a fixed height: a row that doesn't fit wraps into a second column, out
+    // of sight, so a short screen drops whole rows rather than cutting one in half. The padding
+    // leaves room for the focus rings.
+    &__before {
+        display: flex;
+        min-height: 0;
+        flex-direction: column;
+        margin: -4px -8px 0;
+        overflow: hidden;
+        padding: 4px 8px 6px;
+        list-style: none;
+
+        @media (min-width: $desktop) {
+            flex: 1 1 0;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            column-gap: 24px;
         }
 
-        &:hover {
-            transform: rotate(-14deg) scale(1.06);
+        li {
+            width: 100%;
+        }
+
+        li + li {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        a,
+        li > span {
+            display: flex;
+            min-height: 26px;
+            align-items: center;
+            gap: 10px;
+            color: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a {
+            border-radius: 6px;
+            transition: transform 0.3s $spring;
+
+            &:hover {
+                color: inherit;
+                transform: translateX(4px);
+            }
         }
     }
 
-    &__hint {
-        font-size: 14px;
+    &__name {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        strong {
+            font-weight: 800;
+        }
+    }
+
+    &__ago {
+        flex: none;
+        margin-left: auto;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    &__empty {
+        font-size: 15px;
         font-weight: 800;
     }
 }

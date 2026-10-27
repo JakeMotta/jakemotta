@@ -3,7 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { ColorShiftingBackground } from '../../templates';
 import { MiniPlayer } from '../../atoms';
 import { useAudioStore } from '../../../store/audio';
-import { ArtistsTile, FeaturedTile, HeroTile, ModpackTile, NowPlayingTile, ProjectsTile, SayHiTile, SurpriseTile, UpNextTile } from './tiles';
+import { ArtistsTile, EarsTile, FeaturedTile, HeroTile, ModpackTile, NowPlayingTile, ProjectsTile, SayHiTile, UpNextTile } from './tiles';
 import './index.scss';
 
 // The board on its own; any other path under it is an opened tile drawn over it
@@ -11,7 +11,7 @@ const BOARD_PATHS = ['/', '/home'];
 
 /**
  * The whole site on one board. Tiles open as overlays (the routes rendered into the Outlet:
- * /music, /project/:id, /minecraft), so the board stays mounted behind them.
+ * /library, /listening, /project/:id, /minecraft), so the board stays mounted behind them.
  */
 export const Home = () => {
     const { pathname } = useLocation();
@@ -54,7 +54,7 @@ export const Home = () => {
                 <ProjectsTile />
                 <ModpackTile />
                 <ArtistsTile />
-                <SurpriseTile />
+                <EarsTile />
                 <SayHiTile />
             </main>
 

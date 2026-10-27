@@ -7,18 +7,18 @@ import { ListenCover, SourceIcon, sourceName } from '../listen-cover';
 import './index.scss';
 
 /**
- * What Jake is listening to right now on Spotify or YouTube Music, or else the last thing he played.
- * The card links out to the track. While he's on Spotify, and the listening Worker is up, it also
- * offers to listen along: the YouTube copy, in sync, in atoms/listen-along.
+ * What to show as Jake's current listen: what's playing now, or else the last thing he played,
+ * with its label, and whether a visitor can listen along. The card below and the opened
+ * /listening overlay both read it.
  */
-export const NowPlaying = ({ className = '' }: { className?: string }) => {
+export const useNowListening = () => {
     useLiveListening();
     const nowPlaying = useListeningStore((store) => store.nowPlaying);
     const last = useListeningStore((store) => store.recent[0]);
     const listenAlongReady = useListenAlongStore((store) => store.available);
     const listeningAlong = useListenAlongStore((store) => store.active);
     const { probe, start, stop } = useListenAlongStore.getState();
-    const listen = nowPlaying ?? last;
+    const listen = LISTENBRAINZ_USER ? (nowPlaying ?? last) : undefined;
     const onSpotify = nowPlaying?.source === 'spotify';
 
     // Only ask whether the Worker is there once there's something to listen along with
@@ -26,14 +26,50 @@ export const NowPlaying = ({ className = '' }: { className?: string }) => {
         if (onSpotify) probe();
     }, [onSpotify, probe]);
 
-    if (!LISTENBRAINZ_USER || !listen) return null;
-
     const live = !!nowPlaying;
-    const service = sourceName[listen.source];
-    const label = live ? 'Now spinning' : `Last spun · ${listen.listenedAt ? listenedAgo(listen.listenedAt) : 'a while ago'}`;
+    const ago = listen?.listenedAt ? listenedAgo(listen.listenedAt) : 'a while ago';
+    const label = live ? 'Now spinning' : `Last spun · ${ago}`;
+
+    return {
+        listen,
+        live,
+        label,
+        // For the board's narrow tile, where the long label would wrap
+        shortLabel: live ? label : `Spun ${ago}`,
+        service: listen ? sourceName[listen.source] : undefined,
+        canListenAlong: onSpotify && !!listenAlongReady,
+        listeningAlong,
+        toggleListenAlong: () => (listeningAlong ? stop() : start()),
+    };
+};
+
+/** The listen-along button: the YouTube copy of what Jake has on Spotify, in sync (atoms/listen-along) */
+export const ListenAlongButton = ({ className = '' }: { className?: string }) => {
+    const { canListenAlong, listeningAlong, toggleListenAlong } = useNowListening();
+    if (!canListenAlong) return null;
 
     return (
-        <div className={`now-playing${listen.link ? ' now-playing--link' : ''} ${className}`}>
+        <button type='button' className={`now-playing__along ${className}`} aria-pressed={listeningAlong} onClick={toggleListenAlong}>
+            <FiHeadphones aria-hidden /> {listeningAlong ? 'Listening' : 'Listen along'}
+        </button>
+    );
+};
+
+/**
+ * What Jake is listening to right now on Spotify or YouTube Music, or else the last thing he played.
+ * The card links out to the track. While he's on Spotify, and the listening Worker is up, it also
+ * offers to listen along. `compact` drops the arrow and the listen-along button, for the board's
+ * narrow tile; the opened overlay has both.
+ */
+export const NowPlaying = ({ compact = false, className = '' }: { compact?: boolean; className?: string }) => {
+    const now = useNowListening();
+    const { listen, live, service } = now;
+    const label = compact ? now.shortLabel : now.label;
+
+    if (!listen) return null;
+
+    return (
+        <div className={`now-playing${listen.link ? ' now-playing--link' : ''}${compact ? ' now-playing--compact' : ''} ${className}`}>
             <ListenCover title={listen.title} cover={listen.cover} spotifyUrl={listen.spotifyUrl} className='now-playing__cover' />
             <span className='now-playing__text'>
                 <span className='now-playing__label'>
@@ -56,12 +92,8 @@ export const NowPlaying = ({ className = '' }: { className?: string }) => {
                 <span className='now-playing__artist'>{listen.artist}</span>
             </span>
             <SourceIcon source={listen.source} className='now-playing__source' />
-            {onSpotify && listenAlongReady && (
-                <button type='button' className='now-playing__along' aria-pressed={listeningAlong} onClick={() => (listeningAlong ? stop() : start())}>
-                    <FiHeadphones aria-hidden /> {listeningAlong ? 'Listening' : 'Listen along'}
-                </button>
-            )}
-            {listen.link && (
+            {!compact && <ListenAlongButton />}
+            {listen.link && !compact && (
                 <span className='now-playing__go' aria-hidden>
                     <FiArrowUpRight />
                 </span>

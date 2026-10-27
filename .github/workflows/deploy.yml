@@ -166,6 +166,11 @@ jobs:
             printf "put -O %s ./build/index.html\n" "$target"
             printf "put -O %s ./build/asset-manifest.json\n" "$target"
 
+            # The privacy policy is edited in place under a fixed name, so a
+            # reworded sentence of the same length would never go up either.
+            # Google's OAuth app for the YouTube Music sync links to it.
+            printf "put -O %s ./build/privacy.html\n" "$target"
+
             # The same goes for the modpack's release pointers: going from
             # 1.0.0-rc.1 to 1.0.0-rc.2 changes them without changing their
             # length. The versioned archives they point at are new paths and

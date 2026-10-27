@@ -138,6 +138,12 @@ const SITES = [
         replace: [
             ['http://jakemotta.com/DanJames/', '/projects/dan-james/index.static.html'],
             ['http://blackchamber.com/', '/projects/black-chamber/index.html'],
+            // On the home page the second cloud and the balloons are nudged right to about 950px,
+            // and "I'm Jake" is a full-width line that pulses to 105% forever, so anything
+            // narrower than a 2016 desktop, like the viewer's frame, scrolls sideways and keeps
+            // flickering a scrollbar. They're decoration, so the page clips them. (About and
+            // Projects are fixed 960px layouts whose text runs that wide, so they keep scrolling.)
+            ['<div id="ich">', '<style>html { overflow-x: hidden; }</style>\n    <div id="ich">'],
         ],
     },
     // Motorsport sites: three client sites behind one hand-written hub (motorsport/index.html).

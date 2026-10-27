@@ -7,6 +7,7 @@ Jake's portfolio from 2016 ("Hello World! I'm Jake"), with clouds and balloons t
 `index.htm`, `about.html` and `projects.html` are written as `X.static.html` by `scripts/convert-php-sites.mjs` (its `personal-site` entry):
 - `index.htm` loads a second jQuery over plain `http://`, which an https page blocks. The other two pages link back to it.
 - The projects page's links to Dan James and Black Chamber point at their previews here. The Bay Area Juneteenth and Team SAFE Racing links stay external.
+- The home page clips sideways overflow (`html { overflow-x: hidden }`). Its second cloud and the balloons are nudged right to about 950px, and "I'm Jake" pulses a full-width line to 105% forever. So in anything narrower, like the viewer's frame, it scrolled sideways and kept flickering a scrollbar. About and Projects don't get the rule: they're fixed 960px layouts whose text runs that wide, so clipping would hide it.
 
 Some quirks are the original's own and are left alone:
 - The home page's menu scrolls within the page. Nothing on it links to the About or Projects pages; only `index (2).htm`, an unlinked variant, does.

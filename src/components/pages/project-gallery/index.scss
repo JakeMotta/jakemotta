@@ -1,0 +1,196 @@
+$spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+.gallery {
+    gap: 18px;
+    padding: 26px 28px 0;
+
+    @media (max-width: 639px) {
+        padding: 20px 16px 0;
+    }
+
+    h2,
+    p {
+        margin: 0;
+        color: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+        outline: 3px solid var(--color-primary-light);
+        outline-offset: 2px;
+        box-shadow: 0 0 0 6px var(--color-primary-ink);
+    }
+
+    &__head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 18px;
+        // Clear of the overlay's close button
+        padding-right: 64px;
+    }
+
+    &__intro {
+        min-width: 0;
+        flex: 1 1 360px;
+
+        h2 {
+            font-size: 40px;
+            font-weight: 900;
+            letter-spacing: -0.035em;
+            line-height: 1;
+        }
+
+        p {
+            margin-top: 8px;
+            font-size: 16px;
+            font-weight: 800;
+        }
+    }
+
+    &__player {
+        width: 300px;
+        max-width: 100%;
+        background: rgba(0, 0, 0, 0.28);
+    }
+
+    &__grid {
+        display: grid;
+        min-height: 0;
+        flex: 1;
+        align-content: start;
+        gap: 22px;
+        margin: 0 -8px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 8px 8px 28px;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        list-style: none;
+
+        @media (max-width: 639px) {
+            overflow: visible;
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        color: var(--color-primary-light);
+        text-decoration: none;
+        transition: transform 0.4s $spring;
+
+        &:hover {
+            color: var(--color-primary-light);
+            transform: translateY(-5px) rotate(-1.5deg);
+        }
+    }
+
+    li:nth-child(even) &__card:hover {
+        transform: translateY(-5px) rotate(1.5deg);
+    }
+
+    &__frame {
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.32);
+    }
+
+    &__image {
+        transition:
+            transform 0.5s ease,
+            filter 0.5s ease;
+    }
+
+    &__card:hover &__image,
+    &__card:focus-visible &__image {
+        filter: brightness(0.85);
+        transform: scale(1.05);
+    }
+
+    &__badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 5px 11px;
+        border-radius: 999px;
+        background: var(--color-primary-light);
+        color: var(--color-primary-ink);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    &__arrow {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--color-primary-dark);
+        font-size: 18px;
+        opacity: 0;
+        transform: scale(0.6);
+        transition:
+            opacity 0.2s,
+            transform 0.35s $spring;
+
+        // No hover on a phone, so the arrow is always there
+        @media (hover: none) {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    &__card:hover &__arrow,
+    &__card:focus-visible &__arrow {
+        opacity: 1;
+        transform: none;
+    }
+
+    &__title {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+
+        strong {
+            min-width: 0;
+            overflow: hidden;
+            font-size: 19px;
+            font-weight: 900;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        span {
+            flex-shrink: 0;
+            font-size: 13px;
+            font-weight: 800;
+        }
+    }
+
+    &__description {
+        display: -webkit-box;
+        overflow: hidden;
+        margin-top: -2px;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.4;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &__card:hover,
+        li:nth-child(even) &__card:hover {
+            transform: none;
+        }
+    }
+}

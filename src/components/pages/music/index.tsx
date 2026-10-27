@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FiShuffle, FiVolume2, FiX } from 'react-icons/fi';
 import { BentoOverlay } from '../../templates';
 import { CoverArt, EqBars, MusicTile, TrackProgress, Transport, VolumeSlider } from '../../atoms';
@@ -13,7 +13,10 @@ type Tab = 'mine' | 'favorites';
 /** The music tile opened: the player and its queue on the left, the whole library on the right */
 export const MusicLibrary = () => {
     const navigate = useNavigate();
-    const [tab, setTab] = useState<Tab>('mine');
+    // The tab lives in the URL (/music?tab=favorites), so the board's Favorite artists tile can open straight onto it
+    const [params, setParams] = useSearchParams();
+    const tab: Tab = params.get('tab') === 'favorites' ? 'favorites' : 'mine';
+    const setTab = (key: Tab) => setParams(key === 'favorites' ? { tab: key } : {}, { replace: true });
     const audioUrl = useAudioStore((store) => store.audioUrl);
     const isPlaying = useAudioStore((store) => store.isPlaying);
     const queue = useAudioStore((store) => store.queue);

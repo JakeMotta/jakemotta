@@ -183,6 +183,36 @@ $phone: 639px;
     }
 }
 
+// The link in a tile's header that opens the rest of it in an overlay, like Library on the Now Playing tile
+.tile-expand {
+    display: inline-flex;
+    min-height: 40px;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 4px;
+    padding: 0 12px;
+    border-radius: 999px;
+    color: inherit;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: normal;
+    text-decoration: none;
+    text-transform: none;
+    transition:
+        background-color 0.2s,
+        transform 0.3s $spring;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.14);
+        color: inherit;
+        transform: rotate(-3deg);
+    }
+
+    .tile--shade &:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+}
+
 // Where each tile sits on a desktop, and how it leans on hover
 @media (min-width: $desktop) {
     .tile-hero {
@@ -313,24 +343,6 @@ $phone: 639px;
         align-items: center;
         justify-content: space-between;
         gap: 8px;
-    }
-
-    &__library {
-        display: inline-flex;
-        min-height: 36px;
-        align-items: center;
-        gap: 4px;
-        padding: 0 12px;
-        border-radius: 999px;
-        color: var(--color-primary-light);
-        font-size: 13px;
-        font-weight: 900;
-        text-decoration: none;
-
-        &:hover {
-            background: rgba(255, 255, 255, 0.14);
-            color: var(--color-primary-light);
-        }
     }
 
     &__cover {
@@ -572,16 +584,19 @@ $phone: 639px;
 
     &__head {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
-        padding: 0 8px 4px;
+        gap: 8px;
+        padding: 0 0 4px 8px;
 
         h2 {
             font-size: 18px;
             font-weight: 900;
         }
 
-        span {
+        div > span {
+            display: block;
+            margin-top: 2px;
             font-size: 13px;
             font-weight: 800;
         }
@@ -658,24 +673,27 @@ $phone: 639px;
 
     &__head {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
+        gap: 8px;
 
         h2 {
             font-size: 24px;
             font-weight: 900;
         }
-
-        span {
-            font-size: 14px;
-            font-weight: 900;
-        }
     }
 
+    // Scrolls inside the tile once there are more projects than fit. The padding leaves room
+    // for the thumbnails' lift on hover and their focus rings, which the scroll box would clip.
     &__grid {
         display: grid;
-        margin: 0;
-        padding: 0;
+        min-height: 0;
+        flex: 1;
+        align-content: start;
+        margin: -6px -6px 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 6px 6px 8px;
         gap: 14px;
         grid-template-columns: repeat(5, minmax(0, 1fr));
         list-style: none;
@@ -776,6 +794,14 @@ $phone: 639px;
     --tilt: 1.2deg;
     justify-content: space-between;
     gap: 12px;
+
+    &__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: -10px;
+    }
 
     &__names {
         display: flex;
@@ -878,11 +904,6 @@ $phone: 639px;
             padding-left: 6px;
             color: var(--color-primary-ink);
         }
-    }
-
-    &__hint {
-        font-size: 13px;
-        font-weight: 800;
     }
 }
 

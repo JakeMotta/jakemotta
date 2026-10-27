@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Home, Minecraft, MusicLibrary, ProjectViewer } from './components/pages';
+import { Home, Minecraft, MusicLibrary, ProjectGallery, ProjectViewer } from './components/pages';
 import { ConfigProvider } from 'antd';
 import { ThemeProvider, useTheme, generateRandomHue } from './contexts/ThemeContext';
 import { TsParticleBackground, MusicPlayer } from './components/atoms';
@@ -55,6 +55,8 @@ const AppContent = () => {
             <Route path="home" element={null} />
             <Route path="music" element={<MusicLibrary />} />
             <Route path="minecraft" element={<Minecraft />} />
+            {/* /project, singular: /projects/ is the standalone sites' folder, which the server keeps from the app */}
+            <Route path="project" element={<ProjectGallery />} />
             <Route path="project/:id" element={<ProjectViewer />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>

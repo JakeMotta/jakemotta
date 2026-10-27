@@ -8,6 +8,13 @@ import { findTrack, LIBRARY, trackByline } from '../../../common/music';
 import { useReleases } from '../../../common/modpack';
 import { CoverArt, EqBars, PixelCube, ProjectImage, TrackProgress, Transport } from '../../atoms';
 
+/** A tile's way to open itself up: the link in its header to the overlay with the rest of it */
+const ExpandLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
+    <Link className='tile-expand' to={to}>
+        {children} <FiArrowUpRight />
+    </Link>
+);
+
 export const HeroTile = () => {
     const isPlaying = useAudioStore((store) => store.isPlaying);
 
@@ -23,13 +30,13 @@ export const HeroTile = () => {
                 <h1 id='hero-name' className='tile-hero__name'>
                     Jake Motta
                 </h1>
-                <p className='tile-hero__tagline'>Websites, songs, and the occasional Minecraft modpack.</p>
+                <p className='tile-hero__tagline'>A slice of work throughout the years</p>
             </div>
             <nav className='tile-hero__chips' aria-label='Sections'>
                 <Link className='chip' to='/music'>
                     Music
                 </Link>
-                <Link className='chip' to={`/project/${homeProjectList[0].id}`}>
+                <Link className='chip' to='/project'>
                     Projects
                 </Link>
                 <Link className='chip' to='/minecraft'>
@@ -53,11 +60,7 @@ export const NowPlayingTile = forwardRef<HTMLElement>((_, ref) => {
     const togglePlayback = useAudioStore((store) => store.togglePlayback);
     const track = findTrack(audioUrl);
 
-    const libraryLink = (
-        <Link className='tile-now__library' to='/music'>
-            Library <FiArrowUpRight />
-        </Link>
-    );
+    const libraryLink = <ExpandLink to='/music'>Library</ExpandLink>;
 
     return (
         <section ref={ref} className='tile tile-now tile--dark' aria-label='Now playing'>
@@ -148,8 +151,11 @@ export const UpNextTile = () => {
     return (
         <section className='tile tile-next tile--dark' aria-labelledby='up-next-title'>
             <div className='tile-next__head'>
-                <h2 id='up-next-title'>Up next</h2>
-                <span>{queue.length ? `${queue.length} queued, then shuffle` : 'shuffled'}</span>
+                <div>
+                    <h2 id='up-next-title'>Up next</h2>
+                    <span>{queue.length ? `${queue.length} queued, then shuffle` : 'shuffled'}</span>
+                </div>
+                <ExpandLink to='/music'>Queue</ExpandLink>
             </div>
             <ol className='tile-next__list'>
                 {rows.map(({ url, position }) => {
@@ -176,12 +182,12 @@ export const UpNextTile = () => {
     );
 };
 
-/** Every project but the featured one, as small screenshots */
+/** Every project but the featured one, as small screenshots that scroll inside the tile */
 export const ProjectsTile = () => (
     <section id='projects' className='tile tile-proj tile--shade' aria-labelledby='projects-title'>
         <div className='tile-proj__head'>
             <h2 id='projects-title'>Projects</h2>
-            <span>{homeProjectList.length} projects</span>
+            <ExpandLink to='/project'>All {homeProjectList.length}</ExpandLink>
         </div>
         <ul className='tile-proj__grid'>
             {homeProjectList.slice(1).map((project) => (
@@ -223,9 +229,12 @@ export const ArtistsTile = () => {
 
     return (
         <section className='tile tile-art tile--dark' aria-labelledby='artists-title'>
-            <h2 id='artists-title' className='eyebrow'>
-                Favorite artists
-            </h2>
+            <div className='tile-art__head'>
+                <h2 id='artists-title' className='eyebrow'>
+                    Favorite artists
+                </h2>
+                <ExpandLink to='/music?tab=favorites'>Library</ExpandLink>
+            </div>
             <div className='tile-art__names'>
                 {favoriteArtists.map((artist) => (
                     <button key={artist.title} type='button' className='tile-art__name' onClick={() => setAudioUrl(artist.url)}>
@@ -265,6 +274,5 @@ export const SayHiTile = () => (
         <a className='tile-hi__link' href='https://github.com/JakeMotta' target='_blank' rel='noreferrer'>
             GitHub <FiArrowUpRight />
         </a>
-        <p className='tile-hi__hint'>The color changes every 30 seconds. You're welcome.</p>
     </section>
 );

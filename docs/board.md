@@ -20,15 +20,19 @@ On a desktop the tiles sit like this:
 
 ## The tiles
 
-- **Hero** (`HeroTile`): the name, the one-line tagline, whether sound is on, and links to Music (`/music`), Projects (the newest project's viewer) and Minecraft (`/minecraft`). It holds the page's only `<h1>`.
-- **Now Playing** (`NowPlayingTile`): the player. Cover, title, byline, a seek slider and previous/play/next, plus a link to the library. It also holds the sound-or-silence choice (below), and when the visitor chose silence it offers to start the welcome track.
+- **Hero** (`HeroTile`): the name, the one-line tagline, whether sound is on, and links to Music (`/music`), Projects (`/project`) and Minecraft (`/minecraft`). It holds the page's only `<h1>`.
+- **Now Playing** (`NowPlayingTile`): the player. Cover, title, byline, a seek slider and previous/play/next, plus **Library ↗**. It also holds the sound-or-silence choice (below), and when the visitor chose silence it offers to start the welcome track.
 - **Featured project** (`FeaturedTile`): the first entry in `homeProjectList`, which is the newest, marked "Newest". The whole tile links to its viewer.
-- **Up next** (`UpNextTile`): the next four tracks, queued ones first with their place in line, then the shuffle. Clicking one plays it now.
-- **Projects** (`ProjectsTile`): every other project as a small 4:3 screenshot with its name and year, each linking to its viewer.
+- **Up next** (`UpNextTile`): the next four tracks, queued ones first with their place in line, then the shuffle. Clicking one plays it now. **Queue ↗** opens the library, where the queue is.
+- **Projects** (`ProjectsTile`): every other project as a small 4:3 screenshot with its name and year, each linking to its viewer. The screenshots scroll inside the tile once there are more than fit; **All *n* ↗** opens all of them.
 - **Modpack** (`ModpackTile`): links to `/minecraft`, and shows the latest version from `releases.json`.
-- **Favorite artists** (`ArtistsTile`): the names in `favoriteArtists`; clicking one plays its track.
+- **Favorite artists** (`ArtistsTile`): the names in `favoriteArtists`; clicking one plays its track. **Library ↗** opens the library on its Favorite artists tab (`/music?tab=favorites`).
 - **Surprise me** (`SurpriseTile`): plays a random track that isn't the one playing.
 - **Say hi** (`SayHiTile`): Jake's GitHub.
+
+### Opening a tile
+
+A tile with more behind it opens into an overlay. A tile that is one thing (the featured project, the modpack) is a link as a whole. A tile that holds several things has an expand link in its header (`ExpandLink`, styled `.tile-expand`): Library, Queue, All *n*. Hero, Surprise me and Say hi have nothing more to show, so they don't open.
 
 ## Sound or silence
 
@@ -46,12 +50,13 @@ A tile opens as an overlay route drawn over the board, which stays mounted behin
 | Route | Page | What it is |
 | --- | --- | --- |
 | `/music` | `pages/music` | The library: the big player, volume and the queue on the left; My music and Favorite artists as cover tiles on the right, each with play and a queue toggle. |
-| `/project/:id` | `pages/project` | The project viewer (see [projects/README.md](projects/README.md)). |
+| `/project` | `pages/project-gallery` | Every project, newest first, as cards with screenshot, name, year and description. It's at `/project`, singular, because `/projects/` is the folder of standalone sites, which `.htaccess` keeps from the app. |
+| `/project/:id` | `pages/project` | The project viewer (see [projects/README.md](projects/README.md)). Opened from the all-projects overlay, it closes back to it; opened from the board, back to the board. Its side panel links to all projects too. |
 | `/minecraft` | `pages/minecraft` | The modpack download page as a board of its own: Download, Install, Playing, Updating, Troubleshooting and Server files tiles (see [modpack.md](modpack.md)). |
 
 Each uses `templates/bento-overlay`, which:
 - portals the panel to `<body>`, over a scrim, under the visualizer's vignette;
-- closes on Escape, on its close button and on a click on the scrim, all by going to `/`;
+- closes on Escape, on its close button and on a click on the scrim, all through the page's `onClose`, which goes to `/` (the viewer goes back to `/project` when it was opened from there). Escape also works while focus is inside a framed project, because the overlay listens in each same-origin frame's document every time it loads a page. A live site on another domain (TapSlayDie) is out of reach; there, click the overlay outside the frame first. Escape is left alone when the page already used it (`defaultPrevented`), like a framed site closing its own lightbox;
 - moves focus to its close button on open and hands it back to whatever opened it on close.
 
 The board turns `inert` off in a layout effect, so it's live again by the time focus comes back. On phones an overlay fills the screen and scrolls.

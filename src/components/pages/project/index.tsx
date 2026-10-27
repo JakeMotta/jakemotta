@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FiArrowUpRight, FiChevronLeft, FiChevronRight, FiInfo, FiLock } from 'react-icons/fi';
 import { BentoOverlay } from '../../templates';
 import { MiniPlayer, ProjectImage } from '../../atoms';
@@ -32,11 +32,14 @@ const address = (preview: string) => {
 export const ProjectViewer = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const frameRef = useRef<HTMLIFrameElement>(null);
     const [loadedId, setLoadedId] = useState<string>();
     const index = homeProjectList.findIndex((item) => item.id === id);
     const project = homeProjectList[index];
-    const close = () => navigate('/');
+    // Opened from the all-projects overlay, closing goes back there; opened from the board, back to the board
+    const fromGallery = (location.state as { from?: string } | null)?.from === 'gallery';
+    const close = () => navigate(fromGallery ? '/project' : '/');
 
     if (!project) {
         return (
@@ -53,7 +56,7 @@ export const ProjectViewer = () => {
     const previous = homeProjectList[(index - 1 + count) % count];
     const next = homeProjectList[(index + 1) % count];
     // Stepping between projects replaces the entry, so Back closes the viewer instead of retracing every project
-    const show = (projectId: string) => navigate(`/project/${projectId}`, { replace: true });
+    const show = (projectId: string) => navigate(`/project/${projectId}`, { replace: true, state: location.state });
 
     const onFrameLoad = () => {
         setLoadedId(project.id);
@@ -144,6 +147,10 @@ export const ProjectViewer = () => {
                         <span>Next</span>
                         <span>{next.title} →</span>
                     </button>
+                    <Link className='viewer__step' to='/project'>
+                        <span>All projects</span>
+                        <span>{count}</span>
+                    </Link>
                 </div>
                 <MiniPlayer className='viewer__player' />
             </aside>

@@ -92,8 +92,15 @@ async function buildImages() {
   }
   ensure(join(MEDIA, 'artists'));
   await writeSizes(Buffer.from(artistPortrait()), join(MEDIA, 'artists', 'jake-motta'), [640, 320, 120]);
-  ensure(join(MEDIA, 'brand'));
-  await writeSizes(join(REPO, 'demos/ambii/business-web/src/images/ambii_logo_inverse.png'), join(MEDIA, 'brand', 'ambii-logo'), [512, 250, 120]);
+  // The logo comes from the dashboard's source, which isn't committed (its repository is private),
+  // so anywhere but Jake's machine the logo files already in media/brand/ are kept as they are.
+  const logo = join(REPO, 'demos/ambii/business-web/src/images/ambii_logo_inverse.png');
+  if (existsSync(logo)) {
+    ensure(join(MEDIA, 'brand'));
+    await writeSizes(logo, join(MEDIA, 'brand', 'ambii-logo'), [512, 250, 120]);
+  } else {
+    console.warn('build-media: kept the existing Ambii logo; its source is in demos/ambii/business-web/, which is not committed');
+  }
 }
 
 // ---------- audio ----------

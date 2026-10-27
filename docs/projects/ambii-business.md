@@ -70,7 +70,7 @@ Rebuilding needs the apps' source in `demos/ambii/`, so it only works on Jake's 
 
 - **The apps' source,** which stays on Jake's machine ([Where the source lives](#where-the-source-lives)). Source maps are left out of the build output for the same reason: they'd publish it.
 - **Secrets the repositories held:** the old API keys, the CodePush key, the Google Maps key, the tracker IDs (Tag Manager, Analytics), the Auth0 settings, and, in the server, its TLS key and database connection string. None was copied. The server isn't copied at all.
-- **Anything that would call another host:** Google Fonts, cdnjs, the Maps script and the Tag Manager iframe are removed from the pages. The few `ambii.io` strings left in the bundles are inert hostname checks and an email comparison.
+- **Anything that would call another host:** Google Fonts, cdnjs, the Maps script and the Tag Manager iframe are removed from the pages. The few `ambii.io` strings left in the bundles are inert hostname checks and an email comparison. The web player also still names an S3 logo for its old MVIX white-label mode, which only switches on when the page's path contains "mvix", so it never loads here.
 - **The store listings:** the app is gone from the App Store and Google Play, so the store buttons in the dashboard's Connect Player modal open the phone app demo instead.
 
 ## Card image

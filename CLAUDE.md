@@ -143,9 +143,18 @@ Projects appear on the board as the featured tile (the first, newest entry in `h
 
 The tiles are fed by `homeProjectList` in `common/constants.ts`: an empty `image` gives the monogram tile and an empty `description` shows none, so leave a field empty rather than writing filler. Descriptions say what the project is in one plain sentence. They don't start with "This is a project…" and aren't padded to fill space.
 
+## Branches and staging
+
+Jake asked on 2026-10-27 for every task to go through its own branch into `staging`, so chats stop asking to commit and deploy and can't overwrite each other's work. `master` is what's live; `staging` is everything finished and waiting to go live.
+
+- **One task, one branch, one worktree.** Before editing anything, move into a worktree of your own on a new branch cut from `staging`. A session the app started in a worktree already is one (run `git merge staging` first if it was cut from `master`). Otherwise, from the main checkout: `git worktree add .claude/worktrees/<name> -b claude/<name> staging`, then work only in that folder. Never edit in the main checkout (`C:\Users\Jake\Documents\Github\jakemotta`): other chats share it, and it stays on `master`. A worktree has no `node_modules`; run `yarn install --frozen-lockfile` there before `yarn dev` or `yarn build`.
+- **Commit as you go, without asking.** Commits on the task branch are routine.
+- **When the task is done, merge it into `staging`, without asking.** In the worktree, `git merge staging` (resolve any conflict there, keeping both sides' work), then `git push . HEAD:staging`. That only fast-forwards, so it refuses rather than lose anything that reached `staging` in the meantime; merge again and retry. Never check `staging` out anywhere, or it can't be moved this way. Then `git worktree remove` a worktree you created, and name the branch in the wrap-up.
+- **Never deploy, and don't offer to.** Jake decides when: on his word, merge `staging` into `master` and push `master`. Don't push `staging` or task branches either unless he asks.
+
 ## Deployment
 
-Pushing to `master` deploys (`.github/workflows/deploy.yml`): `yarn build`, then `lftp mirror --reverse` of `build/` to the host over FTPS. Things that follow from how it works:
+Pushing to `master` deploys (`.github/workflows/deploy.yml`), which happens only when Jake says so (see Branches and staging): `yarn build`, then `lftp mirror --reverse` of `build/` to the host over FTPS. Things that follow from how it works:
 
 - **Nothing is ever deleted on the server** (no `--delete`), so the standalone `/projects/` sites and old hashed bundles survive every deploy. That also means a file once uploaded stays public, which is why `yarn build` prunes `pistol-art/myAdmin` (an old CMS admin whose `config.php` holds database credentials) and every `.php` under `projects/` before the upload ever sees them.
 - **Files are compared by size only** (`--ignore-time`), because CI rewrites every timestamp. A file whose contents change but whose length doesn't would never be re-uploaded. Hashed bundles are safe; `index.html`, `asset-manifest.json`, `privacy.html`, `sitemap.xml`, the modpack pointer files and the Ambii Business demos' `index.html` pages are uploaded unconditionally for this reason. Any new file that is rewritten in place under a fixed name needs the same explicit `put` in the workflow.

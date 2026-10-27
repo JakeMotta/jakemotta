@@ -33,3 +33,6 @@ yarn-error.log*
 /demos/**/node_modules
 /demos/**/build
 /demos/**/dist
+
+# Worktrees for Claude sessions, one per task (see Branches and staging in CLAUDE.md)
+/.claude/worktrees

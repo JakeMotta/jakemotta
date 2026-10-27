@@ -21,11 +21,13 @@ Only the files each web build uses were copied (no `android/`, `ios/` or CI conf
 
 The three apps' source isn't in this repository. Their upstream repositories are private and this one is public, so Jake decided on 2026-10-26 to keep it out (CLAUDE.md, "Kept and removed files").
 
-- **On Jake's machine:** `demos/ambii/business-web/`, `web-player/` and `music-app/`, which `.gitignore` leaves out. Each holds its app as of the commit in the table, changed for the demo, with a `DEMO-CHANGES.md` that lists every change. The phone app's web port (`music-app/web/`: the webpack config, the native-module shims and the phone-frame page) is there too. This copy is the only one with the demo's changes, so losing it means redoing them from the upstream commits.
-- **Upstream:** the private repositories in the table, at those commits, without the demo's changes.
+- **On Jake's machine:** `demos/ambii/business-web/`, `web-player/` and `music-app/`, which `.gitignore` leaves out. Each holds its app as of the commit in the table, changed for the demo, with a `DEMO-CHANGES.md` that lists the changes. The phone app's web port (`music-app/web/`: the webpack config, the native-module shims and the phone-frame page) is there too. These folders are plain copies, not git checkouts.
+- **Upstream, on a `jakemotta-demo` branch:** each private repository in the table has one, pushed on 2026-10-27. It is the commit in the table plus one commit with the demo's changes (the dashboard's comes after the two `fix/tempo-fix` commits), and every file in the folder above is on it unchanged, apart from the phone app's `.npmrc` (`legacy-peer-deps=true`), which that repository's `.gitignore` ignores. The branches are a backup, not something to merge: they build only inside `demos/ambii/`, next to the mock and `shared/`.
+  - **Restoring the source** on another machine: clone each repository's `jakemotta-demo` branch into its folder (`ambii_business_web` → `business-web/`, `ambii-web-player` → `web-player/`, `ambii_business_music` → `music-app/`).
+  - **After changing an app's source,** update its branch too. Copy the folder over a checkout of the branch, leaving out `node_modules`, `build` and `dist`, then commit and push. Otherwise the folder is again the only copy of that change. In the dashboard, `package.json` and `package-lock.json` are stored with CRLF line endings upstream; convert them back before committing, or the diff rewrites every line.
 - **In this repository:** the build output in `public/projects/ambii-business/` (minified bundles, no source maps), the mock in `demos/ambii/mock-server/`, the shared build tooling in `demos/ambii/shared/`, `demos/ambii/README.md` and `scripts/build-ambii-demos.mjs`.
 
-So a fresh clone can serve and deploy the demos but can't rebuild them, and `yarn projects:ambii` stops and names the missing folders. That includes changes to the mock, which is bundled into each app.
+So a fresh clone can serve and deploy the demos but can't rebuild them until the three folders are restored from the branches, and `yarn projects:ambii` stops and names the missing folders. That includes changes to the mock, which is bundled into each app.
 
 ## How the preview runs
 
@@ -35,7 +37,7 @@ So a fresh clone can serve and deploy the demos but can't rebuild them, and `yar
 - **The phone app** runs through react-native-web in a phone-frame page (`mobile/index.html`, the app itself in `mobile/app/`). Its WebView screens frame the dashboard in in-app mode, two frames deep inside the viewer.
 - **Nothing leaves the site.** Auth0, Stripe, Google Maps, Google's text-to-speech, analytics and the old `ambii.io` hosts are all replaced or removed. Sign-in is a one-click stand-in, subscribing uses a read-only sample card (no card fields at all), the address search suggests a few made-up places, and announcements made in the demo are spoken by the browser's own voices.
 
-The contract between the apps (storage keys, the links between them, the WebView bridge) is in [`demos/ambii/README.md`](../../demos/ambii/README.md). The mock's routes are the `ROUTES` table in `demos/ambii/mock-server/core/server.js`, described in [`demos/ambii/mock-server/README.md`](../../demos/ambii/mock-server/README.md). Every change to an app's source carries a `DEMO:` comment and is listed in that app's `DEMO-CHANGES.md`, along with the upstream quirks that were left as they were; both are in the local copies only ([Where the source lives](#where-the-source-lives)).
+The contract between the apps (storage keys, the links between them, the WebView bridge) is in [`demos/ambii/README.md`](../../demos/ambii/README.md). The mock's routes are the `ROUTES` table in `demos/ambii/mock-server/core/server.js`, described in [`demos/ambii/mock-server/README.md`](../../demos/ambii/mock-server/README.md). Every change to an app's source carries a `DEMO:` comment and is listed in that app's `DEMO-CHANGES.md`, along with the upstream quirks that were left as they were; both are in the local copies and on the `jakemotta-demo` branches, not in this repository ([Where the source lives](#where-the-source-lives)).
 
 ## Demo data
 
@@ -56,7 +58,7 @@ yarn projects:ambii                 # all three apps
 yarn projects:ambii dashboard       # or dashboard, player, mobile
 ```
 
-Rebuilding needs the apps' source in `demos/ambii/`, so it only works on Jake's machine ([Where the source lives](#where-the-source-lives)). `scripts/build-ambii-demos.mjs` installs each app from its own lockfile (`npm ci --legacy-peer-deps`, the first time and whenever the lockfile is newer than `node_modules`), then runs its `demo:build`, which builds and copies the output into `public/projects/ambii-business/<app>/` through `demos/ambii/shared/publish-build.mjs`. That copy leaves out source maps, `asset-manifest.json` and any service worker.
+Rebuilding needs the apps' source in `demos/ambii/`, so it only works on Jake's machine, or on one where the folders were restored from the `jakemotta-demo` branches ([Where the source lives](#where-the-source-lives)). `scripts/build-ambii-demos.mjs` installs each app from its own lockfile (`npm ci --legacy-peer-deps`, the first time and whenever the lockfile is newer than `node_modules`), then runs its `demo:build`, which builds and copies the output into `public/projects/ambii-business/<app>/` through `demos/ambii/shared/publish-build.mjs`. That copy leaves out source maps, `asset-manifest.json` and any service worker.
 
 - **Toolchains:** the dashboard and web player keep their Create React App builds (react-scripts 3 and 4, run through react-app-rewired, with `--openssl-legacy-provider` in their scripts for current Node). The phone app was a Metro build for iOS and Android; for the web it is bundled with webpack 5 and react-native-web, with shims for its native modules in `music-app/web/shims/`.
 - **Icons:** FontAwesome Pro needed a paid token, so its icons are aliased to free stand-ins in `demos/ambii/shared/fontawesome-pro/`.
@@ -68,7 +70,7 @@ Rebuilding needs the apps' source in `demos/ambii/`, so it only works on Jake's 
 
 ## Left out on purpose
 
-- **The apps' source,** which stays on Jake's machine ([Where the source lives](#where-the-source-lives)). Source maps are left out of the build output for the same reason: they'd publish it.
+- **The apps' source,** which stays on Jake's machine and in the private repositories ([Where the source lives](#where-the-source-lives)). Source maps are left out of the build output for the same reason: they'd publish it.
 - **Secrets the repositories held:** the old API keys, the CodePush key, the Google Maps key, the tracker IDs (Tag Manager, Analytics), the Auth0 settings, and, in the server, its TLS key and database connection string. None was copied. The server isn't copied at all.
 - **Anything that would call another host:** Google Fonts, cdnjs, the Maps script and the Tag Manager iframe are removed from the pages. The few `ambii.io` strings left in the bundles are inert hostname checks and an email comparison. The web player also still names an S3 logo for its old MVIX white-label mode, which only switches on when the page's path contains "mvix", so it never loads here.
 - **The store listings:** the app is gone from the App Store and Google Play, so the store buttons in the dashboard's Connect Player modal open the phone app demo instead.

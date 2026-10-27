@@ -11,7 +11,7 @@ Three apps from the Ambii Business product (2019–2022, background music for st
 
 All four repositories are private (the `shariqs` account); the links work only for people with access.
 
-For the same reason the three app folders aren't in the jakemotta repository, which is public: `.gitignore` leaves out `business-web/`, `web-player/` and `music-app/`, and they exist only on Jake's machine. A clone has `mock-server/`, `shared/`, this README and the built apps in `public/projects/ambii-business/`, so it can serve and deploy the demos but can't rebuild them. Details: "Where the source lives" in [docs/projects/ambii-business.md](../../docs/projects/ambii-business.md#where-the-source-lives).
+For the same reason the three app folders aren't in the jakemotta repository, which is public: `.gitignore` leaves out `business-web/`, `web-player/` and `music-app/`. They are on Jake's machine, and each app's private repository has them on a `jakemotta-demo` branch. A clone has `mock-server/`, `shared/`, this README and the built apps in `public/projects/ambii-business/`, so it can serve and deploy the demos, but rebuilding them needs the three folders restored from those branches. Details: "Where the source lives" in [docs/projects/ambii-business.md](../../docs/projects/ambii-business.md#where-the-source-lives).
 
 Each app folder holds that app's source as of the commit above, with the changes the demo needs. Only the files the web build uses were copied (no `android/`, `ios/`, CI config). Secrets that were committed upstream (API keys, a CodePush key, a Google Maps key, tracker IDs) were removed rather than copied.
 
@@ -81,7 +81,7 @@ All three demos (and jakemotta.com) share one origin, so they share `localStorag
 
 ## Rebuilding
 
-Run `yarn projects:ambii` at the repository root, on a machine that has the three app folders. It installs and builds each app with its own pinned dependencies, then copies the output into `public/projects/ambii-business/` through `shared/publish-build.mjs`. Commit that output: the deploy only uploads what is in `public/`, and CI never builds these apps.
+Run `yarn projects:ambii` at the repository root, on a machine that has the three app folders. It installs and builds each app with its own pinned dependencies, then copies the output into `public/projects/ambii-business/` through `shared/publish-build.mjs`. Commit that output: the deploy only uploads what is in `public/`, and CI never builds these apps. When an app's own source changed, push it to its `jakemotta-demo` branch as well.
 
 To work on one app, run `npm ci --legacy-peer-deps` and then `npm run demo:build` inside its folder. The CRA apps need `--openssl-legacy-provider` on Node 17 and newer, which their scripts set.
 

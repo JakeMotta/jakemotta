@@ -11,7 +11,8 @@
 // and copies the output into public/ through demos/ambii/shared/publish-build.mjs.
 // The output is committed: CI only runs `yarn build`, which copies public/ as-is.
 // The apps' own source isn't: their upstream repositories are private, so the three
-// folders are gitignored and this only runs where they exist (Jake's machine).
+// folders are gitignored and this only runs where they exist (Jake's machine, or a clone
+// of each repository's jakemotta-demo branch).
 // How the demos work: demos/ambii/README.md and docs/projects/ambii-business.md.
 
 import { spawnSync } from 'node:child_process';
@@ -39,7 +40,7 @@ const missing = Object.entries(APPS)
     .filter(([name, folder]) => (!wanted.length || wanted.includes(name)) && !existsSync(join(DEMOS, folder, 'package.json')))
     .map(([, folder]) => `demos/ambii/${folder}/`);
 if (missing.length) {
-    console.error(`build-ambii-demos: missing ${missing.join(', ')}. The apps' source isn't in this repo; see "Where the source lives" in docs/projects/ambii-business.md.`);
+    console.error(`build-ambii-demos: missing ${missing.join(', ')}. The apps' source isn't in this repo; clone each one's private repository at its jakemotta-demo branch (see "Where the source lives" in docs/projects/ambii-business.md).`);
     process.exit(1);
 }
 

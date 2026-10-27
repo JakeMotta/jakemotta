@@ -25,6 +25,44 @@
         }
     }
 
+    // The video's place, when a song plays from YouTube: off the pill, on the side away from the edge
+    // it's docked to. YouTube's player shows over it (atoms/youtube-player), at its smallest, 200×200.
+    &__video {
+        position: absolute;
+        bottom: calc(100% + 12px);
+        width: 200px;
+        height: 200px;
+        border-radius: 20px;
+
+        &--away {
+            visibility: hidden;
+        }
+    }
+
+    &--top-left &__video,
+    &--top &__video,
+    &--top-right &__video {
+        top: calc(100% + 12px);
+        bottom: auto;
+    }
+
+    &--top-left &__video,
+    &--left &__video,
+    &--bottom-left &__video {
+        left: 0;
+    }
+
+    &--top-right &__video,
+    &--right &__video,
+    &--bottom-right &__video {
+        right: 0;
+    }
+
+    &--top &__video,
+    &--bottom &__video {
+        left: calc(50% - 100px);
+    }
+
     &--dragging {
         transition: none;
 

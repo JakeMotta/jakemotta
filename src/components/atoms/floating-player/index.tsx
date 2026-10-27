@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { isStreamed } from '../../../common/music';
+import { useAudioStore } from '../../../store/audio';
 import { MiniPlayer } from '../mini-player';
+import { useVideoStore, VideoSlot } from '../youtube-player';
 import './index.scss';
 
 // Where the button can sit: the corners and the middles of the edges (never the middle of the page)
@@ -49,6 +52,9 @@ export const FloatingPlayer = () => {
     // A drag ends in a click on the cover; this lets that click through without toggling
     const justDragged = useRef(false);
     const rootRef = useRef<HTMLDivElement>(null);
+    const streamed = useAudioStore((store) => isStreamed(store.audioUrl));
+    // A song from YouTube shows its video here when no player card is in sight
+    const inFloating = useVideoStore((store) => store.inFloating);
 
     // Open, a click anywhere else closes it
     useEffect(() => {
@@ -129,6 +135,7 @@ export const FloatingPlayer = () => {
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerCancel}>
+            {streamed && <VideoSlot kind='floating' className={`floating-player__video${inFloating ? '' : ' floating-player__video--away'}`} />}
             <MiniPlayer collapsed open={open} onToggle={toggle} volume={upward ? 'up' : 'down'} className='floating-player__player' />
         </div>,
         document.body,

@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Devlog, Home, Minecraft, MusicLibrary, ProjectGallery, ProjectViewer } from './components/pages';
 import { ConfigProvider } from 'antd';
 import { ThemeProvider, useTheme, generateRandomHue } from './contexts/ThemeContext';
-import { TsParticleBackground, MusicPlayer, ListenAlong } from './components/atoms';
+import { TsParticleBackground, MusicPlayer, ListenAlong, YouTubePlayer } from './components/atoms';
 
 import 'antd/dist/reset.css';
 import './global.scss';
@@ -72,6 +72,9 @@ const AppContent = () => {
 
       {/* Music player */}
       <MusicPlayer />
+
+      {/* The songs that play from YouTube, in the same shuffle. Beside the player, so it survives navigation too */}
+      <YouTubePlayer />
 
       {/* Listen along: the YouTube copy of what Jake has on Spotify. Beside the player, so it survives navigation too */}
       <ListenAlong />

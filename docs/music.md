@@ -4,7 +4,14 @@ Music plays across the whole site. The player sits outside the routes in `App.ts
 
 ## The library
 
-The tracks are the static arrays `musicList` and `favoriteArtists` in `src/common/constants.ts`, plus `welcomeTrack` (Dancin, what the board's "Play with sound" starts). The audio is in `public/music/` and the cover art in `public/images/music/`; a track with no `image` (the welcome track) shows a monogram in the hue. `src/common/music.ts` builds `LIBRARY`, every distinct `url` in all three, which the shuffle draws from, and `findTrack(url)`, which looks a track up for display. A track's `description` shows in the library's player, so leave it empty rather than writing filler.
+The tracks are the static arrays `musicList` and `favoriteArtists` in `src/common/constants.ts`, plus `welcomeTrack` (Dancin, what the board's "Play with sound" starts). The audio is in `public/music/` and the cover art in `public/images/music/`; a track with no `image` (the welcome track) shows a monogram in the hue. A track's `description` shows in the library's player, so leave it empty rather than writing filler.
+
+Songs from YouTube join them in the same shuffle ([Songs from YouTube](#songs-from-youtube)): `youtubeSongs` in `constants.ts`, and the songs on Jake's Spotify playlist once the listening Worker sends them.
+
+`src/common/music.ts` keeps every track the site knows:
+- `libraryUrls()` is what the shuffle draws from, each `url` once.
+- `findTrack(url)` looks a track up for display.
+- `addTracks()` adds the ones that arrive later: the playlist's, and a play picked from Recent listens, which can be played but doesn't join the shuffle.
 
 ## Playback and the shuffle
 
@@ -16,8 +23,13 @@ State lives in `src/store/audio.ts` (zustand):
 | `shuffled` | What plays next: the whole library, shuffled, kept topped up. This is the only "queue"; visitors don't build one. |
 | `history` | Tracks that played before this one, for Previous (the last 50). |
 | `entry` | Whether the visitor has chosen yet: `waiting`, `sound` or `silent` (see [board.md](board.md)). |
-| `isPlaying`, `volume` | Mirrored from the `<audio>` element. |
+| `isPlaying`, `volume` | Mirrored from whichever player has the current track. |
 | `audioElement`, `audioContext` | The player's element and Web Audio context, registered by `MusicPlayer` so any control can drive them. |
+| `youtube` | The YouTube player, dressed as an `<audio>` element (`paused`, `currentTime`, `duration`, `play`, `pause`), registered by `YouTubePlayer` once it's ready. |
+| `media()` | Whichever of the two has the current track. Every control goes through it, never straight to `audioElement`. |
+| `playlist` | The Spotify playlist's songs, for the library's Playlist tab. |
+| `playTrack(track)` | Play a track that isn't in the library (a play from Recent listens). |
+| `addToLibrary(tracks)` | Add songs to the library and deal them into the shuffle at random places (the playlist's). |
 | `setAudioUrl(url)` | Play this track now, and take it out of the shuffle so it doesn't come round again straight after; the shuffle carries on when it ends. If it's the track already loaded, it just resumes. |
 | `playNext()` | Next: the next shuffled track. Also called when a track ends. |
 | `playPrevious()` | More than 3 seconds in, restart the track; otherwise go back to the one before it, which puts the current track back at the front of the shuffle so Next returns to it. |
@@ -28,7 +40,7 @@ When the shuffle runs out, the whole library is shuffled again, leaving out the 
 
 **In the UI:**
 - The player is `PlayerCard` (`atoms/player-card`): what's on, with a speaker button in that header row whose vertical volume slider (`VolumeSlider`) drops down on hover, focus or a tap; then cover, title and byline, the seek slider (`TrackProgress`), and previous/play/next (`Transport`) centred as one group. The board's Now Playing tile and the library both show it, so they always match. The Up next tile lists every song left in the shuffle and scrolls.
-- The library (`/library`) adds every song left in the shuffle under the player, scrolling, and shows every song as a `MusicTile`: cover and a play button.
+- The library (`/library`) adds every song left in the shuffle under the player, scrolling, and shows every song as a `MusicTile`: cover and a play button. Its Playlist tab ("What I've had on repeat.") lists `youtubeSongs` and the Spotify playlist's songs, and only shows when there are some.
 - `FloatingPlayer` stands in wherever the Now Playing tile is out of sight: behind the overlays, and on phones once it scrolls away. It's a `MiniPlayer` (cover, title, play/pause, next and a `VolumeControl`) collapsed to a circle of the cover, ringed with the song's progress, until it's clicked open, and the visitor can drag it to any corner or edge middle ([board.md](board.md)).
 
 **Autoplay:** browsers only allow audio after a user gesture. That's why the Now Playing tile asks the visitor to choose sound or silence first, and why `togglePlayback` resumes the `AudioContext` inside the click that called it, before `play()`. After that first gesture, moving on to the next track is allowed.
@@ -42,6 +54,48 @@ When the shuffle runs out, the whole library is shuffled again, leaving out the 
 - the Ambii story page, when a video with sound plays.
 
 Use the same message for new previews.
+
+## Songs from YouTube
+
+Jake asked on 2026-10-27 for songs from YouTube, and his Spotify songs through their YouTube copies, to play in the site's player, in the same shuffle as his own tracks. When it's one's turn, its video plays where the player is.
+
+**What a track's `url` says** (`common/music.ts`, `isStreamed()`):
+
+| `url` | Plays |
+| --- | --- |
+| `/music/foo.mp3` | in the site's `<audio>`, as always |
+| `youtube:<video id>` | that YouTube video |
+| `spotify:<track id>` | the YouTube copy of a Spotify song, which the listening Worker finds (`/api/listening/match`, [listening.md](listening.md#the-worker)) |
+| `song:<artist>/<title>` | the same for a song known only by name: ListenBrainz's top songs |
+
+**Where the songs come from:**
+- **`youtubeSongs`** in `constants.ts`: Jake's own picks.
+  - The `url` is `youtube:` and the video's ID.
+  - Leave `image` empty to use the video's thumbnail, which for YouTube Music's own uploads is the album art.
+  - `artist` shows in place of "Jake Motta · year".
+  - It's empty to start with; the comment above it shows an entry.
+- **Jake's Spotify playlist** (`SPOTIFY_PLAYLIST` in the Worker's `wrangler.toml`): `YouTubePlayer` asks the Worker for it once per visit (`/api/listening/playlist`), and its songs are dealt into the shuffle as `spotify:` tracks.
+- **Recent listens:** rows that can play here get a play button beside the link out (`ListenRow`'s `onPlay`). These play on a pick and don't join the shuffle:
+  - YouTube Music plays play as their own video;
+  - Spotify plays, and top songs, play through the Worker's match;
+  - albums and artists have no play button.
+
+Everything that needs the Worker stays hidden until it answers.
+
+**The player, `atoms/youtube-player`:** `YouTubePlayer` is mounted in `App.tsx` beside `MusicPlayer`, so it survives navigation the same way.
+- **One player for the visit:** it's YouTube's own embedded player (the IFrame API, loaded once by `common/youtube.ts`, which listen-along shares), made the first time a song from YouTube comes up.
+- **How a song plays:** a `youtube:` song plays straight away. Any other is matched first, through `matchSong()`, and each answer is kept for the visit. A song with no match, or one YouTube won't play (embedding off, removed), is skipped to the next.
+- **The controls:** they drive it through `media()`, so play, pause, Next, Previous, seeking, the progress ring and the volume all work as they do for an MP3. `MusicPlayer` pauses its `<audio>` while a song from YouTube is on, and each player only reports `isPlaying` for its own songs.
+- **Where the video shows:** in place of the cover, as `VideoSlot`. The player card's slot (`PlayerCard`, on the board and in the library) comes first. When no card is in sight (behind any other overlay, or on a phone once the tile scrolls away), the floating player shows a 200×200 slot beside its pill, on the side away from the edge it's docked to.
+  - **Not inside the slot:** an iframe reloads whenever it's moved in the page. So the player is fixed above everything, and a `requestAnimationFrame` loop lays it over the slot on screen, written straight onto the element like the visualizer.
+  - **Picking the slot:** the newest card at least half in view and not `inert` (the board's, behind an overlay, is), then the floating player's, then any card partly in view, and as a last resort the bottom-left corner.
+  - **The volume card:** it opens over the cover, so the player cuts a hole (`clip-path`) wherever an open volume card overlaps it, as if the card were on top.
+- **YouTube's rules** ([API Services Developer Policies](https://developers.google.com/youtube/terms/developer-policies)), as for listen-along:
+  - **Visible:** the video is always visible while it plays. It's at z-index 105, above the overlays (60), the floating player (80) and the vignette (100), and under listen-along's (110).
+  - **Size:** it's never under 200×200. The slots' minimums keep it there, and a smaller slot gets a player that grows past it, centred.
+  - **No background play:** it pauses when the tab is hidden, and carries on when the visitor comes back.
+  - **Ads:** YouTube's ads aren't blocked.
+- **The vignette rests during these songs.** YouTube's frame is cross-origin, so the analyser can't hear it, and the eq bars rest too. Listen-along's opt-in tab capture ([listening.md](listening.md#the-visualizer-while-listening-along-opt-in)) isn't offered here yet.
 
 ## The visualizer
 
@@ -59,5 +113,6 @@ The dev server Claude starts (the `dev` config in `.claude/launch.json`) sets `R
 - **How:** `src/muteAudio.js` runs first in every page. `src/index.tsx` loads it into the app, and `src/setupProxy.js` inlines it at the top of every `.html` page under `public/` as it serves it, leaving the files on disk alone. It never reaches the build.
 - **What it does:** `<audio>` and `<video>` elements are really muted as they load or play, while the page still reads back whatever it set `muted` to, so its own mute buttons work. Every `AudioContext` renders to no device (`sinkId: { type: 'none' }`, Chromium 110+), which covers Ruffle's Flash and the games.
 - **The visualizer still moves.** Chromium applies an element's `muted` before the Web Audio graph, so an element that feeds a graph (the music player's) is left unmuted and goes silent at the context's sink instead. The analyser still gets the signal, and the vignette and eq bars react as usual.
-- **Not covered:** cross-origin frames (the YouTube, SoundCloud and Vimeo embeds in the old sites, and listen-along's YouTube player) can't be reached from the page. None of the embeds autoplay, so they only make sound if something clicks play.
+- **YouTube's players:** the site's own (songs from YouTube) and listen-along's are cross-origin frames the script can't reach. Under `REACT_APP_MUTE_AUDIO` each calls the IFrame API's `mute()` when it's ready (`MUTED` in `common/youtube.ts`).
+- **Not covered:** the other cross-origin frames, the YouTube, SoundCloud and Vimeo embeds in the old sites, can't be reached from the page. None of them autoplay, so they only make sound if something clicks play.
 - **To hear it:** remove `REACT_APP_MUTE_AUDIO` from `.claude/launch.json`, or run `yarn dev` yourself. The screenshot script is muted separately, by its browser's `--mute-audio`.

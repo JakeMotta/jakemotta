@@ -25,6 +25,8 @@ const env = (overrides = {}) => ({
     SPOTIFY_REFRESH_TOKEN: 'refresh',
     YOUTUBE_API_KEY: 'key',
     HIDDEN: '',
+    LISTENBRAINZ_USER: 'jake',
+    SPOTIFY_PLAYLIST: '',
     ...overrides,
 });
 
@@ -154,6 +156,88 @@ describe('GET /api/listening/now', () => {
 
     it('404s anything else', async () => {
         assert.equal((await get('/api/listening/other', env())).status, 404);
+    });
+});
+
+const token = { 'https://accounts.spotify.com/api/token': () => answer({ access_token: 'access', expires_in: 3600 }) };
+
+const playlistPage = {
+    items: [
+        { item: { id: 'sp1', type: 'track', name: 'Digital Love', duration_ms: 301_000, artists: [{ name: 'Daft Punk' }], album: { name: 'Discovery', images: [{ url: 'cover.jpg' }] } } },
+        { item: { id: null, type: 'track', name: 'A local file', artists: [] } },
+        { item: { id: 'ep1', type: 'episode', name: 'A podcast' } },
+    ],
+    next: null,
+};
+
+const youtubeFound = {
+    'https://www.googleapis.com/youtube/v3/search': () => answer({ items: [{ id: { videoId: 'topic' } }] }),
+    'https://www.googleapis.com/youtube/v3/videos': () => answer({ items: [{ id: 'topic', snippet: { channelTitle: 'Daft Punk - Topic' }, contentDetails: { duration: 'PT5M1S' }, status: { embeddable: true } }] }),
+};
+
+const listenbrainz = (listens = [], recordings = []) => ({
+    'https://api.listenbrainz.org/1/user/jake/listens': () => answer({ payload: { listens } }),
+    'https://api.listenbrainz.org/1/stats/user/jake/recordings': (href) => (href.includes('all_time') ? answer({ payload: { recordings } }) : answer(undefined, 204)),
+});
+
+describe('GET /api/listening/playlist', () => {
+    it("returns the playlist's songs, without local files or podcasts, and keeps them", async () => {
+        fakeFetch({ ...token, 'https://api.spotify.com/v1/playlists/pl1/items': () => answer(playlistPage) });
+        const e = env({ SPOTIFY_PLAYLIST: 'pl1' });
+        const body = await (await get('/api/listening/playlist', e)).json();
+        assert.deepEqual(
+            body.tracks.map((t) => t.id),
+            ['sp1'],
+        );
+        assert.equal(body.tracks[0].cover, 'cover.jpg');
+
+        await get('/api/listening/playlist', e);
+        assert.equal(calls.filter((call) => call.includes('/playlists/')).length, 1, 'asks Spotify once');
+    });
+
+    it('is empty without a playlist', async () => {
+        assert.deepEqual(await (await get('/api/listening/playlist', env())).json(), { tracks: [] });
+    });
+
+    it('keeps hidden artists off', async () => {
+        fakeFetch({ ...token, 'https://api.spotify.com/v1/playlists/pl1/items': () => answer(playlistPage) });
+        assert.deepEqual(await (await get('/api/listening/playlist', env({ SPOTIFY_PLAYLIST: 'pl1', HIDDEN: 'Daft Punk' }))).json(), { tracks: [] });
+    });
+});
+
+describe('GET /api/listening/match', () => {
+    it("finds a playlist song's YouTube copy by its Spotify ID", async () => {
+        fakeFetch({ ...token, 'https://api.spotify.com/v1/playlists/pl1/items': () => answer(playlistPage), ...listenbrainz(), ...youtubeFound });
+        const body = await (await get('/api/listening/match?spotify=sp1', env({ SPOTIFY_PLAYLIST: 'pl1' }))).json();
+        assert.deepEqual(body.youtube, { videoId: 'topic', synced: true });
+    });
+
+    it('finds a recent Spotify play by its ID, and a top song by name', async () => {
+        const listen = { track_metadata: { artist_name: 'Daft Punk', track_name: 'Digital Love', additional_info: { spotify_id: 'https://open.spotify.com/track/sp1', duration_ms: 301_000 } } };
+        fakeFetch({ ...listenbrainz([listen], [{ artist_name: 'Justice', track_name: 'D.A.N.C.E.' }]), ...youtubeFound });
+        const e = env();
+        assert.equal((await get('/api/listening/match?spotify=sp1', e)).status, 200);
+        assert.equal((await get('/api/listening/match?artist=justice&title=d.a.n.c.e.', e)).status, 200);
+    });
+
+    it("refuses a song that isn't Jake's, without searching YouTube", async () => {
+        fakeFetch(listenbrainz());
+        const response = await get('/api/listening/match?artist=Someone&title=Else', env());
+        assert.equal(response.status, 404);
+        assert.equal(calls.filter((call) => call.includes('googleapis')).length, 0);
+    });
+
+    it("rebuilds the list once a minute at most when a song isn't in it", async () => {
+        fakeFetch(listenbrainz());
+        const e = env();
+        await get('/api/listening/match?artist=A&title=B', e);
+        await get('/api/listening/match?artist=C&title=D', e);
+        assert.equal(calls.filter((call) => call.includes('/listens')).length, 1);
+    });
+
+    it('wants a Spotify ID, or an artist and a title', async () => {
+        assert.equal((await get('/api/listening/match?artist=Daft%20Punk', env())).status, 400);
+        assert.equal((await get('/api/listening/match?spotify=not/an/id', env())).status, 400);
     });
 });
 

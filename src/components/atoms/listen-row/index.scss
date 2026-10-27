@@ -82,4 +82,53 @@
     &--link:hover &__go {
         opacity: 1;
     }
+
+    // Play here, beside the link out
+    &__play {
+        display: flex;
+        width: 36px;
+        height: 36px;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 50%;
+        background: var(--color-primary);
+        color: var(--color-primary-ink);
+        cursor: pointer;
+        font-size: 22px;
+        transition: transform 0.3s var(--spring);
+
+        &:hover {
+            transform: scale(1.12) rotate(-6deg);
+        }
+
+        &:focus-visible {
+            outline: 3px solid var(--color-primary-light);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            &:hover {
+                transform: none;
+            }
+        }
+    }
+}
+
+.listen-row-playable {
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 6px;
+
+    > .listen-row {
+        min-width: 0;
+        flex: 1;
+    }
+
+    &--current .listen-row__play {
+        background: var(--color-primary-light);
+    }
 }

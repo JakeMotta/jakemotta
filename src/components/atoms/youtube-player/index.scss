@@ -1,0 +1,40 @@
+// Laid over the slot on screen by the component, every frame. Above the overlays (60), the floating
+// player (80) and the vignette (100), since nothing may cover a YouTube player; under listen-along's (110).
+.youtube-player {
+    position: fixed;
+    z-index: 105;
+    top: 0;
+    left: 0;
+    display: none;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    background: #000;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+
+    &--on {
+        display: block;
+    }
+
+    iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+}
+
+// The cover under the video, showing while it loads. YouTube's player is never smaller than 200×200.
+.video-slot {
+    position: relative;
+    overflow: hidden;
+    min-width: 200px;
+    min-height: 200px;
+
+    &__cover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        inset: 0;
+    }
+}

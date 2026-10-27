@@ -12,8 +12,8 @@ import { randomBytes } from 'node:crypto';
 
 const PORT = 8888;
 const REDIRECT_URI = `http://127.0.0.1:${PORT}/callback`;
-// Just enough to see what's playing
-const SCOPE = 'user-read-currently-playing';
+// Just enough to see what's playing, and to read Jake's playlist (SPOTIFY_PLAYLIST) if it's private
+const SCOPE = 'user-read-currently-playing playlist-read-private';
 
 const { SPOTIFY_CLIENT_ID: clientId, SPOTIFY_CLIENT_SECRET: clientSecret } = process.env;
 if (!clientId || !clientSecret) {

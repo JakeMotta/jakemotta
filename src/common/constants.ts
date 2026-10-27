@@ -4,7 +4,13 @@ export interface MusicItemProps {
     date: string;
     /** Shown in the library's player. Leave it empty rather than writing filler. */
     description: string;
+    /**
+     * A file in public/music/, or a song that plays from YouTube (common/music.ts):
+     * `youtube:<video id>`, `spotify:<track id>` or `song:<artist>/<title>`.
+     */
     url: string;
+    /** Whose song it is, for songs that aren't Jake's. Shown in place of "Jake Motta · year". */
+    artist?: string;
 }
 
 export const musicList: MusicItemProps[] = [
@@ -124,6 +130,16 @@ export const favoriteArtists: MusicItemProps[] = [
         date: '2021'
     },
 ]
+
+/**
+ * Songs that play from YouTube, in the shuffle with everything else. `url` is `youtube:` and the
+ * video's ID (the part after `v=` in its link). Leave `image` empty to use the video's thumbnail,
+ * which for YouTube Music's own uploads is the album art. The songs on Jake's Spotify playlist join
+ * these when the listening Worker is running (docs/music.md).
+ *
+ *     { image: '', title: 'Song', artist: 'Artist', description: '', url: 'youtube:dQw4w9WgXcQ', date: '' },
+ */
+export const youtubeSongs: MusicItemProps[] = [];
 
 /** What "Play with sound" starts on the board. It has no cover art, so it shows a monogram. */
 export const welcomeTrack: MusicItemProps = {

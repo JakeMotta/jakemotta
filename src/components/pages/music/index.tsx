@@ -3,13 +3,13 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BentoOverlay, OverlayHeader } from '../../templates';
 import { CoverArt, Lately, MusicTile, NowPlaying, PlayerCard } from '../../atoms';
 import { useAudioStore } from '../../../store/audio';
-import { favoriteArtists, musicList } from '../../../common/constants';
+import { favoriteArtists, musicList, youtubeSongs } from '../../../common/constants';
 import { findTrack } from '../../../common/music';
 import './index.scss';
 
-type Tab = 'mine' | 'favorites' | 'recent';
+type Tab = 'mine' | 'favorites' | 'playlist' | 'recent';
 
-const TABS: Tab[] = ['mine', 'favorites', 'recent'];
+const TABS: Tab[] = ['mine', 'favorites', 'playlist', 'recent'];
 
 /** The music tile opened: the player and what plays next on the left, the whole library on the right */
 export const MusicLibrary = () => {
@@ -22,11 +22,15 @@ export const MusicLibrary = () => {
     const track = findTrack(audioUrl);
     const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
     const upNext = useAudioStore((store) => store.shuffled);
+    // The songs that play from YouTube: Jake's picks, then his Spotify playlist's once the Worker sends them
+    const spotifyPlaylist = useAudioStore((store) => store.playlist);
+    const playlist = [...youtubeSongs.map((song) => findTrack(song.url) ?? song), ...spotifyPlaylist];
 
     // Each tab has its own subtitle under the heading
     const tabs: { key: Tab; label: string; count?: number; subtitle: string }[] = [
         { key: 'mine', label: 'My music', count: musicList.length, subtitle: "Songs I've made over the years." },
         { key: 'favorites', label: 'Favorite artists', count: favoriteArtists.length, subtitle: 'Artists I love. Press play to hear why.' },
+        ...(playlist.length ? [{ key: 'playlist' as Tab, label: 'Playlist', count: playlist.length, subtitle: "What I've had on repeat." }] : []),
         // What Jake's been playing elsewhere (ListenBrainz): the song on now, then his recent plays and top lists
         { key: 'recent', label: 'Recent listens', subtitle: "What I've been digging." },
     ];
@@ -82,6 +86,8 @@ export const MusicLibrary = () => {
                     <div id='library-grid' role='tabpanel' aria-labelledby={`library-tab-${tab}`} className='library__grid'>
                         {tab === 'mine'
                             ? musicList.map((item) => <MusicTile key={item.url} item={item} />)
+                            : tab === 'playlist'
+                            ? playlist.map((item) => <MusicTile key={item.url} item={item} meta={item.artist} />)
                             : favoriteArtists.map((artist) => <MusicTile key={artist.url} item={findTrack(artist.url) ?? artist} title={artist.title} meta={findTrack(artist.url)?.title} />)}
                     </div>
                 )}

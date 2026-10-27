@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { MdGraphicEq } from 'react-icons/md';
 import { positionNow } from '../../../api/listen-along';
+import { ENDED, loadYouTubeApi, MUTED, PAUSED, PLAYING, YouTubePlayer } from '../../../common/youtube';
 import { useAudioStore } from '../../../store/audio';
 import { supportsTabCapture, useListenAlongStore } from '../../../store/listen-along';
 import './index.scss';
@@ -9,49 +10,6 @@ import './index.scss';
 // How often to check what Jake is playing while listening along, and how far off before jumping back in line
 const POLL_MS = 5_000;
 const DRIFT_SECONDS = 4;
-
-// The parts of YouTube's IFrame Player API used here
-interface YouTubePlayer {
-    loadVideoById(options: { videoId: string; startSeconds?: number }): void;
-    cueVideoById(options: { videoId: string; startSeconds?: number }): void;
-    playVideo(): void;
-    pauseVideo(): void;
-    seekTo(seconds: number, allowSeekAhead: boolean): void;
-    getCurrentTime(): number;
-    getPlayerState(): number;
-    destroy(): void;
-}
-
-interface YouTubeApi {
-    Player: new (element: HTMLElement, options: object) => YouTubePlayer;
-}
-
-declare global {
-    interface Window {
-        YT?: YouTubeApi;
-        onYouTubeIframeAPIReady?: () => void;
-    }
-}
-
-const ENDED = 0;
-const PLAYING = 1;
-const PAUSED = 2;
-
-let youtubeApi: Promise<YouTubeApi> | undefined;
-
-const loadYouTubeApi = () =>
-    (youtubeApi ??= new Promise((resolve) => {
-        if (window.YT?.Player) return resolve(window.YT);
-        const previous = window.onYouTubeIframeAPIReady;
-        window.onYouTubeIframeAPIReady = () => {
-            previous?.();
-            if (window.YT) resolve(window.YT);
-        };
-        const script = document.createElement('script');
-        script.src = 'https://www.youtube.com/iframe_api';
-        script.async = true;
-        document.head.appendChild(script);
-    }));
 
 /**
  * The listen-along player: YouTube's own embedded player, floating over the site, playing the copy
@@ -89,7 +47,10 @@ export const ListenAlong = () => {
                 height: '100%',
                 playerVars: { playsinline: 1, rel: 0 },
                 events: {
-                    onReady: () => setReady(true),
+                    onReady: () => {
+                        if (MUTED) player.current?.mute();
+                        setReady(true);
+                    },
                     onStateChange: ({ data }: { data: number }) => {
                         if (data === PAUSED) {
                             visitorPaused.current = !ourPause.current;

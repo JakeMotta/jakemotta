@@ -83,3 +83,46 @@ export const isHidden = (track, hidden = '') => {
     const artists = track.artists.map((artist) => artist.toLowerCase());
     return artists.some((artist) => names.includes(artist) || names.includes(`${artist} - ${track.title.toLowerCase()}`));
 };
+
+const PLAYLIST_TTL = 10 * 60;
+// Enough for any playlist worth shuffling, in pages of 50
+const PLAYLIST_LIMIT = 500;
+
+/**
+ * The songs on Jake's playlist (SPOTIFY_PLAYLIST), kept in KV for ten minutes. Spotify only returns
+ * a playlist's songs to its owner or a collaborator, and a private one needs the
+ * playlist-read-private scope (scripts/spotify-auth.mjs asks for it).
+ */
+export const getPlaylist = async (env) => {
+    if (!env.SPOTIFY_PLAYLIST) return [];
+    const cached = await env.LISTENING.get('playlist', 'json');
+    if (cached) return cached;
+
+    const tracks = [];
+    let next = `https://api.spotify.com/v1/playlists/${encodeURIComponent(env.SPOTIFY_PLAYLIST)}/items?limit=50`;
+    while (next && tracks.length < PLAYLIST_LIMIT) {
+        const response = await fetch(next, { headers: { Authorization: `Bearer ${await accessToken(env)}` } });
+        if (response.status === 401) await env.LISTENING.delete('spotify:access_token');
+        if (response.status === 429) throw new SpotifyError('Spotify is rate limiting', 503, response.headers.get('Retry-After') ?? '30');
+        if (!response.ok) throw new SpotifyError(`Spotify answered ${response.status} for the playlist`, 502);
+        const page = await response.json();
+        for (const entry of page.items ?? []) {
+            // Since February 2026 the song is `item`; `track` before that. Local files and podcasts have no ID to match.
+            const item = entry.item ?? entry.track;
+            if (!item?.id || (item.type && item.type !== 'track')) continue;
+            tracks.push({
+                id: item.id,
+                title: item.name,
+                artists: (item.artists ?? []).map((artist) => artist.name),
+                album: item.album?.name,
+                durationMs: item.duration_ms,
+                cover: item.album?.images?.[0]?.url,
+                url: item.external_urls?.spotify,
+            });
+        }
+        next = page.next;
+    }
+
+    await env.LISTENING.put('playlist', JSON.stringify(tracks), { expirationTtl: PLAYLIST_TTL });
+    return tracks;
+};

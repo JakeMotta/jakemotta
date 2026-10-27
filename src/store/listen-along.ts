@@ -42,9 +42,9 @@ export const useListenAlongStore = create<ListenAlongStore>((set, get) => ({
     },
     start: () => {
         // Two songs at once is nobody's idea of fun
-        const element = useAudioStore.getState().audioElement;
-        interruptedSite = !!element && !element.paused;
-        element?.pause();
+        const media = useAudioStore.getState().media();
+        interruptedSite = !!media && !media.paused;
+        media?.pause();
         set({ active: true, answer: null });
         get().refresh();
     },

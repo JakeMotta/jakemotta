@@ -30,6 +30,11 @@
         border-radius: 16px;
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
 
+        // The video is never smaller than 200×200 (atoms/youtube-player)
+        &.video-slot {
+            min-height: 200px;
+        }
+
         // Below the desktop board the tile has no fixed height, so the cover keeps its own shape
         @media (max-width: 1099px) {
             max-height: 340px;

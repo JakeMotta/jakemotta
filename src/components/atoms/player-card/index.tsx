@@ -1,11 +1,12 @@
 import React, { ReactNode } from 'react';
 import { useAudioStore } from '../../../store/audio';
-import { findTrack, trackByline } from '../../../common/music';
+import { findTrack, isStreamed, trackByline } from '../../../common/music';
 import { CoverArt } from '../cover-art';
 import { EqBars } from '../eq-bars';
 import { TrackProgress } from '../track-progress';
 import { Transport } from '../transport';
 import { VolumeControl } from '../volume-control';
+import { VideoSlot } from '../youtube-player';
 import './index.scss';
 
 interface PlayerCardProps {
@@ -35,7 +36,8 @@ export const PlayerCard = ({ action, className = '' }: PlayerCardProps) => {
                     {action}
                 </div>
             </div>
-            <CoverArt track={track} className='player-card__cover' />
+            {/* A song from YouTube shows its video where the cover goes */}
+            {isStreamed(audioUrl) ? <VideoSlot track={track} className='player-card__cover' /> : <CoverArt track={track} className='player-card__cover' />}
             <div>
                 <h2 className='player-card__title'>{track ? track.title : 'Pick a song'}</h2>
                 {track && <p className='player-card__byline'>{trackByline(track)}</p>}

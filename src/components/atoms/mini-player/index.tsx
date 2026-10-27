@@ -18,8 +18,8 @@ const ProgressRing = () => {
     useEffect(() => {
         let frame = 0;
         const tick = () => {
-            const element = useAudioStore.getState().audioElement;
-            const progress = element && element.duration ? element.currentTime / element.duration : 0;
+            const media = useAudioStore.getState().media();
+            const progress = media && media.duration ? media.currentTime / media.duration : 0;
             if (fillRef.current) fillRef.current.style.strokeDashoffset = String(RING_LENGTH * (1 - progress));
             frame = requestAnimationFrame(tick);
         };

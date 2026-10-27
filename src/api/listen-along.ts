@@ -45,3 +45,37 @@ export const getNow = async (withYoutube: boolean): Promise<NowAnswer | undefine
 
 /** Where Jake is in the song now, in seconds, allowing for how old the answer is */
 export const positionNow = (playing: NonNullable<NowAnswer['playing']>) => (playing.progressMs + (playing.isPlaying ? Date.now() - playing.fetchedAt : 0)) / 1000;
+
+/** A song from Jake's Spotify playlist, as the Worker sends it */
+export interface PlaylistTrack {
+    id: string;
+    title: string;
+    artists: string[];
+    album?: string;
+    durationMs?: number;
+    cover?: string;
+    url?: string;
+}
+
+const getWorkerJson = async <T>(path: string): Promise<T | undefined> => {
+    try {
+        const response = await fetch(path, { signal: AbortSignal.timeout(10_000) });
+        if (!response.ok || !response.headers.get('Content-Type')?.includes('application/json')) return undefined;
+        return await response.json();
+    } catch {
+        return undefined;
+    }
+};
+
+/** The songs on Jake's Spotify playlist, which join the shuffle, or undefined when the Worker isn't there */
+export const getPlaylist = async () => (await getWorkerJson<{ tracks: PlaylistTrack[] }>('/api/listening/playlist'))?.tracks;
+
+/**
+ * The YouTube copy of one of Jake's songs: a Spotify track by its ID, or a song by artist and title.
+ * The Worker only looks up songs from his playlist and his ListenBrainz history. null when there's
+ * nothing to play: no copy was found, it isn't one of his, or the Worker isn't there.
+ */
+export const matchSong = async (song: { spotify: string } | { artist: string; title: string }) => {
+    const answer = await getWorkerJson<{ youtube: { videoId: string; synced: boolean } | null }>(`/api/listening/match?${new URLSearchParams(song)}`);
+    return answer?.youtube ?? null;
+};

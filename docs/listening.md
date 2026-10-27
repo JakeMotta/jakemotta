@@ -1,6 +1,6 @@
 # What Jake's listening to
 
-The site shows what Jake is listening to on Spotify and YouTube Music: the track playing right now (or the last one), his latest plays, and his top songs, albums and artists. Visitors can also **listen along**: play the YouTube copy of whatever he has on Spotify, in sync with him.
+The site shows what Jake is listening to on Spotify and YouTube Music: the track playing right now (or the last one), his latest plays, and his top songs, albums and artists. Visitors can also **listen along**: play the YouTube copy of whatever he has on Spotify, in sync with him. And they can play his recent and top songs, and his Spotify playlist, in the site's own player, from their YouTube copies ([music.md](music.md#songs-from-youtube)).
 
 **Status (2026-10-26):** built, tested and on the board, though not deployed yet:
 
@@ -46,7 +46,10 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
   - `compact` is the board's version: no arrow, no listen-along button, a smaller cover, and the short label "Played 3h ago", since the tile is one column wide.
 - **`atoms/lately`** is the panel: Recent, Songs, Albums and Artists, with This month, This year and All time for the top lists.
   - ListenBrainz recalculates statistics now and then, and a range it hasn't counted answers 204. Until the visitor picks a range, the panel steps on to the next one that's ready. If they pick one that isn't, it says so.
-- **`atoms/listen-row` and `atoms/listen-cover`** are the pieces both use. Rows link out and have no play button, so they can't be mistaken for the library's songs.
+- **`atoms/listen-row` and `atoms/listen-cover`** are the pieces both use. Rows link out. Since 2026-10-27, a row that can play in the site's player also has a play button beside the link ([music.md](music.md#songs-from-youtube)). Until then rows had none, so they couldn't be mistaken for the library's songs; Jake asked for them to play.
+  - **YouTube Music plays** play as their own video, with no Worker.
+  - **Spotify plays and top songs** play through the Worker's match, so their buttons show only once it answers.
+  - **Albums and artists** never get a button.
 - **Times are relative** ("3h ago"), never clock times, which would say when Jake sleeps.
 
 ## Listen along
@@ -55,6 +58,13 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
 
 `workers/listening` is a Cloudflare Worker on `jakemotta.com/api/listening*`. Cloudflare already sits in front of the domain, so it answers before a request reaches the Namecheap host, and it doesn't go through the FTP deploy at all.
 
+- **`GET /api/listening/playlist`:** the songs on Jake's Spotify playlist (`SPOTIFY_PLAYLIST` in `wrangler.toml`), which the site's player deals into its shuffle.
+  - **Reading it:** it uses Spotify's `GET /playlists/{id}/items`, which since February 2026 returns a playlist's songs only to its owner or a collaborator. A private playlist needs the `playlist-read-private` scope, which `scripts/spotify-auth.mjs` asks for.
+  - **Caching:** the list is kept in KV, and cached, for 10 minutes. Local files and podcasts are left out, and so is anything in `HIDDEN`.
+- **`GET /api/listening/match?spotify=<track id>`** or **`?artist=<artist>&title=<title>`:** the YouTube copy of one of Jake's songs, `{ youtube: { videoId, synced } | null }`, for the site's player.
+  - **Only Jake's songs (`src/songs.js`):** the playlist, his last 100 ListenBrainz plays and his top 100 songs for each range (`LISTENBRAINZ_USER`). Anything else is refused with a 404 before YouTube is searched, so nobody can spend the day's search quota on other songs.
+  - **Keeping the list:** it's kept in KV for 10 minutes. A song that isn't in it rebuilds it, at most once a minute, in case it was only just played.
+  - **Matching and caching:** the same as listen-along's (below), with the same KV entries for Spotify songs. A song known only by name has no length to check, so it gets the best embeddable video. Answers are cached for an hour.
 - **`GET /api/listening/now`:** what Jake's Spotify is playing, with `progressMs`, `isPlaying` and `fetchedAt` (the Worker's clock when Spotify answered). A visitor's position in the song is `progressMs` plus the time since `fetchedAt`.
 - **`?youtube=1`** adds `youtube: { videoId, synced }`, the YouTube copy. It's `null` when none was found.
 - **Caching:** answers are cached for 5 seconds, so Spotify is asked at most once per 5 seconds per Cloudflare location, however many visitors are listening.
@@ -64,8 +74,8 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
   - It picks the video within 3 seconds of the Spotify track's length, preferring the artist's "Artist - Topic" channel. That's YouTube Music's own upload, with the album audio, so it can join mid-song (`synced: true`). Failing that, it picks the best embeddable video and plays it from the top.
   - A search costs 100 of the 10,000 free daily units. Each track is looked up only when a visitor is listening along, and the answer is kept in KV for 30 days, the longest YouTube's policies allow (III.E.4.d). A miss is kept for a day, and a failed search (usually the day's quota) for an hour.
   - **Fixing a bad match:** `npx wrangler kv key put --binding LISTENING "yt-override:<spotify track id>" <video id>` always wins.
-- **`HIDDEN`** in `wrangler.toml` lists artists, or "artist - title", never to offer listen-along for. They still show on ListenBrainz and in the card, since that data is public anyway.
-- **Tests:** `yarn test` in `workers/listening` runs the Worker in Node with Spotify, YouTube and KV faked.
+- **`HIDDEN`** in `wrangler.toml` lists artists, or "artist - title", never to play on the site: not for listen-along, not from the playlist, not through a match. They still show on ListenBrainz and in the card, since that data is public anyway.
+- **Tests:** `yarn test` in `workers/listening` runs the Worker in Node with Spotify, YouTube, ListenBrainz and KV faked.
 - **Locally:** `yarn dev` in `workers/listening` runs it on port 8787, with the secrets in a gitignored `.dev.vars`. `src/setupProxy.js` makes the site's own `yarn dev` pass `/api/listening` through to it. Without the Worker running, listen-along simply stays hidden.
 
 ### The player
@@ -169,7 +179,7 @@ What Jake does once, in this order. Nothing secret goes in the repository.
      - hands GitHub the four secrets: `LISTENBRAINZ_TOKEN`, `YTMUSIC_CLIENT_ID`, `YTMUSIC_CLIENT_SECRET` and `YTMUSIC_OAUTH_JSON`.
    - **How the secrets get to GitHub:** with the GitHub CLI signed in, the script sets them itself. Otherwise it copies each to the clipboard and opens GitHub's new-secret page to paste into. Nothing is printed or saved.
    - **The schedule** only runs once the workflow is on `master`, and the workflow has since been removed (see above).
-3. **Spotify app:** a developer app at developer.spotify.com, which needs Premium on the owner's account since February 2026, with the redirect URI `http://127.0.0.1:8888/callback`.
+3. **Spotify app:** a developer app at developer.spotify.com, which needs Premium on the owner's account since February 2026, with the redirect URI `http://127.0.0.1:8888/callback`. For the playlist, put its ID (from its share link, `open.spotify.com/playlist/<ID>`) in `SPOTIFY_PLAYLIST` in `wrangler.toml`. It must be one Jake owns or collaborates on. A refresh token minted before 2026-10-27 lacks `playlist-read-private`, so for a private playlist, run the sign-in step below again.
 4. **YouTube key:** a YouTube Data API v3 key in the same Google Cloud project, restricted to that API.
 5. **The Worker**, from `workers/listening`:
    - `yarn install`

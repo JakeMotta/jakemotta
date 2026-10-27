@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { isStreamed } from '../../../common/music';
 import { useAudioStore } from '../../../store/audio';
 import { useListenAlongStore } from '../../../store/listen-along';
 import { audioLevels } from './levels';
@@ -57,7 +58,8 @@ const updateBand = (band: Band, data: Uint8Array, hzPerBin: number, dt: number) 
 /**
  * Owns the site's one <audio> element and the vignette visualizer. It has no buttons of its own:
  * every control (the board's Now Playing tile, the library, the mini players) drives the element
- * through the audio store, where this registers it.
+ * through the audio store, where this registers it. Songs from YouTube play in atoms/youtube-player
+ * instead, whose cross-origin frame the analyser can't hear, so the vignette rests through them.
  */
 export const MusicPlayer = () => {
     const audioUrl = useAudioStore((store) => store.audioUrl);
@@ -89,7 +91,7 @@ export const MusicPlayer = () => {
     // this when it starts, so the site's track pauses instead of playing over it
     useEffect(() => {
         const onMessage = (event: MessageEvent) => {
-            if (event.origin === window.location.origin && event.data?.type === 'jakemotta:media-playing') audioRef.current?.pause();
+            if (event.origin === window.location.origin && event.data?.type === 'jakemotta:media-playing') useAudioStore.getState().media()?.pause();
         };
         window.addEventListener('message', onMessage);
         return () => window.removeEventListener('message', onMessage);
@@ -169,6 +171,11 @@ export const MusicPlayer = () => {
     // Effect to handle audio URL changes
     useEffect(() => {
         if (!audioRef.current || !audioUrl) return;
+        // A song from YouTube plays in atoms/youtube-player; this element just stops
+        if (isStreamed(audioUrl)) {
+            audioRef.current.pause();
+            return;
+        }
 
         ensureAudioGraph();
         // Each track learns its own range from scratch
@@ -203,10 +210,11 @@ export const MusicPlayer = () => {
 
             <audio
                 ref={audioRef}
-                src={audioUrl}
-                onPlay={() => useAudioStore.setState({ isPlaying: true })}
-                onPause={() => useAudioStore.setState({ isPlaying: false })}
-                onEnded={playNext}
+                src={isStreamed(audioUrl) ? undefined : audioUrl}
+                // Only while it's this element's turn: the pause as a YouTube song takes over arrives after that song has started
+                onPlay={() => !isStreamed(useAudioStore.getState().audioUrl) && useAudioStore.setState({ isPlaying: true })}
+                onPause={() => !isStreamed(useAudioStore.getState().audioUrl) && useAudioStore.setState({ isPlaying: false })}
+                onEnded={() => !isStreamed(useAudioStore.getState().audioUrl) && playNext()}
             />
         </>
     );

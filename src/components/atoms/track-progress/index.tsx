@@ -11,7 +11,6 @@ const formatTime = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Ma
  * is written in an animation loop straight onto the input, like the visualizer, not through state.
  */
 export const TrackProgress = ({ className = '' }: { className?: string }) => {
-    const audioElement = useAudioStore((store) => store.audioElement);
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -20,8 +19,9 @@ export const TrackProgress = ({ className = '' }: { className?: string }) => {
         const draw = () => {
             frame = requestAnimationFrame(draw);
             const input = inputRef.current;
-            if (!input || !audioElement) return;
-            const { currentTime, duration } = audioElement;
+            const media = useAudioStore.getState().media();
+            if (!input || !media) return;
+            const { currentTime, duration } = media;
             const progress = duration > 0 && Number.isFinite(duration) ? currentTime / duration : 0;
             // Leave the value alone while the visitor is dragging it
             if (document.activeElement !== input) input.value = String(Math.round(progress * SCALE));
@@ -34,11 +34,12 @@ export const TrackProgress = ({ className = '' }: { className?: string }) => {
         };
         frame = requestAnimationFrame(draw);
         return () => cancelAnimationFrame(frame);
-    }, [audioElement]);
+    }, []);
 
     const seek = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (!audioElement || !Number.isFinite(audioElement.duration)) return;
-        audioElement.currentTime = (Number(event.target.value) / SCALE) * audioElement.duration;
+        const media = useAudioStore.getState().media();
+        if (!media || !Number.isFinite(media.duration)) return;
+        media.currentTime = (Number(event.target.value) / SCALE) * media.duration;
     };
 
     return <input ref={inputRef} className={`range-slider ${className}`} type='range' min={0} max={SCALE} defaultValue={0} aria-label='Seek' onChange={seek} />;

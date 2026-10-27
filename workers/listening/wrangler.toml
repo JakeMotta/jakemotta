@@ -1,5 +1,6 @@
 # The listening API: what Jake is playing on Spotify right now, to the second, and the YouTube copy
-# of it that visitors can listen along with. docs/listening.md explains where it fits.
+# of it that visitors can listen along with. It also finds the YouTube copies of his other songs (his
+# playlist, his ListenBrainz history) for the site's own player. docs/listening.md explains where it fits.
 #
 # It runs on Cloudflare, which already sits in front of jakemotta.com, so /api/listening is answered
 # before a request ever reaches the Namecheap host. It isn't part of the FTP deploy: deploy it from
@@ -23,15 +24,22 @@ routes = [
   { pattern = "www.jakemotta.com/api/listening*", zone_name = "jakemotta.com" },
 ]
 
-# Holds Spotify's access token between requests, a refresh token if Spotify rotates it, and the
-# YouTube match for each Spotify track. Create it with `npx wrangler kv namespace create LISTENING`
+# Holds Spotify's access token between requests, a refresh token if Spotify rotates it, the
+# YouTube match for each song, and the lists of Jake's songs. Create it with `npx wrangler kv namespace create LISTENING`
 # and paste the id it prints here.
 [[kv_namespaces]]
 binding = "LISTENING"
 id = "PASTE_THE_KV_NAMESPACE_ID_HERE"
 
 [vars]
-# Artists or tracks never to offer listen-along for, comma-separated and case-insensitive: an artist
-# ("Some Artist") or one track ("Some Artist - Some Song"). They still show on ListenBrainz, which
-# is public; this only keeps them off the site's live card.
+# Artists or tracks never to play on the site, comma-separated and case-insensitive: an artist
+# ("Some Artist") or one track ("Some Artist - Some Song"). They're kept from listen-along, the
+# playlist and the Recent listens play buttons. They still show on ListenBrainz, which is public.
 HIDDEN = ""
+
+# Whose ListenBrainz history counts as Jake's songs (the same account as src/common/listening.ts)
+LISTENBRAINZ_USER = "draymothisk"
+
+# The Spotify playlist whose songs join the site's shuffle: the ID from its share link
+# (open.spotify.com/playlist/<ID>). Jake must own it or collaborate on it. Empty: no playlist.
+SPOTIFY_PLAYLIST = ""

@@ -30,7 +30,7 @@ When the shuffle runs out, the whole library is shuffled again, leaving out the 
 
 **In the UI:**
 - The board's Now Playing tile is the player: seek slider (`TrackProgress`) and previous/play/next (`Transport`). The Up next tile lists the next four tracks, queued ones first with their place in line.
-- The library (`/music`) adds volume (`VolumeSlider`) and the queue, and shows every song as a `MusicTile`: cover, a play button, and a queue toggle that shows a faint "add to queue" icon at rest and the track's place in line (1, 2…) once queued. Clicking it again removes the track.
+- The library (`/library`) adds volume (`VolumeSlider`) and the queue, and shows every song as a `MusicTile`: cover, a play button, and a queue toggle that shows a faint "add to queue" icon at rest and the track's place in line (1, 2…) once queued. Clicking it again removes the track.
 - `MiniPlayer` (cover, title, play/pause, next) stands in wherever the Now Playing tile is out of sight: in the overlays, and on phones once it scrolls away.
 
 **Autoplay:** browsers only allow audio after a user gesture. That's why the Now Playing tile asks the visitor to choose sound or silence first, and why `togglePlayback` resumes the `AudioContext` inside the click that called it, before `play()`. After that first gesture, moving on to the next track is allowed.

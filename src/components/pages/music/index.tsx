@@ -13,7 +13,7 @@ type Tab = 'mine' | 'favorites';
 /** The music tile opened: the player and its queue on the left, the whole library on the right */
 export const MusicLibrary = () => {
     const navigate = useNavigate();
-    // The tab lives in the URL (/music?tab=favorites), so the board's Favorite artists tile can open straight onto it
+    // The tab lives in the URL (/library?tab=favorites), so the board's Favorite artists tile can open straight onto it
     const [params, setParams] = useSearchParams();
     const tab: Tab = params.get('tab') === 'favorites' ? 'favorites' : 'mine';
     const setTab = (key: Tab) => setParams(key === 'favorites' ? { tab: key } : {}, { replace: true });

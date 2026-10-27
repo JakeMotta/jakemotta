@@ -33,7 +33,7 @@ export const HeroTile = () => {
                 <p className='tile-hero__tagline'>A slice of work throughout the years</p>
             </div>
             <nav className='tile-hero__chips' aria-label='Sections'>
-                <Link className='chip' to='/music'>
+                <Link className='chip' to='/library'>
                     Music
                 </Link>
                 <Link className='chip' to='/project'>
@@ -60,7 +60,7 @@ export const NowPlayingTile = forwardRef<HTMLElement>((_, ref) => {
     const togglePlayback = useAudioStore((store) => store.togglePlayback);
     const track = findTrack(audioUrl);
 
-    const libraryLink = <ExpandLink to='/music'>Library</ExpandLink>;
+    const libraryLink = <ExpandLink to='/library'>Library</ExpandLink>;
 
     return (
         <section ref={ref} className='tile tile-now tile--dark' aria-label='Now playing'>
@@ -155,7 +155,7 @@ export const UpNextTile = () => {
                     <h2 id='up-next-title'>Up next</h2>
                     <span>{queue.length ? `${queue.length} queued, then shuffle` : 'shuffled'}</span>
                 </div>
-                <ExpandLink to='/music'>Queue</ExpandLink>
+                <ExpandLink to='/library'>Queue</ExpandLink>
             </div>
             <ol className='tile-next__list'>
                 {rows.map(({ url, position }) => {
@@ -233,7 +233,7 @@ export const ArtistsTile = () => {
                 <h2 id='artists-title' className='eyebrow'>
                     Favorite artists
                 </h2>
-                <ExpandLink to='/music?tab=favorites'>Library</ExpandLink>
+                <ExpandLink to='/library?tab=favorites'>Library</ExpandLink>
             </div>
             <div className='tile-art__names'>
                 {favoriteArtists.map((artist) => (

@@ -53,7 +53,8 @@ const AppContent = () => {
           <Route element={<Home />}>
             <Route index element={null} />
             <Route path="home" element={null} />
-            <Route path="music" element={<MusicLibrary />} />
+            {/* Not /music: public/music/ is a real folder, and the server would serve it instead of the app */}
+            <Route path="library" element={<MusicLibrary />} />
             <Route path="minecraft" element={<Minecraft />} />
             {/* /project, singular: /projects/ is the standalone sites' folder, which the server keeps from the app */}
             <Route path="project" element={<ProjectGallery />} />

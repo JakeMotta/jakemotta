@@ -20,13 +20,13 @@ On a desktop the tiles sit like this:
 
 ## The tiles
 
-- **Hero** (`HeroTile`): the name, the one-line tagline, whether sound is on, and links to Music (`/music`), Projects (`/project`) and Minecraft (`/minecraft`). It holds the page's only `<h1>`.
+- **Hero** (`HeroTile`): the name, the one-line tagline, whether sound is on, and links to Music (`/library`), Projects (`/project`) and Minecraft (`/minecraft`). It holds the page's only `<h1>`.
 - **Now Playing** (`NowPlayingTile`): the player. Cover, title, byline, a seek slider and previous/play/next, plus **Library ↗**. It also holds the sound-or-silence choice (below), and when the visitor chose silence it offers to start the welcome track.
 - **Featured project** (`FeaturedTile`): the first entry in `homeProjectList`, which is the newest, marked "Newest". The whole tile links to its viewer.
 - **Up next** (`UpNextTile`): the next four tracks, queued ones first with their place in line, then the shuffle. Clicking one plays it now. **Queue ↗** opens the library, where the queue is.
 - **Projects** (`ProjectsTile`): every other project as a small 4:3 screenshot with its name and year, each linking to its viewer. The screenshots scroll inside the tile once there are more than fit; **All *n* ↗** opens all of them.
 - **Modpack** (`ModpackTile`): links to `/minecraft`, and shows the latest version from `releases.json`.
-- **Favorite artists** (`ArtistsTile`): the names in `favoriteArtists`; clicking one plays its track. **Library ↗** opens the library on its Favorite artists tab (`/music?tab=favorites`).
+- **Favorite artists** (`ArtistsTile`): the names in `favoriteArtists`; clicking one plays its track. **Library ↗** opens the library on its Favorite artists tab (`/library?tab=favorites`).
 - **Surprise me** (`SurpriseTile`): plays a random track that isn't the one playing.
 - **Say hi** (`SayHiTile`): Jake's GitHub.
 
@@ -45,11 +45,11 @@ Playing anything from anywhere also counts as choosing sound. The choice is the 
 
 ## Overlays
 
-A tile opens as an overlay route drawn over the board, which stays mounted behind it, blurred and `inert`. The routes are children of the board's layout route in `App.tsx`, rendered into its `<Outlet />`:
+A tile opens as an overlay route drawn over the board, which stays mounted behind it, blurred and `inert`. The routes are children of the board's layout route in `App.tsx`, rendered into its `<Outlet />`. An overlay's path must not match a folder in `public/` (`downloads`, `images`, `music`, `projects`, `vendor`): on the live server a refresh or a shared link would get the folder, not the app. That's why the library is at `/library`, not `/music`, which redirected to a file listing of the audio.
 
 | Route | Page | What it is |
 | --- | --- | --- |
-| `/music` | `pages/music` | The library: the big player, volume and the queue on the left; My music and Favorite artists as cover tiles on the right, each with play and a queue toggle. |
+| `/library` | `pages/music` | The library: the big player, volume and the queue on the left; My music and Favorite artists as cover tiles on the right, each with play and a queue toggle. |
 | `/project` | `pages/project-gallery` | Every project, newest first, as cards with screenshot, name, year and description. It's at `/project`, singular, because `/projects/` is the folder of standalone sites, which `.htaccess` keeps from the app. |
 | `/project/:id` | `pages/project` | The project viewer (see [projects/README.md](projects/README.md)). Opened from the all-projects overlay, it closes back to it; opened from the board, back to the board. Its side panel links to all projects too. |
 | `/minecraft` | `pages/minecraft` | The modpack download page as a board of its own: Download, Install, Playing, Updating, Troubleshooting and Server files tiles (see [modpack.md](modpack.md)). |

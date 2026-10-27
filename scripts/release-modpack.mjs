@@ -84,15 +84,25 @@ if (!existsSync(join(sourceDir, 'Release-Notes.md'))) fail(`${sourceDir} has no 
 
 // The builder's own checksums. A mismatch means an archive was rebuilt after
 // the sums were written, and which one is right is not something to guess.
+// Some builds write only latest.json, whose artifacts carry the same hashes.
 const sumsPath = join(sourceDir, 'SHA256SUMS.txt');
-if (!existsSync(sumsPath)) fail(`${sourceDir} has no SHA256SUMS.txt`);
-const expected = Object.fromEntries(
-    readFileSync(sumsPath, 'utf8')
-        .split(/\r?\n/)
-        .map((line) => line.trim().split(/\s+\*?/))
-        .filter(([hash, name]) => hash && name)
-        .map(([hash, name]) => [name, hash.toLowerCase()]),
-);
+const builderLatestPath = join(sourceDir, 'latest.json');
+let expected;
+if (existsSync(sumsPath)) {
+    expected = Object.fromEntries(
+        readFileSync(sumsPath, 'utf8')
+            .split(/\r?\n/)
+            .map((line) => line.trim().split(/\s+\*?/))
+            .filter(([hash, name]) => hash && name)
+            .map(([hash, name]) => [name, hash.toLowerCase()]),
+    );
+} else if (existsSync(builderLatestPath)) {
+    const builderLatest = JSON.parse(readFileSync(builderLatestPath, 'utf8'));
+    if (builderLatest.version !== version) fail(`latest.json is for ${builderLatest.version}, not ${version}`);
+    expected = Object.fromEntries((builderLatest.artifacts ?? []).map(({ file, sha256 }) => [file, String(sha256).toLowerCase()]));
+} else {
+    fail(`${sourceDir} has neither SHA256SUMS.txt nor latest.json`);
+}
 
 const describe = (name) => {
     const path = join(sourceDir, name);

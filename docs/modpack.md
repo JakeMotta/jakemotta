@@ -8,14 +8,14 @@ Self-hosters get one line at the foot of the Install tile instead: the `.mrpack`
 
 ## Publishing a release
 
-1. Build the release in the pack workspace. It produces a folder such as `outputs/Progression-Survival-1.0.0-rc.2/` holding `mods.lock.json`, `SHA256SUMS.txt`, `Release-Notes.md`, one `.mrpack` and one `Progression-Survival-Server-*.zip`.
+1. Build the release in the pack workspace. It produces a folder such as `outputs/Progression-Survival-1.0.0-rc.2/` holding `mods.lock.json`, `Release-Notes.md`, one `.mrpack`, one `Progression-Survival-Server-*.zip`, and the archives' hashes in `SHA256SUMS.txt` or, in builds that don't write one (rc.2, rc.6), in `latest.json`.
 2. Copy it into the site:
    ```bash
    yarn modpack:release "C:/Users/Jake/Documents/Codex/2026-10-23/minecraft-progressive-smithing/outputs/Progression-Survival-1.0.0-rc.2"
    ```
 3. Commit and push. The deploy uploads it.
 
-`scripts/release-modpack.mjs` refuses a release whose archives don't match the builder's `SHA256SUMS.txt`, or that contain worlds, player data, admin lists, `server.properties` or logs. It copies the two archives and the notes into `public/downloads/progression-survival/releases/<version>/`, writes a checksum file covering just those two archives, and regenerates:
+`scripts/release-modpack.mjs` refuses a release whose archives don't match the builder's `SHA256SUMS.txt` (or, without one, the `artifacts` in its `latest.json`), or that contain worlds, player data, admin lists, `server.properties` or logs. It copies the two archives and the notes into `public/downloads/progression-survival/releases/<version>/`, writes a checksum file covering just those two archives, and regenerates:
 - **`releases.json`:** every release, newest first. The download page and the board's modpack tile read it at runtime (`src/common/modpack.ts`), so a release needs no code change.
 - **`latest.json`:** the newest release on its own.
 - **`.htaccess`:** `latest.mrpack` and `latest-server.zip` answer with a 302 to the newest files, never a 301, which browsers would remember forever. It also sets `no-cache` on the JSON files and `no-store` on those redirects.
@@ -31,6 +31,6 @@ The deploy uploads `releases.json`, `latest.json` and `.htaccess` on every run (
 
 ## State
 
-- **Published:** `1.0.0-rc.1`, labelled a test build on the page.
+- **Published:** `1.0.0-rc.6` (latest, added 2026-10-27, matching the updated server) and `1.0.0-rc.1`, both labelled test builds on the page. rc.2 to rc.5 were built but never published.
 - **Untested (as of 2026-10-26):** a real Prism import and a friend joining over the internet.
 - **Server address:** not on the page. Friends get it from Jake.

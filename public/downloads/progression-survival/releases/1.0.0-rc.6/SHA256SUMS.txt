@@ -1,0 +1,2 @@
+053ee25f0d4e9f7519ca0fd6ef96ec1926bdbb40eb06de833fd4f98741f8a5b7  Progression-Survival-1.0.0-rc.6.mrpack
+cca41f37bf11e90d2b805f894d48c08aa1e1a10b0436a08f7adf824634e59427  Progression-Survival-Server-1.0.0-rc.6.zip

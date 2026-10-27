@@ -22,21 +22,47 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         box-shadow: 0 0 0 6px var(--color-primary-ink);
     }
 
-    &__grid {
-        display: grid;
+    &__body {
+        display: flex;
         min-height: 0;
         flex: 1;
-        align-content: start;
-        gap: 22px;
+        flex-direction: column;
+        gap: 30px;
         margin: 0 -8px;
         overflow-y: auto;
         overscroll-behavior: contain;
         padding: 8px 8px 28px;
+
+        @media (max-width: 639px) {
+            overflow: visible;
+        }
+    }
+
+    &__heading {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin: 0 0 14px;
+        color: var(--color-primary-light);
+        font-size: 22px;
+        font-weight: 900;
+
+        span {
+            font-size: 14px;
+            font-weight: 800;
+            opacity: 0.7;
+        }
+    }
+
+    &__grid {
+        display: grid;
+        gap: 22px;
+        margin: 0;
+        padding: 0;
         grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         list-style: none;
 
         @media (max-width: 639px) {
-            overflow: visible;
             grid-template-columns: minmax(0, 1fr);
         }
     }

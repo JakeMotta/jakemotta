@@ -3,6 +3,7 @@ import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-route
 import { FiArrowLeft, FiArrowRight, FiArrowUpRight, FiInfo } from 'react-icons/fi';
 import { BentoOverlay } from '../../templates';
 import { homeProjectList, movedProjects } from '../../../common/constants';
+import { orderedProjects } from '../../../common/projects';
 import './index.scss';
 
 /**
@@ -27,8 +28,7 @@ export const ProjectViewer = () => {
     const location = useLocation();
     const frameRef = useRef<HTMLIFrameElement>(null);
     const [loadedId, setLoadedId] = useState<string>();
-    const index = homeProjectList.findIndex((item) => item.id === id);
-    const project = homeProjectList[index];
+    const project = homeProjectList.find((item) => item.id === id);
     // Opened from the all-projects overlay, closing goes back there; opened from the board, back to the board
     const fromGallery = (location.state as { from?: string } | null)?.from === 'gallery';
     const close = () => navigate(fromGallery ? '/project' : '/');
@@ -46,9 +46,11 @@ export const ProjectViewer = () => {
         );
     }
 
-    const count = homeProjectList.length;
-    const previous = homeProjectList[(index - 1 + count) % count];
-    const next = homeProjectList[(index + 1) % count];
+    // Back and Forward step through the projects in the all-projects overlay's order
+    const count = orderedProjects.length;
+    const position = orderedProjects.indexOf(project);
+    const previous = orderedProjects[(position - 1 + count) % count];
+    const next = orderedProjects[(position + 1) % count];
     // Stepping between projects replaces the entry, so Back in the browser closes the viewer instead of retracing every project
     const show = (projectId: string) => navigate(`/project/${projectId}`, { replace: true, state: location.state });
 

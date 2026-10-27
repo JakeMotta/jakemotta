@@ -41,64 +41,12 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         min-height: 0;
         flex-direction: column;
         gap: 14px;
-        padding: 20px;
-    }
+        // No padding: the preview runs to the panel's edges
+        padding: 0;
 
-    &__bar {
-        display: flex;
-        min-height: 56px;
-        align-items: center;
-        gap: 8px;
-        padding: 6px;
-        border-radius: 16px;
-        background: rgba(0, 0, 0, 0.25);
-
-        // On a phone the overlay's close button sits at this bar's end
+        // On a phone the overlay's close button sits over the stage's top corner
         @media (max-width: 999px) {
-            margin-right: 56px;
-        }
-    }
-
-    &__icon {
-        display: flex;
-        width: 44px;
-        height: 44px;
-        flex-shrink: 0;
-        align-items: center;
-        justify-content: center;
-        border: 0;
-        border-radius: 12px;
-        background: transparent;
-        color: inherit;
-        cursor: pointer;
-        font-size: 22px;
-
-        &:hover {
-            background: rgba(255, 255, 255, 0.14);
-        }
-    }
-
-    &__address {
-        display: flex;
-        min-width: 0;
-        height: 44px;
-        flex: 1;
-        align-items: center;
-        gap: 8px;
-        padding: 0 14px;
-        border-radius: 12px;
-        background: rgba(0, 0, 0, 0.25);
-        font-size: 15px;
-        font-weight: 800;
-
-        svg {
-            flex-shrink: 0;
-        }
-
-        span {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            padding-top: 76px;
         }
     }
 
@@ -129,23 +77,12 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
     }
 
-    // Just the arrow on phones, where the bar is tight
-    &__label {
-        display: none;
-
-        @media (min-width: 640px) {
-            display: inline;
-        }
-    }
-
     &__frame {
         position: relative;
         min-height: 0;
         flex: 1;
         overflow: hidden;
-        border-radius: 16px;
         background: var(--color-primary-ink);
-        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12);
 
         @media (max-width: 999px) {
             height: 62vh;
@@ -191,80 +128,31 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         object-fit: contain;
     }
 
-    &__strip {
-        display: flex;
-        gap: 12px;
-        margin: 0;
-        overflow-x: auto;
-        padding: 4px 2px 6px;
-        list-style: none;
-    }
-
-    &__thumb {
-        display: flex;
-        width: 128px;
-        flex-direction: column;
-        gap: 6px;
-        padding: 0;
-        border: 0;
-        background: transparent;
-        color: inherit;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 900;
-        text-align: left;
-        transition: transform 0.35s $spring;
-
-        span {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        &:hover {
-            transform: translateY(-4px) rotate(-2deg);
-        }
-    }
-
-    &__thumb-image {
-        border-radius: 10px;
-        opacity: 0.75;
-        transition: opacity 0.2s;
-    }
-
-    &__thumb:hover &__thumb-image,
-    &__thumb--on &__thumb-image {
-        opacity: 1;
-    }
-
-    &__thumb--on &__thumb-image {
-        box-shadow:
-            0 0 0 3px var(--color-primary-light),
-            0 0 0 6px var(--color-primary-ink);
-    }
-
     &__side {
         display: flex;
         min-height: 0;
         flex-direction: column;
         gap: 14px;
         overflow: auto;
-        padding: 24px;
+        // 16px down, so the title's 48px line is level with the close button
+        padding: 16px 24px 24px;
         background: rgba(0, 0, 0, 0.2);
     }
 
-    &__eyebrow {
-        // Level with the overlay's close button
+    &__head {
         display: flex;
-        min-height: 48px;
-        align-items: center;
-        font-size: 12px;
-        font-weight: 900;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
+        flex-direction: column;
+        gap: 12px;
+        // Clear of the overlay's close button, which sits over this corner on a wide screen
+        @media (min-width: 1000px) {
+            padding-right: 52px;
+        }
     }
 
     &__title {
+        display: flex;
+        min-height: 48px;
+        align-items: center;
         font-size: 42px;
         font-weight: 900;
         letter-spacing: -0.035em;
@@ -272,15 +160,61 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         overflow-wrap: anywhere;
     }
 
-    &__year {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 5px 12px;
+    // The year, then what kind of thing it is (tags in homeProjectList)
+    &__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: var(--color-primary-light);
+            color: var(--color-primary-ink);
+            font-size: 13px;
+            font-weight: 900;
+        }
+    }
+
+    // On the preview's bottom right corner, out of the way of the sites' own headers
+    &__open {
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    // Back and Forward, at the foot of the side panel
+    &__steps {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: auto;
+    }
+
+    &__step {
+        display: flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 16px;
+        border: 2px solid var(--color-primary-light);
         border-radius: 999px;
-        background: var(--color-primary-light);
-        color: var(--color-primary-ink);
-        font-size: 13px;
+        background: transparent;
+        color: var(--color-primary-light);
+        cursor: pointer;
+        font: inherit;
+        font-size: 14px;
         font-weight: 900;
+
+        &:hover {
+            background: var(--color-primary-light);
+            color: var(--color-primary-ink);
+        }
     }
 
     &__description {
@@ -306,36 +240,4 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
     }
 
-    &__steps {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    &__step {
-        display: flex;
-        min-height: 48px;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        padding: 0 16px;
-        border: 2px solid var(--color-primary-light);
-        border-radius: 999px;
-        background: transparent;
-        color: var(--color-primary-light);
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 800;
-        text-decoration: none;
-
-        &:hover {
-            background: var(--color-primary-light);
-            color: var(--color-primary-ink);
-        }
-    }
-
-    &__player {
-        margin-top: auto;
-        background: rgba(0, 0, 0, 0.28);
-    }
 }

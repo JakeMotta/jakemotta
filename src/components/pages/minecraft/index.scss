@@ -3,7 +3,8 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 // A board of its own, on the page ground with an ink rim, its tiles in the usual surfaces
 .modpack {
     gap: 14px;
-    padding: 20px;
+    // 16px down, so the header's first line is level with the close button
+    padding: 16px 20px 20px;
     border: 3px solid var(--color-primary-ink);
     background: var(--color-primary) !important;
     color: var(--color-primary-ink) !important;
@@ -28,42 +29,10 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         box-shadow: 0 0 0 6px var(--color-primary-ink);
     }
 
-    &__head {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 18px;
-        // Clear of the overlay's close button
-        padding: 4px 64px 0 4px;
-    }
-
     &__cube {
-        width: 72px;
-        height: 72px;
+        width: 48px;
+        height: 48px;
         transform: rotate(-6deg);
-    }
-
-    &__intro {
-        min-width: 0;
-        flex: 1 1 420px;
-
-        h2 {
-            font-size: 40px;
-            font-weight: 900;
-            letter-spacing: -0.035em;
-            line-height: 1;
-        }
-
-        p {
-            margin-top: 6px;
-            font-size: 16px;
-            font-weight: 800;
-        }
-    }
-
-    &__player {
-        width: 300px;
-        max-width: 100%;
     }
 
     &__grid {
@@ -155,9 +124,10 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             background: rgba(0, 0, 0, 0.12);
         }
 
-        &--trouble {
+        // The releases before the latest, each with its pack and notes
+        &--older {
             --tilt: 0.8deg;
-            gap: 4px;
+            gap: 8px;
             background: var(--color-primary-dark);
             color: var(--color-primary-light);
 
@@ -173,10 +143,6 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         font-weight: 900;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-
-        &--sub {
-            margin-top: 8px !important;
-        }
     }
 
     &__version {
@@ -191,17 +157,6 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             letter-spacing: -0.03em;
             line-height: 1;
         }
-    }
-
-    &__tag {
-        padding: 4px 10px;
-        border-radius: 999px;
-        background: var(--color-primary-light);
-        color: var(--color-primary-ink);
-        font-size: 12px;
-        font-weight: 900;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
     }
 
     &__meta {
@@ -358,46 +313,17 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
     }
 
-    &__question {
-        display: flex;
-        width: 100%;
-        min-height: 48px;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        padding: 8px 10px;
-        border: 0;
-        border-radius: 12px;
-        background: transparent;
-        color: inherit;
-        cursor: pointer;
-        font: inherit;
-        font-weight: 900;
-        text-align: left;
-
-        &:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        svg {
-            flex-shrink: 0;
-            transition: transform 0.3s;
-        }
-
-        &--open svg {
-            transform: rotate(45deg);
-        }
-    }
-
-    &__answer {
-        padding: 0 10px 8px;
-    }
-
+    // One line per release, never wrapping: the version, then its pack and notes
     &__older {
         display: flex;
-        flex-wrap: wrap;
         align-items: baseline;
-        gap: 4px 12px;
+        gap: 12px;
+        white-space: nowrap;
+
+        a {
+            color: inherit;
+            font-weight: 900;
+        }
     }
 
     @media (prefers-reduced-motion: reduce) {

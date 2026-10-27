@@ -4,7 +4,7 @@ The site shows what Jake is listening to on Spotify and YouTube Music: the track
 
 **Status (2026-10-26):** built, tested and on the board, though not deployed yet:
 
-- **On the board:** the "In Jake's ears" tile and the `/listening` overlay it opens ([How it's hooked up](#how-its-hooked-up)). Listen-along is mounted too, but stays hidden until the Worker is deployed.
+- **On the board:** the "Recent listens" tile and the library's Recent listens tab it opens ([How it's hooked up](#how-its-hooked-up)). Listen-along is mounted too, but stays hidden until the Worker is deployed.
 - **ListenBrainz is connected:** the account is [draymothisk](https://listenbrainz.org/user/draymothisk/) (`LISTENBRAINZ_USER`), linked to Spotify on 2026-10-26.
   - Nothing came through for about 2 hours. Plays started minutes after Jake disconnected and reconnected Spotify in ListenBrainz, so if it ever stalls, reconnect first.
   - Spotify also makes the link expire every 6 months, and ListenBrainz emails a reminder before it does.
@@ -38,12 +38,12 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
   3. For a Spotify play, Spotify's oEmbed thumbnail, asked once per track per visit. This is what covers the track playing now, which ListenBrainz never matches.
   4. Otherwise a monogram tile in the hue, like the project cards'.
 - **`src/store/listening.ts`** (zustand) holds `nowPlaying`, `recent` and the top lists. `useLiveListening()` keeps the first two fresh: one poll every 30 seconds (`LISTENING_POLL_MS`), however many components ask, and only while the page is visible.
-- **`atoms/now-playing`** is the card: "Now spinning" with a pulsing dot, or "Last spun · 3h ago".
+- **`atoms/now-playing`** is the card: "Playing now" with a pulsing dot, or "Last played · 3h ago".
   - The dot is a "live" light, not a visualizer: ListenBrainz says what's playing, not how loud.
   - The title is a link stretched over the whole card, so the "Listen along" button beside it stays a control of its own.
   - That button (`ListenAlongButton`) shows only while Jake is on Spotify and the Worker answers.
   - `useNowListening()` is what the card shows, shared with the overlay: the current listen (or the last), its label, and the listen-along state.
-  - `compact` is the board's version: no arrow, no listen-along button, a smaller cover, and the short label "Spun 3h ago", since the tile is one column wide.
+  - `compact` is the board's version: no arrow, no listen-along button, a smaller cover, and the short label "Played 3h ago", since the tile is one column wide.
 - **`atoms/lately`** is the panel: Recent, Songs, Albums and Artists, with This month, This year and All time for the top lists.
   - ListenBrainz recalculates statistics now and then, and a range it hasn't counted answers 204. Until the visitor picks a range, the panel steps on to the next one that's ready. If they pick one that isn't, it says so.
 - **`atoms/listen-row` and `atoms/listen-cover`** are the pieces both use. Rows link out and have no play button, so they can't be mistaken for the library's songs.
@@ -184,13 +184,13 @@ What Jake does once, in this order. Nothing secret goes in the repository.
 
 Done on 2026-10-26, once the bento redesign had settled. Jake picked the placement from the [Listening Tile Placement canvas](https://claude.ai/artifact/JvNbfMdMFpPAmT4A1rWdgW): of the three options there, he had the tile take the cell of "Surprise me", which he removed.
 
-1. **The tile:** `EarsTile` in `pages/home/tiles.tsx`, "In Jake's ears", in row 3 under the Now Playing tile ([board.md](board.md)).
+1. **The tile:** `EarsTile` in `pages/home/tiles.tsx`, "Recent listens", in row 3 under the Now Playing tile ([board.md](board.md)).
    - It holds the compact `NowPlaying` card and the plays before it, each linking out.
    - On a desktop the tile is a fixed height, so a short screen shows fewer rows: one that doesn't fit is hidden whole, never cut.
    - Before the first answer it says "Tuning in…"; with nothing to show, "Quiet in here for now."
-2. **The overlay:** its **Lately ↗** opens `/listening` (`pages/listening`).
-   - On the left is the current listen, big, with "Open in Spotify" and the listen-along button. On the right is `Lately`, ten rows at a time, in two columns on a wide screen.
-   - The path is safe because `public/` has no `listening` folder.
+2. **The library tab:** its **Lately ↗** opens the library on its Recent listens tab (`/library?tab=recent`, `pages/music`).
+   - At the top is the full `NowPlaying` card, which links out and carries the listen-along button. Under it is `Lately`, twelve rows at a time, in two columns on a wide screen.
+   - This was its own overlay at `/listening` until 2026-10-27, when Jake had it folded into the library. `/listening` redirects to the tab, so old links still work.
 3. **Listen-along:** `<ListenAlong />` is mounted in `App.tsx`, right after `<MusicPlayer />`, outside the routes, so it survives navigation the way the player does. Until the Worker is deployed, `/api/listening/now` gets the app's own page back instead of JSON, so the button never shows.
 4. **The music player hears the capture** (`atoms/music-player/index.tsx`):
    - **The chain is split:** the `<audio>` source connects to the speakers and, separately, to the analyser, which listens beside the speakers rather than in front of them.

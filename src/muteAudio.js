@@ -1,6 +1,6 @@
 // Silences the page it runs in without stopping anything. Media keeps playing, muted, and Web Audio
 // keeps running into an output that reaches no speaker, so analysers (the vignette, the eq bars) still
-// move. Claude's preview server turns it on with REACT_APP_MUTE_AUDIO (.claude/launch.json): index.tsx
+// move. The muted preview server (the "dev" launch config) turns it on with REACT_APP_MUTE_AUDIO: index.tsx
 // loads it into the app and setupProxy.js inlines it into every static page under public/. It never
 // reaches the build. It's a plain script rather than a module, so it can be served as one.
 (() => {
@@ -49,7 +49,7 @@
         return createSource.call(this, media);
     };
 
-    // Every context renders to no device at all (sinkId 'none', Chromium 110+: Claude's browser pane
+    // Every context renders to no device at all (sinkId 'none', Chromium 110+: the preview browser
     // and the screenshot script). Ruffle's Flash sound and the games' Web Audio go through here.
     if ('setSinkId' in NativeContext.prototype) {
         window.AudioContext = class AudioContext extends NativeContext {

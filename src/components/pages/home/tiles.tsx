@@ -4,11 +4,11 @@ import { FiArrowUpRight, FiDownload } from 'react-icons/fi';
 import { MdPlayArrow } from 'react-icons/md';
 import { useAudioStore } from '../../../store/audio';
 import { useListeningStore } from '../../../store/listening';
-import { favoriteArtists, homeProjectList, welcomeTrack } from '../../../common/constants';
+import { homeProjectList, socialLinks, welcomeTrack } from '../../../common/constants';
 import { listenedAgo } from '../../../common/listening';
-import { findTrack, trackByline } from '../../../common/music';
+import { findTrack } from '../../../common/music';
 import { useReleases } from '../../../common/modpack';
-import { CoverArt, EqBars, NowPlaying, PixelCube, ProjectImage, sourceName, TrackProgress, Transport, useNowListening } from '../../atoms';
+import { CoverArt, NowPlaying, PixelCube, PlayerCard, ProjectImage, sourceName, useNowListening } from '../../atoms';
 
 /** A tile's way to open itself up: the link in its header to the overlay with the rest of it */
 const ExpandLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
@@ -18,21 +18,13 @@ const ExpandLink = ({ to, children }: { to: string; children: React.ReactNode })
 );
 
 export const HeroTile = () => {
-    const isPlaying = useAudioStore((store) => store.isPlaying);
-
     return (
         <section className='tile tile-hero tile--outline' aria-labelledby='hero-name'>
-            <div className='tile-hero__top'>
-                <span>jakemotta.com</span>
-                <span className='tile-hero__sound'>
-                    <EqBars /> {isPlaying ? 'sound on' : 'sound off'}
-                </span>
-            </div>
             <div>
                 <h1 id='hero-name' className='tile-hero__name'>
                     Jake Motta
                 </h1>
-                <p className='tile-hero__tagline'>A slice of work throughout the years</p>
+                <p className='tile-hero__tagline'>Some of my work throughout the years</p>
             </div>
             <nav className='tile-hero__chips' aria-label='Sections'>
                 <Link className='chip' to='/library'>
@@ -56,7 +48,6 @@ export const HeroTile = () => {
 export const NowPlayingTile = forwardRef<HTMLElement>((_, ref) => {
     const entry = useAudioStore((store) => store.entry);
     const audioUrl = useAudioStore((store) => store.audioUrl);
-    const isPlaying = useAudioStore((store) => store.isPlaying);
     const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
     const enterSilently = useAudioStore((store) => store.enterSilently);
     const togglePlayback = useAudioStore((store) => store.togglePlayback);
@@ -69,14 +60,12 @@ export const NowPlayingTile = forwardRef<HTMLElement>((_, ref) => {
             {entry === 'waiting' ? (
                 <>
                     <span className='eyebrow'>Welcome in</span>
-                    <h2 className='tile-now__ask'>Press play to come in</h2>
-                    <p className='tile-now__why'>The music follows you around the whole site. Your browser just wants a click first.</p>
+                    <h2 className='tile-now__ask'>Kick on them tunes</h2>
                     <div className='tile-now__stage'>
                         <span className='disc disc--spin' aria-hidden>
                             <span className='disc__label'>{welcomeTrack.title}</span>
                         </span>
                     </div>
-                    <p className='tile-now__first'>First up: {welcomeTrack.title}, the welcome track</p>
                     <button type='button' className='tile-now__go' onClick={() => setAudioUrl(welcomeTrack.url)}>
                         <MdPlayArrow /> Play with sound
                     </button>
@@ -86,21 +75,7 @@ export const NowPlayingTile = forwardRef<HTMLElement>((_, ref) => {
                     </button>
                 </>
             ) : track ? (
-                <>
-                    <div className='tile-now__head'>
-                        <span className='eyebrow'>
-                            <EqBars bars={4} /> {isPlaying ? 'Now playing' : 'Paused'}
-                        </span>
-                        {libraryLink}
-                    </div>
-                    <CoverArt track={track} className='tile-now__cover' />
-                    <div>
-                        <h2 className='tile-now__title'>{track.title}</h2>
-                        <p className='tile-now__byline'>{trackByline(track)}</p>
-                    </div>
-                    <TrackProgress />
-                    <Transport />
-                </>
+                <PlayerCard action={libraryLink} />
             ) : (
                 <>
                     <div className='tile-now__head'>
@@ -143,24 +118,19 @@ export const FeaturedTile = () => {
     );
 };
 
-/** What plays next: the queue first, numbered, then the shuffle */
+/** What plays next: the next few tracks of the shuffle */
 export const UpNextTile = () => {
-    const queue = useAudioStore((store) => store.queue);
-    const shuffled = useAudioStore((store) => store.shuffled);
+    const upNext = useAudioStore((store) => store.shuffled).slice(0, 4);
     const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
-    const rows = [...queue.map((url, i) => ({ url, position: i + 1 })), ...shuffled.filter((url) => !queue.includes(url)).map((url) => ({ url, position: 0 }))].slice(0, 4);
 
     return (
         <section className='tile tile-next tile--dark' aria-labelledby='up-next-title'>
             <div className='tile-next__head'>
-                <div>
-                    <h2 id='up-next-title'>Up next</h2>
-                    <span>{queue.length ? `${queue.length} queued, then shuffle` : 'shuffled'}</span>
-                </div>
-                <ExpandLink to='/library'>Queue</ExpandLink>
+                <h2 id='up-next-title'>Up next</h2>
+                <ExpandLink to='/library'>All songs</ExpandLink>
             </div>
             <ol className='tile-next__list'>
-                {rows.map(({ url, position }) => {
+                {upNext.map((url) => {
                     const track = findTrack(url);
                     if (!track) return null;
                     return (
@@ -168,13 +138,7 @@ export const UpNextTile = () => {
                             <button type='button' className='tile-next__row' onClick={() => setAudioUrl(url)}>
                                 <CoverArt track={track} className='tile-next__cover' />
                                 <span className='tile-next__name'>{track.title}</span>
-                                {position ? (
-                                    <span className='tile-next__position' title={`Queued #${position}`}>
-                                        {position}
-                                    </span>
-                                ) : (
-                                    <span className='tile-next__year'>{track.date}</span>
-                                )}
+                                <span className='tile-next__year'>{track.date}</span>
                             </button>
                         </li>
                     );
@@ -226,32 +190,10 @@ export const ModpackTile = () => {
     );
 };
 
-export const ArtistsTile = () => {
-    const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
-
-    return (
-        <section className='tile tile-art tile--dark' aria-labelledby='artists-title'>
-            <div className='tile-art__head'>
-                <h2 id='artists-title' className='eyebrow'>
-                    Favorite artists
-                </h2>
-                <ExpandLink to='/library?tab=favorites'>Library</ExpandLink>
-            </div>
-            <div className='tile-art__names'>
-                {favoriteArtists.map((artist) => (
-                    <button key={artist.title} type='button' className='tile-art__name' onClick={() => setAudioUrl(artist.url)}>
-                        {artist.title}
-                    </button>
-                ))}
-            </div>
-            <p className='tile-art__hint'>Tap a name to hear why.</p>
-        </section>
-    );
-};
-
 /**
  * What Jake has on, from ListenBrainz (docs/listening.md): the song playing now, or else the last
- * one, then the few before it. Lately opens the rest.
+ * one, then the few before it. Lately opens the rest. On a desktop it takes two cells, the one that
+ * held Favorite artists until 2026-10-27 included (those live on in the library's tab).
  */
 export const EarsTile = () => {
     const { listen } = useNowListening();
@@ -260,15 +202,16 @@ export const EarsTile = () => {
     const loaded = useListeningStore((store) => store.loaded);
     // The card shows the last play when nothing's playing, so the list starts after it
     const from = playingNow ? 0 : 1;
-    const before = recent.slice(from, from + 3);
+    // Up to six: on a desktop the tile spans two cells and lists them in two columns
+    const before = recent.slice(from, from + 6);
 
     return (
         <section className='tile tile-ears tile--light' aria-labelledby='ears-title'>
             <div className='tile-ears__head'>
                 <h2 id='ears-title' className='eyebrow'>
-                    In Jake's ears
+                    Recent listens
                 </h2>
-                <ExpandLink to='/listening'>Lately</ExpandLink>
+                <ExpandLink to='/library?tab=recent'>Lately</ExpandLink>
             </div>
             {listen ? (
                 <>
@@ -311,8 +254,14 @@ export const SayHiTile = () => (
         <h2 id='say-hi-title' className='tile-hi__title'>
             Say hi
         </h2>
-        <a className='tile-hi__link' href='https://github.com/JakeMotta' target='_blank' rel='noreferrer'>
-            GitHub <FiArrowUpRight />
-        </a>
+        <ul className='tile-hi__links'>
+            {socialLinks.map(({ label, url }) => (
+                <li key={label}>
+                    <a className='tile-hi__link' href={url} target='_blank' rel='noreferrer'>
+                        {label} <FiArrowUpRight />
+                    </a>
+                </li>
+            ))}
+        </ul>
     </section>
 );

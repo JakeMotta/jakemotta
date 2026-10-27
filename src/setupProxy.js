@@ -11,7 +11,7 @@ module.exports = (app) => {
     // The path goes in as the filter rather than to app.use, which would strip it from the forwarded URL
     app.use(createProxyMiddleware('/api/listening', { target: 'http://127.0.0.1:8787', changeOrigin: true, logLevel: 'silent' }));
 
-    // Claude's preview server (REACT_APP_MUTE_AUDIO, from .claude/launch.json) inlines muteAudio.js at
+    // The muted preview server (REACT_APP_MUTE_AUDIO, from the "dev" launch config) inlines muteAudio.js at
     // the top of every static page under public/, the way index.tsx loads it into the app, so the
     // projects' music, videos and Flash play silently too. The files on disk are left alone.
     if (process.env.REACT_APP_MUTE_AUDIO) {

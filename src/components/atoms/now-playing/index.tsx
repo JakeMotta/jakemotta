@@ -9,7 +9,7 @@ import './index.scss';
 /**
  * What to show as Jake's current listen: what's playing now, or else the last thing he played,
  * with its label, and whether a visitor can listen along. The card below and the opened
- * /listening overlay both read it.
+ * library's Recent listens tab both read it.
  */
 export const useNowListening = () => {
     useLiveListening();
@@ -28,14 +28,14 @@ export const useNowListening = () => {
 
     const live = !!nowPlaying;
     const ago = listen?.listenedAt ? listenedAgo(listen.listenedAt) : 'a while ago';
-    const label = live ? 'Now spinning' : `Last spun · ${ago}`;
+    const label = live ? 'Playing now' : `Last played · ${ago}`;
 
     return {
         listen,
         live,
         label,
         // For the board's narrow tile, where the long label would wrap
-        shortLabel: live ? label : `Spun ${ago}`,
+        shortLabel: live ? label : `Played ${ago}`,
         service: listen ? sourceName[listen.source] : undefined,
         canListenAlong: onSpotify && !!listenAlongReady,
         listeningAlong,
@@ -59,7 +59,7 @@ export const ListenAlongButton = ({ className = '' }: { className?: string }) =>
  * What Jake is listening to right now on Spotify or YouTube Music, or else the last thing he played.
  * The card links out to the track. While he's on Spotify, and the listening Worker is up, it also
  * offers to listen along. `compact` drops the arrow and the listen-along button, for the board's
- * narrow tile; the opened overlay has both.
+ * narrow tile; the library's Recent listens tab has both.
  */
 export const NowPlaying = ({ compact = false, className = '' }: { compact?: boolean; className?: string }) => {
     const now = useNowListening();

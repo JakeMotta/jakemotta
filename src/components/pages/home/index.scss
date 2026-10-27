@@ -73,29 +73,6 @@ $phone: 639px;
         }
     }
 
-    // Phones only, once the Now Playing tile has scrolled out of view
-    &__minibar {
-        display: none !important;
-
-        @media (max-width: $phone) {
-            position: fixed;
-            right: 12px;
-            bottom: 12px;
-            left: 12px;
-            z-index: 50;
-            display: flex !important;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
-            transition:
-                transform 0.35s $spring,
-                visibility 0.35s;
-        }
-
-        &--hidden {
-            visibility: hidden;
-            transform: translateY(150%);
-        }
-    }
-
     // Shared focus ring: pale with a dark halo, so it shows on the ground and on tiles alike
     a:focus-visible,
     button:focus-visible,
@@ -245,13 +222,9 @@ $phone: 639px;
         grid-row: 3;
     }
 
-    .tile-art {
-        grid-column: 2;
-        grid-row: 3;
-    }
-
+    // Two cells: its own and the one Favorite artists had
     .tile-ears {
-        grid-column: 3;
+        grid-column: 2 / span 2;
         grid-row: 3;
     }
 
@@ -276,21 +249,9 @@ $phone: 639px;
     --tilt: -0.6deg;
     justify-content: space-between;
     gap: 18px;
-
-    &__top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 14px;
-        font-weight: 900;
-    }
-
-    &__sound {
-        display: flex;
-        align-items: flex-end;
-        gap: 8px;
-        line-height: 1;
-    }
+    // Opaque, but in the hue: mostly the ground with some of the pale tint, so it sits in the background rather than on it
+    background: color-mix(in srgb, var(--color-primary) 65%, var(--color-primary-light));
+    color: var(--color-primary-ink);
 
     &__name {
         margin: 0;
@@ -338,41 +299,12 @@ $phone: 639px;
     --tilt: 1deg;
     gap: 12px;
 
+    // The silent state's header; playing, the tile shows the shared PlayerCard (atoms/player-card)
     &__head {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 8px;
-    }
-
-    &__cover {
-        width: 100%;
-        min-height: 120px;
-        flex: 1;
-        border-radius: 16px;
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-
-        @media (max-width: $desktop - 1) {
-            max-height: 340px;
-            flex: none;
-            aspect-ratio: 1 / 1;
-        }
-    }
-
-    &__title {
-        display: -webkit-box;
-        overflow: hidden;
-        font-size: 22px;
-        font-weight: 900;
-        line-height: 1.15;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-    }
-
-    &__byline {
-        margin-top: 4px !important;
-        font-size: 14px;
-        font-weight: 800;
     }
 
     &__ask {
@@ -382,17 +314,10 @@ $phone: 639px;
         line-height: 1;
     }
 
-    &__why,
-    &__first {
+    &__why {
         font-size: 15px;
         font-weight: 700;
         line-height: 1.45;
-    }
-
-    &__first {
-        font-size: 13px;
-        font-weight: 800;
-        text-align: center;
     }
 
     &__stage {
@@ -593,13 +518,6 @@ $phone: 639px;
             font-size: 18px;
             font-weight: 900;
         }
-
-        div > span {
-            display: block;
-            margin-top: 2px;
-            font-size: 13px;
-            font-weight: 800;
-        }
     }
 
     &__list {
@@ -650,20 +568,6 @@ $phone: 639px;
 
     &__year {
         font-size: 13px;
-    }
-
-    &__position {
-        display: flex;
-        width: 26px;
-        height: 26px;
-        flex-shrink: 0;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: var(--color-primary-light);
-        color: var(--color-primary-ink);
-        font-size: 13px;
-        font-weight: 900;
     }
 }
 
@@ -790,56 +694,7 @@ $phone: 639px;
     }
 }
 
-.tile-art {
-    --tilt: 1.2deg;
-    justify-content: space-between;
-    gap: 12px;
-
-    &__head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        margin-top: -10px;
-    }
-
-    &__names {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-    }
-
-    &__name {
-        min-height: 44px;
-        padding: 0;
-        border: 0;
-        background: transparent;
-        color: inherit;
-        cursor: pointer;
-        font-size: 34px;
-        font-weight: 900;
-        letter-spacing: -0.03em;
-        line-height: 1.05;
-        text-align: left;
-        transition: transform 0.35s $spring;
-
-        &:first-child {
-            transform: rotate(-2deg);
-        }
-
-        &:hover {
-            transform: rotate(-3deg) translateX(6px);
-        }
-    }
-
-    &__hint {
-        font-size: 13px;
-        font-weight: 700;
-    }
-}
-
-// In Jake's ears: the song he has on (atoms/now-playing, compact) and the few before it
+// Recent listens: the song he has on (atoms/now-playing, compact) and the few before it
 .tile-ears {
     --tilt: -1deg;
     gap: 10px;
@@ -880,6 +735,11 @@ $phone: 639px;
 
         li {
             width: 100%;
+
+            // Two columns across the tile's two cells
+            @media (min-width: $desktop) {
+                width: calc(50% - 12px);
+            }
         }
 
         li + li {
@@ -942,6 +802,12 @@ $phone: 639px;
         font-size: 34px;
         font-weight: 900;
         letter-spacing: -0.03em;
+    }
+
+    &__links {
+        margin: 0;
+        padding: 0;
+        list-style: none;
     }
 
     &__link {

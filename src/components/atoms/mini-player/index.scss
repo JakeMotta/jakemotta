@@ -46,7 +46,34 @@
         color: var(--color-primary-ink) !important;
     }
 
-    &__next:hover {
+    &__next:hover,
+    &__volume button:hover {
         background: rgba(255, 255, 255, 0.14) !important;
+    }
+
+    // Just the cover, as a circle, until hovered or tabbed into: then the pill slides out to full width.
+    // The rest stays in place but transparent, so keyboard focus can still reach it and open the pill.
+    &--collapsed {
+        width: 60px;
+        max-width: 100%;
+        overflow: hidden;
+        padding: 0 8px;
+        transition: width 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+
+        > :not(.mini-player__cover) {
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        &:hover,
+        &:focus-within {
+            width: 100%;
+            overflow: visible;
+
+            > :not(.mini-player__cover) {
+                opacity: 1;
+                transition-delay: 0.12s;
+            }
+        }
     }
 }

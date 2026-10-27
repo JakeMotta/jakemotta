@@ -1,10 +1,10 @@
 # Sketchbook
 
-Digital drawings from Jake's 2012 sketchbook (August to December): NinjaDonut, a few logos (TechnoNoob, Batman, Castor, Kyak) and some characters. The folder is `public/projects/sketchbook/`; the card id is `sketchbook`.
+Digital drawings from Jake's 2012 sketchbook (August to December): NinjaDonut, a few logos (TechnoNoob, Batman, Castor) and some characters. The folder is `public/projects/sketchbook/`; the card id is `sketchbook`.
 
 ## Preview
 
-`index.html` is a hand-written gallery of 14 drawings. Each is a plain link to its file. Clicking one opens it full size in a `<dialog>`, and clicking again closes it.
+`index.html` is a hand-written gallery of 10 drawings. Each is a plain link to its file. Clicking one opens it full size in a `<dialog>`, and clicking again closes it.
 
 The originals are mostly TIFFs, which browsers can't show. `drawings/` holds JPEG copies (quality 88, full size), renamed to plain slugs. Which original became which:
 
@@ -18,12 +18,8 @@ The originals are mostly TIFFs, which browsers can't show. `drawings/` holds JPE
 | `sutherland.jpg` | `Sutherland.tif` |
 | `batman.jpg` | `BatmanQWertee.tif` |
 | `castor.jpg` | `Castor.tif` |
-| `kyak.jpg` | `kyak.tif` |
 | `hero.jpg` | `Hero.tif` |
-| `girl-hoodie.jpg` | `girl1.tif` |
-| `girl.jpg` | `girl.tif` |
 | `kyle.jpg` | `Kyle2.tif` |
-| `elipse.jpg` | `Elipse.tif` |
 
 ## Left out on purpose
 
@@ -32,7 +28,7 @@ The archive's `Sketchbook` folder has 27 files, but most subjects were saved sev
 - **NinjaDonut:** the other copies of the space scene (`Ninjadonut1.jpg`, `Ninjadonut2.jpg`) and the earlier saves of the framed drawing (`NinjaDrawing.tif`, `NinjaDrawing1.png`, `NinjaDrawing2.tif`).
 - **Kyle:** the first sketch (`Kyle.tif`).
 - **Self-portrait:** the second copy (`Myself.jpg`).
-- **Elipse:** `weapon.tif`, the same drawing as `Elipse.tif`.
+- **Taken off by Jake on 2026-10-27:** Kyak (`kyak.tif`), Girl in a hoodie (`girl1.tif`), Girl (`girl.tif`) and Elipse (`Elipse.tif`, and `weapon.tif`, the same drawing). Their JPEG copies were deleted from the repo; the ones already deployed stay on the server until they're moved to the Trash in cPanel.
 - **CAD:** `First.dwg`, an AutoCAD file.
 
 ## Card image

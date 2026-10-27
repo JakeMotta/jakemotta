@@ -1,9 +1,10 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { ColorShiftingBackground } from '../../templates';
-import { MiniPlayer } from '../../atoms';
+import { FloatingPlayer } from '../../atoms';
 import { useAudioStore } from '../../../store/audio';
-import { ArtistsTile, EarsTile, FeaturedTile, HeroTile, ModpackTile, NowPlayingTile, ProjectsTile, SayHiTile, UpNextTile } from './tiles';
+import { usePageMeta } from '../../../common/seo';
+import { EarsTile, FeaturedTile, HeroTile, ModpackTile, NowPlayingTile, ProjectsTile, SayHiTile, UpNextTile } from './tiles';
 import './index.scss';
 
 // The board on its own; any other path under it is an opened tile drawn over it
@@ -11,7 +12,7 @@ const BOARD_PATHS = ['/', '/home'];
 
 /**
  * The whole site on one board. Tiles open as overlays (the routes rendered into the Outlet:
- * /library, /listening, /project/:id, /minecraft), so the board stays mounted behind them.
+ * /library, /project, /project/:id, /minecraft), so the board stays mounted behind them.
  */
 export const Home = () => {
     const { pathname } = useLocation();
@@ -20,6 +21,7 @@ export const Home = () => {
     const boardRef = useRef<HTMLElement>(null);
     const nowRef = useRef<HTMLElement>(null);
     const [nowInView, setNowInView] = useState(true);
+    usePageMeta();
 
     // Behind an overlay the whole board is inert; while the visitor hasn't chosen yet, everything but the Now Playing tile is.
     // A layout effect, so the board is live again before a closing overlay hands focus back to the tile that opened it.
@@ -30,7 +32,7 @@ export const Home = () => {
         board.querySelectorAll('.tile:not(.tile-now)').forEach((tile) => tile.toggleAttribute('inert', waiting));
     }, [overlayOpen, waiting]);
 
-    // On phones the Now Playing tile scrolls away; the mini player takes over until it's back
+    // On phones the Now Playing tile scrolls away; the floating player takes over until it's back
     useEffect(() => {
         const tile = nowRef.current;
         if (!tile) return;
@@ -44,7 +46,7 @@ export const Home = () => {
             <main ref={boardRef} className={`bento${waiting ? ' bento--waiting' : ''}${overlayOpen ? ' bento--behind' : ''}`}>
                 {waiting && (
                     <span className='bento__shh' aria-hidden>
-                        shh… pick one first
+                        psst… sound or silence
                     </span>
                 )}
                 <HeroTile />
@@ -53,12 +55,12 @@ export const Home = () => {
                 <UpNextTile />
                 <ProjectsTile />
                 <ModpackTile />
-                <ArtistsTile />
                 <EarsTile />
                 <SayHiTile />
             </main>
 
-            {!waiting && !overlayOpen && <MiniPlayer className={`bento__minibar${nowInView ? ' bento__minibar--hidden' : ''}`} />}
+            {/* The music, wherever the Now Playing tile is out of sight: behind an overlay, or scrolled away on a phone */}
+            {!waiting && (overlayOpen || !nowInView) && <FloatingPlayer />}
 
             <Outlet />
         </ColorShiftingBackground>

@@ -74,7 +74,7 @@ The older images in `public/images/projects/` (`ambii.png`, `pistolArt.png` and 
 ## Adding a project
 
 1. Get it running as a preview: a static copy in `public/projects/<folder>/` (a new `SITES` entry if it's PHP, or if some of its plain pages need fixes), or the address of a live site that allows framing (check its response headers for `X-Frame-Options` and `frame-ancestors`). On Windows, copying a batch of files into `public/` while `yarn dev` runs can crash the dev server (chokidar's `EBUSY: resource busy or locked`). Copy first and start the server after, or just restart it.
-2. Add an entry to `homeProjectList`, newest first (so a new project becomes the featured tile): `id`, `title`, `date`, a one-sentence `description`, `preview`, and `image: '/images/projects/<id>.webp'`.
+2. Add an entry to `homeProjectList`, newest first (so a new project becomes the featured tile): `id`, `title`, `date`, `tags` (what kind of thing it is, shown as pills in the viewer: "Website", "Java Game", "School"…), a one-sentence `description` in Jake's voice that says what it is rather than how the preview runs, `preview`, and `image: '/images/projects/<id>.webp'`.
 3. Add a `SHOTS` entry to `scripts/screenshot-projects.mjs`, run `yarn projects:screenshot <id>` and look at the result.
 4. Write `docs/projects/<id>.md` and add it to the table above.
 5. Open `/project/<id>` in the dev server, click around inside the frame, and check the console.

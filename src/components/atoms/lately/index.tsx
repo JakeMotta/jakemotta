@@ -69,7 +69,7 @@ export const Lately = ({ pageSize = 8, className = '' }: { pageSize?: number; cl
     let empty: string | undefined;
     if (view === 'recent') empty = !loaded ? 'Tuning in…' : rows.length === 0 ? 'No plays yet. Give it a minute.' : undefined;
     else if (top === undefined) empty = 'Counting…';
-    else if (top === null) empty = "ListenBrainz hasn't counted this one yet. Try another range.";
+    else if (top === null) empty = "These numbers aren't ready yet. Try another range.";
     else if (rows.length === 0) empty = 'Nothing here yet.';
 
     return (

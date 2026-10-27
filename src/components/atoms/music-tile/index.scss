@@ -72,24 +72,6 @@
         font-size: 26px;
     }
 
-    &__queue {
-        top: 8px;
-        right: 8px;
-        background: var(--color-primary-dark);
-        color: var(--color-primary-light);
-        font-size: 16px;
-        font-weight: 900;
-
-        svg {
-            font-size: 22px;
-        }
-
-        &--queued {
-            background: var(--color-primary-light);
-            color: var(--color-primary-ink);
-        }
-    }
-
     &__title {
         display: -webkit-box;
         overflow: hidden;

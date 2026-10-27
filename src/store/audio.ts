@@ -7,9 +7,7 @@ export type Entry = 'waiting' | 'sound' | 'silent';
 
 interface AudioStore {
     audioUrl: string | undefined;
-    // Tracks the visitor queued, played in order before anything else
-    queue: string[];
-    // What plays once the queue runs dry: the library, shuffled. Kept topped up so "Up next" always has something to show.
+    // What plays next: the whole library, shuffled. Kept topped up so "Up next" always has something to show.
     shuffled: string[];
     // Tracks that played before this one, oldest first, for Previous
     history: string[];
@@ -21,9 +19,7 @@ interface AudioStore {
     audioContext: AudioContext | null;
     setAudioUrl: (url: string) => void;
     enterSilently: () => void;
-    toggleQueued: (url: string) => void;
-    clearQueue: () => void;
-    // Plays the next queued track, else the next shuffled one
+    // Plays the next track in the shuffle
     playNext: () => void;
     // Restarts the track if it's a few seconds in, else goes back to the one before it
     playPrevious: () => void;
@@ -62,7 +58,6 @@ const play = async (element: HTMLAudioElement, context: AudioContext | null) => 
 
 export const useAudioStore = create<AudioStore>((set, get) => ({
     audioUrl: undefined,
-    queue: [],
     shuffled: shuffle(LIBRARY),
     history: [],
     entry: 'waiting',
@@ -70,17 +65,16 @@ export const useAudioStore = create<AudioStore>((set, get) => ({
     volume: 1,
     audioElement: null,
     audioContext: null,
-    // Playing a queued or shuffled track now takes it out of line. Picking the track that's already loaded just resumes it.
+    // Picking a song plays it now, and takes it out of the shuffle so it doesn't come round again straight after. Picking the track that's already loaded just resumes it.
     setAudioUrl: (url) => {
         const { audioUrl, audioElement, audioContext } = get();
         if (url === audioUrl) {
             if (audioElement?.paused) play(audioElement, audioContext);
             return;
         }
-        set(({ queue, shuffled, history }) => ({
+        set(({ shuffled, history }) => ({
             audioUrl: url,
             entry: 'sound',
-            queue: queue.filter((queued) => queued !== url),
             shuffled: topUp(
                 shuffled.filter((next) => next !== url),
                 url,
@@ -89,14 +83,8 @@ export const useAudioStore = create<AudioStore>((set, get) => ({
         }));
     },
     enterSilently: () => set({ entry: 'silent' }),
-    toggleQueued: (url) => set(({ queue }) => ({ queue: queue.includes(url) ? queue.filter((queued) => queued !== url) : [...queue, url] })),
-    clearQueue: () => set({ queue: [] }),
     playNext: () => {
-        const { audioUrl, queue, shuffled, history } = get();
-        if (queue.length) {
-            set({ audioUrl: queue[0], queue: queue.slice(1), history: remember(history, audioUrl), entry: 'sound' });
-            return;
-        }
+        const { audioUrl, shuffled, history } = get();
         const upNext = topUp(shuffled, audioUrl);
         if (!upNext.length) return;
         set({ audioUrl: upNext[0], shuffled: topUp(upNext.slice(1), upNext[0]), history: remember(history, audioUrl), entry: 'sound' });

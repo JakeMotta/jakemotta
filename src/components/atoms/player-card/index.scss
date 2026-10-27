@@ -1,0 +1,81 @@
+.player-card {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 12px;
+
+    &__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    &__eyebrow {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.14em;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    &__cover {
+        width: 100%;
+        min-height: 120px;
+        flex: 1;
+        border-radius: 16px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+
+        // Below the desktop board the tile has no fixed height, so the cover keeps its own shape
+        @media (max-width: 1099px) {
+            max-height: 340px;
+            flex: none;
+            aspect-ratio: 1 / 1;
+        }
+    }
+
+    &__title {
+        display: -webkit-box;
+        overflow: hidden;
+        margin: 0;
+        color: inherit;
+        font-size: 22px;
+        font-weight: 900;
+        line-height: 1.15;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    &__byline {
+        margin: 4px 0 0;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    // Previous / play / next as one group in the middle, rather than spread to the edges
+    &__transport.transport {
+        justify-content: center;
+        gap: 18px;
+    }
+
+    // The volume and any action (the board's Library link), together at the header's end
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    &__volume {
+        color: var(--color-primary-light);
+
+        .volume-control__button {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+        }
+    }
+}

@@ -1,33 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiArrowUpRight, FiDownload, FiPlus } from 'react-icons/fi';
-import { BentoOverlay } from '../../templates';
-import { MiniPlayer, PixelCube } from '../../atoms';
+import { FiArrowUpRight, FiDownload } from 'react-icons/fi';
+import { BentoOverlay, OverlayHeader } from '../../templates';
+import { PixelCube } from '../../atoms';
 import { formatDate, formatSize, PACK_DIR, useReleases } from '../../../common/modpack';
 import './index.scss';
-
-const TROUBLESHOOTING = [
-    {
-        question: 'Missing AStages or channel error',
-        answer: 'You launched a plain NeoForge profile. Launch the imported Progression Survival instance.',
-    },
-    {
-        question: 'J does nothing',
-        answer: (
-            <>
-                Check Options → Controls → Key Binds for <i>Open Progression Journal</i> and give it a free key.
-            </>
-        ),
-    },
-    {
-        question: "Can't mine",
-        answer: "You're holding gear you haven't unlocked. Switch to an allowed tool or an empty hand.",
-    },
-    {
-        question: "Can't connect",
-        answer: 'Check with Jake that the server is up, and that your pack version matches the one above.',
-    },
-];
 
 /**
  * The modpack tile opened: the Progression Survival download page, laid out as a board of its own.
@@ -38,7 +15,6 @@ export const Minecraft = () => {
     const navigate = useNavigate();
     const { releases, failed } = useReleases();
     const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
-    const [openQuestion, setOpenQuestion] = useState<number | null>(null);
     const latest = releases?.[0];
     const latestLink = `${window.location.origin}${PACK_DIR}/latest.mrpack`;
 
@@ -51,14 +27,11 @@ export const Minecraft = () => {
 
     return (
         <BentoOverlay label='Progression Survival modpack' onClose={() => navigate('/')} className='modpack'>
-            <header className='modpack__head'>
-                <PixelCube className='modpack__cube' />
-                <div className='modpack__intro'>
-                    <h2>Progression Survival</h2>
-                    <p>Our modded Minecraft server. Earn every armor and tool tier yourself, on Hard, with mobs that fight back.</p>
-                </div>
-                <MiniPlayer className='modpack__player' />
-            </header>
+            <OverlayHeader
+                title='Progression Survival'
+                subtitle='Our modded Minecraft server. Earn every armor and tool tier yourself, on Hard, with mobs that fight back.'
+                lead={<PixelCube className='modpack__cube' />}
+            />
 
             <div className='modpack__grid'>
                 <section className='modpack__tile modpack__tile--download' aria-labelledby='modpack-download'>
@@ -71,36 +44,18 @@ export const Minecraft = () => {
                         <>
                             <div className='modpack__version'>
                                 <span>{latest.version}</span>
-                                {latest.prerelease && <span className='modpack__tag'>Test build</span>}
                             </div>
                             <p className='modpack__meta'>
                                 Released {formatDate(latest.published)}
-                                <br />
-                                Minecraft Java {latest.minecraft} · NeoForge {latest.neoforge} · Java {latest.java}
                             </p>
-                            <p>{latest.summary}</p>
-                            <a className='modpack__button modpack__button--solid' href={latest.client.url} download>
-                                <FiDownload /> Download the pack ({formatSize(latest.client.bytes)})
-                            </a>
+                            {/* What the pack is, in plain words; the release's own `summary` is a changelog, kept for the release notes */}
+                            <p>Survival the slow way: earn every armor and tool tier yourself, with tougher mobs and dungeons worth the trip.</p>
                             <a className='modpack__button' href={latest.notes} target='_blank' rel='noreferrer'>
                                 Release notes <FiArrowUpRight />
                             </a>
-                            {releases && releases.length > 1 && (
-                                <>
-                                    <h3 className='modpack__eyebrow modpack__eyebrow--sub'>Older releases</h3>
-                                    {releases.slice(1).map((release) => (
-                                        <p key={release.version} className='modpack__older'>
-                                            <b>{release.version}</b> <span>{formatDate(release.published)}</span>
-                                            <a href={release.client.url} download>
-                                                Pack
-                                            </a>
-                                            <a href={release.notes} target='_blank' rel='noreferrer'>
-                                                Notes
-                                            </a>
-                                        </p>
-                                    ))}
-                                </>
-                            )}
+                            <a className='modpack__button modpack__button--solid' href={latest.client.url} download>
+                                <FiDownload /> Download the pack ({formatSize(latest.client.bytes)})
+                            </a>
                             <div className='modpack__latest'>
                                 <label htmlFor='modpack-latest-link'>Always-latest link</label>
                                 <div>
@@ -184,29 +139,25 @@ export const Minecraft = () => {
                     <p>Your progress lives on the server, so a new instance picks up right where you left off.</p>
                 </section>
 
-                <section className='modpack__tile modpack__tile--trouble' aria-labelledby='modpack-trouble'>
-                    <h3 id='modpack-trouble' className='modpack__eyebrow'>
-                        Troubleshooting
+                <section className='modpack__tile modpack__tile--older' aria-labelledby='modpack-older'>
+                    <h3 id='modpack-older' className='modpack__eyebrow'>
+                        Older releases
                     </h3>
-                    {TROUBLESHOOTING.map(({ question, answer }, i) => {
-                        const open = openQuestion === i;
-                        return (
-                            <div key={question}>
-                                <button
-                                    type='button'
-                                    className={`modpack__question${open ? ' modpack__question--open' : ''}`}
-                                    aria-expanded={open}
-                                    aria-controls={`modpack-answer-${i}`}
-                                    onClick={() => setOpenQuestion(open ? null : i)}>
-                                    <span>{question}</span>
-                                    <FiPlus aria-hidden />
-                                </button>
-                                <p id={`modpack-answer-${i}`} className='modpack__answer' hidden={!open}>
-                                    {answer}
-                                </p>
-                            </div>
-                        );
-                    })}
+                    {releases && releases.length > 1 ? (
+                        releases.slice(1).map((release) => (
+                            <p key={release.version} className='modpack__older'>
+                                <b>{release.version}</b>
+                                <a href={release.client.url} download>
+                                    Pack
+                                </a>
+                                <a href={release.notes} target='_blank' rel='noreferrer'>
+                                    Notes
+                                </a>
+                            </p>
+                        ))
+                    ) : (
+                        <p>{releases ? "Nothing older yet. This is the first release." : 'Loading…'}</p>
+                    )}
                 </section>
             </div>
         </BentoOverlay>

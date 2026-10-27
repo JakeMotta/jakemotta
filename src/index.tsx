@@ -4,8 +4,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.scss';
 
-// Claude's preview server sets REACT_APP_MUTE_AUDIO (.claude/launch.json), so the music plays
-// silently while Claude looks around. The production build drops this line.
+// The muted preview server (the "dev" launch config) sets REACT_APP_MUTE_AUDIO, so the music plays
+// silently while it's checked in a browser. The production build drops this line.
 if (process.env.NODE_ENV === 'development' && process.env.REACT_APP_MUTE_AUDIO) require('./muteAudio');
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

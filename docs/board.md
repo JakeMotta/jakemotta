@@ -16,27 +16,26 @@ On a desktop the tiles sit like this:
 | --- | --- | --- | --- | --- |
 | Row 1 | Hero | Hero | Now Playing | Featured project |
 | Row 2 | Projects | Projects | Now Playing | Up next |
-| Row 3 | Modpack | Favorite artists | In Jake's ears | Say hi |
+| Row 3 | Modpack | Recent listens | Recent listens | Say hi |
 
 ## The tiles
 
-- **Hero** (`HeroTile`): the name, the one-line tagline, whether sound is on, and links to Music (`/library`), Projects (`/project`) and Minecraft (`/minecraft`). It holds the page's only `<h1>`.
-- **Now Playing** (`NowPlayingTile`): the player. Cover, title, byline, a seek slider and previous/play/next, plus **Library ↗**. It also holds the sound-or-silence choice (below), and when the visitor chose silence it offers to start the welcome track.
+- **Hero** (`HeroTile`): on an opaque surface mixed from `primary` and `primary-light` (mostly the ground), with the ink outline, the name, the one-line tagline and links to Music (`/library`), Projects (`/project`) and Minecraft (`/minecraft`). It holds the page's only `<h1>`.
+- **Now Playing** (`NowPlayingTile`): the player. Cover, title, byline, a seek slider, previous/play/next and a speaker button whose vertical volume slider shows on hover, plus **Library ↗**. It also holds the sound-or-silence choice (below), and when the visitor chose silence it offers to start the welcome track.
 - **Featured project** (`FeaturedTile`): the first entry in `homeProjectList`, which is the newest, marked "Newest". The whole tile links to its viewer.
-- **Up next** (`UpNextTile`): the next four tracks, queued ones first with their place in line, then the shuffle. Clicking one plays it now. **Queue ↗** opens the library, where the queue is.
+- **Up next** (`UpNextTile`): the next four tracks of the shuffle. Clicking one plays it now. **All songs ↗** opens the library.
 - **Projects** (`ProjectsTile`): every other project as a small 4:3 screenshot with its name and year, each linking to its viewer. The screenshots scroll inside the tile once there are more than fit; **All *n* ↗** opens all of them.
 - **Modpack** (`ModpackTile`): links to `/minecraft`, and shows the latest version from `releases.json`.
-- **Favorite artists** (`ArtistsTile`): the names in `favoriteArtists`; clicking one plays its track. **Library ↗** opens the library on its Favorite artists tab (`/library?tab=favorites`).
-- **In Jake's ears** (`EarsTile`): what Jake is listening to on Spotify, from ListenBrainz. It shows the song playing now (or the last one, "Spun 40m ago") as a card that links to it, then the plays before it, as many as fit. **Lately ↗** opens `/listening`. It took the cell of **Surprise me** (a random-track button), which Jake removed on 2026-10-26; the placement came from the [Listening Tile Placement canvas](https://claude.ai/artifact/JvNbfMdMFpPAmT4A1rWdgW). How it works: [listening.md](listening.md).
-- **Say hi** (`SayHiTile`): Jake's GitHub.
+- **Recent listens** (`EarsTile`, two cells wide on a desktop): what Jake is listening to on Spotify, from ListenBrainz. The plays before the card run in two columns, up to six. It shows the song playing now (or the last one, "Played 40m ago") as a card that links to it, then the plays before it, as many as fit. **Lately ↗** opens the library on its Recent listens tab (`/library?tab=recent`). It took the cell of **Surprise me** (a random-track button), which Jake removed on 2026-10-26; the placement came from the [Listening Tile Placement canvas](https://claude.ai/artifact/JvNbfMdMFpPAmT4A1rWdgW). How it works: [listening.md](listening.md).
+- **Say hi** (`SayHiTile`): links to Jake's profiles (`socialLinks` in `common/constants.ts`): GitHub, LinkedIn and Instagram.
 
 ### Opening a tile
 
-A tile with more behind it opens into an overlay. A tile that is one thing (the featured project, the modpack) is a link as a whole. A tile that holds several things has an expand link in its header (`ExpandLink`, styled `.tile-expand`): Library, Queue, All *n*, Lately. Hero and Say hi have nothing more to show, so they don't open.
+A tile with more behind it opens into an overlay. A tile that is one thing (the featured project, the modpack) is a link as a whole. A tile that holds several things has an expand link in its header (`ExpandLink`, styled `.tile-expand`): Library, All songs, All *n*, Lately. The Favorite artists tile was taken off the board on 2026-10-27, and Recent listens grew into its cell; the artists live on as the library's Favorite artists tab. Hero and Say hi have nothing more to show, so they don't open.
 
 ## Sound or silence
 
-Browsers only let audio start after a click. So until the visitor chooses, the Now Playing tile asks "Press play to come in", and every other tile is dimmed, blurred and `inert`, with a "shh… pick one first" sticker over them on a desktop.
+Browsers only let audio start after a click. So until the visitor chooses, the Now Playing tile says "Kick on them tunes", and every other tile is dimmed, blurred and `inert`, with a "psst… sound or silence" sticker over them on a desktop.
 
 - **Play with sound** plays `welcomeTrack` (Dancin).
 - **Browse in silence** (it reads "Click here if you're lame" on hover or focus) just lets them in.
@@ -49,11 +48,11 @@ A tile opens as an overlay route drawn over the board, which stays mounted behin
 
 | Route | Page | What it is |
 | --- | --- | --- |
-| `/library` | `pages/music` | The library: the big player, volume and the queue on the left; My music and Favorite artists as cover tiles on the right, each with play and a queue toggle. |
-| `/listening` | `pages/listening` | In Jake's ears opened: the song Jake has on now (or had on last), big, with "Open in Spotify" and listen-along, beside his recent plays and top songs, albums and artists (see [listening.md](listening.md)). |
+| `/library` | `pages/music` | The library: on the left the same `PlayerCard` as the board's Now Playing tile (one component, so they always match), then the next five songs of the shuffle (click one to play it); the header's subtitle changes with the tab; My music and Favorite artists as cover tiles on the right, each with a play button, and a third tab, Recent listens (`?tab=recent`), with the full `NowPlaying` card (link out and listen-along) above the `Lately` lists. |
+| `/listening` | (redirect) | Sends old links to `/library?tab=recent`. It was its own overlay until Jake had it removed on 2026-10-27, since the library's tab shows the same. |
 | `/project` | `pages/project-gallery` | Every project, newest first, as cards with screenshot, name, year and description. It's at `/project`, singular, because `/projects/` is the folder of standalone sites, which `.htaccess` keeps from the app. |
-| `/project/:id` | `pages/project` | The project viewer (see [projects/README.md](projects/README.md)). Opened from the all-projects overlay, it closes back to it; opened from the board, back to the board. Its side panel links to all projects too. The strip under the frame holds every project, more than fit, so it keeps the open one centred: at once when the viewer opens, then gliding as the visitor steps (at once under reduced motion). |
-| `/minecraft` | `pages/minecraft` | The modpack download page as a board of its own: Download, Install, Playing, Updating and Troubleshooting tiles, written for players, with one line for self-hosters (see [modpack.md](modpack.md)). |
+| `/project/:id` | `pages/project` | The project viewer (see [projects/README.md](projects/README.md)). Opened from the all-projects overlay, it closes back to it; opened from the board, back to the board. The frame fills the left edge to edge, with "Open in a new tab" on its bottom right corner; the side panel has the title, the year and `tags` pills, the description, then Back and Forward at its foot (the previous and next project, replacing the history entry so the browser's Back closes the viewer). The address bar and the strip of every project were removed on 2026-10-27. |
+| `/minecraft` | `pages/minecraft` | The modpack download page as a board of its own: Download, Install, Playing, Updating and Older releases tiles (Older releases replaced Troubleshooting on 2026-10-27), written for players, with one line for self-hosters (see [modpack.md](modpack.md)). |
 
 Each uses `templates/bento-overlay`, which:
 - portals the panel to `<body>`, over a scrim, under the visualizer's vignette;
@@ -62,4 +61,7 @@ Each uses `templates/bento-overlay`, which:
 
 The board turns `inert` off in a layout effect, so it's live again by the time focus comes back. On phones an overlay fills the screen and scrolls.
 
-The overlays carry a `MiniPlayer` (the library has the full player instead), so the music stays in reach. On phones the same pill is fixed to the bottom of the board whenever the Now Playing tile has scrolled out of view.
+Wherever the Now Playing tile is out of sight (an overlay is open, or on a phone it has scrolled away) the board shows one `FloatingPlayer` (`atoms/floating-player`), portaled to `<body>` above the overlays:
+- **At rest** it's a circle of the cover art. Hover or tab into it and it opens sideways into the full `MiniPlayer` pill: title, play/pause, next and volume.
+- **It can be dragged** by the cover or title to any of eight spots, the corners and the middles of the edges (never the page's centre). It snaps to the one in whichever third of the screen it's let go in, and remembers it in `localStorage` (`jakemotta:player-dock`, a per-visitor convenience). It starts bottom right.
+- **It replaced** the music pill in each overlay's header, the one in the project viewer, and the phone's bottom bar, on 2026-10-27.

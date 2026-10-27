@@ -134,11 +134,20 @@ export const welcomeTrack: MusicItemProps = {
     date: '2016'
 }
 
+/** The board's Say hi tile, in this order. public/index.html lists the same profiles as the Person's sameAs. */
+export const socialLinks = [
+    { label: 'GitHub', url: 'https://github.com/JakeMotta' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/jakemotta/' },
+    { label: 'Instagram', url: 'https://www.instagram.com/foulprogramming' },
+];
+
 export interface HomeProject {
     id: string;
     image: string;
     title: string;
     date: string;
+    // What kind of thing it is, shown as pills after the year in the viewer: "Website", "Java Game", "School"…
+    tags?: string[];
     description: string;
     /**
      * What the viewer at /project/:id frames. Either the project's browser-runnable copy under
@@ -161,6 +170,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/tapslaydie.webp',
         title: 'TapSlayDie',
         date: '2026',
+        tags: ['Mobile Game'],
         description: 'A hardcore fantasy clicker RPG for iOS and Android: tap to slay, loot what you kill, and die.',
         preview: 'https://tapslaydie.com/',
     },
@@ -169,6 +179,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/asteroids.webp',
         title: 'Asteroids',
         date: '2026',
+        tags: ['HTML5 Game'],
         description: 'The arcade classic rebuilt in Godot, with UFOs, screen shake and my own music.',
         preview: '/projects/asteroids/index.html',
     },
@@ -177,7 +188,8 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/ambii.webp',
         title: 'Ambii',
         date: '2025',
-        description: '',
+        tags: ['Startup', 'App', 'Website'],
+        description: 'My startup from 2017 to 2021: a music app for listening together, where everyone in the room gets a say in what plays next.',
         preview: '/projects/ambii/story/index.html',
     },
     {
@@ -185,6 +197,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/black-chamber.webp',
         title: 'Black Chamber',
         date: '2025',
+        tags: ['Website'],
         description: 'Members, programs and events for the Silicon Valley Black Chamber of Commerce.',
         preview: '/projects/black-chamber/index.html',
     },
@@ -193,6 +206,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/pistol-art.webp',
         title: 'Pistol Art',
         date: '2025',
+        tags: ['Website'],
         description: 'Course schedules and class sign-ups for a pistol training school.',
         preview: '/projects/pistol-art/index.html',
     },
@@ -201,6 +215,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/ninjadonut.webp',
         title: 'NinjaDonut',
         date: '2025',
+        tags: ['Website', 'Games', 'Comics'],
         description: 'Games, comics and odds and ends, starring a very serious donut.',
         preview: '/projects/ninja-donut/index.html',
     },
@@ -209,7 +224,8 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/ambii-business.webp',
         title: 'Ambii Business',
         date: '2022',
-        description: 'Background music for cafés and shops, with its dashboard, web player and phone app working again in your browser.',
+        tags: ['Web App', 'Mobile App'],
+        description: 'Background music for cafés and shops: the dashboard, the web player and the phone app, all working again.',
         preview: '/projects/ambii-business/index.html',
     },
     {
@@ -217,6 +233,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/cs134.webp',
         title: 'CS 134 Games',
         date: '2017',
+        tags: ['Java Game', 'School'],
         description: 'Two Java and OpenGL games: a miner racing rising lava, and a Scott Pilgrim side-scroller.',
         preview: '/projects/cs134/index.html',
     },
@@ -225,6 +242,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/fooder.webp',
         title: 'Fooder',
         date: '2017',
+        tags: ['Android App', 'School'],
         description: 'A team Android app that deals out nearby restaurants one card at a time, swipe-style.',
         preview: '/projects/fooder/index.html',
     },
@@ -233,6 +251,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/survivor.webp',
         title: 'Survivor & Arena King',
         date: '2017',
+        tags: ['Game Design', 'School'],
         description: 'A prison-escape platformer and a dice-and-card dueling game, designed for a game design class.',
         preview: '/projects/survivor/index.html',
     },
@@ -241,6 +260,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/cs160.webp',
         title: 'CS160',
         date: '2016',
+        tags: ['Web App', 'School'],
         description: 'Face Me: upload a video and get it back with a face mesh drawn on every frame.',
         preview: '/projects/cs160/index.html',
     },
@@ -249,6 +269,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/personal-site.webp',
         title: 'Personal Site',
         date: '2016',
+        tags: ['Website'],
         description: 'My old portfolio, with drifting clouds and balloons tied to its hello.',
         preview: '/projects/personal-site/index.static.html',
     },
@@ -257,6 +278,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/dan-james.webp',
         title: 'Dan James',
         date: '2016',
+        tags: ['Website'],
         description: 'A site for a music producer and mixing engineer, with a beat store and his mixing services.',
         preview: '/projects/dan-james/index.static.html',
     },
@@ -265,6 +287,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/motorsport.webp',
         title: 'Motorsport Sites',
         date: '2014',
+        tags: ['Website'],
         description: 'Websites for an inline speed-skating team, a motorcycle race shop and a young kart racer.',
         preview: '/projects/motorsport/index.html',
     },
@@ -273,6 +296,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/coloris.webp',
         title: 'Coloris',
         date: '2014',
+        tags: ['Java Game'],
         description: 'An unfinished top-down RPG: walk Huey through a scrolling forest and change his color with the number keys.',
         preview: '/projects/coloris/index.html',
     },
@@ -281,7 +305,8 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/isguy.webp',
         title: 'The Adventures of isGuy',
         date: '2013',
-        description: 'A five-level platformer with lasers, ladders, keys and doors, running again as the original Java game.',
+        tags: ['Java Game'],
+        description: 'A five-level platformer with lasers, ladders, keys and doors.',
         preview: '/projects/isguy/index.html',
     },
     {
@@ -289,6 +314,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/sketchbook.webp',
         title: 'Sketchbook',
         date: '2012',
+        tags: ['Art'],
         description: 'Digital drawings of NinjaDonut, a few logos and some characters.',
         preview: '/projects/sketchbook/index.html',
     },
@@ -297,7 +323,8 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/flash.webp',
         title: 'Flash',
         date: '2012',
-        description: 'Cartoons, caricatures of friends and a side-scrolling shooter, playing again through Ruffle.',
+        tags: ['Flash', 'Animation', 'Game'],
+        description: 'Cartoons, caricatures of my friends and a side-scrolling shooter.',
         preview: '/projects/flash/index.html',
     },
     {
@@ -305,6 +332,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/highschool.webp',
         title: 'High School Sites',
         date: '2012',
+        tags: ['Website', 'Flash'],
         description: 'A Flash homepage with a Pac-Man in it, and a portfolio with a parallax city skyline.',
         preview: '/projects/highschool/index.html',
     },
@@ -313,6 +341,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/greenfoot-pokemon.webp',
         title: 'Pokémon: Green Foot Edition',
         date: '2012',
+        tags: ['Java Game', 'School'],
         description: 'A Pokémon fan game Logan Lovell and I made for a programming class: pick a starter and explore TrainingVille.',
         preview: '/projects/greenfoot-pokemon/index.html',
     },
@@ -321,6 +350,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/escaping-confinement.webp',
         title: 'Escaping Confinement',
         date: '2012',
+        tags: ['3D Animation', 'Short Film', 'School'],
         description: 'A five-minute Maya short about a desk fan that comes to life and tries to escape.',
         preview: '/projects/escaping-confinement/index.html',
     },
@@ -329,6 +359,7 @@ export const homeProjectList: HomeProject[] = [
         image: '/images/projects/pivot.webp',
         title: 'Pivot Animations',
         date: '2008',
+        tags: ['Animation'],
         description: 'Stick-figure fights, sword moves, skate tricks and Goku versus Vegeta.',
         preview: '/projects/pivot/index.html',
     },

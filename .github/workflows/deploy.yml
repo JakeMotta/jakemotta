@@ -171,6 +171,10 @@ jobs:
             # Google's OAuth app for the YouTube Music sync links to it.
             printf "put -O %s ./build/privacy.html\n" "$target"
 
+            # The sitemap is rewritten by every build under the same name, and
+            # a renamed project can leave it the same length.
+            printf "put -O %s ./build/sitemap.xml\n" "$target"
+
             # The same goes for the modpack's release pointers: going from
             # 1.0.0-rc.1 to 1.0.0-rc.2 changes them without changing their
             # length. The versioned archives they point at are new paths and

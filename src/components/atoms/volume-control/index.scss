@@ -1,0 +1,81 @@
+.volume-control {
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    flex-shrink: 0;
+
+    &__button {
+        display: flex;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        font-size: 20px;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+    }
+
+    // A vertical slider standing off the button. Hidden until the control is hovered, focused or tapped open;
+    // the padding on the button's side bridges the gap, so the pointer can travel to it.
+    &__pop {
+        position: absolute;
+        z-index: 10;
+        left: 50%;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+            opacity 0.2s,
+            transform 0.3s var(--spring);
+
+        .range-slider {
+            display: block;
+            width: 120px;
+            // Turned upright: the slider is laid out 120px wide, then rotated into a 44 × 120 box
+            margin: 48px -38px;
+            transform: rotate(-90deg);
+        }
+
+        &::before {
+            position: absolute;
+            z-index: -1;
+            border-radius: 22px;
+            background: var(--color-primary-ink);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+            content: '';
+        }
+    }
+
+    &--up &__pop {
+        bottom: 100%;
+        padding-bottom: 6px;
+        transform: translate(-50%, 8px);
+
+        &::before {
+            inset: 0 0 6px;
+        }
+    }
+
+    &--down &__pop {
+        top: 100%;
+        padding-top: 6px;
+        transform: translate(-50%, -8px);
+
+        &::before {
+            inset: 6px 0 0;
+        }
+    }
+
+    &:hover &__pop,
+    &:focus-within &__pop,
+    &--open &__pop {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, 0);
+    }
+}

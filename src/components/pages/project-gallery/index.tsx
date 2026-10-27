@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiArrowUpRight } from 'react-icons/fi';
-import { BentoOverlay } from '../../templates';
-import { MiniPlayer, ProjectImage } from '../../atoms';
+import { BentoOverlay, OverlayHeader } from '../../templates';
+import { ProjectImage } from '../../atoms';
 import { homeProjectList } from '../../../common/constants';
 import './index.scss';
 
@@ -16,13 +16,7 @@ export const ProjectGallery = () => {
 
     return (
         <BentoOverlay label='All projects' onClose={() => navigate('/')} className='gallery'>
-            <header className='gallery__head'>
-                <div className='gallery__intro'>
-                    <h2>Projects</h2>
-                    <p>{homeProjectList.length} of them, newest first. Each one opens right here, and the music keeps going.</p>
-                </div>
-                <MiniPlayer className='gallery__player' />
-            </header>
+            <OverlayHeader title='Projects' subtitle="Everything I've built, drawn and animated over the years, newest first." />
 
             <ul className='gallery__grid'>
                 {homeProjectList.map((project, i) => (

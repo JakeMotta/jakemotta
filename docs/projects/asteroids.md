@@ -28,7 +28,7 @@ vram_texture_compression/for_desktop=true
 vram_texture_compression/for_mobile=false
 html/export_icon=true
 html/canvas_resize_policy=2
-html/head_include="<script>(function(){var done=false;function pause(){if(done)return;done=true;try{if(window.parent!==window)window.parent.document.querySelectorAll('audio').forEach(function(a){a.pause()})}catch(e){}}addEventListener('pointerdown',pause);addEventListener('keydown',pause)})();</script>"
+html/head_include="<script>(function(){var done=false;function pause(){if(done)return;done=true;if(window.top!==window)window.top.postMessage({type:'jakemotta:media-playing'},location.origin)}addEventListener('pointerdown',pause);addEventListener('keydown',pause)})();</script>"
 html/focus_canvas_on_start=true
 progressive_web_app/enabled=false
 ```
@@ -42,7 +42,7 @@ Godot_v4.5-stable_win64_console.exe --headless --path <copy> --export-release "W
 
 Then copy `web/` over `public/projects/asteroids/`. Stop `yarn dev` first, since copying into `public/` while it runs can crash it.
 
-**Music.** The game plays its own music, so the `head_include` script pauses the site's music on the first click or key press in the frame, the same way the film and Flash pages do.
+**Music.** The game plays its own music, so the `head_include` script asks the site's player to pause (the `jakemotta:media-playing` message) on the first click or key press in the frame, the same way the film and Flash pages do. It was switched to the message after the export, in both the preset above and the published `index.html`, where Godot had copied the line as is.
 
 **Hosting notes.**
 - **The `.wasm` type:** `public/.htaccess` doesn't declare one. If the host serves `.wasm` without `application/wasm`, the loader logs a warning and falls back to a slower, non-streaming load; it still runs.

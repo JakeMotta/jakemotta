@@ -80,7 +80,7 @@ Every preview has to run in the browser with no server code. PHP sites are rende
 - **Java desktop games** run as their original jars through CheerpJ. Its free license requires loading it from `cjrtnc.leaningtech.com` and crediting it, so don't self-host it.
 - **Godot games** use Godot's own web export, with threads off.
 - **Galleries, a film and case studies:** work that was never a website gets a hand-written page.
-- **Pages with sound** pause the site's music themselves.
+- **Pages with sound** pause the site's music themselves, by posting `{ type: 'jakemotta:media-playing' }` to `window.top`.
 
 The README in `docs/projects/` has the details of each.
 

@@ -27,9 +27,11 @@ export const BentoOverlay = ({ label, onClose, className = '', children }: Bento
     useEffect(() => {
         const panel = panelRef.current;
         closeRef.current?.focus();
-        // Leave Escape alone when something on the page already used it, like a framed site closing its own lightbox
+        // Leave Escape alone when something on the page already used it, like a framed site closing its own lightbox,
+        // or when a framed page has a <dialog> open: the browser closes that on Escape without marking the key used
         const onKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape' && !event.defaultPrevented) onCloseRef.current();
+            const dialogOpen = (event.currentTarget as Document).querySelector('dialog[open]');
+            if (event.key === 'Escape' && !event.defaultPrevented && !dialogOpen) onCloseRef.current();
         };
         // Keys pressed inside a framed page (a project preview) go to that page's document, not this one, so
         // listen there too, each time the frame loads a page. A cross-origin frame (a live site) can't be reached.

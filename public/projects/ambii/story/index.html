@@ -176,9 +176,7 @@
         video.addEventListener('play', function () {
             videos.forEach(function (other) { if (other !== video) other.pause(); });
             if (!video.hasAttribute('data-sound')) return;
-            try {
-                if (window.parent !== window) window.parent.document.querySelectorAll('audio').forEach(function (audio) { audio.pause(); });
-            } catch (e) {}
+            if (window.top !== window) window.top.postMessage({ type: 'jakemotta:media-playing' }, location.origin);
         });
     });
 </script>

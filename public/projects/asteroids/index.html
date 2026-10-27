@@ -92,7 +92,7 @@ body {
 		</style>
 		<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
 <link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
-<script>(function(){var done=false;function pause(){if(done)return;done=true;try{if(window.parent!==window)window.parent.document.querySelectorAll('audio').forEach(function(a){a.pause()})}catch(e){}}addEventListener('pointerdown',pause);addEventListener('keydown',pause)})();</script>
+<script>(function(){var done=false;function pause(){if(done)return;done=true;if(window.top!==window)window.top.postMessage({type:'jakemotta:media-playing'},location.origin)}addEventListener('pointerdown',pause);addEventListener('keydown',pause)})();</script>
 	</head>
 	<body>
 		<canvas id="canvas">

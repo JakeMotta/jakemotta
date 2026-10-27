@@ -57,7 +57,7 @@ Each poster (`.jpg` beside it) is the recording's first frame.
 | `v4-splash`, `v4-web-home`, `v4-web-party` | `Ambii Layouts\Ambii 4.0\Web App\`: `SPLASH PAGE`, `Home Page`, `Party Page - Horizontal Scrolling` |
 | `v4-mobile-connect`, `v4-mobile-party` | `Ambii Layouts\Ambii 4.0\Mobile App\`: `Connect`, `Party Page` |
 
-**Sound.** Only the Techstars intro has sound. When it plays, the page pauses the site's music in the parent page, the same way as [Escaping Confinement](escaping-confinement.md); the silent recordings leave the music alone. Starting any video pauses the others. When the planned `jakemotta:media-playing` message exists, this page should send it too.
+**Sound.** Only the Techstars intro has sound. When it plays, the page asks the site's player to pause with the `jakemotta:media-playing` message, the same way as [Escaping Confinement](escaping-confinement.md); the silent recordings leave the music alone. Starting any video pauses the others.
 
 ### The 2019 sites as they run
 

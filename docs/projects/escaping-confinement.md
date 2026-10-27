@@ -12,7 +12,7 @@ A five-minute animated short Jake made in Maya in spring 2012, about a desk fan 
 - **How it was encoded:** Blender's video sequencer, with the `Standard` view transform so the colors pass through unchanged. ffmpeg isn't installed here.
 - **Poster:** `poster.jpg` is frame 150, the title on the wall.
 
-**Pausing the site's music.** The site's music plays in the page around the viewer's frame, so the film page pauses the parent page's `<audio>` when the film starts. The player's own pause handler then updates its buttons. This reaches into the app's page directly, which only works because the preview is same-origin. A `{type: 'jakemotta:media-playing'}` message for the viewer to handle is planned for the Ambii Business demos; once that exists, this page should send it instead.
+**Pausing the site's music.** The site's music plays in the page around the viewer's frame, so when the film starts the page posts `{ type: 'jakemotta:media-playing' }` to `window.top`, and the site's player pauses ([music.md](../music.md)). Opened on its own, outside the viewer, there's no player to tell. The other previews with sound (Flash, Asteroids, isGuy, Pokémon and the Ambii story page) do the same.
 
 ## Left out on purpose
 

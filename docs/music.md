@@ -35,9 +35,15 @@ When the shuffle runs out, the whole library is shuffled again, leaving out the 
 
 **Autoplay:** browsers only allow audio after a user gesture. That's why the Now Playing tile asks the visitor to choose sound or silence first, and why `togglePlayback` resumes the `AudioContext` inside the click that called it, before `play()`. After that first gesture, moving on to the next track is allowed.
 
-**Previews with sound:** most previews that make their own sound pause the music when they start, and it stays paused until the visitor presses play again. Not all do yet: NinjaDonut's Flash games play over it. A preview pauses the music in one of the two ways below, and either way the player's `onPause` handler keeps `isPlaying` and the buttons in step.
-- **The message:** `MusicPlayer` pauses when a page from the site's own origin posts `{ type: 'jakemotta:media-playing' }` to it. The Ambii Business demos post it to `window.top` whenever one of them starts a song, an announcement or a preview, two frames deep in the phone app's case ([projects/ambii-business.md](projects/ambii-business.md)). Use this for new previews: it works however deeply the page is framed, and the page doesn't need to know how the site plays its music.
-- **Reaching into the parent:** Escaping Confinement's film page (when the film plays), the Flash gallery (when a piece opens), Asteroids (on the first click or key press in its frame) and the Ambii story page (when a video with sound plays) call `pause()` on the parent page's `<audio>` directly. Details are in [projects/escaping-confinement.md](projects/escaping-confinement.md).
+**Previews with sound:** most previews that make their own sound pause the music when they start, and it stays paused until the visitor presses play again. Not all do yet: NinjaDonut's Flash games play over it. `MusicPlayer` pauses when a page from the site's own origin posts `{ type: 'jakemotta:media-playing' }` to it, and its `onPause` handler keeps `isPlaying` and the buttons in step. Every preview with sound posts it to `window.top`, which works however deeply the page is framed, and the page doesn't need to know how the site plays its music:
+- the Ambii Business demos, whenever one of them starts a song, an announcement or a preview, two frames deep in the phone app's case ([projects/ambii-business.md](projects/ambii-business.md));
+- Escaping Confinement's film page, when the film plays ([projects/escaping-confinement.md](projects/escaping-confinement.md));
+- the Flash gallery, when a piece opens;
+- Asteroids, on the first click or key press in its frame;
+- isGuy and Pokémon, when Play is pressed;
+- the Ambii story page, when a video with sound plays.
+
+Use the same message for new previews.
 
 ## The visualizer
 

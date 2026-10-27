@@ -25,12 +25,10 @@
     <p class="credits">A desk fan comes to life and tries to escape. Directed, produced, modeled, colored, animated, rendered "and everything else" by me.</p>
 </main>
 <script>
-    // The site's music keeps playing in the page around this frame. Pause it when the film starts,
-    // so the two don't play over each other. Same-origin only; standalone there's nothing to pause.
+    // The site's music keeps playing in the page around this frame. Ask its player to pause when the
+    // film starts, so the two don't play over each other. Standalone there's no player to ask.
     document.getElementById('film').addEventListener('play', function () {
-        try {
-            if (window.parent !== window) window.parent.document.querySelectorAll('audio').forEach(function (audio) { audio.pause(); });
-        } catch (e) {}
+        if (window.top !== window) window.top.postMessage({ type: 'jakemotta:media-playing' }, location.origin);
     });
 </script>
 </body>

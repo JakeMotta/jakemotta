@@ -85,10 +85,8 @@
         stage.style.height = Math.round(h * scale) + 'px';
         document.getElementById('playing').textContent = piece.querySelector('.name').textContent;
 
-        // The site's music plays in the page around this frame; pause it so the two don't overlap
-        try {
-            if (window.parent !== window) window.parent.document.querySelectorAll('audio').forEach(function (audio) { audio.pause(); });
-        } catch (e) {}
+        // The site's music plays in the page around this frame; ask its player to pause so the two don't overlap
+        if (window.top !== window) window.top.postMessage({ type: 'jakemotta:media-playing' }, location.origin);
 
         var player = window.RufflePlayer.newest().createPlayer();
         stage.replaceChildren(player);

@@ -18,7 +18,7 @@ This page also covers how all three Greenfoot games run, since they share it. Po
 - **Keys:** arrow keys and Space are kept from scrolling the page while the game runs. The game only gets keys once it's been clicked, which pressing Run does.
 - **`#play`:** `index.html#play` starts without a click, for screenshots.
 
-**Pausing the site's music.** Pressing Play pauses the parent page's `<audio>`, the same way the Escaping Confinement page does ([escaping-confinement.md](escaping-confinement.md)). isGuy and Pokémon do; Coloris has no sound, so it leaves the music playing.
+**Pausing the site's music.** Pressing Play asks the site's player to pause with the `jakemotta:media-playing` message, the same way the Escaping Confinement page does ([escaping-confinement.md](escaping-confinement.md)). isGuy and Pokémon do; Coloris has no sound, so it leaves the music playing (`PAUSE_SITE_MUSIC` at the top of each page's script).
 
 **CheerpJ's license.** The free [Community License](https://cheerpj.com/docs/licensing) covers an individual's personal projects, earning or not, as long as CheerpJ is loaded from `cjrtnc.leaningtech.com`; self-hosting it needs a paid license. It asks for appropriate credit, which is the CheerpJ line on each page. CheerpJ prints a "Community Edition, for personal and non-business use only" banner to the console. Checked on 2026-10-26, when 4.3 was current.
 

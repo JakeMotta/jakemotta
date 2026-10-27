@@ -32,7 +32,8 @@ const QUALITY = 85;
 // What to shoot for each card. `url` is a path on BASE_URL or a full address; `settle` is how
 // long to wait after the page loads, for web fonts, Ruffle's Flash and animations to get going.
 // `width` narrows the viewport for a fixed-width site that would otherwise sit in empty
-// margins; `scroll` moves the page down first, for a site whose best view isn't at the top.
+// margins; `scroll` moves the page down first, for a site whose best view isn't at the top;
+// `run` is a line of script run once the page loads, to open a panel or hide something.
 const SHOTS = [
     // The 2018 landing page rather than the story page in front of it
     { id: 'ambii', url: '/projects/ambii/index.html', settle: 2500 },
@@ -50,19 +51,25 @@ const SHOTS = [
     { id: 'personal-site', url: '/projects/personal-site/index.static.html', settle: 3000 },
     // After its loader clears, on the slider's first slide
     { id: 'dan-james', url: '/projects/dan-james/index.static.html', settle: 4000 },
-    // The Flash index rather than the hub page in front of it
-    { id: 'highschool', url: '/projects/highschool/flashIndex/FlashIndex.static.html', settle: 5000 },
+    { id: 'jakes-index', url: '/projects/highschool/flashIndex/FlashIndex.static.html', settle: 5000 },
+    // The old phone number and email stay on the page but not on the card, which shows on the board itself
+    { id: 'highschool-portfolio', url: '/projects/highschool/oldSite/index.html', settle: 2500, run: "document.getElementById('contact').style.visibility = 'hidden'" },
     { id: 'sketchbook', url: '/projects/sketchbook/index.html', settle: 1500 },
     { id: 'flash', url: '/projects/flash/index.html', settle: 1500 },
     // The poster frame, with the film's title on the wall
     { id: 'escaping-confinement', url: '/projects/escaping-confinement/index.html', settle: 1500 },
     // Down past the three wide ones, onto the grid of smaller GIFs mid-animation
     { id: 'pivot', url: '/projects/pivot/index.html', settle: 3000, scroll: 2010 },
-    { id: 'cs134', url: '/projects/cs134/index.html', settle: 2500 },
+    { id: 'floor-is-lava', url: '/projects/cs134/floor-is-lava.html', settle: 2500 },
+    { id: 'scott-pilgrim', url: '/projects/cs134/scott-pilgrim.html', settle: 2500 },
     { id: 'fooder', url: '/projects/fooder/index.html', settle: 1500 },
     { id: 'survivor', url: '/projects/survivor/index.html', settle: 1500 },
-    // Team SAFE's welcome page rather than the text-only hub, on the slideshow's first slide
-    { id: 'motorsport', url: '/projects/motorsport/team-safe/About.html', settle: 2500 },
+    { id: 'arena-king', url: '/projects/survivor/arena-king.html', settle: 1500 },
+    // On the slideshow's first slide
+    { id: 'team-safe', url: '/projects/motorsport/team-safe/About.html', settle: 2500 },
+    { id: 'worxxx', url: '/projects/motorsport/worxxx/index.static.html', settle: 2500 },
+    // The page opens on just its header; the About panel has his photo and story
+    { id: 'noah-garza', url: '/projects/motorsport/noah-garza/index.static.html', settle: 2500, width: 1000, run: 'aboutDiv()' },
     // The Java games: their pages before Play, with the title-screen poster (the game itself is black until Run)
     { id: 'coloris', url: '/projects/coloris/index.html', settle: 2000 },
     { id: 'isguy', url: '/projects/isguy/index.html', settle: 2000 },
@@ -176,6 +183,7 @@ const shoot = async (cdp, shot) => {
         const { errorText } = await cdp.send('Page.navigate', { url }, sessionId);
         if (errorText) throw new Error(`${url}: ${errorText}`);
         await loaded;
+        if (shot.run) await cdp.send('Runtime.evaluate', { expression: shot.run }, sessionId);
         if (shot.scroll) await cdp.send('Runtime.evaluate', { expression: `window.scrollTo(0, ${shot.scroll})` }, sessionId);
         await sleep(shot.settle);
         // The clip is measured from the top of the document, so it starts where the page scrolled to
@@ -220,10 +228,10 @@ try {
     for (const shot of shots) {
         try {
             const { bytes } = await shoot(cdp, shot);
-            console.log(`  ${shot.id.padEnd(14)} public/images/projects/${shot.id}.webp  ${Math.round(bytes / 1024)} KB`);
+            console.log(`  ${shot.id.padEnd(20)} public/images/projects/${shot.id}.webp  ${Math.round(bytes / 1024)} KB`);
         } catch (error) {
             failed++;
-            console.error(`  ${shot.id.padEnd(14)} FAILED: ${error.message}`);
+            console.error(`  ${shot.id.padEnd(20)} FAILED: ${error.message}`);
         }
     }
 } finally {

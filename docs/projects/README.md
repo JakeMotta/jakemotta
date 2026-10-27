@@ -11,20 +11,25 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `pistol-art` | `/projects/pistol-art/index.html` | [pistol-art.md](pistol-art.md) |
 | `ninjadonut` | `/projects/ninja-donut/index.html` | [ninjadonut.md](ninjadonut.md) |
 | `ambii-business` | `/projects/ambii-business/index.html` (a hand-written hub in front of three built apps) | [ambii-business.md](ambii-business.md) |
-| `cs134` | `/projects/cs134/index.html` (recorded clips) | [cs134.md](cs134.md) |
+| `floor-is-lava` | `/projects/cs134/floor-is-lava.html` (a recorded clip) | [floor-is-lava.md](floor-is-lava.md) |
+| `scott-pilgrim` | `/projects/cs134/scott-pilgrim.html` (a recorded clip) | [scott-pilgrim.md](scott-pilgrim.md) |
 | `fooder` | `/projects/fooder/index.html` (a case study) | [fooder.md](fooder.md) |
 | `survivor` | `/projects/survivor/index.html` (a case study) | [survivor.md](survivor.md) |
+| `arena-king` | `/projects/survivor/arena-king.html` (a write-up of the rules) | [arena-king.md](arena-king.md) |
 | `cs160` | `/projects/cs160/index.html` | [cs160.md](cs160.md) |
 | `personal-site` | `/projects/personal-site/index.static.html` | [personal-site.md](personal-site.md) |
 | `dan-james` | `/projects/dan-james/index.static.html` | [dan-james.md](dan-james.md) |
-| `motorsport` | `/projects/motorsport/index.html` (a hand-written hub) | [motorsport.md](motorsport.md) |
+| `team-safe` | `/projects/motorsport/team-safe/About.html` | [team-safe.md](team-safe.md) |
 | `coloris` | `/projects/coloris/index.html` (Java, through CheerpJ) | [coloris.md](coloris.md) |
+| `worxxx` | `/projects/motorsport/worxxx/index.static.html` | [worxxx.md](worxxx.md) |
 | `isguy` | `/projects/isguy/index.html` (Java, through CheerpJ) | [isguy.md](isguy.md) |
+| `noah-garza` | `/projects/motorsport/noah-garza/index.static.html` | [noah-garza.md](noah-garza.md) |
 | `sketchbook` | `/projects/sketchbook/index.html` (a hand-written gallery) | [sketchbook.md](sketchbook.md) |
 | `flash` | `/projects/flash/index.html` (a hand-written gallery) | [flash.md](flash.md) |
-| `highschool` | `/projects/highschool/index.html` (a hand-written hub) | [highschool.md](highschool.md) |
+| `highschool-portfolio` | `/projects/highschool/oldSite/index.html` | [highschool-portfolio.md](highschool-portfolio.md) |
 | `greenfoot-pokemon` | `/projects/greenfoot-pokemon/index.html` (Java, through CheerpJ) | [greenfoot-pokemon.md](greenfoot-pokemon.md) |
 | `escaping-confinement` | `/projects/escaping-confinement/index.html` (a video page) | [escaping-confinement.md](escaping-confinement.md) |
+| `jakes-index` | `/projects/highschool/flashIndex/FlashIndex.static.html` | [jakes-index.md](jakes-index.md) |
 | `pivot` | `/projects/pivot/index.html` (a hand-written gallery) | [pivot.md](pivot.md) |
 
 ## How previews run
@@ -39,8 +44,8 @@ A preview has to run in the browser with no server code: the host is static, and
   - Ruffle added wherever there's Flash;
   - the site's literal `replace` fixes.
 
-  Personal Site, Dan James and the high school Flash index work this way; the card's `preview` names the `.static.html` page.
-- **Hub pages:** a folder with more than one site and no front page of its own (`highschool/`) gets a small hand-written `index.html` that links to them.
+  Personal Site, Dan James and JAKE's Index work this way; the card's `preview` names the `.static.html` page.
+- **One project, one card:** a folder that holds several sites or games (`motorsport/`, `highschool/`, `cs134/`) gives each its own card, framing that project's own page. Don't put a hub page in front of them; Jake asked on 2026-10-27 for every project to be its own card. Hubs that front one project's parts, like Ambii Business's three apps, are fine. Collections of small works in one category (Flash, Pivot, Sketchbook) stay one card each, as Jake decided the same day.
 - **Galleries and videos:** work that was never a website (animations, drawings, a film, loose Flash movies) gets a hand-written page in its own folder: Pivot, Sketchbook, Escaping Confinement, Flash.
   - **Files:** keep the original files where browsers can show them (GIFs), and convert where they can't (TIFF to JPEG, MPEG to H.264 MP4). Each project's page says which originals were used and what was left out.
   - **Sound:** a page that plays sound pauses the site's music when it starts (see [escaping-confinement.md](escaping-confinement.md)). Under the dev server Claude starts, every preview plays silently ([music.md](../music.md#silent-while-claude-previews)).
@@ -49,7 +54,7 @@ A preview has to run in the browser with no server code: the host is static, and
 - **Flash** plays through Ruffle, self-hosted in `public/vendor/ruffle/`.
 - **Java desktop games** (isGuy, Pokémon, Coloris) run as the original jars through CheerpJ, which loads only when the visitor presses Play. CheerpJ's free Community License covers a personal site only while it loads from `cjrtnc.leaningtech.com` and the page credits it; self-hosting it would need a paid license. How the three pages work is in [isguy.md](isguy.md).
 - **Godot games** (Asteroids) are Godot's own web export, with threads off so the static host needs no special headers ([asteroids.md](asteroids.md)).
-- **Games that can't run in a browser** get short recorded clips (CS 134, recorded from the original jars) or a case study of their design and art (Survivor, Fooder).
+- **Games that can't run in a browser** get a short recorded clip (The Floor is Lava and Scott Pilgrim, recorded from the original jars) or a case study of their design and art (Survivor, Arena King, Fooder).
 - **Live sites** on their own domain (TapSlayDie) are framed at their address. Their document is cross-origin, so the viewer's link handling can't reach inside them.
 
 **Embedded third-party forms stay live.** JotForm embeds (Dan James's contact page, Pistol Art's register page, the 2012 high school page and its NinjaDonut copy) still submit for real. Jake decided on 2026-10-26 to leave them, along with his old contact details on the 2012 pages. Only the sites' own mail handlers are rerouted, because they'd need the PHP that isn't published.
@@ -59,7 +64,7 @@ Treat the originals under `public/projects/` as an archive: don't reformat or mo
 ## Card images
 
 Card images are screenshots of each running preview, taken by `yarn projects:screenshot` (`scripts/screenshot-projects.mjs`) with `yarn dev` running. It drives headless Chrome, Edge or Brave and writes `public/images/projects/<id>.webp` at 960×720, the cards' 4:3.
-- **Shots:** each project's shot is an entry in the script's `SHOTS` list. It says how long to let the page settle and, for a narrow fixed-width site, a narrower viewport so the site fills the frame. A shot can name a page inside the preview rather than its front page (the high school card shoots its Flash index, not the hub), or `scroll` down to the part worth showing (Pivot's grid).
+- **Shots:** each project's shot is an entry in the script's `SHOTS` list. It says how long to let the page settle and, for a narrow fixed-width site, a narrower viewport so the site fills the frame. A shot can name a page inside the preview rather than its front page (Ambii's card shoots its 2018 landing page, not the story page), `scroll` down to the part worth showing (Pivot's grid), or `run` a line of script first, to open a panel (Noah Garza's About) or keep something off the card (the high school portfolio's phone number).
 - **Audio and autoplay:** the browser runs muted, with autoplay allowed, so Ruffle starts the Flash instead of waiting behind its play button.
 
 ```bash
@@ -74,7 +79,7 @@ The older images in `public/images/projects/` (`ambii.png`, `pistolArt.png` and 
 ## Adding a project
 
 1. Get it running as a preview: a static copy in `public/projects/<folder>/` (a new `SITES` entry if it's PHP, or if some of its plain pages need fixes), or the address of a live site that allows framing (check its response headers for `X-Frame-Options` and `frame-ancestors`). On Windows, copying a batch of files into `public/` while `yarn dev` runs can crash the dev server (chokidar's `EBUSY: resource busy or locked`). Copy first and start the server after, or just restart it.
-2. Add an entry to `homeProjectList`, newest first (so a new project becomes the featured tile): `id`, `title`, `date`, `tags` (what kind of thing it is, shown as pills in the viewer: "Website", "Java Game", "School"…), a one-sentence `description` in Jake's voice that says what it is rather than how the preview runs, `preview`, and `image: '/images/projects/<id>.webp'`.
+2. Add an entry to `homeProjectList`, one per project (see One project, one card above), newest first (so a new project becomes the featured tile): `id`, `title`, `date`, `tags` (what kind of thing it is, shown as pills in the viewer: "Website", "Java Game", "School"…), a one-sentence `description` in Jake's voice that says what it is rather than how the preview runs, `preview`, and `image: '/images/projects/<id>.webp'`.
 3. Add a `SHOTS` entry to `scripts/screenshot-projects.mjs`, run `yarn projects:screenshot <id>` and look at the result.
 4. Write `docs/projects/<id>.md` and add it to the table above.
 5. Open `/project/<id>` in the dev server, click around inside the frame, and check the console.

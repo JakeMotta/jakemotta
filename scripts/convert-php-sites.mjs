@@ -146,7 +146,7 @@ const SITES = [
             ['<div id="ich">', '<style>html { overflow-x: hidden; }</style>\n    <div id="ich">'],
         ],
     },
-    // Motorsport sites: three client sites behind one hand-written hub (motorsport/index.html).
+    // Three motorsport client sites, each its own card: Team SAFE, Worxxx and Noah Garza.
     {
         dir: 'motorsport/team-safe',
         // Jake's own page links back to the live domain.

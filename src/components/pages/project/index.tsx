@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FiArrowLeft, FiArrowRight, FiArrowUpRight, FiInfo } from 'react-icons/fi';
 import { BentoOverlay } from '../../templates';
-import { homeProjectList } from '../../../common/constants';
+import { homeProjectList, movedProjects } from '../../../common/constants';
 import './index.scss';
 
 /**
@@ -34,6 +34,8 @@ export const ProjectViewer = () => {
     const close = () => navigate(fromGallery ? '/project' : '/');
 
     if (!project) {
+        const moved = id && movedProjects[id];
+        if (moved) return <Navigate to={`/project/${moved}`} replace state={location.state} />;
         return (
             <BentoOverlay label='Project not found' onClose={close} className='viewer viewer--missing'>
                 <h2 className='viewer__missing-title'>That project doesn't exist</h2>

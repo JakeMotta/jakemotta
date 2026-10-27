@@ -98,4 +98,4 @@ A grep of everything under `story/` for passwords, secrets, API keys and tokens 
 
 ## Card image
 
-`public/images/projects/ambii.webp`, a screenshot of the 2018 landing page taken by `yarn projects:screenshot ambii`. Its shot names `/projects/ambii/index.html` rather than the story hub in front of it, the way the high school card shoots its Flash index. The card has no description; that's deliberate rather than missing.
+`public/images/projects/ambii.webp`, a screenshot of the 2018 landing page taken by `yarn projects:screenshot ambii`. Its shot names `/projects/ambii/index.html` rather than the story hub in front of it. The card has no description; that's deliberate rather than missing.

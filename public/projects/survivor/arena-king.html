@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: Arena King, a tabletop game Jake designed for SJSU's CS 108 (spring 2017),
+     written up from its rules and playtest report. See docs/projects/arena-king.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arena King</title>
+<style>
+    html, body { margin: 0; background: #fbd969; color: #1d1a14; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 28px 16px 48px; }
+    main { max-width: 1100px; margin: 0 auto; }
+    .kicker { margin: 0; font-size: 14px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6d5a1e; }
+    h1 { font-size: 34px; font-weight: 900; margin: 2px 0 4px; letter-spacing: -.5px; }
+    .lede { margin: 0 0 24px; max-width: 720px; }
+    h3 { font-size: 18px; font-weight: 900; margin: 26px 0 10px; }
+    .meta { margin: 0 0 12px; color: #6d5a1e; font-size: 14px; font-weight: 600; }
+    .panel { background: #fffaf0; border: 3px solid #1d1a14; border-radius: 12px; box-shadow: 6px 6px 0 #1d1a14; }
+    .note { font-size: 14px; color: #4d4120; margin-top: 16px; }
+
+    .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+    .rules .panel { padding: 14px 18px; }
+    .rules h4 { margin: 0 0 6px; font-size: 16px; font-weight: 900; }
+    .rules p, .rules ul, .rules ol { margin: 4px 0; }
+    .rules ul, .rules ol { padding-left: 20px; }
+    .table-wrap { overflow-x: auto; padding: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 15px; }
+    th, td { text-align: left; padding: 8px 14px; border-bottom: 1px solid #e4d9b8; vertical-align: top; }
+    th { font-weight: 900; }
+    tr:last-child td { border-bottom: 0; }
+    td:first-child { font-weight: 800; white-space: nowrap; }
+    .lasts { white-space: nowrap; }
+    .tag { display: inline-block; padding: 0 8px; border-radius: 999px; font-size: 13px; font-weight: 800; }
+    .match { background: #cfe0ff; color: #12306b; }
+    .once { background: #ffd2c7; color: #7a1a06; }
+    .log { padding: 14px 18px 14px 38px; margin: 0; }
+    .log li { margin: 6px 0; }
+
+    /* On a phone each buff becomes a little card: name and tag on top, what it does underneath */
+    @media (max-width: 560px) {
+        thead { display: none; }
+        tr { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 14px; border-bottom: 1px solid #e4d9b8; }
+        tr:last-child { border-bottom: 0; }
+        td { padding: 0; border: 0; }
+        td.lasts { grid-column: 2; grid-row: 1; }
+        td:nth-child(2) { grid-column: 1 / -1; }
+    }
+</style>
+</head>
+<body>
+<main>
+    <p class="kicker">SJSU CS 108 · February 2017</p>
+    <h1>Arena King</h1>
+    <p class="meta">Tabletop dice-and-card game for my game design class · 2–4 players</p>
+    <p class="lede">A game about dueling warriors. Fight with your character cards, buy buffs, and keep the good buffs away from everyone else, but don't spend your money too fast.</p>
+
+    <div class="rules">
+        <div class="panel">
+            <h4>In the box</h4>
+            <ul>
+                <li>12 character cards, each with HP, ATK and DEF</li>
+                <li>2 or 3 dice</li>
+                <li>Silver and copper coins (1 silver = 5 copper)</li>
+                <li>A buff sheet, and a log sheet for each player</li>
+            </ul>
+            <h4 style="margin-top: 12px">Setup</h4>
+            <p>Everyone draws 3 character cards at random and starts with 5 silver.</p>
+        </div>
+        <div class="panel">
+            <h4>A match</h4>
+            <p>One card from each player fights until only one is left standing. Each round:</p>
+            <ol>
+                <li>Pick a card to fight with, face down.</li>
+                <li>Roll the dice. In that order, each player may buy one buff.</li>
+                <li>Reveal the cards, apply the buffs and write everything on your log sheet.</li>
+                <li>Fight, taking turns in the same order: pick an enemy and attack.</li>
+            </ol>
+            <p>Then go back to step 2 until one card is left.</p>
+        </div>
+        <div class="panel">
+            <h4>Fighting</h4>
+            <p>Damage is your ATK minus their DEF. If that's zero or less, they take nothing.</p>
+            <p>Kill a card and you claim it, plus 1 silver. Claimed cards never fight again; the survivor can, and heals 1 HP for each match it sits out.</p>
+            <h4 style="margin-top: 12px">Winning</h4>
+            <p>Whoever has claimed the most cards wins.</p>
+        </div>
+    </div>
+
+    <h3>Buffs</h3>
+    <p>Each buff is a single item in the store: only one player can have it, and it goes back once it's used. One buy per player per round, and no sharing money. Hold on to a buff (anything but ATK or DEF) to spring it later, or just to keep it from someone else. ATK and DEF go on at the start of a round, and once one's been used in a match nobody else gets it that match.</p>
+    <div class="panel table-wrap">
+        <table>
+            <thead><tr><th>Buff</th><th>What it does</th><th>Lasts</th></tr></thead>
+            <tbody>
+                <tr><td>ATK +1 / +3 / +5</td><td>Raises attack</td><td class="lasts"><span class="tag match">the match</span></td></tr>
+                <tr><td>DEF +1 / +3 / +5</td><td>Raises defense</td><td class="lasts"><span class="tag match">the match</span></td></tr>
+                <tr><td>HP +1 / +3 / +5</td><td>Restores HP, never past the card's starting HP</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                <tr><td>Poison</td><td>1 damage to one opponent at the start of every turn</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                <tr><td>Dodge</td><td>Halves the damage you take, rounded down</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                <tr><td>Block</td><td>Blocks all damage from one opponent</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                <tr><td>Heal</td><td>Cures poison, but restores no HP</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                <tr><td>Stab</td><td>2 damage to an opponent</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+                <tr><td>Reflect</td><td>Turns an opponent's attack back on them this round. You can't attack in the same turn.</td><td class="lasts"><span class="tag once">one use</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <p class="note">In the playtest, the +1, +3 and +5 buffs cost 1, 2 and 3 copper.</p>
+
+    <h3>Playtest: me against one playtester, five matches</h3>
+    <ol class="log panel">
+        <li><b>Steven</b> (6 HP, 2 ATK, 5 DEF) against <b>Another Steven</b> (10 HP, 3 ATK, 4 DEF). I stacked ATK +3 and +5 for a 6-damage hit, and Reflect turned it around: 5 damage back, leaving Steven on 1 HP. An HP +3 kept him going, and he won.</li>
+        <li><b>Big Ass Sword</b> (5 HP, 8 ATK, 3 DEF) took <b>Square</b> in two hits.</li>
+        <li><b>Not A Square</b> against <b>Guy with A Lot of HP</b> (15 HP). With DEF buffs on both sides, nobody could do damage, so my Poison won it a point at a time over 14 turns of swinging for nothing.</li>
+        <li>Big Ass Sword came back for the last two: Steven in one hit, then Not A Square in two.</li>
+    </ol>
+    <p class="note">Final count: the playtester 3 cards, me 2. One heavy hitter decided three of the five matches, and high defense could stall a fight until something like Poison broke it.</p>
+</main>
+</body>
+</html>

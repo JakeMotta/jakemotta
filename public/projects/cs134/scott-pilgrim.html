@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: the Scott Pilgrim side-scroller, Jake's first CS 134 game (SJSU, 2017), a
+     Java + JOGL desktop program that can't run in a browser. The clip was recorded from the original build on
+     2026-10-26. See docs/projects/scott-pilgrim.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scott Pilgrim side-scroller</title>
+<style>
+    html, body { margin: 0; background: #14121b; color: #ece8f4; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 28px 16px 48px; }
+    main { max-width: 900px; margin: 0 auto; }
+    .kicker { margin: 0; color: #9d97ad; font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    h1 { font-size: 34px; font-weight: 900; margin: 2px 0 20px; letter-spacing: -.5px; color: #7dbcff; }
+    .screen { display: block; width: 100%; height: auto; aspect-ratio: 800 / 600; background: #000; border: 3px solid #000; border-radius: 12px; box-shadow: 6px 6px 0 #4fa4ff; transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); }
+    .screen:hover { transform: rotate(.6deg) translateY(-3px); }
+    .meta { margin: 18px 0 6px; color: #9d97ad; font-size: 14px; }
+    p { margin: 6px 0 12px; max-width: 760px; }
+    .keys { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0 18px; padding: 0; list-style: none; font-size: 14px; color: #c9c3d6; }
+    kbd { display: inline-block; min-width: 1.4em; padding: 1px 6px; margin-right: 3px; border: 1px solid #4a4458; border-bottom-width: 3px; border-radius: 5px; background: #221f2b; color: #fff; font-family: inherit; font-size: 12px; font-weight: 700; line-height: 1.5; text-align: center; }
+    .credit { color: #9d97ad; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+    <p class="kicker">SJSU CS 134 · 2017</p>
+    <h1>Scott Pilgrim side-scroller</h1>
+
+    <video class="screen" autoplay muted loop playsinline controls preload="auto" poster="scott-pilgrim.jpg" src="scott-pilgrim.mp4" aria-label="The Scott Pilgrim side-scroller being played"></video>
+    <p class="meta">Class project for my game programming class · March 2017</p>
+    <p>My first game for the class: Scott runs, idles and punches across a scrolling level, and every punch throws a fireball. Ramona follows him around and jumps when he swings. The window was titled “I can't charge my phone and listen to music at the same time”.</p>
+    <p>It's written in Java straight on top of OpenGL (JOGL). There was no engine, so the sprite loading, animation, camera and collisions are mine too.</p>
+    <ul class="keys">
+        <li><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> run</li>
+        <li><kbd>Z</kbd> punch</li>
+    </ul>
+    <p class="credit">Scott and Ramona's sprites come from <i>Scott Pilgrim vs. the World: The Game</i> (art by Paul Robertson), and the grass from <i>Super Mario World</i> (Nintendo). They were ripped for a class exercise; they aren't mine.</p>
+    <p class="credit">The clip was recorded in 2026 from the original 2017 build, with the music off.</p>
+</main>
+<script>
+    // The clip is silent, so it leaves the site's music alone. Someone who asked for less motion gets it paused.
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('video').forEach(function (video) { video.removeAttribute('autoplay'); video.pause(); });
+    }
+</script>
+</body>
+</html>

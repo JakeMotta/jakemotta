@@ -158,6 +158,13 @@ export interface HomeProject {
     preview?: string;
 }
 
+/** Cards that held several projects before each got its own, so links to their old ids still land on one. */
+export const movedProjects: Record<string, string> = {
+    motorsport: 'team-safe',
+    highschool: 'highschool-portfolio',
+    cs134: 'floor-is-lava',
+};
+
 /**
  * Leave `image` empty to show a monogram tile, and `description` empty to show none. Card
  * images are screenshots of each running preview, made by `yarn projects:screenshot`
@@ -229,13 +236,22 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/ambii-business/index.html',
     },
     {
-        id: 'cs134',
-        image: '/images/projects/cs134.webp',
-        title: 'CS 134 Games',
+        id: 'floor-is-lava',
+        image: '/images/projects/floor-is-lava.webp',
+        title: 'The Floor is Lava',
         date: '2017',
         tags: ['Java Game', 'School'],
-        description: 'Two Java and OpenGL games: a miner racing rising lava, and a Scott Pilgrim side-scroller.',
-        preview: '/projects/cs134/index.html',
+        description: 'A miner digs blocks loose and stacks them under his feet to stay above the rising lava.',
+        preview: '/projects/cs134/floor-is-lava.html',
+    },
+    {
+        id: 'scott-pilgrim',
+        image: '/images/projects/scott-pilgrim.webp',
+        title: 'Scott Pilgrim Side-Scroller',
+        date: '2017',
+        tags: ['Java Game', 'School'],
+        description: 'My first OpenGL game: Scott punches fireballs across a scrolling level while Ramona tags along.',
+        preview: '/projects/cs134/scott-pilgrim.html',
     },
     {
         id: 'fooder',
@@ -249,11 +265,20 @@ export const homeProjectList: HomeProject[] = [
     {
         id: 'survivor',
         image: '/images/projects/survivor.webp',
-        title: 'Survivor & Arena King',
+        title: 'Survivor',
         date: '2017',
         tags: ['Game Design', 'School'],
-        description: 'A prison-escape platformer and a dice-and-card dueling game, designed for a game design class.',
+        description: 'A prison-escape platformer full of spikes, electric barriers and fake floors, designed for a game design class.',
         preview: '/projects/survivor/index.html',
+    },
+    {
+        id: 'arena-king',
+        image: '/images/projects/arena-king.webp',
+        title: 'Arena King',
+        date: '2017',
+        tags: ['Tabletop Game', 'School'],
+        description: 'A dice-and-card dueling game where you buy buffs and hoard the good ones so nobody else gets them.',
+        preview: '/projects/survivor/arena-king.html',
     },
     {
         id: 'cs160',
@@ -283,13 +308,13 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/dan-james/index.static.html',
     },
     {
-        id: 'motorsport',
-        image: '/images/projects/motorsport.webp',
-        title: 'Motorsport Sites',
+        id: 'team-safe',
+        image: '/images/projects/team-safe.webp',
+        title: 'Team SAFE Racing',
         date: '2014',
         tags: ['Website'],
-        description: 'Websites for an inline speed-skating team, a motorcycle race shop and a young kart racer.',
-        preview: '/projects/motorsport/index.html',
+        description: 'A site for an inline speed-skating team, with a bio page for every skater.',
+        preview: '/projects/motorsport/team-safe/About.html',
     },
     {
         id: 'coloris',
@@ -301,6 +326,15 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/coloris/index.html',
     },
     {
+        id: 'worxxx',
+        image: '/images/projects/worxxx.webp',
+        title: 'Worxxx PM',
+        date: '2013',
+        tags: ['Website'],
+        description: 'A motorcycle race shop in Lemoore, California: service rates, pit stop kits and Öhlins suspension.',
+        preview: '/projects/motorsport/worxxx/index.static.html',
+    },
+    {
         id: 'isguy',
         image: '/images/projects/isguy.webp',
         title: 'The Adventures of isGuy',
@@ -308,6 +342,15 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Java Game'],
         description: 'A five-level platformer with lasers, ladders, keys and doors.',
         preview: '/projects/isguy/index.html',
+    },
+    {
+        id: 'noah-garza',
+        image: '/images/projects/noah-garza.webp',
+        title: 'Noah Garza Racing',
+        date: '2012',
+        tags: ['Website'],
+        description: "A one-page site for a young kart racer, with his wins, the season's schedule and a photo gallery.",
+        preview: '/projects/motorsport/noah-garza/index.static.html',
     },
     {
         id: 'sketchbook',
@@ -328,13 +371,13 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/flash/index.html',
     },
     {
-        id: 'highschool',
-        image: '/images/projects/highschool.webp',
-        title: 'High School Sites',
+        id: 'highschool-portfolio',
+        image: '/images/projects/highschool-portfolio.webp',
+        title: 'High School Portfolio',
         date: '2012',
-        tags: ['Website', 'Flash'],
-        description: 'A Flash homepage with a Pac-Man in it, and a portfolio with a parallax city skyline.',
-        preview: '/projects/highschool/index.html',
+        tags: ['Website'],
+        description: 'My portfolio from the end of high school, with a parallax city skyline scrolling behind it.',
+        preview: '/projects/highschool/oldSite/index.html',
     },
     {
         id: 'greenfoot-pokemon',
@@ -353,6 +396,15 @@ export const homeProjectList: HomeProject[] = [
         tags: ['3D Animation', 'Short Film', 'School'],
         description: 'A five-minute Maya short about a desk fan that comes to life and tries to escape.',
         preview: '/projects/escaping-confinement/index.html',
+    },
+    {
+        id: 'jakes-index',
+        image: '/images/projects/jakes-index.webp',
+        title: "JAKE's Index",
+        date: '2011',
+        tags: ['Website', 'Flash', 'School'],
+        description: 'A Flash homepage for my web design class assignments, with a Pac-Man hiding in it.',
+        preview: '/projects/highschool/flashIndex/FlashIndex.static.html',
     },
     {
         id: 'pivot',

@@ -21,6 +21,7 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `team-safe` | `/projects/motorsport/team-safe/About.html` | [team-safe.md](team-safe.md) |
 | `coloris` | `/projects/coloris/index.html` (Java, through CheerpJ) | [coloris.md](coloris.md) |
 | `worxxx` | `/projects/motorsport/worxxx/index.static.html` | [worxxx.md](worxxx.md) |
+| `rebound` | `/projects/rebound/index.html` (Greenfoot, ported to JavaScript) | [rebound.md](rebound.md) |
 | `isguy` | `/projects/isguy/index.html` (Java, through CheerpJ) | [isguy.md](isguy.md) |
 | `noah-garza` | `/projects/motorsport/noah-garza/index.static.html` | [noah-garza.md](noah-garza.md) |
 | `sketchbook` | `/projects/sketchbook/index.html` (a hand-written gallery) | [sketchbook.md](sketchbook.md) |
@@ -52,6 +53,7 @@ A preview has to run in the browser with no server code: the host is static, and
 - **Apps whose source survives** (Ambii Business) are built from that source, with the old API answered by a mock that runs in the browser. The mock and the build tooling live in `demos/`, outside `public/`, and only the build output is published. The apps' own source isn't committed at all, because its upstream repositories are private ([ambii-business.md](ambii-business.md#where-the-source-lives)).
 - **Flash** plays through Ruffle, self-hosted in `public/vendor/ruffle/`.
 - **Java desktop games** (isGuy, Pokémon, Coloris) run as the original jars through CheerpJ, which loads only when the visitor presses Play. CheerpJ's free Community License covers a personal site only while it loads from `cjrtnc.leaningtech.com` and the page credits it; self-hosting it would need a paid license. How the three pages work is in [isguy.md](isguy.md).
+- **Small Greenfoot games** (Rebound) can be ported instead: `greenfoot.js`, a canvas version of the Greenfoot 2 API, with the game's Java translated class by class beside it and the original scenario kept unchanged. Greenfoot's own HTML5 conversion only runs on greenfoot.org's servers, for scenarios published there ([rebound.md](rebound.md)).
 - **Godot games** (Asteroids) are Godot's own web export, with threads off so the static host needs no special headers ([asteroids.md](asteroids.md)).
 - **Games that can't run in a browser** get a short recorded clip (The Floor is Lava and Scott Pilgrim, recorded from the original jars) or a case study of their design and art (Survivor, Fooder).
 - **Live sites** on their own domain (TapSlayDie) are framed at their address. Their document is cross-origin, so the viewer's link handling can't reach inside them.

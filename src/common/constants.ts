@@ -372,6 +372,16 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/motorsport/worxxx/index.static.html',
     },
     {
+        id: 'rebound',
+        image: '/images/projects/rebound.webp',
+        title: 'Rebound',
+        date: '2013',
+        category: 'game',
+        tags: ['Java Game'],
+        description: 'Bank a ball off the walls into the target, with only a couple of shots to do it.',
+        preview: '/projects/rebound/index.html',
+    },
+    {
         id: 'isguy',
         image: '/images/projects/isguy.webp',
         title: 'The Adventures of isGuy',

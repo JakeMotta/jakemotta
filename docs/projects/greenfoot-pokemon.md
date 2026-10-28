@@ -43,7 +43,7 @@ How the three Greenfoot games were measured and what was wrong with them all is 
 **What could make the town faster, none of them done:**
 - Lighten the board while a game plays, which helps every game on the site ([isguy.md](isguy.md#speed)). It doesn't change the town's standalone speed.
 - Rewrite how the town is drawn, for instance an override `TrainingVille` that paints the rocks, trees and grass into the background and keeps only invisible actors for collisions. That changes the 2012 game's code a lot more than the jars above, and stepping on grass would need its own drawing.
-- Rebuild it from the source (V8 to V10 are in the archive, under `Greenfoot/Pokemon/`) with something that turns Java into JavaScript ahead of time instead of running a JVM in the browser. Not checked: what current Greenfoot offers for this, or whether the 2012 code builds on it.
+- Rebuild it from the source (V8 to V10 are in the archive, under `Greenfoot/Pokemon/`) with something that turns Java into JavaScript ahead of time instead of running a JVM in the browser. Greenfoot itself only does this on greenfoot.org's servers, for published scenarios. Rebound was ported by hand onto a small JavaScript Greenfoot instead ([rebound.md](rebound.md)), which would take far more for Pokémon's size.
 
 ## Left out on purpose
 

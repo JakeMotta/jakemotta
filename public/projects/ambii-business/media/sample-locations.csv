@@ -1,0 +1,4 @@
+location_name,location_address_one,location_address_two,location_city,location_state,location_zip,location_phone,explicit_allowed,allow_player_to_change_station
+Willow Glen Roastery,1180 Crema Ave,,San Jose,CA,95125,(408) 555-0161,no,yes
+Campus Corner,88 Scholar Way,Student Union,San Jose,California,95112,(408) 555-0162,no,no
+Harbor Pop-up,9 Pier Walk,"Stall 4, North Wharf",Santa Cruz,CA,95060,(831) 555-0163,no,yes

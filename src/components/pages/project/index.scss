@@ -143,9 +143,14 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         display: flex;
         flex-direction: column;
         gap: 12px;
-        // Clear of the overlay's close button, which sits over this corner on a wide screen
+    }
+
+    // Clear of the overlay's close button, which sits over this corner on a wide screen. The tags under
+    // them take the panel's whole width (Jake, 2026-10-28).
+    &__crumb,
+    &__title {
         @media (min-width: 1000px) {
-            padding-right: 52px;
+            margin-right: 52px;
         }
     }
 
@@ -211,12 +216,10 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
     }
 
-    // On the preview's bottom right corner, out of the way of the sites' own headers
+    // At the foot of the side panel, above Back and Forward. It sat on the preview's bottom right
+    // corner until 2026-10-28, when Jake had it moved off: it covered parts of the projects.
     &__open {
-        position: absolute;
-        right: 14px;
-        bottom: 14px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        margin-top: auto;
     }
 
     // Back and Forward, at the foot of the side panel
@@ -225,6 +228,10 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         grid-template-columns: 1fr 1fr;
         gap: 8px;
         margin-top: auto;
+    }
+
+    &__open + &__steps {
+        margin-top: 0;
     }
 
     &__step {

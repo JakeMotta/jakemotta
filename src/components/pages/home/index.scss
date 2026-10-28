@@ -278,18 +278,21 @@ $phone: 639px;
     }
 }
 
-// A "HELLO my name is" name tag: the only tile that rests tilted, with a corner that peels up on hover
+// A "HELLO my name is" name tag: the only tile that rests tilted, with a corner that peels up on hover.
+// It's drawn a little small, so the tilt and its shadow stay inside its own cell rather than reaching
+// into Projects under it, which lifts into the same gap on hover.
 .tile-hero {
     --tilt: 1deg;
     padding: 0;
     background: var(--color-primary-light);
-    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.18);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.18);
     color: var(--color-primary-ink);
-    transform: rotate(-1.5deg);
+    transform: rotate(-1deg) scale(0.96);
 
     &:hover {
         box-shadow: 0 22px 34px rgba(0, 0, 0, 0.3);
         color: var(--color-primary-ink);
+        transform: rotate(var(--tilt)) translateY(-4px) scale(0.97);
     }
 
     &::after {

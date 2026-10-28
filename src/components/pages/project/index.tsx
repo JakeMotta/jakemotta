@@ -134,9 +134,6 @@ export const ProjectViewer = () => {
                         <>
                             {loadedId !== frameKey && <div className='viewer__loading'>Loading {title}…</div>}
                             <iframe key={frameKey} ref={frameRef} src={src} title={`${title} preview`} onLoad={onFrameLoad} />
-                            <a className='viewer__button viewer__button--solid viewer__open' href={src} target='_blank' rel='noreferrer'>
-                                Open in a new tab <FiArrowUpRight aria-hidden />
-                            </a>
                         </>
                     ) : (
                         <div className='viewer__empty'>
@@ -170,6 +167,11 @@ export const ProjectViewer = () => {
                         </a>
                         {project.download.note && <p>{project.download.note}</p>}
                     </div>
+                )}
+                {src && (
+                    <a className='viewer__button viewer__button--solid viewer__open' href={src} target='_blank' rel='noreferrer'>
+                        Open in a new tab <FiArrowUpRight aria-hidden />
+                    </a>
                 )}
                 <div className='viewer__steps'>
                     <button type='button' className='viewer__step' aria-label={`Back: ${previous.title}`} onClick={() => show(previous.id)}>

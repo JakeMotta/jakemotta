@@ -37,11 +37,11 @@ export const MusicLibrary = () => {
         probe();
     }, [probe]);
 
-    // Each tab has its own subtitle under the heading
-    const tabs: { key: Tab; label: string; count?: number; subtitle: string }[] = [
-        { key: 'mine', label: 'My music', count: musicList.length, subtitle: "Songs I've made over the years." },
-        { key: 'favorites', label: 'Favorite artists', count: favorites.ready ? favorites.artists.length : undefined, subtitle: 'Artists I love. Press play to hear why.' },
-        ...(playlist.length ? [{ key: 'playlist' as Tab, label: 'Playlist', count: playlist.length, subtitle: "What I've had on repeat." }] : []),
+    // Each tab has its own subtitle under the heading. The tabs show no counts, as Jake asked on 2026-10-28.
+    const tabs: { key: Tab; label: string; subtitle: string }[] = [
+        { key: 'mine', label: 'My music', subtitle: "Songs I've made over the years." },
+        { key: 'favorites', label: 'Favorite artists', subtitle: 'Artists I love. Press play to hear why.' },
+        ...(playlist.length ? [{ key: 'playlist' as Tab, label: 'Playlist', subtitle: "What I've had on repeat." }] : []),
         // What Jake's been playing elsewhere (ListenBrainz): the song on now, then his recent plays and top lists
         { key: 'recent', label: 'Recent listens', subtitle: "What I've been digging." },
     ];
@@ -56,6 +56,7 @@ export const MusicLibrary = () => {
                     art={<CoverArt track={item} />}
                     title={item.title}
                     meta={meta}
+                    description={item.description}
                     current={current}
                     playing={isPlaying}
                     onPlay={() => (current ? togglePlayback() : setAudioUrl(item.url))}
@@ -110,7 +111,7 @@ export const MusicLibrary = () => {
             <div className='library__browse'>
                 <OverlayHeader title='Music' subtitle={tabs.find(({ key }) => key === tab)?.subtitle}>
                     <div role='tablist' aria-label='Music lists' className='library__tabs'>
-                        {tabs.map(({ key, label, count }) => (
+                        {tabs.map(({ key, label }) => (
                             <button
                                 key={key}
                                 type='button'
@@ -120,7 +121,7 @@ export const MusicLibrary = () => {
                                 aria-controls='library-list'
                                 className={`library__tab${tab === key ? ' library__tab--on' : ''}`}
                                 onClick={() => setTab(key)}>
-                                {label} {count !== undefined && <span>{count}</span>}
+                                {label}
                             </button>
                         ))}
                     </div>

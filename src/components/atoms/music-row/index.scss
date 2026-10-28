@@ -116,6 +116,19 @@
         opacity: 0.8;
     }
 
+    // Up to two lines of what Jake says about the song
+    &__description {
+        display: -webkit-box;
+        margin-top: 4px;
+        overflow: hidden;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.4;
+        opacity: 0.9;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
     // Shows on hover and focus, and stays while it's the song on
     &__go {
         display: flex;

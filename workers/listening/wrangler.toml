@@ -29,7 +29,7 @@ routes = [
 # and paste the id it prints here.
 [[kv_namespaces]]
 binding = "LISTENING"
-id = "PASTE_THE_KV_NAMESPACE_ID_HERE"
+id = "48e4ab2840354d1ebc31ae02eedc4540"
 
 [vars]
 # Artists or tracks never to play on the site, comma-separated and case-insensitive: an artist
@@ -42,4 +42,4 @@ LISTENBRAINZ_USER = "draymothisk"
 
 # The Spotify playlist whose songs join the site's shuffle: the ID from its share link
 # (open.spotify.com/playlist/<ID>). Jake must own it or collaborate on it. Empty: no playlist.
-SPOTIFY_PLAYLIST = ""
+SPOTIFY_PLAYLIST = "1VwcuVIPRIZ8niiRfK5pbu"

@@ -68,7 +68,8 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
 - **`GET /api/listening/now`:** what Jake's Spotify is playing, with `progressMs`, `isPlaying` and `fetchedAt` (the Worker's clock when Spotify answered). A visitor's position in the song is `progressMs` plus the time since `fetchedAt`.
 - **`?youtube=1`** adds `youtube: { videoId, synced }`, the YouTube copy. It's `null` when none was found.
 - **Caching:** answers are cached for 5 seconds, so Spotify is asked at most once per 5 seconds per Cloudflare location, however many visitors are listening.
-- **Spotify:** only the `user-read-currently-playing` scope. The access token is kept in KV for its hour, and if Spotify ever rotates the refresh token, the new one is stored in KV and replaces the secret.
+- **Spotify:** only the `user-read-currently-playing` and `playlist-read-private` scopes. The access token is kept in KV for its hour, and if Spotify ever rotates the refresh token, the new one is stored in KV and replaces the secret.
+- **The sign-in lasts 180 days.** Spotify's dashboard gives the app ("Personal Site") a refresh-token lifetime of 180 days. When it runs out, `/now` and `/playlist` fail until the `spotify-auth.mjs` step in [Setup](#setup) is run again.
 - **Matching (`src/youtube.js`):**
   - It searches the YouTube Data API for "first artist + title" among embeddable music videos, then checks each result's length and whether it may be embedded.
   - It picks the video within 3 seconds of the Spotify track's length, preferring the artist's "Artist - Topic" channel. That's YouTube Music's own upload, with the album audio, so it can join mid-song (`synced: true`). Failing that, it picks the best embeddable video and plays it from the top.
@@ -180,6 +181,7 @@ What Jake does once, in this order. Nothing secret goes in the repository.
    - **How the secrets get to GitHub:** with the GitHub CLI signed in, the script sets them itself. Otherwise it copies each to the clipboard and opens GitHub's new-secret page to paste into. Nothing is printed or saved.
    - **The schedule** only runs once the workflow is on `master`, and the workflow has since been removed (see above).
 3. **Spotify app:** a developer app at developer.spotify.com, which needs Premium on the owner's account since February 2026, with the redirect URI `http://127.0.0.1:8888/callback`. For the playlist, put its ID (from its share link, `open.spotify.com/playlist/<ID>`) in `SPOTIFY_PLAYLIST` in `wrangler.toml`. It must be one Jake owns or collaborates on. A refresh token minted before 2026-10-27 lacks `playlist-read-private`, so for a private playlist, run the sign-in step below again.
+   - **Done on 2026-10-28:** the app "Personal Site" (Development mode) has both redirect URIs, `https://jakemotta.com/` and `http://127.0.0.1:8888/callback`. The playlist is `1VwcuVIPRIZ8niiRfK5pbu`, and the KV namespace was created. Its ID is in `wrangler.toml`.
 4. **YouTube key:** a YouTube Data API v3 key in the same Google Cloud project, restricted to that API.
 5. **The Worker**, from `workers/listening`:
    - `yarn install`
@@ -187,7 +189,13 @@ What Jake does once, in this order. Nothing secret goes in the repository.
    - `npx wrangler kv namespace create LISTENING`, then paste the ID into `wrangler.toml`
    - `npx wrangler secret put` for `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET` and `YOUTUBE_API_KEY`
    - `SPOTIFY_CLIENT_ID=… SPOTIFY_CLIENT_SECRET=… node scripts/spotify-auth.mjs | npx wrangler secret put SPOTIFY_REFRESH_TOKEN`
+     - **Check the output:** wrangler stores whatever the script prints, even when it fails ("Set SPOTIFY_CLIENT_ID… first", "Invalid client secret"). So "Success! Uploaded secret" alone doesn't mean it worked; look for an error above it, and run it again if there is one.
    - `npx wrangler deploy`
+   - **On Windows PowerShell:**
+     - **The `.cmd` shims:** script policy blocks `npx.ps1` and `yarn.ps1`, so use `npx.cmd` and `yarn.cmd`.
+     - **Environment variables:** set them with `$env:NAME = '…'`, and enter the secret with `Read-Host -AsSecureString`, so it isn't saved in PSReadLine's history.
+     - **The token pipe:** run it through `cmd /c "…"`, so PowerShell doesn't re-encode the token on its way to wrangler.
+     - **Pasting secrets:** paste a secret only at a prompt. Typed on a command line, it lands in PSReadLine's history file.
 6. **Past history:** the two imports above.
 
 ## How it's hooked up

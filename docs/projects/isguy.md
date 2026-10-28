@@ -77,6 +77,10 @@ Painting kept up better too: isGuy drew 47–56 frames a second instead of 44–
 - `javaProperties: ['awt.nativeDoubleBuffering=true']`, to skip Swing's back buffer: CheerpJ then sent every draw call to the canvas (7,700–9,300 `putImageData` calls a second) and the town got slower.
 - A lower frame cap that doesn't wait for paints (`Simulation`'s `MAX_FRAME_RATE` and `MIN_FRAME_RATE`): the acts got ahead, but painting starved to 3 frames a second.
 
+## Download
+
+The download is the jar itself, `public/projects/isguy/isGuyFinal.jar` (39.9 MB): its manifest names `greenfoot.export.GreenfootScenarioMain`, so a visitor with Java 8 or newer double-clicks it or runs `java -jar isGuyFinal.jar`, from any folder. Nothing new was made for it. Verified on 2026-10-27 with Java 25 on Windows 10: the window ("isGuyFinal") opens behind the Reset / Run bar, black until Run as on the site, with nothing on stderr. Not checked on the desktop: Run, playing, and the music. `browser-timer.jar` is for CheerpJ and isn't needed on the desktop. The deploy compares files by size only (see CLAUDE.md), which doesn't matter here as long as the jar stays as it is.
+
 ## Left out on purpose
 
 - The 2013 export (`Greenfoot/isGuyExport/`, `isGuyExport.zip`): source and classes but no jar, and the same game.

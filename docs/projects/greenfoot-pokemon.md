@@ -45,6 +45,21 @@ How the three Greenfoot games were measured and what was wrong with them all is 
 - Rewrite how the town is drawn, for instance an override `TrainingVille` that paints the rocks, trees and grass into the background and keeps only invisible actors for collisions. That changes the 2012 game's code a lot more than the jars above, and stepping on grass would need its own drawing.
 - Rebuild it from the source (V8 to V10 are in the archive, under `Greenfoot/Pokemon/`) with something that turns Java into JavaScript ahead of time instead of running a JVM in the browser. Not checked: what current Greenfoot offers for this, or whether the 2012 code builds on it.
 
+## Download
+
+`public/projects/greenfoot-pokemon/download/pokemon-green-foot-edition.zip` (13.2 MB, made on 2026-10-27) is the game to run on a desktop. It unzips to one `pokemon-green-foot-edition/` folder:
+- `pokemon-green-foot-edition.jar` (932 bytes), new: a launcher with no code. It holds a manifest, `Main-Class: greenfoot.export.GreenfootScenarioMain` and `Class-Path: V10.jar jl1.0.1.jar`, and `start-at-title.jar`'s `standalone.properties`, byte for byte. Java puts the launcher first on the class path, so Greenfoot reads that copy and the game opens on the title screen, as on the site.
+- `V10.jar` and `jl1.0.1.jar`, copied unchanged from this folder.
+- `README.txt`: how to run it, the controls and the credits (it says it's a fan game and whose the characters are).
+
+`browser-timer.jar` and `closed-sign.jar` are left out: both are there for CheerpJ's sake, and a desktop JVM runs the game at speed without them.
+
+**What a visitor needs.** Java 8 or newer, and the three jars kept together. Double-click the launcher or run `java -jar pokemon-green-foot-edition.jar`; it works from any folder, since Greenfoot reads everything from the jars. The window is titled "V10" (the export's `project.name`) and opens paused, so the README says to press Run.
+
+**Verified** on 2026-10-27 with Java 25 on Windows 10, from an unzipped copy: the launcher opens the title screen ("Press the Space Bar to enter", both names), with nothing on stderr. Built without the properties file, the same launcher opened TrainingVille instead, which is why it's in there. Not checked on the desktop: playing past the title, and the battle music.
+
+**How it was made, and rebuilding it.** A one-off Python script (`zipfile`; not kept) built the launcher in memory and the zip around it: the README, then the three jars stored uncompressed. Every entry is dated 2012-05-30, so the same inputs give a byte-identical zip. The deploy compares files by size only (see CLAUDE.md), so a rebuilt zip of the same length wouldn't be uploaded: give a changed download a new name, or add it to the workflow's unconditional uploads.
+
 ## Left out on purpose
 
 - V1 to V10 and `OldCrap` under `Greenfoot/Pokemon/`: source, and compiled classes for V8 to V10. `V10-export` is the build that was published.

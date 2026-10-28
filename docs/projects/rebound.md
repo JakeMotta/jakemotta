@@ -43,11 +43,42 @@ A few locals that shared a class's name are renamed, and the four walls (`bF`, `
 - left and right jump the view 55 pixels an act, since `player` sets its x to 505 or 95 rather than moving;
 - `menuWorld`'s title is never drawn and nothing opens it.
 
+## The Java version, for comparison
+
+On 2026-10-27 Jake asked to see the port beside the original running the way Coloris does, so `java/` holds that version and `compare.html` shows the two side by side. Neither is linked from the site: the card still frames the port. Open `/projects/rebound/compare.html` directly.
+
+**`java/rebound.jar`** (554 KB, 296 entries) was assembled the way `coloris.jar` was ([coloris.md](coloris.md)), with a Python script (`zipfile`; not kept). Nothing in it was changed or recompiled. In it:
+- **The game:** the 24 `.class` files and `project.greenfoot` from `TargetFinder/`, and its eight `.png` images under `images/`. The `.java`, `.ctxt` and `.fla` files are left out.
+- **The Greenfoot 3.0.4 runtime:** `greenfoot/`, `bluej/`, `javazoom/` and the six control-bar icons, 260 entries copied byte for byte from `coloris.jar`, which took them from `isGuyFinal.jar`.
+- **Settings:** `coloris.jar`'s `standalone.properties` with `main.class=levelOne` and `project.name=Rebound`, an empty `soundindex.list`, and its manifest, so `java -jar rebound.jar` should run it on the desktop too (not tried).
+
+**The other files in `java/`:**
+- `browser-timer.jar` is Coloris's, unchanged: Greenfoot's timer without its busy-wait ([isguy.md](isguy.md#speed)).
+- There's no `game-speed.jar`, since Rebound was saved at speed 50 already.
+- `index.html` is Coloris's page with the game's name, controls and note swapped in, and the CheerpJ credit kept.
+- `poster.webp` is the starting view, cut from a screenshot of the game in CheerpJ.
+
+**What the comparison showed**, in headless Chrome on Jake's desktop against `yarn dev`, as a foreground tab:
+- **Loading:** the port is playable at once. The Java version took 91 seconds from a cold cache to show the game, and then it waits behind Run like every Greenfoot export.
+- **Frame rate:** distinct frames a second, from a 60×40 copy of each canvas taken every animation frame:
+
+  | | Port | Java (CheerpJ) |
+  | --- | --- | --- |
+  | Shapes falling, no shot | 34 | 16.5 |
+  | During a shot | 44 | 29 |
+
+  The counter undercounts moves too small to show at 60×40, the slow shapes especially, so the numbers only compare the two with each other.
+- **Looks:** CheerpJ draws the score in a sans-serif font, its stand-in for Times New Roman. The port uses Times New Roman, as Java on Windows would have.
+- **The aiming arrow** stays at the launch spot during a shot in the Java version too, which bears out the port.
+
+The Browser pane is no good for timing this: when it's hidden its page runs as a background tab, and CheerpJ all but stops.
+
 ## Files
 
 - `TargetFinder/` is the whole `.gfar`, unpacked and unchanged: the 21 `.java` files with their compiled `.class` and `.ctxt` files, `project.greenfoot`, `README.TXT` (BlueJ's empty template), `soundindex.list` and `images/`, `.fla` sources included. The page reads its images from `TargetFinder/images/`.
 - `greenfoot.js` and `rebound.js`: the port, written on 2026-10-27.
 - `index.html`: the page, with the canvas, the controls and a note in Jake's voice. The game has no sound, so it leaves the site's music playing.
+- `java/` and `compare.html`: the original Java through CheerpJ, and the side-by-side page (see above).
 
 ## Verified
 

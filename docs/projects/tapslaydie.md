@@ -15,4 +15,4 @@ Nothing from TapSlayDie is copied into this repo except the card image.
 
 ## Card image
 
-`public/images/projects/tapslaydie.webp`, a screenshot of the live landing page taken by `yarn projects:screenshot tapslaydie`. Retake it when the landing page changes.
+`public/images/projects/tapslaydie.webp`, a screenshot of the live landing page taken by `yarn projects:screenshot tapslaydie`. Retake it when the landing page changes. It's the one game card that isn't the game itself: as of 2026-10-27 the site shows no gameplay, only the app icon, so there's nothing of the game to clip. Clip a screenshot from the site once it has one.

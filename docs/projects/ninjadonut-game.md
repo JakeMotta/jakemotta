@@ -9,7 +9,7 @@ The scenario's README names it "NinjaDonut: The Game", by Jacob Motta, V1, with 
 The way Coloris runs ([greenfoot-web.md](greenfoot-web.md)): the game's own compiled classes, unchanged, compiled to JavaScript with TeaVM against the site's Greenfoot runtime. Nothing in the game was changed, for phones or anything else.
 
 - **`Ninjai/`** is the whole `.gfar`, unpacked and unchanged: the `.java`, `.class` and `.ctxt` files, both `project.greenfoot` files, the `README.TXT`, `images/` (and a stray `cityBackground2.htm` saved beside its image), and an `enemyRun.fw.png` outside `images/`.
-- **`ninjadonut.jar`** (606 KB) is new, made on 2026-10-27, because the build reads jars. It was assembled like `rebound.jar` ([rebound.md](rebound.md#compared-with-the-coloris-way)), with a Python script (`zipfile`; not kept). In it:
+- **`ninjadonut.jar`** (606 KB) is new, made on 2026-10-27, because the build reads jars. It was assembled like `rebound.jar` ([rebound.md](rebound.md#compared-with-the-coloris-way)), first with a one-off Python script; `yarn projects:greenfoot-pack public/projects/ninjadonut-game/Ninjai public/projects/ninjadonut-game/ninjadonut.jar NinjaDonut` now packs the same contents ([greenfoot-web.md](greenfoot-web.md#converting-a-game)). In it:
   - `Ninjai/`'s classes, `project.greenfoot` and the images in `images/`;
   - `coloris.jar`'s Greenfoot 3.0.4 runtime and manifest;
   - its `standalone.properties`, with `main.class=levelOne` and `project.name=NinjaDonut`.
@@ -31,7 +31,7 @@ Not played through to see whether the ninja can die, or how.
 
 ## Card image
 
-`public/images/projects/ninjadonut-game.webp`: the game six seconds after `#play`, once the first enemies have run in (its `SHOTS` entry). Enemies arrive at random, so every retake differs.
+`public/images/projects/ninjadonut-game.webp` is just the game, ten seconds after `#play`: the middle 4:3 of the 960×400 canvas, with the ninja in the centre and, with luck, an enemy beside him. Enemies arrive at random, so every retake differs; retake it if none made it into the shot.
 
 ## Download
 

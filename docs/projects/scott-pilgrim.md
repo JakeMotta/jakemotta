@@ -39,4 +39,4 @@ Nothing else from the archive: no source, `.DS_Store`, `__MACOSX`, Eclipse files
 
 ## Card image
 
-`public/images/projects/scott-pilgrim.webp`, the page with the clip a couple of seconds in.
+`public/images/projects/scott-pilgrim.webp` is just the recording, a couple of seconds in, clipped to the video (4:3 already) without the page around it.

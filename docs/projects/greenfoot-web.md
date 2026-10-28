@@ -52,6 +52,63 @@ Each game's `index.html` is hand-written, like the CheerpJ ones: a poster and a 
 - **Music:** the first time the game plays a sound, the page posts `jakemotta:media-playing` to the site's player, as the CheerpJ pages did on Play. A game with no sound leaves the music alone without a setting.
 - **`#play`** starts it without a click, for `yarn projects:screenshot`.
 
+## Converting a game
+
+The steps that took isGuy, Rebound and NinjaDonut: The Game from their jars and `.gfar` archives to the site on 2026-10-27. They work for any Greenfoot game whose code uses only Greenfoot's API and Java basics. Do it in a worktree of your own (CLAUDE.md, Branches and staging), with `yarn dev` running from that worktree.
+
+**1. Get the game's jar.**
+- **An exported jar** (Greenfoot's "Share → Application" before 3.8.2, or an applet export) is used as it is: copy it unchanged into `public/projects/<id>/`.
+- **A `.gfar`** (Greenfoot's archive, a zip) or a scenario folder:
+  1. Unpack it unchanged into `public/projects/<id>/<the scenario's folder name>/`, as the archive, like `ninjadonut-game/Ninjai/`. In PowerShell, `tar -xf "Ninja Donut.gfar" -C public/projects/ninjadonut-game` unpacks it: Windows' own `tar.exe` reads zips, and Git Bash's `tar` doesn't.
+  2. Pack a jar from it: `yarn projects:greenfoot-pack public/projects/<id>/<folder> public/projects/<id>/<name>.jar <Project name>`.
+
+  The packer (`scripts/pack-greenfoot.mjs`) takes the folder's compiled classes, `project.greenfoot`, `images/` and `sounds/`. It starts the game on `world.lastInstantiated`, the world Greenfoot opened it on, and adds the Greenfoot 3.0.4 runtime from `coloris.jar`. Packing the same folder again gives the same jar; it reproduces `ninjadonut.jar` and `rebound/java/rebound.jar` exactly.
+- **Check:** the scenario must have its `.class` files. The packer stops if it has none, or none for the start world. A scenario saved without them needs compiling in Greenfoot first; nothing here compiles Java source.
+- **Check the start world:** read the summary line. If it isn't the world the game should open on, set it in the jar's `standalone.properties`. A world that switches to a title screen from its constructor is fine (isGuy's `worldOne`): the runtime follows the switch (see How it works).
+
+**2. Build it.** Add `{ id: '<id>', jars: ['<name>.jar'] }` to `GAMES` in `scripts/build-greenfoot.mjs`. List any small fix jars first: earlier jars win, as Coloris's `game-speed.jar` does. Leave out CheerpJ-only fixes like `browser-timer.jar`. Then run `yarn projects:greenfoot <id>`.
+- **Check:** read its summary line, `<id>: <start world> at speed <n>, <n> images, <n> sounds`. The speed should be what the game was saved at, usually 50.
+- **If it stops on a `java.awt` class** other than `Color` and `Font`, or a Greenfoot call the runtime doesn't have, teach the runtime in `demos/greenfoot/runtime/greenfoot/`. Never change the game's classes. Then rebuild every game in `GAMES` (`yarn projects:greenfoot` with no id), since they share the runtime, and smoke-test them all (step 5).
+- **Commit** the jar and `web/`. Don't edit `web/` by hand.
+
+**3. Write the page.**
+- **Copy:** start from a compiled game's `index.html` (`coloris/index.html`), not a CheerpJ one. If the game had a CheerpJ page, `git mv` it to `cheerpj.html` first and keep it.
+- **What to change:**
+  - the comment at the top, `<title>`, `<h1>` and the meta line (kind of game · year · "no sound" or "sound on");
+  - the world's size in four places: `main`'s width, the comment above `.frame`, `.frame`'s `aspect-ratio`, and `canvas.width` / `canvas.height`;
+  - the poster's `src`;
+  - the hint and `READY_HINT`;
+  - the controls (`<dl>`), the note, the canvas's `aria-label`, and the comment about sound.
+- **The world's size** is in the start world's `super(width, height, cellSize…)` (in the `.java` if there is one). For an exported jar, the applet size less Greenfoot's frame gives it: 16 px of border across and 69 px of border and control bar down, so isGuy's 816×669 applet is 800×600.
+- **The note** is in Jake's voice and says what the game is, never how the page works (CLAUDE.md, Style). The last line says it's his original code and that a phone needs a keyboard (or a mouse). **Don't add touch controls or change the game for phones**, as Jake decided on 2026-10-27.
+- **`poster.webp`** is the game's starting view at the world's size, shown behind Play: screenshot the running game (`#play`) and crop the canvas. A CheerpJ capture works as well, as Rebound's does.
+
+**4. Add it to the site.**
+- **The card:** an entry in `homeProjectList` (`category: 'game'`, `tags: ['Java Game']`, and the year the game was made, not when it was last saved). Then a page in `docs/projects/<id>.md` and a row in [README.md](README.md)'s table; [ninjadonut-game.md](ninjadonut-game.md) is the model.
+- **The card image** is just the game (README.md, Card images): add `{ id, url: '/projects/<id>/index.html#play', settle, clip: { selector: '#frame canvas' } }` to `SHOTS`, run `BASE_URL=http://localhost:<port> yarn projects:screenshot <id>` and look at the image.
+  - Wait long enough for something to be happening (Ninja Donut's enemies need 10 s).
+  - Use `focus` to pick which part of a wide world the 4:3 crop shows.
+  - A shot that clicks with synthetic pointer events must stub out the canvas's `setPointerCapture` first (Rebound's entry).
+- **A desktop download** only if the jar has actually been run with `java -jar` (README.md, Downloads).
+
+**5. Check it.** `BASE_URL=http://localhost:<port> yarn projects:greenfoot-check <id> --keys ArrowRight:1500,Space:100` (`scripts/check-greenfoot.mjs`). It opens the page in headless Chrome, presses Play with a real click, holds the keys given, and reports:
+- seconds until the game was ready;
+- acts and frames a second, and how busy the main thread was;
+- the sounds it played, and any errors;
+- a screenshot.
+
+A healthy game is ready within about a second, at about 60 acts and 60 frames a second, with the main thread well under half busy and no errors. On top of that:
+- **Play it by hand** in a real browser, through every screen it has: the title, each level, the menus and the end screens.
+- **Compare with the CheerpJ version** if there is one (`cheerpj.html`).
+- **Open `/project/<id>`** and press Play inside the site's viewer.
+
+**Things learned the hard way:**
+- **Measure in a foreground tab.** The built-in browser pane runs its page as a background tab when the pane is hidden, which throttles timers: CheerpJ all but stops there, and any timing taken there is wrong.
+- **Don't measure by reading the canvas.** Reading pixels back every frame (`getImageData`, or `drawImage` from the game's canvas) stalls the page being measured. Counting `isKeyDown` checks, as the check script does, costs nothing. A game whose current screen checks no keys (isGuy's title) shows no act rate there; press a key into a level first.
+- **Sound needs a real click.** Browsers only let sound start after the visitor's own gesture, so `#play` (no click) can't show whether a game's sounds work. The check script clicks Play for that reason.
+- **The preview tool's dev server may serve the main checkout.** Under `yarn dev` from another folder, a page that only exists in the worktree answers with the site's own app. Start `yarn dev` in the worktree yourself, on a free `PORT` (with `REACT_APP_MUTE_AUDIO=1`, as Claude's previews are muted), and point `BASE_URL` at it.
+- **The deploy compares files by size only.** The build's hashed names and `manifest.json`'s unconditional upload handle `web/`. A rebuilt jar or download of the same name and length would never reach the server: give it a new name.
+
 ## Measured
 
 Coloris, 2026-10-27, served from `public/` by a static server on Jake's desktop:

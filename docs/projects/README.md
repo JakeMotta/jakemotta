@@ -83,6 +83,11 @@ Treat the originals under `public/projects/` as an archive: don't reformat or mo
 ## Card images
 
 Card images are screenshots of each running preview, taken by `yarn projects:screenshot` (`scripts/screenshot-projects.mjs`) with `yarn dev` running. It drives headless Chrome, Edge or Brave and writes `public/images/projects/<id>.webp` at 960×720, the cards' 4:3.
+
+**A game's card is just the game**, as Jake asked on 2026-10-27: never its page, and never a Play button.
+- **How:** the shot's `clip` names the game's canvas, video or image. The script squares off the rounded corners around it, leaves out its border, and takes the largest 4:3 area inside, placed by `focus`.
+- **Where the game can't be shown running in time:** the card uses what stands in for it. Pokémon's is its poster, captured from CheerpJ, without the button; Survivor's is its mockup.
+- **The one exception** is TapSlayDie, whose site has no gameplay to clip ([tapslaydie.md](tapslaydie.md)).
 - **Shots:** each project's shot is an entry in the script's `SHOTS` list. It says how long to let the page settle and, for a narrow fixed-width site, a narrower viewport so the site fills the frame. A shot can name a page inside the preview rather than its front page (Ambii's card shoots its 2018 landing page, not the story page), `scroll` down to the part worth showing (Pivot's grid), or `run` a line of script first, to open a panel (Noah Garza's About) or keep something off the card (the high school portfolio's phone number).
 - **Audio and autoplay:** the browser runs muted, with autoplay allowed, so Ruffle starts the Flash instead of waiting behind its play button.
 
@@ -96,6 +101,8 @@ Look at each image after taking it. A shot can catch a page mid-load, and a fixe
 The older images in `public/images/projects/` (`ambii.png`, `pistolArt.png` and the rest) are no longer used by the cards. They're kept, and CS160's own pages use copies of `faceme_output.png`.
 
 ## Adding a project
+
+A Greenfoot game has its own steps, which cover all of these: [greenfoot-web.md](greenfoot-web.md#converting-a-game).
 
 1. Get it running as a preview: a static copy in `public/projects/<folder>/` (a new `SITES` entry if it's PHP, or if some of its plain pages need fixes), or the address of a live site that allows framing (check its response headers for `X-Frame-Options` and `frame-ancestors`). On Windows, copying a batch of files into `public/` while `yarn dev` runs can crash the dev server (chokidar's `EBUSY: resource busy or locked`). Copy first and start the server after, or just restart it.
 2. Add an entry to `homeProjectList`, one per project (see One project, one card above), newest first (so a new project becomes the featured tile): `id`, `title`, `date`, `category` (which section of the all-projects overlay it goes in: `website`, `app`, `game`, `art` or `animation`; a new one goes in `projectCategories`), `tags` (what kind of thing it is, shown as pills in the viewer: "Website", "Java Game", "School"…), `download` for a game with a desktop build (see Downloads above), a one-sentence `description` in Jake's voice that says what it is rather than how the preview runs, `preview`, and `image: '/images/projects/<id>.webp'`.

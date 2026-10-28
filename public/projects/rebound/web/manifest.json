@@ -1,0 +1,14 @@
+{
+ "host": "host.5680c3e9ad.js",
+ "game": "game.6c172504d5.js",
+ "images": {
+  "borderLongMed.png": "files/images/borderLongMed.png",
+  "player.fw.png": "files/images/player.fw.png",
+  "Target.png": "files/images/Target.png",
+  "borderFlat.png": "files/images/borderFlat.png",
+  "borderFlatMed.png": "files/images/borderFlatMed.png",
+  "borderLong.png": "files/images/borderLong.png",
+  "<greenfoot-logo>": "files/greenfoot.png"
+ },
+ "sounds": {}
+}

@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<!-- Jake asked on 2026-10-27 to see the two versions of Rebound side by side: the JavaScript port the card frames
-     (index.html) and the original Java through CheerpJ, the way Coloris runs (java/index.html). Not linked from the
-     site; each frame is its page exactly as it runs on its own. See docs/projects/rebound.md. -->
+<!-- Jake asked on 2026-10-27 to see Rebound's hand port beside the same game made the way Coloris runs. Top: the port the
+     card frames (index.html) and the 2013 classes compiled to JavaScript like Coloris (teavm.html). Below: the same jar
+     through CheerpJ, the way Coloris ran before (java/index.html). Not linked from the site; each frame is its page
+     exactly as it runs on its own. See docs/projects/rebound.md. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rebound: port and original side by side</title>
+<title>Rebound side by side</title>
 <style>
     html, body { margin: 0; background: #0c0c0c; color: #eee; }
     body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 20px 16px 32px; box-sizing: border-box; }
     h1 { font-size: 22px; font-weight: 800; margin: 0 0 4px; text-align: center; }
-    .lede { color: #999; text-align: center; margin: 0 auto 18px; max-width: 60em; font-size: 15px; }
+    .lede { color: #999; text-align: center; margin: 0 auto 18px; max-width: 62em; font-size: 15px; }
     .pair { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .pair + .pair { margin-top: 28px; }
     figure { margin: 0; width: min(100%, 650px); }
     figcaption { font-weight: 800; margin-bottom: 6px; }
     figcaption small { font-weight: 400; color: #999; margin-left: 6px; }
@@ -21,14 +23,20 @@
 </head>
 <body>
     <h1>Rebound, side by side</h1>
-    <p class="lede">Left, the JavaScript port the site's card shows. Right, the original 2013 Java through CheerpJ, the way Coloris runs: press Play, then Run. Both share this computer while they run, so pause one to give the other all of it.</p>
+    <p class="lede">Left, the hand port the site's card shows. Right, the 2013 classes compiled to JavaScript, the way Coloris runs now. Underneath, the same game through CheerpJ, the way Coloris used to run. Everything here shares this computer while it runs, so pause the others to give one all of it.</p>
     <div class="pair">
         <figure>
-            <figcaption>JavaScript port <small>index.html</small></figcaption>
-            <iframe src="index.html" title="Rebound, JavaScript port"></iframe>
+            <figcaption>Hand port <small>index.html</small></figcaption>
+            <iframe src="index.html" title="Rebound, hand port"></iframe>
         </figure>
         <figure>
-            <figcaption>Original Java, through CheerpJ <small>java/index.html</small></figcaption>
+            <figcaption>Compiled, like Coloris <small>teavm.html</small></figcaption>
+            <iframe src="teavm.html" title="Rebound, compiled from its classes"></iframe>
+        </figure>
+    </div>
+    <div class="pair">
+        <figure>
+            <figcaption>Original Java through CheerpJ <small>java/index.html</small></figcaption>
             <iframe src="java/index.html" title="Rebound, original Java through CheerpJ"></iframe>
         </figure>
     </div>

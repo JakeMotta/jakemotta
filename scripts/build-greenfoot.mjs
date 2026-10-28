@@ -33,6 +33,11 @@ const GAMES = [
         id: 'coloris',
         jars: ['game-speed.jar', 'coloris.jar'],
     },
+    // Built to compare with Rebound's hand port (docs/projects/rebound.md), from the jar its CheerpJ copy runs
+    {
+        id: 'rebound',
+        jars: ['java/rebound.jar'],
+    },
 ];
 
 const TEAVM_VERSION = '0.12.0';

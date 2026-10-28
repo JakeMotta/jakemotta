@@ -10,7 +10,7 @@
 // timeline under the speech, at 0.4 of the announcement's volume.
 import { API_BASE, STORAGE_PREFIX } from '../config.js';
 import { VOICE_GENDER, normalizeLanguage } from '../core/voices.js';
-import { estimateSpeechSeconds } from '../core/handlers/announcements.js';
+import { estimateSpeechSeconds, hasBed, BED_LEAD_SECONDS, BED_TAIL_SECONDS } from '../core/handlers/announcements.js';
 import { BED_MEDIA } from '../core/bed-data.js';
 import { notifyMediaPlaying } from './notify.js';
 
@@ -21,8 +21,9 @@ var MALE = /\bmale\b|david|mark|guy|ryan|george|daniel|alex|fred|tom\b|aaron|art
 // The server's mix, in seconds (lead and tail: bed alone before and after the voice; fade: in at the start,
 // out at the end), and the bed's level as a share of the announcement's volume. switchFade is the crossfade
 // when setSpeechBed() changes the bed mid-announcement, stopFade the ramp that keeps a cancel click-free,
-// loadTimeout how long a bed may take to load before the voice goes ahead without one.
-export var BED_TIMING = { lead: 3, tail: 3, fade: 1.5, level: 0.4, switchFade: 0.6, stopFade: 0.04, loadTimeout: 4 };
+// loadTimeout how long a bed may take to load before the voice goes ahead without one. Lead and tail come from
+// core/handlers/announcements.js, whose spokenSeconds() adds them to a bedded announcement's stored duration.
+export var BED_TIMING = { lead: BED_LEAD_SECONDS, tail: BED_TAIL_SECONDS, fade: 1.5, level: 0.4, switchFade: 0.6, stopFade: 0.04, loadTimeout: 4 };
 
 var current = null; // the announcement being spoken (see speakAnnouncement)
 
@@ -44,7 +45,7 @@ export function isTtsAnnouncement(ism) {
 // `n`, or null for 1 ("No Music"), a missing value or one with no bed.
 export function bedFor(ism) {
   var n = Number(ism !== null && typeof ism === 'object' ? ism.backgroundMusic : ism);
-  return n > 1 && BED_MEDIA[n] ? Object.assign({ n: n }, BED_MEDIA[n]) : null;
+  return hasBed(n) ? Object.assign({ n: n }, BED_MEDIA[n]) : null;
 }
 
 function readCollection(name) {
@@ -377,8 +378,9 @@ export function setSpeechBed(backgroundMusic) {
 // starts at once and the promise resolves when it ends.
 // Always resolves (never rejects), with {spoken, reason, bed}. When the browser cannot speak it (no
 // speechSynthesis, no on-device voice, speech refused or never starting, as in headless browsers), the voice's
-// part lasts the time the words would have taken (the announcement's `duration` comes from the same estimate),
-// so a player's announcement still lasts as long as announced. Speech that starts but never reports its end is
+// part lasts the time the words would have taken (the announcement's `duration` is the same estimate, plus the
+// lead and tail when it has a bed: spokenSeconds() in core/handlers/announcements.js), so a player's
+// announcement still lasts as long as announced. Speech that starts but never reports its end is
 // cut off by a timer too. cancelSpeech() (or speechSynthesis.cancel()) ends it at once.
 export function speakAnnouncement(ism, options) {
   var opts = options || {};

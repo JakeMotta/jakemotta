@@ -125,11 +125,19 @@ Object.keys(albumTracks).forEach(function (key) {
     MEDIA_URL + '/albums/' + coverSlug, GUEST_ARTISTS[first.artist].name);
 });
 
+// credit (demo-only field): the licence and the artist's site, which the players show beside the now-playing title.
+// Josh Woodward asks for his credit by the player controls; every guest gets the same line.
+function siteHost(url) {
+  return String(url || '').replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+}
+
 GUESTS.forEach(function (t) {
   var media = GUEST_MEDIA[t.slug];
   var album = guestAlbums[t.album || 'single:' + t.slug];
   var isrc = 'AMBDMO' + ('0000' + t.n).slice(-4);
-  add(t.slug, trackDoc(fixedId('61a7c0', 0x100 + t.n), t.title, isrc, media, 400000 - t.n * 997, t.bpm, ARTIST_BY_KEY[t.artist], album, t.explicit));
+  var track = trackDoc(fixedId('61a7c0', 0x100 + t.n), t.title, isrc, media, 400000 - t.n * 997, t.bpm, ARTIST_BY_KEY[t.artist], album, t.explicit);
+  track.credit = t.license + ' · ' + siteHost(GUEST_ARTISTS[t.artist].site);
+  add(t.slug, track);
 });
 
 // The ad. The real server had one "ADVERT_60" track; here each slot in a queue gets its own _id and isrc

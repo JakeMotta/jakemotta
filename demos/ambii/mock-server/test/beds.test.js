@@ -1,12 +1,17 @@
-// Announcement music beds: the generated files and core/bed-data.js, and speakAnnouncement()'s timeline
-// (bed in, the voice after the lead, the bed on for the tail) with fake Web Audio and speechSynthesis.
+// Announcement music beds: the generated files and core/bed-data.js, speakAnnouncement()'s timeline
+// (bed in, the voice after the lead, the bed on for the tail) with fake Web Audio and speechSynthesis, the
+// stored durations that follow that timeline, and the seeded Welcome's pre-rendered clip.
 // Each test imports a fresh copy of browser/tts.js, which keeps its AudioContext and hooks in module state.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { BED_MEDIA } from '../core/bed-data.js';
+import { CLIP_MEDIA } from '../core/media-data.js';
 import { mp3Duration } from '../core/mp3.js';
+import { estimateSpeechSeconds, spokenSeconds, hasBed, BED_LEAD_SECONDS, BED_TAIL_SECONDS } from '../core/handlers/announcements.js';
+import { IDS } from '../core/seed.js';
+import { makeServer } from './helpers.js';
 import { API_BASE } from '../config.js';
 
 var PUBLIC = fileURLToPath(new URL('../../../../public', import.meta.url));
@@ -413,4 +418,80 @@ test('no speechSynthesis at all: still resolves, after the stand-in, with the be
   } finally {
     env.restore();
   }
+});
+
+// ---------- stored durations ----------
+
+var WORDY = 'Fresh croissants are out of the oven, so come and grab one while they are still warm';
+
+test('spokenSeconds: the words, plus the lead and tail exactly when speakAnnouncement() plays a bed', async () => {
+  var tts = await import('../browser/tts.js?copy=timing'); // a copy whose BED_TIMING is left as it is
+  assert.equal(tts.BED_TIMING.lead, BED_LEAD_SECONDS);
+  assert.equal(tts.BED_TIMING.tail, BED_TAIL_SECONDS);
+  var words = estimateSpeechSeconds(WORDY, 1.25);
+  [1, 2, 3, 4, 5, 6, 7, 0, -3, null, undefined, '3', 'x'].forEach(function (bm) {
+    var bed = !!tts.bedFor(bm);
+    assert.equal(hasBed(bm), bed, String(bm));
+    assert.equal(spokenSeconds(WORDY, 1.25, bm), bed ? Math.round((words + BED_LEAD_SECONDS + BED_TAIL_SECONDS) * 10) / 10 : words, String(bm));
+  });
+});
+
+test("create, edit and preview store a duration that covers the bed's lead and tail", async () => {
+  var s = makeServer();
+  var words = estimateSpeechSeconds(WORDY, 1);
+  var bedded = Math.round((words + BED_LEAD_SECONDS + BED_TAIL_SECONDS) * 10) / 10;
+  var body = { assignedLocations: [IDS.downtown], voice: 'en-US-Wavenet-A', language: 'en-US', message: WORDY, speed: 1, frequency: '15', specifiedTimes: [] };
+  await s.call('POST', '/v3/auth/announcement', Object.assign({ title: 'Bright', backgroundMusic: 3 }, body));
+  await s.call('POST', '/v3/auth/announcement', Object.assign({ title: 'Quiet', backgroundMusic: 1 }, body));
+  await s.call('POST', '/v3/auth/announcement', Object.assign({ title: 'Default' }, body)); // no bed sent: the server's default, 2
+  var list = (await s.call('GET', '/v3/api/announcement/?hash=')).body.data.announcements;
+  var by = (title) => list.find((a) => a.title === title);
+  assert.equal(by('Bright').duration, bedded);
+  assert.equal(by('Quiet').duration, words);
+  assert.equal(by('Default').backgroundMusic, 2);
+  assert.equal(by('Default').duration, bedded);
+
+  // A new bed alone changes it: No Music drops the lead and tail, a bed brings them back.
+  var id = by('Bright')._id;
+  var e = await s.call('PATCH', '/v3/auth/announcement/' + id, { announcementId: id, backgroundMusic: 1 });
+  assert.equal(e.body.data.duration, words);
+  e = await s.call('PATCH', '/v3/auth/announcement/' + id, { announcementId: id, backgroundMusic: 6 });
+  assert.equal(e.body.data.duration, bedded);
+  assert.equal(e.body.data.url, API_BASE + '/tts/' + id);
+
+  await s.call('POST', '/v3/auth/announcement/preview', { hash: 'dur1', voice: 'en-US-Wavenet-C', language: 'en-US', message: WORDY, speed: 1, backgroundMusic: 5 });
+  await s.call('POST', '/v3/auth/announcement/preview', { hash: 'dur2', voice: 'en-US-Wavenet-C', language: 'en-US', message: WORDY, speed: 1, backgroundMusic: 1 });
+  assert.equal(s.collection('ttsPreviews')['preview-dur1'].duration, bedded);
+  assert.equal(s.collection('ttsPreviews')['preview-dur2'].duration, words);
+});
+
+test('a seeded announcement keeps its recording until its words, voice or bed change', async () => {
+  var s = makeServer();
+  var hh = (await s.call('GET', '/v3/api/announcement/?hash=')).body.data.announcements.find((a) => a.title === 'Happy Hour');
+  assert.match(hh.url, /happy-hour\.mp3$/);
+  // Save Changes sends every field; only the title changed here.
+  var same = await s.call('PATCH', '/v3/auth/announcement/' + hh._id, {
+    announcementId: hh._id, title: 'Happy Hour!', voice: hh.voice, language: hh.language, message: hh.message, speed: hh.speed, frequency: hh.frequency,
+    backgroundMusic: hh.backgroundMusic, specifiedTimes: [],
+  });
+  assert.match(same.body.data.url, /happy-hour\.mp3$/);
+  assert.equal(same.body.data.duration, CLIP_MEDIA['happy-hour'].duration);
+  // Another bed: the recording has Smooth mixed in, so the browser speaks it over Mellow instead.
+  var mellow = await s.call('PATCH', '/v3/auth/announcement/' + hh._id, { announcementId: hh._id, backgroundMusic: 6 });
+  assert.equal(mellow.body.data.url, API_BASE + '/tts/' + hh._id);
+  assert.equal(mellow.body.data.duration, spokenSeconds(hh.message, 1, 6));
+});
+
+test('the seeded Welcome plays its pre-rendered clip, the voice over the Smooth bed', async () => {
+  var clip = CLIP_MEDIA.welcome;
+  assert.ok(clip, 'media-data.js lists a welcome clip');
+  assert.equal(clip.bed, true);
+  assert.ok(existsSync(PUBLIC + clip.url), clip.url);
+  assert.ok(clip.duration > BED_LEAD_SECONDS + BED_TAIL_SECONDS + 5, 'the words and the bed either side: ' + clip.duration);
+  var s = makeServer();
+  var w = (await s.call('GET', '/v3/api/announcement/?hash=')).body.data.announcements.find((a) => a._id === IDS.welcome);
+  assert.equal(w.url, clip.url);
+  assert.equal(w.duration, clip.duration);
+  assert.equal(w.message, clip.text);
+  assert.equal(w.backgroundMusic, 2); // Smooth: the pad mixed into every seeded clip
 });

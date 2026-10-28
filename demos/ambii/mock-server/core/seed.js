@@ -5,7 +5,7 @@ import { CLIP_MEDIA } from './media-data.js';
 import { STATION_IDS } from './catalogue.js';
 import { fixedId, seededRandom, hash32, stamp } from './util.js';
 import { assignStation, createDynamicStation, dueStationId } from './music.js';
-import { ttsUrl, estimateSpeechSeconds } from './handlers/announcements.js';
+import { ttsUrl, spokenSeconds } from './handlers/announcements.js';
 import { SEED_VERSION, DEFAULT_STATION_ID, INVOICE_PAGE_URL } from '../config.js';
 
 export var IDS = {
@@ -256,11 +256,11 @@ export function seed(baseCtx) {
   });
 
   // Announcements. Seeded TTS ones have pre-rendered audio (Windows SAPI voices standing in for Google Wavenet).
-  // "Welcome" is spoken by the browser unless media-data.js has a pre-rendered "welcome" clip.
+  // "Welcome" plays its pre-rendered "welcome" clip; without one in media-data.js the browser speaks the same words.
   var closing = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 21, 45, 0);
   var welcomeClip = CLIP_MEDIA.welcome || {
     url: ttsUrl(IDS.welcome), tts: true,
-    text: "Welcome to Bean & Beat! Our baristas are pulling fresh shots all day, so ask about today's single-origin pour-over.",
+    text: "Welcome to Bean & Beat! We're so glad you stopped in. Our baristas are pulling fresh shots all day, so ask about today's single-origin pour-over, and make yourself at home.",
   };
   var welcome = welcomeTime(now);
   var isms = [
@@ -283,7 +283,7 @@ export function seed(baseCtx) {
     var doc = {
       _id: m._id, company: IDS.company, title: m.title, message: m.uploaded ? '' : clip.text, description: '', voice: m.uploaded ? '' : m.voice,
       language: m.uploaded ? '' : 'en-US', speed: 1, frequency: m.frequency, backgroundMusic: m.backgroundMusic, specifiedTimes: m.specifiedTimes,
-      uploaded: !!m.uploaded, duration: clip.tts ? estimateSpeechSeconds(clip.text, 1) : clip.duration, url: clip.url, isActive: true, isDeleted: false,
+      uploaded: !!m.uploaded, duration: clip.tts ? spokenSeconds(clip.text, 1, m.backgroundMusic) : clip.duration, url: clip.url, isActive: true, isDeleted: false,
       assignedLocations: m.assignedLocations,
     };
     if (m.uploaded) doc.fileName = m.fileName;

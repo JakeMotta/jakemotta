@@ -6,7 +6,14 @@ import { send } from '../envelope.js';
 import { clone, pick, stamp, newId, hash32 } from '../util.js';
 import { VOICES, normalizeLanguage } from '../voices.js';
 import { mp3Duration } from '../mp3.js';
+import { BED_MEDIA } from '../bed-data.js';
 import { API_BASE } from '../../config.js';
+
+// The server mixed the voice over its music bed with 3 s of bed before it and 3 s after it
+// (controllers/announcement.js, announcementBackgroundMusic), and stored the mixed file's length as the
+// duration. browser/tts.js plays the demo's beds on the same timeline (its BED_TIMING starts from these).
+export var BED_LEAD_SECONDS = 3;
+export var BED_TAIL_SECONDS = 3;
 
 export function ttsUrl(id) {
   return API_BASE + '/tts/' + id;
@@ -23,6 +30,20 @@ export function estimateSpeechSeconds(message, speed) {
   return Math.max(2, Math.round((words / 2.6 / rate) * 10) / 10);
 }
 
+// True when a backgroundMusic value names one of the demo's beds (2..6; 1 is "No Music").
+export function hasBed(backgroundMusic) {
+  var n = Number(backgroundMusic);
+  return n > 1 && !!BED_MEDIA[n];
+}
+
+// How long a browser-spoken announcement lasts, as speakAnnouncement() plays it: the words, plus the bed's
+// lead and tail when it has a bed. Stored as its `duration`, which the web player's silent stand-in clip and
+// progress bar follow.
+export function spokenSeconds(message, speed, backgroundMusic) {
+  var words = estimateSpeechSeconds(message, speed);
+  return hasBed(backgroundMusic) ? Math.round((words + BED_LEAD_SECONDS + BED_TAIL_SECONDS) * 10) / 10 : words;
+}
+
 function view(ism) {
   var v = clone(ism);
   if (!Array.isArray(v.specifiedTimes)) v.specifiedTimes = [];
@@ -31,6 +52,11 @@ function view(ism) {
 
 function specifiedTimes(x) {
   return Array.isArray(x) ? x : [];
+}
+
+// What a listener hears of a text announcement: its words, voice, language, speed and bed (1 for none).
+function heard(ism) {
+  return [ism.message, ism.voice, ism.language, Number(ism.speed), hasBed(ism.backgroundMusic) ? Number(ism.backgroundMusic) : 1].join('|');
 }
 
 // GET /v3/api/announcement/?hash=   (dashboard: the company's list)
@@ -64,7 +90,10 @@ export function preview(ctx) {
     return send('SUCCESSFUL_CREATE', ism ? ism.url : ttsUrl(b.announcementId), 'Announcement');
   }
   var id = 'preview-' + (typeof b.hash === 'string' && /^[\w-]{1,64}$/.test(b.hash) ? b.hash : newId(ctx));
-  var rec = { _id: id, message: String(b.message || ''), voice: b.voice || '', language: normalizeLanguage(b.language, b.voice), speed: Number(b.speed) || 1, backgroundMusic: b.backgroundMusic };
+  var rec = {
+    _id: id, message: String(b.message || ''), voice: b.voice || '', language: normalizeLanguage(b.language, b.voice), speed: Number(b.speed) || 1, backgroundMusic: b.backgroundMusic,
+    duration: spokenSeconds(b.message, b.speed, b.backgroundMusic),
+  };
   ctx.tx.put('ttsPreviews', stamp(rec, ctx.now(), true));
   // Keep the previews table small.
   var all = ctx.tx.all('ttsPreviews');
@@ -81,11 +110,12 @@ function activeAllowed(ctx) {
 export function createAnnouncement(ctx) {
   var b = ctx.body || {};
   var id = newId(ctx);
+  var backgroundMusic = b.backgroundMusic !== undefined ? b.backgroundMusic : 2;
   var doc = {
     _id: id, company: ctx.company._id, title: b.title || '', message: String(b.message || ''), description: '', voice: b.voice || '',
     language: normalizeLanguage(b.language, b.voice), speed: Number(b.speed) || 1, frequency: b.frequency !== undefined ? String(b.frequency) : '30',
-    backgroundMusic: b.backgroundMusic !== undefined ? b.backgroundMusic : 2, specifiedTimes: specifiedTimes(b.specifiedTimes), uploaded: false,
-    duration: estimateSpeechSeconds(b.message, b.speed), url: ttsUrl(id), isActive: activeAllowed(ctx), isDeleted: false,
+    backgroundMusic: backgroundMusic, specifiedTimes: specifiedTimes(b.specifiedTimes), uploaded: false,
+    duration: spokenSeconds(b.message, b.speed, backgroundMusic), url: ttsUrl(id), isActive: activeAllowed(ctx), isDeleted: false,
     assignedLocations: Array.isArray(b.assignedLocations) ? b.assignedLocations.slice() : [],
   };
   ctx.tx.put('announcements', stamp(doc, ctx.now(), true));
@@ -98,7 +128,7 @@ export function editAnnouncement(ctx) {
   var b = ctx.body || {};
   var ism = ctx.tx.get('announcements', b.announcementId || ctx.params.id);
   if (!ism || ism.isDeleted) return send('REQUIRED_DATA_NOT_FOUND');
-  var before = [ism.message, ism.voice, ism.language, Number(ism.speed)].join('|');
+  var before = heard(ism);
   if (Array.isArray(b.assignedLocations)) ism.assignedLocations = b.assignedLocations.slice();
   ['title', 'message', 'voice'].forEach(function (k) { if (b[k] !== undefined) ism[k] = b[k]; });
   if (b.speed !== undefined) ism.speed = Number(b.speed) || 1;
@@ -106,10 +136,11 @@ export function editAnnouncement(ctx) {
   if (b.backgroundMusic !== undefined) ism.backgroundMusic = b.backgroundMusic;
   if (b.specifiedTimes !== undefined) ism.specifiedTimes = specifiedTimes(b.specifiedTimes);
   if (b.language !== undefined || b.voice !== undefined) ism.language = normalizeLanguage(b.language !== undefined ? b.language : ism.language, ism.voice);
-  // New words or a new voice: the pre-rendered audio no longer matches, so the browser speaks it.
-  if (!ism.uploaded && before !== [ism.message, ism.voice, ism.language, Number(ism.speed)].join('|')) {
+  // New words, a new voice or a new bed: the pre-rendered audio (its bed mixed in) no longer matches, so the
+  // browser speaks it, and a spoken one's duration follows its words and bed.
+  if (!ism.uploaded && before !== heard(ism)) {
     ism.url = ttsUrl(ism._id);
-    ism.duration = estimateSpeechSeconds(ism.message, ism.speed);
+    ism.duration = spokenSeconds(ism.message, ism.speed, ism.backgroundMusic);
   }
   stamp(ism, ctx.now());
   ctx.tx.put('announcements', ism);

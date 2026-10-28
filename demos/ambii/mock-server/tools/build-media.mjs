@@ -1,7 +1,7 @@
 // Builds the Ambii demo media into public/projects/ambii-business/media/ and writes
 // mock-server/core/media-data.js (measured durations, the embedded silent clip).
 //
-//   node demos/ambii/mock-server/tools/build-media.mjs --deps <node_modules folder> [--images-only | --audio-only | --tracks-only | --beds-only]
+//   node demos/ambii/mock-server/tools/build-media.mjs --deps <node_modules folder> [--images-only | --audio-only | --tracks-only | --beds-only | --clips-only [<clip id> ...]]
 //
 // Needs, in that node_modules folder: sharp 0.33, lamejs 1.2.1, music-metadata 7.
 // Needs Windows (announcements are spoken by the built-in SAPI voices "Microsoft Zira
@@ -11,6 +11,10 @@
 // larger tracks come from tools/fetch-guest-tracks.mjs, which must run first.
 // --beds-only renders just the five announcement music beds (media/beds/, core/bed-data.js), which are
 // synthesized, so it runs anywhere too; a full or --audio-only run renders them as well.
+// --clips-only renders just the announcement and ad clips (CLIPS) that are new or changed: no MP3 yet, not in
+// media-data.js, or listed there with other words, folder or bed. A new voice alone isn't noticed, so name the
+// clip (--clips-only happy-hour) to render it again. Every other clip, the tracks and the hub's credits stay as
+// they are. A full or --audio-only run renders every clip.
 import { createRequire } from 'node:module';
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync, rmSync } from 'node:fs';
@@ -56,6 +60,9 @@ const CLIPS = {
     text: 'Have you picked up a Bean & Beat loyalty card? Collect a stamp with every drink, and your tenth coffee is on us. Just ask your barista!' },
   'holiday-hours': { dir: 'announcements', voice: 'Microsoft David Desktop', bed: true,
     text: "Happy holidays from everyone at Bean & Beat! On holiday weekends we're open from eight until two. Gift cards are available at the register." },
+  // The seeded "Welcome" (core/seed.js reads CLIP_MEDIA.welcome; its voice, en-US-Wavenet-C, is female).
+  welcome: { dir: 'announcements', voice: 'Microsoft Zira Desktop', bed: true,
+    text: "Welcome to Bean & Beat! We're so glad you stopped in. Our baristas are pulling fresh shots all day, so ask about today's single-origin pour-over, and make yourself at home." },
   'ambii-ad': { dir: 'ads', voice: 'Microsoft Zira Desktop', bed: true,
     text: 'This music is brought to you by Ambii: hand-picked, fully licensed music for your business. Want it ad free? Upgrade to Ambii Premium.' },
 };
@@ -643,9 +650,15 @@ async function duration(file) {
   return Math.round(m.format.duration * 1000) / 1000;
 }
 
-async function buildClips() {
+// Renders the clips in `only` (every clip when it is null); the others keep their entries in `previous`, the
+// media-data.js module as it stands, and so does the silent clip.
+async function buildClips(only, previous) {
   const clips = {};
   for (const [id, c] of Object.entries(CLIPS)) {
+    if (only && !only.includes(id)) {
+      clips[id] = previous.CLIP_MEDIA[id];
+      continue;
+    }
     ensure(join(MEDIA, c.dir));
     const voice = normalize(trimSilence(speak(c.text, c.voice)), 0.9);
     const samples = c.bed ? mixWithBed(voice) : voice;
@@ -654,9 +667,24 @@ async function buildClips() {
     clips[id] = { url: `${MEDIA_URL}/${c.dir}/${id}.mp3`, duration: await duration(file), text: c.text, bed: c.bed };
     console.log('clip', id, clips[id].duration);
   }
+  if (only && !only.length) console.log('clips: none new or changed');
   // One second of silence (16 kHz, 16 kbps), served by the mock for TTS URLs fetched as audio by mistake.
-  const silence = encodeMp3(new Float32Array(16000), 16000, 16).toString('base64');
+  const silence = only ? previous.SILENCE_MP3_BASE64 : encodeMp3(new Float32Array(16000), 16000, 16).toString('base64');
   return { clips, silence };
+}
+
+// The clips --clips-only renders: the ids named after it, or else the ones that are new or changed against
+// `listed` (media-data.js's CLIP_MEDIA).
+function clipsToRender(argv, listed) {
+  const named = [];
+  for (let i = argv.indexOf('--clips-only') + 1; i < argv.length && !argv[i].startsWith('--'); i++) named.push(argv[i]);
+  const unknown = named.filter((id) => !Object.prototype.hasOwnProperty.call(CLIPS, id));
+  if (unknown.length) throw new Error(`no clip ${unknown.join(', ')} in CLIPS`);
+  if (named.length) return named;
+  return Object.keys(CLIPS).filter((id) => {
+    const c = CLIPS[id], was = listed[id];
+    return !was || !existsSync(join(MEDIA, c.dir, id + '.mp3')) || was.text !== c.text || was.bed !== c.bed || was.url !== `${MEDIA_URL}/${c.dir}/${id}.mp3`;
+  });
 }
 
 // Jake's tracks (from public/music, or their 128 kbps copies in media/music) and the guest tracks (media/tracks).
@@ -716,14 +744,20 @@ ${items.join('\n')}
 
 const bedsOnly = process.argv.includes('--beds-only');
 const tracksOnly = process.argv.includes('--tracks-only');
-const images = !process.argv.includes('--audio-only') && !tracksOnly && !bedsOnly;
+const clipsOnly = process.argv.includes('--clips-only');
+const images = !process.argv.includes('--audio-only') && !tracksOnly && !bedsOnly && !clipsOnly;
 const audio = !process.argv.includes('--images-only') && !bedsOnly;
 if (images) await buildImages();
-if (bedsOnly || (audio && !tracksOnly)) await buildBeds();
+if (bedsOnly || (audio && !tracksOnly && !clipsOnly)) await buildBeds();
 if (audio) {
-  // --tracks-only keeps the clips already measured in media-data.js.
-  const { clips, silence } = tracksOnly ? await import(pathToFileURL(OUT_MODULE).href + '?t=' + Date.now()).then((m) => ({ clips: m.CLIP_MEDIA, silence: m.SILENCE_MP3_BASE64 })) : await buildClips();
-  const { tracks, guests } = await measureTracks();
+  // --tracks-only keeps the clips already measured in media-data.js, and --clips-only the other clips and the tracks.
+  const previous = tracksOnly || clipsOnly ? await import(pathToFileURL(OUT_MODULE).href + '?t=' + Date.now()) : null;
+  if (clipsOnly) {
+    const unmeasured = TRACKS.filter((s) => !previous.TRACK_MEDIA[s]).concat(GUEST_TRACKS.map((t) => t.slug).filter((s) => !previous.GUEST_MEDIA[s]));
+    if (unmeasured.length) throw new Error(`media-data.js has no measurements for ${unmeasured.join(', ')}: run without --clips-only`);
+  }
+  const { clips, silence } = tracksOnly ? { clips: previous.CLIP_MEDIA, silence: previous.SILENCE_MP3_BASE64 } : await buildClips(clipsOnly ? clipsToRender(process.argv, previous.CLIP_MEDIA) : null, previous);
+  const { tracks, guests } = clipsOnly ? { tracks: previous.TRACK_MEDIA, guests: previous.GUEST_MEDIA } : await measureTracks();
   const art = (slug) => `${MEDIA_URL}/covers/${slug.replace(/_/g, '-')}`;
   const src = `// Generated by tools/build-media.mjs from the files in public/. Do not edit by hand.
 // Durations are measured from the MP3s (seconds).
@@ -743,5 +777,5 @@ export var SILENCE_MP3_BASE64 = ${JSON.stringify(silence)};
 `;
   writeFileSync(OUT_MODULE, src);
   console.log('wrote', OUT_MODULE);
-  writeCredits(guests);
+  if (!clipsOnly) writeCredits(guests);
 }

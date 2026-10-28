@@ -346,30 +346,10 @@ export var GUEST_MEDIA = {
     "duration": 222.168,
     "bytes": 3555298
   },
-  "urbania": {
-    "url": "/projects/ambii-business/media/tracks/urbania.mp3",
-    "duration": 133.773,
-    "bytes": 2141045
-  },
   "island-meet-and-greet": {
     "url": "/projects/ambii-business/media/tracks/island-meet-and-greet.mp3",
     "duration": 216.973,
     "bytes": 3472764
-  },
-  "micro-climas": {
-    "url": "/projects/ambii-business/media/tracks/micro-climas.mp3",
-    "duration": 182.7,
-    "bytes": 2924465
-  },
-  "dont-wait-right-now": {
-    "url": "/projects/ambii-business/media/tracks/dont-wait-right-now.mp3",
-    "duration": 321.254,
-    "bytes": 5141356
-  },
-  "fallen-leaves": {
-    "url": "/projects/ambii-business/media/tracks/fallen-leaves.mp3",
-    "duration": 302.942,
-    "bytes": 4848167
   },
   "circles-round-the-sun": {
     "url": "/projects/ambii-business/media/tracks/circles-round-the-sun.mp3",
@@ -471,6 +451,12 @@ export var CLIP_MEDIA = {
     "url": "/projects/ambii-business/media/announcements/holiday-hours.mp3",
     "duration": 15.36,
     "text": "Happy holidays from everyone at Bean & Beat! On holiday weekends we're open from eight until two. Gift cards are available at the register.",
+    "bed": true
+  },
+  "welcome": {
+    "url": "/projects/ambii-business/media/announcements/welcome.mp3",
+    "duration": 18.077,
+    "text": "Welcome to Bean & Beat! We're so glad you stopped in. Our baristas are pulling fresh shots all day, so ask about today's single-origin pour-over, and make yourself at home.",
     "bed": true
   },
   "ambii-ad": {

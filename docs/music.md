@@ -4,7 +4,7 @@ Music plays across the whole site. The player sits outside the routes in `App.ts
 
 ## The library
 
-The tracks are the static arrays `musicList` and `favoriteArtists` in `src/common/constants.ts`, plus `welcomeTrack` (Dancin, what the board's "Play with sound" starts). The audio is in `public/music/` and the cover art in `public/images/music/`; a track with no `image` (the welcome track) shows a monogram in the hue. A track's `description` shows in the library's player, so leave it empty rather than writing filler.
+The tracks are the static array `musicList` in `src/common/constants.ts`, plus `welcomeTrack` (Dancin, what the board's "Play with sound" starts). The audio is in `public/music/` and the cover art in `public/images/music/`; a track with no `image` (the welcome track) shows a monogram in the hue. A track's `description` shows in the library's player, so leave it empty rather than writing filler.
 
 Songs from YouTube join them in the same shuffle ([Songs from YouTube](#songs-from-youtube)): `youtubeSongs` in `constants.ts`, and the songs on Jake's Spotify playlist once the listening Worker sends them.
 
@@ -39,8 +39,9 @@ State lives in `src/store/audio.ts` (zustand):
 When the shuffle runs out, the whole library is shuffled again, leaving out the track that's playing so it can't play twice in a row. So music never stops on its own. There's no manual queue: Jake had the add-to-queue buttons and the Queued list taken out on 2026-10-27, so songs shuffle on their own and pressing play on one plays it now.
 
 **In the UI:**
-- The player is `PlayerCard` (`atoms/player-card`): what's on, with a speaker button in that header row whose vertical volume slider (`VolumeSlider`) drops down on hover, focus or a tap; then cover, title and byline, the seek slider (`TrackProgress`), and previous/play/next (`Transport`) centred as one group. The board's Now Playing tile and the library both show it, so they always match. The Up next tile lists every song left in the shuffle and scrolls.
-- The library (`/library`) adds every song left in the shuffle under the player, scrolling, and shows every song as a `MusicTile`: cover and a play button. Its Playlist tab ("What I've had on repeat.") lists `youtubeSongs` and the Spotify playlist's songs, and only shows when there are some.
+- The player is `PlayerCard` (`atoms/player-card`): what's on; then cover, title and byline, the seek slider (`TrackProgress`), and previous/play/next (`Transport`) centred as one group, with a speaker button at the row's end whose vertical volume slider (`VolumeSlider`) rises on hover, focus or a tap. The speaker sat in the header until Jake had it moved to the bottom right on 2026-10-28. The board's Now Playing tile and the library both show it, so they always match. The Up next tile lists every song left in the shuffle and scrolls.
+- The library (`/library`) adds every song left in the shuffle under the player, scrolling, and lists every song as a `MusicRow`: its number, cover, title and year, and a play button on the cover and at the row's end on hover. The whole row plays it; the song on now is a pale row with bouncing bars for its number. Jake chose rows over the cover tiles (`MusicTile`) on 2026-10-28. Its Playlist tab ("What I've had on repeat.") lists `youtubeSongs` and the Spotify playlist's songs, and only shows when there are some.
+- **Favorite artists** is Jake's most-listened artists, eight of them, since 2026-10-28; before that it was a fixed two (S3RL and WeAreCastor, whose songs were Jake's own remixes in `musicList`). `useFavoriteArtists` (`pages/music/favorites.ts`) takes ListenBrainz's all-time top artists once it has counted them, and until then counts his latest 100 plays. A play counts for every artist credited on it, but an artist never credited first (an album's credit, like "Funk Wav") isn't listed. Each row shows the artist's play count and their most-played song among those plays, with its cover, and plays that song the way Recent listens would ([Songs from YouTube](#songs-from-youtube)): with no Worker, a Spotify play can't, so the row has no play button.
 - `FloatingPlayer` stands in wherever the Now Playing tile is out of sight: behind the overlays, and on phones once it scrolls away. It's a `MiniPlayer` (cover, title, play/pause, next and a `VolumeControl`) collapsed to a circle of the cover, ringed with the song's progress, until it's clicked open, and the visitor can drag it to any corner or edge middle. It shows only while something plays ([board.md](board.md)).
 
 **Autoplay:** browsers only allow audio after a user gesture. That's why the Now Playing tile asks the visitor to choose sound or silence first, and why `togglePlayback` resumes the `AudioContext` inside the click that called it, before `play()`. After that first gesture, moving on to the next track is allowed.
@@ -79,6 +80,8 @@ Jake asked on 2026-10-27 for songs from YouTube, and his Spotify songs through t
   - YouTube Music plays play as their own video;
   - Spotify plays, and top songs, play through the Worker's match;
   - albums and artists have no play button.
+
+  `listenUrl()` and `streamedTrack()` in `common/music.ts` decide this, for these rows and for the library's Favorite artists.
 
 Everything that needs the Worker stays hidden until it answers.
 

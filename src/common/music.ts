@@ -1,4 +1,5 @@
-import { favoriteArtists, musicList, MusicItemProps, welcomeTrack, youtubeSongs } from './constants';
+import { Listen } from '../api/listenbrainz';
+import { musicList, MusicItemProps, welcomeTrack, youtubeSongs } from './constants';
 import { youtubeThumbnail } from './youtube';
 
 /**
@@ -14,6 +15,26 @@ export const isStreamed = (url: string | undefined) => !!url && /^(youtube|spoti
 export const youtubeUrl = (videoId: string) => `youtube:${videoId}`;
 export const spotifyUrl = (trackId: string) => `spotify:${trackId}`;
 export const songUrl = (artist: string, title: string) => `song:${encodeURIComponent(artist)}/${encodeURIComponent(title)}`;
+
+/**
+ * How a play from ListenBrainz reaches the player: YouTube Music plays as its own video. Spotify
+ * plays go through the YouTube copy the listening Worker finds, so only when it's there.
+ */
+export const listenUrl = (listen: Listen, worker: boolean) => {
+    if (listen.videoId) return youtubeUrl(listen.videoId);
+    const id = listen.spotifyUrl?.match(/open\.spotify\.com\/track\/([A-Za-z0-9]+)/)?.[1];
+    return id && worker ? spotifyUrl(id) : undefined;
+};
+
+/** A song from elsewhere (ListenBrainz) as a track the player can take */
+export const streamedTrack = (url: string, title: string, artist: string | undefined, cover: string | undefined): MusicItemProps => ({
+    image: cover ?? '',
+    title,
+    artist,
+    description: '',
+    url,
+    date: '',
+});
 
 /** Where the YouTube player finds a streamed track: the video itself, or what to ask the Worker for */
 export const streamSource = (url: string): { videoId?: string; spotify?: string; artist?: string; title?: string } => {
@@ -31,7 +52,7 @@ const withThumbnail = (track: MusicItemProps) => {
 };
 
 // Jake's own list wins when a track is in both, since its entries carry the full titles and notes
-const allTracks: MusicItemProps[] = [...musicList, ...favoriteArtists, welcomeTrack, ...youtubeSongs.map(withThumbnail)];
+const allTracks: MusicItemProps[] = [...musicList, welcomeTrack, ...youtubeSongs.map(withThumbnail)];
 
 // Every track the shuffle draws from, once each. The Spotify playlist's songs join it once the Worker sends them.
 const library = new Set(allTracks.map((track) => track.url));

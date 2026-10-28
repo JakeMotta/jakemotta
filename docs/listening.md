@@ -50,6 +50,7 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
   - **YouTube Music plays** play as their own video, with no Worker.
   - **Spotify plays and top songs** play through the Worker's match, so their buttons show only once it answers.
   - **Albums and artists** never get a button.
+- **The library's Favorite artists** (`pages/music/favorites.ts`, since 2026-10-28) are the all-time top artists from here, or a count of the latest plays while ListenBrainz hasn't counted them. Each plays the artist's most-played recent song by the same rules ([music.md](music.md#playback-and-the-shuffle)).
 - **Times are relative** ("3h ago"), never clock times, which would say when Jake sleeps.
 
 ## Listen along

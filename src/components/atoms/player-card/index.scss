@@ -61,20 +61,22 @@
         font-weight: 800;
     }
 
-    // Previous / play / next as one group in the middle, rather than spread to the edges
+    // Previous / play / next as one group in the middle, with the volume at the row's end
+    &__controls {
+        display: grid;
+        align-items: center;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    }
+
     &__transport.transport {
+        grid-column: 2;
         justify-content: center;
         gap: 18px;
     }
 
-    // The volume and any action (the board's Library link), together at the header's end
-    &__actions {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
-
     &__volume {
+        grid-column: 3;
+        justify-self: end;
         color: var(--color-primary-light);
 
         .volume-control__button {

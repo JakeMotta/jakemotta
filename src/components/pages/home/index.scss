@@ -190,6 +190,39 @@ $phone: 639px;
     }
 }
 
+// A tile's header row that opens the tile, like its expand link: the title's link stretches over the
+// row, and the row's own buttons and links sit above it
+.tile-head {
+    position: relative;
+
+    &__link {
+        color: inherit;
+        text-decoration: none;
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 14px;
+            transition: background-color 0.2s;
+        }
+
+        &:hover {
+            color: inherit;
+        }
+    }
+
+    &:hover .tile-head__link::after {
+        background: color-mix(in srgb, currentColor 12%, transparent);
+    }
+
+    .tile-expand,
+    .volume-control {
+        position: relative;
+        z-index: 1;
+    }
+}
+
 // Where each tile sits on a desktop, and how it leans on hover
 @media (min-width: $desktop) {
     .tile-hero {
@@ -245,50 +278,152 @@ $phone: 639px;
     }
 }
 
+// A "HELLO my name is" name tag: the only tile that rests tilted, with a corner that peels up on hover
 .tile-hero {
-    --tilt: -0.6deg;
-    justify-content: space-between;
-    gap: 18px;
-    // Opaque, but in the hue: mostly the ground with some of the pale tint, so it sits in the background rather than on it
-    background: color-mix(in srgb, var(--color-primary) 65%, var(--color-primary-light));
+    --tilt: 1deg;
+    padding: 0;
+    background: var(--color-primary-light);
+    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.18);
     color: var(--color-primary-ink);
+    transform: rotate(-1.5deg);
 
+    &:hover {
+        box-shadow: 0 22px 34px rgba(0, 0, 0, 0.3);
+        color: var(--color-primary-ink);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 46px;
+        height: 46px;
+        border-top-left-radius: 14px;
+        background: linear-gradient(315deg, var(--color-primary) 50%, color-mix(in srgb, var(--color-primary-light) 72%, var(--color-primary-ink)) 50%);
+        box-shadow: -3px -3px 8px rgba(0, 0, 0, 0.15);
+        transition:
+            width 0.45s $spring,
+            height 0.45s $spring;
+    }
+
+    &:hover::after {
+        width: 68px;
+        height: 68px;
+    }
+
+    &__band {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        padding: 14px 24px 12px;
+        background: var(--color-primary-ink);
+        color: var(--color-primary-light);
+
+        @media (max-width: $phone) {
+            gap: 12px;
+            padding: 12px 20px 10px;
+        }
+    }
+
+    &__hello {
+        font-size: 44px;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        line-height: 1;
+
+        @media (max-width: $phone) {
+            font-size: 36px;
+        }
+    }
+
+    &__my-name {
+        font-size: 17px;
+        font-weight: 800;
+
+        @media (max-width: $phone) {
+            font-size: 15px;
+        }
+    }
+
+    // The name and tagline, with the links beside them on a desktop and under them below it
+    &__body {
+        display: flex;
+        min-height: 0;
+        flex: 1;
+        flex-direction: column;
+        gap: 16px;
+        padding: 18px 22px 24px;
+
+        @media (min-width: $desktop) {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 10px 70px 18px 28px;
+        }
+    }
+
+    &__who {
+        min-width: 0;
+    }
+
+    // Written on the tag, a little crooked
     &__name {
         margin: 0;
-        color: inherit;
-        font-size: clamp(52px, 6.1vw, 88px);
+        color: var(--color-primary-dark);
+        font-size: clamp(48px, 5.4vw, 78px);
         font-weight: 900;
-        letter-spacing: -0.045em;
-        line-height: 0.88;
+        letter-spacing: -0.04em;
+        line-height: 0.95;
+        transform: rotate(-3deg);
+        transform-origin: left center;
+
+        @media (max-width: $phone) {
+            font-size: 52px;
+        }
     }
 
     &__tagline {
-        max-width: 460px;
-        margin-top: 14px !important;
-        font-size: 19px;
+        margin-top: 12px !important;
+        font-size: 16px;
         font-weight: 800;
     }
 
+    // Clear of the peeled corner, which they'd otherwise run into below a desktop
     &__chips {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+        padding-right: 36px;
+
+        @media (min-width: $desktop) {
+            padding-right: 0;
+            display: grid;
+            flex-shrink: 0;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
     }
 
     .chip {
         display: inline-flex;
-        height: 44px;
+        height: 40px;
         align-items: center;
-        padding: 0 18px;
+        justify-content: center;
+        padding: 0 16px;
+        border: 2px solid var(--color-primary-ink);
         border-radius: 999px;
-        background: var(--color-primary-dark);
-        color: var(--color-primary-light);
-        font-size: 15px;
-        font-weight: 800;
+        color: var(--color-primary-ink);
+        font-size: 14px;
+        font-weight: 900;
         text-decoration: none;
-        transition: transform 0.3s $spring;
+        transition:
+            transform 0.3s $spring,
+            background-color 0.2s,
+            color 0.2s;
 
         &:hover {
+            background: var(--color-primary-ink);
             color: var(--color-primary-light);
             transform: rotate(-4deg) scale(1.05);
         }
@@ -608,6 +743,11 @@ $phone: 639px;
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
+
+    // On a phone the board grows with its tiles, so the projects stop at 300px and scroll inside
+    @media (max-width: $phone) {
+        max-height: 300px;
+    }
 }
 
 // A project in the Projects tile: its screenshot at 4:3 with the name and year under it
@@ -656,10 +796,14 @@ $phone: 639px;
         min-height: 270px;
     }
 
-    &__cube {
+    // The size of the featured tile's arrow button, in the same corner
+    &__cube.pixel-cube {
         position: absolute;
-        top: 18px;
-        right: 18px;
+        top: 10px;
+        right: 10px;
+        width: 44px;
+        height: 44px;
+        border-radius: 6px;
         transition: transform 0.6s $spring;
     }
 
@@ -716,9 +860,8 @@ $phone: 639px;
         box-shadow: none;
     }
 
-    // On a desktop the tile is a fixed height: a row that doesn't fit wraps into a second column, out
-    // of sight, so a short screen drops whole rows rather than cutting one in half. The padding
-    // leaves room for the focus rings.
+    // On a desktop the eight rows fill the rest of the tile as two even columns of four, across its
+    // two cells. The padding leaves room for the focus rings.
     &__before {
         display: flex;
         min-height: 0;
@@ -729,35 +872,48 @@ $phone: 639px;
         list-style: none;
 
         @media (min-width: $desktop) {
+            display: grid;
             flex: 1 1 0;
-            flex-wrap: wrap;
-            align-content: flex-start;
             column-gap: 24px;
+            grid-auto-flow: column;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            // Down to 22px, so all four still fit on a screen about 840px tall
+            grid-template-rows: repeat(4, minmax(22px, 1fr));
         }
 
         li {
-            width: 100%;
-
-            // Two columns across the tile's two cells
-            @media (min-width: $desktop) {
-                width: calc(50% - 12px);
-            }
+            display: flex;
+            min-width: 0;
+            align-items: center;
         }
 
         li + li {
             border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
+        // The first of the second column starts a column, so it has no line over it
+        @media (min-width: $desktop) {
+            li:nth-child(5) {
+                border-top: 0;
+            }
+        }
+
         a,
         li > span {
             display: flex;
+            min-width: 0;
             min-height: 26px;
+            flex: 1;
             align-items: center;
             gap: 10px;
             color: inherit;
             font-size: 13px;
             font-weight: 600;
             text-decoration: none;
+
+            @media (min-width: $desktop) {
+                min-height: 22px;
+            }
         }
 
         a {

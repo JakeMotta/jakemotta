@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Listen, TopKind, TopRange } from '../../../api/listenbrainz';
-import { MusicItemProps } from '../../../common/constants';
+import { TopKind, TopRange } from '../../../api/listenbrainz';
 import { LISTENBRAINZ_USER, listenedAgo } from '../../../common/listening';
-import { songUrl, spotifyUrl, youtubeUrl } from '../../../common/music';
+import { listenUrl, songUrl, streamedTrack } from '../../../common/music';
 import { useAudioStore } from '../../../store/audio';
 import { useListenAlongStore } from '../../../store/listen-along';
 import { topKey, useListeningStore, useLiveListening } from '../../../store/listening';
@@ -11,17 +10,7 @@ import './index.scss';
 
 type View = 'recent' | TopKind;
 
-// How a play reaches the player: YouTube Music plays as their own video. Spotify plays, and top songs,
-// go through the YouTube copy the listening Worker finds, so only when it's there.
-const playable = (listen: Listen, worker: boolean) => {
-    if (listen.videoId) return youtubeUrl(listen.videoId);
-    const id = listen.spotifyUrl?.match(/open\.spotify\.com\/track\/([A-Za-z0-9]+)/)?.[1];
-    return id && worker ? spotifyUrl(id) : undefined;
-};
-
 type PlayProps = { current?: boolean; playing?: boolean; onPlay?: () => void };
-
-const asTrack = (url: string, title: string, artist: string | undefined, cover: string | undefined): MusicItemProps => ({ image: cover ?? '', title, artist, description: '', url, date: '' });
 
 const views: { key: View; label: string }[] = [
     { key: 'recent', label: 'Recent' },
@@ -63,7 +52,7 @@ export const Lately = ({ pageSize = 8, className = '' }: { pageSize?: number; cl
     // The props that put a play button on a row, for a song that can play here
     const play = (url: string | undefined, title: string, artist: string | undefined, cover: string | undefined): PlayProps => {
         if (!url) return {};
-        const track = asTrack(url, title, artist, cover);
+        const track = streamedTrack(url, title, artist, cover);
         const current = url === audioUrl;
         return { current, playing: isPlaying, onPlay: () => (current ? togglePlayback() : playTrack(track)) };
     };
@@ -95,7 +84,7 @@ export const Lately = ({ pageSize = 8, className = '' }: { pageSize?: number; cl
                       spotifyUrl={listen.spotifyUrl}
                       source={listen.source}
                       href={listen.link}
-                      {...play(playable(listen, worker), listen.title, listen.artist, listen.cover)}
+                      {...play(listenUrl(listen, worker), listen.title, listen.artist, listen.cover)}
                   />
               ))
             : (top ?? []).map((item, i) => (

@@ -23,6 +23,16 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
+    inputs:
+      full:
+        description: 'Mirror every project site, not just the ones changed since the last deploy'
+        type: boolean
+        default: false
+
+# Reading earlier runs is how the upload finds the last deployed commit.
+permissions:
+  contents: read
+  actions: read
 
 # One deploy at a time. Two runs writing the same directory over FTP is how a
 # half-uploaded page ends up being served.
@@ -55,6 +65,45 @@ jobs:
 
       - name: Build
         run: yarn build
+
+      # The upload's time goes on listing the server, not on sending files:
+      # mirror lists every directory it compares, each over a fresh TLS data
+      # connection, and projects/ holds 700 of build/'s 720 directories. Those
+      # sites almost never change, so only the ones touched since the last
+      # successful deploy are mirrored. Anything that can't be worked out
+      # falls back to mirroring them all, as every deploy used to.
+      - name: Work out which project sites changed
+        id: changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE_FULL: ${{ inputs.full }}
+        run: |
+          set -uo pipefail
+
+          full() {
+            echo "::notice::Mirroring every project site: $1"
+            echo "full=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          }
+
+          [ "${FORCE_FULL:-false}" = true ] && full "asked for from the Actions tab"
+
+          last=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow deploy.yml --branch master --status success --limit 1 --json headSha --jq '.[0].headSha // empty')
+          [ -n "$last" ] || full "there is no earlier successful deploy to compare with"
+          git fetch -q --depth=1 origin "$last" || full "couldn't fetch the last deployed commit, $last"
+
+          # Deletions are left out because the deploy never deletes anything.
+          git -c core.quotePath=false diff --name-only --no-renames --diff-filter=d "$last" HEAD -- public/projects/ \
+            | cut -d/ -f3 | sort -u > "$RUNNER_TEMP/sites.txt" \
+            || full "couldn't compare with $last"
+
+          # The names go into the lftp script in double quotes.
+          grep -q '[^A-Za-z0-9._ -]' "$RUNNER_TEMP/sites.txt" && full "a changed site's name needs quoting"
+
+          echo "Last deployed: $last"
+          echo "Project sites changed since then: $(grep -c . "$RUNNER_TEMP/sites.txt")"
+          cat "$RUNNER_TEMP/sites.txt"
+          echo "full=false" >> "$GITHUB_OUTPUT"
 
       # Fail here with an explanation rather than 40 lines down with a bare
       # "Connection refused". The Cloudflare case is the one that has actually
@@ -105,6 +154,7 @@ jobs:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+          FULL: ${{ steps.changed.outputs.full }}
         run: |
           set -euo pipefail
 
@@ -155,7 +205,24 @@ jobs:
             # run, so the default time comparison would call all 1.6GB new and
             # re-upload it on every push. Size alone is safe for the bundles
             # because a changed bundle gets a new hashed filename.
-            printf "mirror --reverse --verbose --parallel=2 --ignore-time --exclude-glob '.DS_Store' ./build/ %s\n" "$target"
+            mirror="mirror --reverse --verbose --parallel=2 --ignore-time --exclude-glob '.DS_Store'"
+            if [ "$FULL" = true ]; then
+              printf "%s ./build/ %s\n" "$mirror" "$target"
+            else
+              # Everything but projects/, then each project site that changed
+              # since the last deploy (see "Work out which project sites
+              # changed"). mirror creates a new site's folder itself.
+              printf "%s --exclude '^projects/' ./build/ %s\n" "$mirror" "$target"
+              projects="${target%/}/projects"
+              while IFS= read -r site; do
+                if [ -d "build/projects/$site" ]; then
+                  printf '%s "./build/projects/%s/" "%s/%s/"\n' "$mirror" "$site" "$projects" "$site"
+                elif [ -f "build/projects/$site" ]; then
+                  printf 'put -O "%s/" "./build/projects/%s"\n' "$projects" "$site"
+                fi
+                # Neither: a file the build prunes, such as a .php.
+              done < "$RUNNER_TEMP/sites.txt"
+            fi
 
             # The exception that --ignore-time would silently break. Both of
             # these are rewritten by every build and both can come out the

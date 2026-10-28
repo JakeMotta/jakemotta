@@ -42,6 +42,7 @@ A preview that's a hub for a project's parts lists them as `pages` in its `homeP
   - **Ambii:** `/project/ambii/landing-2018`, `/template-site` and `/site-2019`.
 - **Opening a page from the hub:** a click on a link to a page's file (matched by path) opens that page's address, carrying the link's own query and hash. For example, `dashboard/index.html#/locations` opens `/project/ambii-business/dashboard` on Locations. A link the hub's `pages` don't name (Ambii's "landing page as it stood then") still opens inside the frame.
 - **Closing a page:** Escape, the close button, and the page title's "← Ambii Business" crumb all go back to the hub. The hub, as before, closes to the board or the all-projects overlay. Back and Forward step between projects.
+- **"Loading…" and the links:** the viewer counts a framed page as shown, and takes over its links, as soon as its document is parsed, not at the frame's load event. Since 2026-10-28, because that event waits for every image: the label sat over Ambii Business's hub for 9 seconds on the live site, and a click on an app before then opened it inside the frame. The viewer checks the frame every 100 ms. A cross-origin frame (TapSlayDie) still counts at its load event.
 - **Each page address is a full entry point:** it can be opened directly, gets its own tab title (`Dashboard · Ambii Business (2022)`), and is in the sitemap.
 - **A new page:** add it to `pages` and the hub's links pick it up. Check that its `preview` path is the one the hub links to.
 

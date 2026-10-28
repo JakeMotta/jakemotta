@@ -34,16 +34,25 @@ export const BentoOverlay = ({ label, onClose, className = '', children }: Bento
             if (event.key === 'Escape' && !event.defaultPrevented && !dialogOpen) onCloseRef.current();
         };
         // Keys pressed inside a framed page (a project preview) go to that page's document, not this one, so
-        // listen there too, each time the frame loads a page. A cross-origin frame (a live site) can't be reached.
-        const listenInFrame = (event: Event) => {
-            if (event.target instanceof HTMLIFrameElement) event.target.contentDocument?.addEventListener('keydown', onKeyDown);
+        // listen there too, on each page a frame shows, as soon as it's parsed: a heavy page's load event can be
+        // seconds later. A cross-origin frame (a live site) can't be reached.
+        const heard = new WeakSet<Document>();
+        const listenInFrames = () => {
+            panel?.querySelectorAll('iframe').forEach((frame) => {
+                const doc = frame.contentDocument;
+                if (!doc || doc.URL === 'about:blank' || heard.has(doc)) return;
+                heard.add(doc);
+                doc.addEventListener('keydown', onKeyDown);
+            });
         };
         document.addEventListener('keydown', onKeyDown);
         // load doesn't bubble, so catch the frames' load events on the way down
-        panel?.addEventListener('load', listenInFrame, true);
+        panel?.addEventListener('load', listenInFrames, true);
+        const timer = window.setInterval(listenInFrames, 100);
         return () => {
             document.removeEventListener('keydown', onKeyDown);
-            panel?.removeEventListener('load', listenInFrame, true);
+            panel?.removeEventListener('load', listenInFrames, true);
+            window.clearInterval(timer);
             opener?.focus?.();
         };
     }, [opener]);

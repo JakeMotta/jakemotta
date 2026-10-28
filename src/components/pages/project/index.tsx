@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FiArrowLeft, FiArrowRight, FiArrowUpRight, FiDownload } from 'react-icons/fi';
 import { BentoOverlay } from '../../templates';
@@ -38,6 +38,16 @@ export const ProjectViewer = () => {
     const location = useLocation();
     const frameRef = useRef<HTMLIFrameElement>(null);
     const [loadedId, setLoadedId] = useState<string>();
+    // The documents the frame has shown that are already set up (see onFrameReady below)
+    const readyDocs = useRef(new WeakSet<Document>());
+    const onFrameReadyRef = useRef<() => void>(undefined);
+    // A framed page counts as shown once its document is parsed, rather than at the frame's load event, which waits for
+    // every image and kept "Loading…" over a page that was already there (9 seconds on Ambii Business's hub). Its
+    // links are taken over then too, so a click before the images finish still opens a hub's page at its address.
+    useEffect(() => {
+        const timer = window.setInterval(() => onFrameReadyRef.current?.(), 100);
+        return () => window.clearInterval(timer);
+    }, []);
     const project = homeProjectList.find((item) => item.id === id);
     const page = slug ? project?.pages?.find((item) => item.slug === slug) : undefined;
     const state = location.state as ViewerState | null;
@@ -79,15 +89,21 @@ export const ProjectViewer = () => {
         return project.pages?.find((item) => item !== page && pathOf(item.preview) === path);
     };
 
-    const onFrameLoad = () => {
+    // Set up each document the frame shows, once: as soon as it's parsed, or at the load event for a cross-origin frame
+    const onFrameReady = () => {
+        const frame = frameRef.current;
+        const doc = frame?.contentDocument;
+        if (!frame || !doc) return;
+        if (doc.URL === 'about:blank' || doc.readyState === 'loading' || readyDocs.current.has(doc)) return;
+        readyDocs.current.add(doc);
         setLoadedId(frameKey);
-        const doc = frameRef.current?.contentDocument;
-        if (!doc) return;
-        // The frame reached one of the pages some other way, like a click before the hub had loaded: move to its
-        // address, in place of the entry that navigation made, so Escape and Back return to the hub
-        const reached = doc.location && pageAt(doc.location);
-        if (reached) {
-            navigate(`/project/${project.id}/${reached.slug}`, { replace: true, state: { from: state?.from, src: doc.location.pathname + doc.location.search + doc.location.hash } });
+        // The frame reached one of the pages some other way (by script, say), or went back to the hub from one: move to
+        // that address, in place of the entry its navigation made, so Escape and Back step back as from a link
+        const path = pathOf(doc.location.href);
+        const reached = pageAt(doc.location);
+        if (reached || (page && project.preview && path === pathOf(project.preview))) {
+            const to = reached ? `/project/${project.id}/${reached.slug}` : `/project/${project.id}`;
+            navigate(to, { replace: true, state: { from: state?.from, src: reached ? doc.location.pathname + doc.location.search + doc.location.hash : undefined } });
             return;
         }
         doc.addEventListener('click', (event) => {
@@ -103,6 +119,11 @@ export const ProjectViewer = () => {
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
         });
+    };
+    onFrameReadyRef.current = onFrameReady;
+    const onFrameLoad = () => {
+        setLoadedId(frameKey);
+        onFrameReady();
     };
 
     return (

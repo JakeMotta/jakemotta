@@ -185,6 +185,12 @@ export interface HomeProject {
      * domain and allows framing. Omit it when there is no preview yet.
      */
     preview?: string;
+    /**
+     * A copy to take home, shown as a Download button in the viewer: every game that has a desktop
+     * build gets one. `label` is the button's text and `note` the small print under it (what it
+     * needs to run). Downloads live in the project's folder under /projects/, usually in download/.
+     */
+    download?: { url: string; label: string; note?: string };
 }
 
 /** Cards that held several projects before each got its own, so links to their old ids still land on one. */
@@ -220,46 +226,7 @@ export const homeProjectList: HomeProject[] = [
         tags: ['HTML5 Game'],
         description: 'The arcade classic rebuilt in Godot, with UFOs, screen shake and my own music.',
         preview: '/projects/asteroids/index.html',
-    },
-    {
-        id: 'ambii',
-        image: '/images/projects/ambii.webp',
-        title: 'Ambii',
-        date: '2025',
-        category: 'app',
-        tags: ['Startup', 'App', 'Website'],
-        description: 'My startup from 2017 to 2021: a music app for listening together, where everyone in the room gets a say in what plays next.',
-        preview: '/projects/ambii/story/index.html',
-    },
-    {
-        id: 'black-chamber',
-        image: '/images/projects/black-chamber.webp',
-        title: 'Black Chamber',
-        date: '2025',
-        category: 'website',
-        tags: ['Website'],
-        description: 'Members, programs and events for the Silicon Valley Black Chamber of Commerce.',
-        preview: '/projects/black-chamber/index.html',
-    },
-    {
-        id: 'pistol-art',
-        image: '/images/projects/pistol-art.webp',
-        title: 'Pistol Art',
-        date: '2025',
-        category: 'website',
-        tags: ['Website'],
-        description: 'Course schedules and class sign-ups for a pistol training school.',
-        preview: '/projects/pistol-art/index.html',
-    },
-    {
-        id: 'ninjadonut',
-        image: '/images/projects/ninjadonut.webp',
-        title: 'NinjaDonut',
-        date: '2025',
-        category: 'website',
-        tags: ['Website', 'Games', 'Comics'],
-        description: 'Games, comics and odds and ends, starring a very serious donut.',
-        preview: '/projects/ninja-donut/index.html',
+        download: { url: '/projects/asteroids/download/asteroids-windows.zip', label: 'Download for Windows', note: '34 MB. Unzip and run Asteroids.exe.' },
     },
     {
         id: 'ambii-business',
@@ -272,6 +239,16 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/ambii-business/index.html',
     },
     {
+        id: 'ambii',
+        image: '/images/projects/ambii.webp',
+        title: 'Ambii',
+        date: '2020',
+        category: 'app',
+        tags: ['Startup', 'App', 'Website'],
+        description: 'My startup from 2017 to 2021: a music app for listening together, where everyone in the room gets a say in what plays next.',
+        preview: '/projects/ambii/story/index.html',
+    },
+    {
         id: 'floor-is-lava',
         image: '/images/projects/floor-is-lava.webp',
         title: 'The Floor is Lava',
@@ -280,6 +257,7 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Java Game', 'School'],
         description: 'A miner digs blocks loose and stacks them under his feet to stay above the rising lava.',
         preview: '/projects/cs134/floor-is-lava.html',
+        download: { url: '/projects/cs134/download/the-floor-is-lava.zip', label: 'Download the game', note: '48 MB. Unzip and open TheFloorIsLava.jar from its folder. Needs Java (java.com). Made for Windows.' },
     },
     {
         id: 'scott-pilgrim',
@@ -290,6 +268,7 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Java Game', 'School'],
         description: 'My first OpenGL game: Scott punches fireballs across a scrolling level while Ramona tags along.',
         preview: '/projects/cs134/scott-pilgrim.html',
+        download: { url: '/projects/cs134/download/scott-pilgrim.zip', label: 'Download the game', note: '9 MB. Unzip and open scott-pilgrim.jar from its folder. Needs Java (java.com). Made for Windows.' },
     },
     {
         id: 'fooder',
@@ -312,6 +291,16 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/survivor/index.html',
     },
     {
+        id: 'pistol-art',
+        image: '/images/projects/pistol-art.webp',
+        title: 'Pistol Art',
+        date: '2016',
+        category: 'website',
+        tags: ['Website'],
+        description: 'Course schedules and class sign-ups for a pistol training school.',
+        preview: '/projects/pistol-art/index.html',
+    },
+    {
         id: 'cs160',
         image: '/images/projects/cs160.webp',
         title: 'CS160',
@@ -322,16 +311,6 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/cs160/index.html',
     },
     {
-        id: 'personal-site',
-        image: '/images/projects/personal-site.webp',
-        title: 'Personal Site',
-        date: '2016',
-        category: 'website',
-        tags: ['Website'],
-        description: 'My old portfolio, with drifting clouds and balloons tied to its hello.',
-        preview: '/projects/personal-site/index%20(2).static.html',
-    },
-    {
         id: 'dan-james',
         image: '/images/projects/dan-james.webp',
         title: 'Dan James',
@@ -340,6 +319,16 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Website'],
         description: 'A site for a music producer and mixing engineer, with a beat store and his mixing services.',
         preview: '/projects/dan-james/index.static.html',
+    },
+    {
+        id: 'black-chamber',
+        image: '/images/projects/black-chamber.webp',
+        title: 'Black Chamber',
+        date: '2015',
+        category: 'website',
+        tags: ['Website'],
+        description: 'Members, programs and events for the Silicon Valley Black Chamber of Commerce.',
+        preview: '/projects/black-chamber/index.html',
     },
     {
         id: 'team-safe',
@@ -360,6 +349,7 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Java Game'],
         description: 'An unfinished top-down RPG: walk Huey through a scrolling forest and change his color with the number keys.',
         preview: '/projects/coloris/index.html',
+        download: { url: '/projects/coloris/download/coloris.zip', label: 'Download the game', note: '6 MB. Unzip and open play-coloris.jar. Needs Java (java.com). Windows, Mac or Linux.' },
     },
     {
         id: 'worxxx',
@@ -390,6 +380,17 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Java Game'],
         description: 'A five-level platformer with lasers, ladders, keys and doors.',
         preview: '/projects/isguy/index.html',
+        download: { url: '/projects/isguy/isGuyFinal.jar', label: 'Download the game', note: '40 MB. Open isGuyFinal.jar. Needs Java (java.com). Windows, Mac or Linux.' },
+    },
+    {
+        id: 'personal-site',
+        image: '/images/projects/personal-site.webp',
+        title: 'Personal Site',
+        date: '2012',
+        category: 'website',
+        tags: ['Website'],
+        description: 'My old portfolio, with drifting clouds and balloons tied to its hello.',
+        preview: '/projects/personal-site/index%20(2).static.html',
     },
     {
         id: 'noah-garza',
@@ -440,6 +441,7 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Java Game', 'School'],
         description: 'A Pokémon fan game Logan Lovell and I made for a programming class: pick a starter and explore TrainingVille.',
         preview: '/projects/greenfoot-pokemon/index.html',
+        download: { url: '/projects/greenfoot-pokemon/download/pokemon-green-foot-edition.zip', label: 'Download the game', note: '14 MB. Unzip and open pokemon-green-foot-edition.jar. Needs Java (java.com). Windows, Mac or Linux.' },
     },
     {
         id: 'escaping-confinement',
@@ -460,6 +462,16 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Website', 'Flash', 'School'],
         description: 'A Flash homepage for my web design class assignments, with a Pac-Man hiding in it.',
         preview: '/projects/highschool/flashIndex/FlashIndex.static.html',
+    },
+    {
+        id: 'ninjadonut',
+        image: '/images/projects/ninjadonut.webp',
+        title: 'NinjaDonut',
+        date: '2010',
+        category: 'website',
+        tags: ['Website', 'Games', 'Comics'],
+        description: 'Games, comics and odds and ends, starring a very serious donut.',
+        preview: '/projects/ninja-donut/index.html',
     },
     {
         id: 'pivot',

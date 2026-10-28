@@ -8,7 +8,8 @@ const formatTime = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Ma
 
 /**
  * How far into the track we are, as a slider you can drag or arrow through to seek. Its position
- * is written in an animation loop straight onto the input, like the visualizer, not through state.
+ * is written in an animation loop straight onto the input, like the visualizer, not through state,
+ * and only when it has moved.
  */
 export const TrackProgress = ({ className = '' }: { className?: string }) => {
     const inputRef = useRef<HTMLInputElement>(null);
@@ -16,16 +17,22 @@ export const TrackProgress = ({ className = '' }: { className?: string }) => {
     useEffect(() => {
         let frame = 0;
         let lastText = '';
+        let lastFill = '';
         const draw = () => {
             frame = requestAnimationFrame(draw);
             const input = inputRef.current;
             const media = useAudioStore.getState().media();
-            if (!input || !media) return;
+            if (!input || !media || input.closest('[inert]')) return;
             const { currentTime, duration } = media;
             const progress = duration > 0 && Number.isFinite(duration) ? currentTime / duration : 0;
+            const value = String(Math.round(progress * SCALE));
             // Leave the value alone while the visitor is dragging it
-            if (document.activeElement !== input) input.value = String(Math.round(progress * SCALE));
-            input.style.setProperty('--fill', `${(progress * 100).toFixed(2)}%`);
+            if (document.activeElement !== input && input.value !== value) input.value = value;
+            const fill = `${(progress * 100).toFixed(1)}%`;
+            if (fill !== lastFill) {
+                input.style.setProperty('--fill', fill);
+                lastFill = fill;
+            }
             const text = duration > 0 && Number.isFinite(duration) ? `${formatTime(currentTime)} of ${formatTime(duration)}` : 'Not started';
             if (text !== lastText) {
                 input.setAttribute('aria-valuetext', text);

@@ -63,3 +63,7 @@ It hasn't been checked inside the site's viewer. The dev server this was tested 
 ## Card image
 
 `public/images/projects/rebound.webp` shows a shot in flight. Its `SHOTS` entry in `scripts/screenshot-projects.mjs` aims and clicks with synthetic pointer events, then waits 1.2 s. The shapes falling behind the level are random, so every retake differs.
+
+## Download
+
+None yet. Greenfoot never exported Rebound, so there's no desktop build to offer. One could be assembled the way Coloris's was ([coloris.md](coloris.md)): the compiled classes, `project.greenfoot` and `images/` in a jar with the Greenfoot runtime, and a launcher.

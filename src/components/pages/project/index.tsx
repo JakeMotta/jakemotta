@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { FiArrowLeft, FiArrowRight, FiArrowUpRight, FiInfo } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowRight, FiArrowUpRight, FiDownload } from 'react-icons/fi';
 import { BentoOverlay } from '../../templates';
 import { homeProjectList, movedProjects } from '../../../common/constants';
 import { orderedProjects } from '../../../common/projects';
@@ -19,8 +19,6 @@ const FRAMEABLE = ['/projects/', '/vendor/'];
 const isFrameable = (link: HTMLAnchorElement) => link.origin === window.location.origin && FRAMEABLE.some((path) => link.pathname.startsWith(path));
 
 const navigates = (link: HTMLAnchorElement) => !/^javascript:$/i.test(link.protocol);
-
-const isLive = (preview: string) => /^https?:\/\//i.test(preview);
 
 export const ProjectViewer = () => {
     const { id } = useParams();
@@ -98,11 +96,13 @@ export const ProjectViewer = () => {
                     </ul>
                 </div>
                 {project.description && <p className='viewer__description'>{project.description}</p>}
-                {project.preview && (
-                    <p className='viewer__how'>
-                        <FiInfo aria-hidden />
-                        {isLive(project.preview) ? `This is the real thing, live at ${new URL(project.preview).host}.` : 'This is the original, saved just the way it was. Click around!'}
-                    </p>
+                {project.download && (
+                    <div className='viewer__download'>
+                        <a className='viewer__button viewer__button--solid' href={project.download.url} download>
+                            <FiDownload aria-hidden /> {project.download.label}
+                        </a>
+                        {project.download.note && <p>{project.download.note}</p>}
+                    </div>
                 )}
                 <div className='viewer__steps'>
                     <button type='button' className='viewer__step' aria-label={`Back: ${previous.title}`} onClick={() => show(previous.id)}>

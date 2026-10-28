@@ -61,7 +61,7 @@ const SHOTS = [
     { id: 'escaping-confinement', url: '/projects/escaping-confinement/index.html', settle: 1500 },
     // Down past the three wide ones, onto the grid of smaller GIFs mid-animation
     { id: 'pivot', url: '/projects/pivot/index.html', settle: 3000, scroll: 2010 },
-    { id: 'floor-is-lava', url: '/projects/cs134/floor-is-lava.html', settle: 2500 },
+    { id: 'floor-is-lava', url: '/projects/cs134/floor-is-lava.html#play', settle: 2500 },
     { id: 'scott-pilgrim', url: '/projects/cs134/scott-pilgrim.html', settle: 2500 },
     { id: 'fooder', url: '/projects/fooder/index.html', settle: 1500 },
     { id: 'survivor', url: '/projects/survivor/index.html', settle: 1500 },

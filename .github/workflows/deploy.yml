@@ -261,6 +261,12 @@ jobs:
               printf "put -O %s ./build/projects/ambii-business/%s\n" "$(dirname "$ambii/$file")/" "$file"
             done
 
+            # Asteroids' game data is re-exported under the same name, and the
+            # 2026-10-27 re-export (sharper rendering) came out exactly the
+            # same length as the one before it. It's under 1 MB, so it goes
+            # up every time.
+            printf "put -O %s ./build/projects/asteroids/index.pck\n" "${target%/}/projects/asteroids/"
+
             echo bye
           } > "$RUNNER_TEMP/deploy.lftp"
 

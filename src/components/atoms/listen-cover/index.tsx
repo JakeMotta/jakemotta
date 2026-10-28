@@ -39,6 +39,7 @@ export const ListenCover = ({ title, cover, spotifyUrl, className = '' }: Listen
             src={src}
             alt=''
             loading='lazy'
+            decoding='async'
             onError={() => setSrc(undefined)}
             // YouTube answers a video it doesn't know with a small grey placeholder rather than an error
             onLoad={(event) => event.currentTarget.naturalWidth < 200 && setSrc(undefined)}

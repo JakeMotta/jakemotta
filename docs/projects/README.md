@@ -11,7 +11,7 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `pistol-art` | `/projects/pistol-art/index.html` | [pistol-art.md](pistol-art.md) |
 | `ninjadonut` | `/projects/ninja-donut/index.html` | [ninjadonut.md](ninjadonut.md) |
 | `ambii-business` | `/projects/ambii-business/index.html` (a hand-written hub in front of three built apps) | [ambii-business.md](ambii-business.md) |
-| `floor-is-lava` | `/projects/cs134/floor-is-lava.html` (a recorded clip) | [floor-is-lava.md](floor-is-lava.md) |
+| `floor-is-lava` | `/projects/cs134/floor-is-lava.html` (a JavaScript port of the jar) | [floor-is-lava.md](floor-is-lava.md) |
 | `scott-pilgrim` | `/projects/cs134/scott-pilgrim.html` (a recorded clip) | [scott-pilgrim.md](scott-pilgrim.md) |
 | `fooder` | `/projects/fooder/index.html` (a case study) | [fooder.md](fooder.md) |
 | `survivor` | `/projects/survivor/index.html` (a case study) | [survivor.md](survivor.md) |
@@ -55,7 +55,23 @@ A preview has to run in the browser with no server code: the host is static, and
 - **Java desktop games** (isGuy, Pokémon, Coloris) run as the original jars through CheerpJ, which loads only when the visitor presses Play. CheerpJ's free Community License covers a personal site only while it loads from `cjrtnc.leaningtech.com` and the page credits it; self-hosting it would need a paid license. How the three pages work is in [isguy.md](isguy.md).
 - **Small Greenfoot games** (Rebound) can be ported instead: `greenfoot.js`, a canvas version of the Greenfoot 2 API, with the game's Java translated class by class beside it and the original scenario kept unchanged. Greenfoot's own HTML5 conversion only runs on greenfoot.org's servers, for scenarios published there ([rebound.md](rebound.md)).
 - **Godot games** (Asteroids) are Godot's own web export, with threads off so the static host needs no special headers ([asteroids.md](asteroids.md)).
-- **Games that can't run in a browser** get a short recorded clip (The Floor is Lava and Scott Pilgrim, recorded from the original jars) or a case study of their design and art (Survivor, Fooder).
+- **Java + OpenGL games** can't run in CheerpJ: JOGL needs native libraries. The Floor is Lava is translated into JavaScript from its compiled classes, line for line, and draws its own sprites on a canvas ([floor-is-lava.md](floor-is-lava.md)). Scott Pilgrim still has a recorded clip.
+- **Games that can't run in a browser at all** get a case study of their design and art (Survivor, Fooder).
+
+## Downloads
+
+Every game with a desktop build has a Download button in the viewer, from the entry's `download` in `homeProjectList` (`url`, `label`, and a `note` saying the size and what it needs). Jake asked for them on 2026-10-27, the same day he had the viewer's "This is the original, saved just the way it was" line taken out; the button sits where it was. The files live in the project's folder, usually in `download/`:
+
+| Game | Download | Notes |
+| --- | --- | --- |
+| Asteroids | `asteroids/download/asteroids-windows.zip`, a Godot Windows export | [asteroids.md](asteroids.md) |
+| The Floor is Lava | `cs134/download/the-floor-is-lava.zip`, the original 2017 zip unchanged | [floor-is-lava.md](floor-is-lava.md) |
+| Scott Pilgrim | `cs134/download/scott-pilgrim.zip`, the compiled game packed as a runnable jar | [scott-pilgrim.md](scott-pilgrim.md) |
+| Coloris | `coloris/download/coloris.zip`, the jar plus a launcher that sets the speed | [coloris.md](coloris.md) |
+| isGuy | `isguy/isGuyFinal.jar`, the preview's own jar | [isguy.md](isguy.md) |
+| Pokémon | `greenfoot-pokemon/download/pokemon-green-foot-edition.zip`, the jars plus a launcher | [greenfoot-pokemon.md](greenfoot-pokemon.md) |
+
+Three games have none. TapSlayDie isn't out on the App Store or Google Play yet (its site says "Coming soon"); link the store pages once it is. Survivor never had a finished build. Rebound was never exported from Greenfoot; one could be assembled the way Coloris's was ([rebound.md](rebound.md)). The deploy compares files by size only, so a rebuilt download needs a new name, or an explicit `put` in the workflow, to reach the server.
 - **Live sites** on their own domain (TapSlayDie) are framed at their address. Their document is cross-origin, so the viewer's link handling can't reach inside them.
 
 **Embedded third-party forms stay live.** JotForm embeds (Dan James's contact page, Pistol Art's register page, the 2012 high school page and its NinjaDonut copy) still submit for real. Jake decided on 2026-10-26 to leave them, along with his old contact details on the 2012 pages. Only the sites' own mail handlers are rerouted, because they'd need the PHP that isn't published.
@@ -80,7 +96,7 @@ The older images in `public/images/projects/` (`ambii.png`, `pistolArt.png` and 
 ## Adding a project
 
 1. Get it running as a preview: a static copy in `public/projects/<folder>/` (a new `SITES` entry if it's PHP, or if some of its plain pages need fixes), or the address of a live site that allows framing (check its response headers for `X-Frame-Options` and `frame-ancestors`). On Windows, copying a batch of files into `public/` while `yarn dev` runs can crash the dev server (chokidar's `EBUSY: resource busy or locked`). Copy first and start the server after, or just restart it.
-2. Add an entry to `homeProjectList`, one per project (see One project, one card above), newest first (so a new project becomes the featured tile): `id`, `title`, `date`, `category` (which section of the all-projects overlay it goes in: `website`, `app`, `game`, `art` or `animation`; a new one goes in `projectCategories`), `tags` (what kind of thing it is, shown as pills in the viewer: "Website", "Java Game", "School"…), a one-sentence `description` in Jake's voice that says what it is rather than how the preview runs, `preview`, and `image: '/images/projects/<id>.webp'`.
+2. Add an entry to `homeProjectList`, one per project (see One project, one card above), newest first (so a new project becomes the featured tile): `id`, `title`, `date`, `category` (which section of the all-projects overlay it goes in: `website`, `app`, `game`, `art` or `animation`; a new one goes in `projectCategories`), `tags` (what kind of thing it is, shown as pills in the viewer: "Website", "Java Game", "School"…), `download` for a game with a desktop build (see Downloads above), a one-sentence `description` in Jake's voice that says what it is rather than how the preview runs, `preview`, and `image: '/images/projects/<id>.webp'`.
 3. Add a `SHOTS` entry to `scripts/screenshot-projects.mjs`, run `yarn projects:screenshot <id>` and look at the result.
 4. Write `docs/projects/<id>.md` and add it to the table above.
 5. Open `/project/<id>` in the dev server, click around inside the frame, and check the console.

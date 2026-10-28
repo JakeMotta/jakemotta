@@ -232,6 +232,36 @@ test('simulated players: a scheduled store moves to the due block when the dashb
   assert.equal((await byCode(w)).LPAVE8.station.name, 'Brunch');
 });
 
+test('simulated players: with no block due, a store following its schedule plays the last block that ran, though nobody looked during it', async () => {
+  // Saturday 10:00 the brunch stores play Brunch; the next look is at 20:00, after Weekend Afternoon (13:00 to 18:00)
+  // has run. A player would have switched at 13:00 and kept that station once the block ended.
+  var s = makeServer({ time: nextWeekday(6, 10, 0) });
+  assert.equal((await byCode(s)).LPAVE8.station.name, 'Brunch');
+  s.advance(10 * 60 * MIN);
+  var stores = await byCode(s);
+  assert.equal(stores.LPAVE8.station.name, 'Weekend Afternoon');
+  assert.equal(stores.LSURF8.station.name, 'Weekend Afternoon');
+  var ts = s.collection('trackSchedules')[s.collection('locations')[IDS.paloAlto].trackSchedule];
+  assert.equal(new Date(ts.createdAt).getTime(), nextWeekday(6, 13, 0));
+  assert.equal(stores.LPAVE8.currentTrack._id, expectedAt(ts, s.clock.time).id);
+  // and keeps it through the week, as the player would (the next look changes nothing)
+  s.advance(4 * DAY);
+  assert.equal((await byCode(s)).LPAVE8.station.name, 'Weekend Afternoon');
+  assert.equal(s.collection('locations')[IDS.paloAlto].trackSchedule, ts._id);
+  // Night Owl: seen during Evening, next looked at at 03:00, after Late Night (22:00 to 02:00) has run
+  var n = makeServer({ time: todayAt(20, 0) });
+  assert.equal((await byCode(n)).LJACK5.station.name, 'Evening');
+  n.advance(7 * 60 * MIN);
+  assert.equal((await byCode(n)).LJACK5.station.name, 'Late Night');
+  var lts = n.collection('trackSchedules')[n.collection('locations')[IDS.jackLondon].trackSchedule];
+  assert.equal(new Date(lts.createdAt).getTime(), todayAt(22, 0));
+  // A store on a station of its own while no block is due keeps it (Weekend Brunch, first seen on a weekday evening).
+  var w = makeServer({ time: nextWeekday(3, 20, 0) });
+  assert.equal((await byCode(w)).LPAVE8.station._id, STATION_IDS.tapiocaTempo);
+  w.advance(DAY);
+  assert.equal((await byCode(w)).LPAVE8.station._id, STATION_IDS.tapiocaTempo);
+});
+
 test('simulated players: a deactivated store shows Offline; the take-over prompt, then a real player carries on from the same song', async () => {
   var s = makeServer({ time: todayAt(10, 0) });
   await s.call('PATCH', '/v3/auth/location/' + IDS.jackLondon, { isActive: false });
@@ -260,6 +290,22 @@ test('simulated players: a deactivated store shows Offline; the take-over prompt
   await s.call('POST', '/v3/api/player/finishedTrack', finishedBody(loc, n), { ambii_player_jwt: c.body.data.ambii_player_jwt });
   var q = loc.trackSchedule.queue;
   assert.equal((await byCode(s)).LMKT42.currentTrack._id, q[(n + 1) % q.length]._id);
+});
+
+test('simulated players: taking over after a block boundary nobody saw joins the new block partway through', async () => {
+  // Saturday: seen at 10:00 during Brunch, taken over at 15:10, two hours into Weekend Afternoon (13:00 to 18:00).
+  var s = makeServer({ time: nextWeekday(6, 10, 0) });
+  assert.equal((await byCode(s)).LPAVE8.station.name, 'Brunch');
+  s.advance(5 * 60 * MIN + 10 * MIN);
+  var c = await connect(s, 'LPAVE8', { override: true });
+  assert.equal(c.body.type, 'SUCCESSFUL_PAIRED');
+  var loc = c.body.data.location;
+  assert.equal(loc.station.name, 'Weekend Afternoon');
+  var ts = s.collection('trackSchedules')[s.collection('locations')[IDS.paloAlto].trackSchedule];
+  assert.equal(new Date(ts.createdAt).getTime(), nextWeekday(6, 13, 0));
+  var at = expectedAt(ts, s.clock.time);
+  assert.equal(loc.currentTrackNumber, at.index);
+  assert.equal(loc.currentTrack._id, at.id);
 });
 
 test('the scheduled store with no player opens straight onto its schedule', async () => {

@@ -185,7 +185,8 @@ ${clouds.join('\n')}`, { title: 'Stepping Clouds', size: 46, shade: 'rgba(61,90,
 // ---------- guest art ----------
 // The guest tracks (core/guests.js) come without artwork we may reuse (an album's art is often under
 // other terms than its music), so each album gets a drawn cover in a style that suits its first genre,
-// with a palette picked from its slug, and each guest artist a drawn portrait.
+// and each guest artist a drawn portrait. The covers in one style take the palettes in turn (nth), since
+// two covers in the same style and palette look alike; the layout within a style comes from the slug.
 
 function hashSeed(s) {
   let h = 2166136261;
@@ -372,12 +373,15 @@ const GENRE_STYLE = {
   latin: 'world', reggae: 'world', world: 'world',
 };
 
-// Light grounds (classical, world) take dark type.
-export function guestCover({ slug, title, artist, genre }) {
-  const style = GENRE_STYLE[genre] || 'pop';
-  const seed = hashSeed(slug);
-  const r = rng(seed);
-  const p = PALETTES[seed % PALETTES.length];
+export function guestCoverStyle(genre) {
+  return GENRE_STYLE[genre] || 'pop';
+}
+
+// nth: how many covers in the same style came before this one. Light grounds (classical, world) take dark type.
+export function guestCover({ slug, title, artist, genre, nth = 0 }) {
+  const style = guestCoverStyle(genre);
+  const r = rng(hashSeed(slug));
+  const p = PALETTES[(hashSeed(style) + nth) % PALETTES.length];
   const light = style === 'classical' || style === 'world';
   return guestFrame(GUEST_STYLES[style](r, p), {
     title, sub: artist, ink: style === 'classical' ? '#2b2118' : light ? p[0] : '#ffffff', shade: light ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.45)', serif: style === 'classical' || style === 'jazz',

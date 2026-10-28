@@ -4,7 +4,7 @@ import { stamp, newId, randomToken, toNumber } from '../util.js';
 import { trackById, isAdId } from '../catalogue.js';
 import {
   getStation, assignStation, buildTrackSchedule, blocksOf, dueBlock, stationLite, stationDetail, scheduleWithBlocks, trackScheduleFull, locationFull,
-  isSimulatedPlayer, simulatedNowPlaying,
+  isSimulatedPlayer, simulatedNowPlaying, followSchedule,
 } from '../music.js';
 import { welcomeTime } from '../seed.js';
 import { DEFAULT_STATION_ID } from '../../config.js';
@@ -46,8 +46,10 @@ export function connect(ctx) {
   if (paired && paired.deviceId && paired.deviceId !== b.deviceId && !b.override) return send('DEVICE_ALREADY_PAIRED', 'DEVICE_ALREADY_PAIRED');
 
   // Demo only: taking over from a simulated in-store player carries on from the song the store is playing
-  // (the players start at location.currentTrackNumber).
+  // (the players start at location.currentTrackNumber). The store first catches up with its schedule, as the
+  // dashboard's next look would, so a block that began since then is joined partway through, not at its start.
   if (isSimulatedPlayer(paired)) {
+    followSchedule(ctx, loc);
     var sim = simulatedNowPlaying(ctx, loc);
     if (sim) {
       loc.currentTrack = sim.currentTrack;

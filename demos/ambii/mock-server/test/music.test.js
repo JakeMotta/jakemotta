@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { makeServer, connect, finishedBody, todayAt, PLAYER } from './helpers.js';
-import { withAds, dueBlock, musicQueue } from '../core/music.js';
+import { withAds, dueBlock, musicQueue, lastStartedBlock } from '../core/music.js';
 import { TRACKS, ALBUMS, STATIONS, GENRE_KEYS, isAdId, trackById } from '../core/catalogue.js';
 import { GUEST_TRACKS } from '../core/guests.js';
 import { seededRandom, fixedId } from '../core/util.js';
@@ -76,6 +76,31 @@ test('dueBlock: local time, last match wins, wraps past midnight, honours days',
   var today = new Date().getDay();
   assert.equal(dueBlock([{ name: 'X', startTime: 0, endTime: 86400, days: [(today + 1) % 7] }], new Date()), null);
   assert.equal(dueBlock([{ name: 'X', startTime: 0, endTime: 86400, days: [today] }], new Date()).name, 'X');
+});
+
+test('lastStartedBlock: the block that began last, looking back up to a week and honouring its days', () => {
+  var blocks = [
+    { name: 'Brunch', startTime: 28800, endTime: 46800, days: [0, 6] },
+    { name: 'Afternoon', startTime: 46800, endTime: 64800, days: [0, 6] },
+    { name: 'Night', startTime: 79200, endTime: 7200, days: [] },
+  ];
+  // Saturday 20:00: Afternoon began at 13:00 today
+  var sat = new Date(2026, 9, 24, 20, 0);
+  var r = lastStartedBlock(blocks.slice(0, 2), sat);
+  assert.equal(r.block.name, 'Afternoon');
+  assert.equal(r.start, new Date(2026, 9, 24, 13, 0).getTime());
+  // the following Wednesday: Sunday's Afternoon
+  r = lastStartedBlock(blocks.slice(0, 2), new Date(2026, 9, 28, 10, 0));
+  assert.equal(r.start, new Date(2026, 9, 25, 13, 0).getTime());
+  // 03:00: the night block that began at 22:00 yesterday, not one that starts later today
+  r = lastStartedBlock(blocks, new Date(2026, 9, 28, 3, 0));
+  assert.equal(r.block.name, 'Night');
+  assert.equal(r.start, new Date(2026, 9, 27, 22, 0).getTime());
+  // across the autumn daylight-saving change, 22:00 local is still 22:00
+  r = lastStartedBlock([blocks[2]], new Date(2026, 10, 1, 21, 0));
+  assert.equal(r.start, new Date(2026, 9, 31, 22, 0).getTime());
+  assert.equal(lastStartedBlock([], sat), null);
+  assert.equal(lastStartedBlock([{ name: 'Never', startTime: 0, endTime: 3600, days: [9] }], sat), null);
 });
 
 test('schedule: the kiosk switches block at the next track end after the boundary', async () => {

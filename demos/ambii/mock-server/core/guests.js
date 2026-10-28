@@ -20,34 +20,36 @@ export var OWN_TRACKS_REENCODED = {
   stepping_clouds: 'Stepping Clouds', she_wants_my_package: 'She wants my package',
 };
 
-// key -> n (fixed: ids derive from it), name, credit (how the artist asks to be credited), site.
+// key -> n (fixed: ids derive from it), name, credit (how the artist asks to be credited), site, and label: what
+// the players' credit line names after the licence, where the site's host alone would name a library rather than
+// the artist (the host otherwise).
 export var GUEST_ARTISTS = {
   'kevin-macleod': { n: 1, name: 'Kevin MacLeod', credit: 'Kevin MacLeod (incompetech.com)', site: 'https://incompetech.com' },
   'kimiko-ishizaka': { n: 2, name: 'Kimiko Ishizaka', site: 'https://www.opengoldbergvariations.org' },
   'musopen': { n: 3, name: 'Musopen', credit: 'Musopen (musopen.org)', site: 'https://musopen.org' },
   'josh-woodward': { n: 5, name: 'Josh Woodward', credit: 'Josh Woodward (joshwoodward.com)', site: 'https://www.joshwoodward.com' },
   'jahzzar': { n: 6, name: 'Jahzzar', credit: 'Jahzzar (betterwithmusic.com)', site: 'https://www.betterwithmusic.com' },
-  'thor-arisland': { n: 7, name: 'Thor Arisland', credit: 'Thor Arisland (tcarisland)', site: 'https://opengameart.org/users/tcarisland' },
+  'thor-arisland': { n: 7, name: 'Thor Arisland', credit: 'Thor Arisland (tcarisland)', site: 'https://opengameart.org/users/tcarisland', label: 'tcarisland on OpenGameArt' },
   'komiku': { n: 8, name: 'Komiku', site: 'https://loyaltyfreakmusic.com' },
-  'broke-for-free': { n: 9, name: 'Broke For Free', site: 'https://freemusicarchive.org/music/Broke_For_Free' },
-  'rolemusic': { n: 10, name: 'Rolemusic', site: 'https://freemusicarchive.org/music/Rolemusic' },
-  'tours': { n: 11, name: 'Tours', site: 'https://freemusicarchive.org/music/Tours' },
+  'broke-for-free': { n: 9, name: 'Broke For Free', site: 'https://freemusicarchive.org/music/Broke_For_Free', label: 'Free Music Archive' },
+  'rolemusic': { n: 10, name: 'Rolemusic', site: 'https://freemusicarchive.org/music/Rolemusic', label: 'Free Music Archive' },
+  'tours': { n: 11, name: 'Tours', site: 'https://freemusicarchive.org/music/Tours', label: 'Free Music Archive' },
   'teknoaxe': { n: 12, name: 'TeknoAXE', credit: 'TeknoAXE (teknoaxe.com)', site: 'https://www.teknoaxe.com' },
   'holiznacc0': { n: 13, name: 'HoliznaCC0', site: 'https://holiznacc0.bandcamp.com' },
-  'lee-rosevere': { n: 14, name: 'Lee Rosevere', site: 'https://freemusicarchive.org/music/lee-rosevere' },
+  'lee-rosevere': { n: 14, name: 'Lee Rosevere', site: 'https://freemusicarchive.org/music/lee-rosevere', label: 'Free Music Archive' },
   'nihilore': { n: 15, name: 'Nihilore', credit: 'Nihilore (nihilore.com)', site: 'https://www.nihilore.com' },
   'primal-light': { n: 16, name: 'Primal Light', site: 'https://primallightmusic.bandcamp.com' },
-  'zane-little': { n: 17, name: 'Zane Little Music', site: 'https://ko-fi.com/zanelittle' },
+  'zane-little': { n: 17, name: 'Zane Little Music', site: 'https://ko-fi.com/zanelittle', label: 'ko-fi.com/zanelittle' },
   'congusbongus': { n: 18, name: 'congusbongus', site: 'https://cxong.github.io' },
-  'yubatake': { n: 19, name: 'Yubatake', site: 'https://opengameart.org/users/yubatake' },
-  'mr-smith': { n: 25, name: 'Mr Smith', site: 'https://freemusicarchive.org/music/mr-smith' },
-  'spinning-clocks': { n: 28, name: 'Spinning Clocks', site: 'https://freemusicarchive.org/music/spinning-clocks' },
-  'brylie-christopher': { n: 30, name: 'Brylie Christopher', site: 'https://freemusicarchive.org/music/brylie-christopher' },
-  'ethos': { n: 31, name: 'Ethos', site: 'https://freemusicarchive.org/music/ethos' },
-  'doctor-turtle': { n: 32, name: 'Doctor Turtle', site: 'https://freemusicarchive.org/music/Doctor_Turtle' },
-  'andy-g-cohen': { n: 33, name: 'Andy G. Cohen', site: 'https://freemusicarchive.org/music/Andy_G_Cohen' },
-  'pierce-murphy': { n: 34, name: 'Pierce Murphy', site: 'https://freemusicarchive.org/music/pierce-murphy' },
-  '1000-handz': { n: 35, name: '1000 Handz', site: 'https://freemusicarchive.org/music/1000-handz' },
+  'yubatake': { n: 19, name: 'Yubatake', site: 'https://opengameart.org/users/yubatake', label: 'OpenGameArt' },
+  'mr-smith': { n: 25, name: 'Mr Smith', site: 'https://freemusicarchive.org/music/mr-smith', label: 'Free Music Archive' },
+  'spinning-clocks': { n: 28, name: 'Spinning Clocks', site: 'https://freemusicarchive.org/music/Spinning_Clocks', label: 'Free Music Archive' },
+  'brylie-christopher': { n: 30, name: 'Brylie Christopher', credit: 'Brylie Christopher (brylie.music)', site: 'https://brylie.music' },
+  'ethos': { n: 31, name: 'Ethos', site: 'https://freemusicarchive.org/music/ethos', label: 'Free Music Archive' },
+  'doctor-turtle': { n: 32, name: 'Doctor Turtle', site: 'https://freemusicarchive.org/music/Doctor_Turtle', label: 'Free Music Archive' },
+  'andy-g-cohen': { n: 33, name: 'Andy G. Cohen', site: 'https://freemusicarchive.org/music/Andy_G_Cohen', label: 'Free Music Archive' },
+  'pierce-murphy': { n: 34, name: 'Pierce Murphy', site: 'https://freemusicarchive.org/music/Pierce_Murphy', label: 'Free Music Archive' },
+  '1000-handz': { n: 35, name: '1000 Handz', site: 'https://freemusicarchive.org/music/1000-handz', label: 'Free Music Archive' },
 };
 
 // key -> n (fixed), title, year. Tracks name their album; a track without one is a single.

@@ -22,7 +22,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { tmpdir } from 'node:os';
 import vm from 'node:vm';
-import { coverDesigns, artistPortrait, guestCover, guestPortrait } from './covers.mjs';
+import { coverDesigns, artistPortrait, guestCover, guestCoverStyle, guestPortrait } from './covers.mjs';
 import { GUEST_ARTISTS, GUEST_ALBUMS, GUEST_TRACKS, OWN_TRACKS_REENCODED, LICENSES } from '../core/guests.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -108,13 +108,15 @@ async function buildImages() {
   await writeSizes(Buffer.from(artistPortrait()), join(MEDIA, 'artists', 'jake-motta'), [640, 320, 120]);
   // Guest albums (a single is an album named after its track) and guest artists get drawn art.
   ensure(join(MEDIA, 'albums'));
-  const drawn = new Set();
+  const drawn = new Set(), perStyle = {};
   for (const t of GUEST_TRACKS) {
     const slug = t.album || t.slug;
     if (drawn.has(slug)) continue;
     drawn.add(slug);
     const title = t.album ? GUEST_ALBUMS[t.album].title : t.title;
-    await writeSizes(Buffer.from(guestCover({ slug, title, artist: GUEST_ARTISTS[t.artist].name, genre: t.genres[0] })), join(MEDIA, 'albums', slug), [640, 320, 120]);
+    const style = guestCoverStyle(t.genres[0]);
+    const nth = (perStyle[style] = (perStyle[style] || 0) + 1) - 1;
+    await writeSizes(Buffer.from(guestCover({ slug, title, artist: GUEST_ARTISTS[t.artist].name, genre: t.genres[0], nth })), join(MEDIA, 'albums', slug), [640, 320, 120]);
   }
   for (const [key, a] of Object.entries(GUEST_ARTISTS)) {
     await writeSizes(Buffer.from(guestPortrait({ slug: key, name: a.name })), join(MEDIA, 'artists', key), [640, 320, 120]);
@@ -714,25 +716,24 @@ function writeCredits(guests) {
   if (start < 0 || end < start) throw new Error('the hub has no credits markers');
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   const artists = new Set(GUEST_TRACKS.map((t) => t.artist));
-  const minutes = Math.round(Object.values(guests).reduce((a, g) => a + g.duration, 0) / 60);
   const byArtist = [...artists].sort((a, b) => GUEST_ARTISTS[a].name.localeCompare(GUEST_ARTISTS[b].name));
   const items = byArtist.map((key) => {
     const a = GUEST_ARTISTS[key];
     const tracks = GUEST_TRACKS.filter((t) => t.artist === key).map((t) => {
       const album = t.album ? `, from <cite>${esc(GUEST_ALBUMS[t.album].title)}</cite>` : '';
-      return `<li>“${esc(t.title)}”${album} · <a href="${esc(t.page)}">source</a> · <a href="${esc(LICENSES[t.license].url)}">${esc(t.license)}</a></li>`;
+      // &nbsp; keeps each "·" on the line before it, so a wrapped line never starts with one
+      return `<li>“${esc(t.title)}”${album}&nbsp;· <a href="${esc(t.page)}">source</a>&nbsp;· <a href="${esc(LICENSES[t.license].url)}">${esc(t.license)}</a></li>`;
     });
     return `              <li><a href="${esc(a.site)}">${esc(a.name)}</a>\n                <ul>\n                  ${tracks.join('\n                  ')}\n                </ul>\n              </li>`;
   });
   const block = `<!-- credits:start -->
           <!-- Written by demos/ambii/mock-server/tools/build-media.mjs from core/guests.js. Edit that file, not this list. -->
           <p>
-            Besides 14 of my own tracks, the stations play ${GUEST_TRACKS.length} tracks (${minutes} minutes) by ${artists.size} artists who release their music under
-            Creative Commons licences or into the public domain. Each was downloaded from the artist's or the library's own site and re-encoded to 128 kbps for the
-            demo; the album covers and artist pictures in the apps were drawn for it.
+            Besides ${TRACKS.length} of my own tracks, the stations play ${GUEST_TRACKS.length} songs by ${artists.size} artists who share their music freely, under Creative
+            Commons licences or in the public domain. Thank you, all of you. The covers you see in the apps are mine, made for the demo, not the artists' own.
           </p>
           <details>
-            <summary>Every track, its source and licence</summary>
+            <summary>Every song, where it's from and its licence</summary>
             <ul class="credits__list">
 ${items.join('\n')}
             </ul>
@@ -757,7 +758,9 @@ if (audio) {
     if (unmeasured.length) throw new Error(`media-data.js has no measurements for ${unmeasured.join(', ')}: run without --clips-only`);
   }
   const { clips, silence } = tracksOnly ? { clips: previous.CLIP_MEDIA, silence: previous.SILENCE_MP3_BASE64 } : await buildClips(clipsOnly ? clipsToRender(process.argv, previous.CLIP_MEDIA) : null, previous);
-  const { tracks, guests } = clipsOnly ? { tracks: previous.TRACK_MEDIA, guests: previous.GUEST_MEDIA } : await measureTracks();
+  const { tracks, guests } = clipsOnly
+    ? { tracks: previous.TRACK_MEDIA, guests: Object.fromEntries(GUEST_TRACKS.map((t) => [t.slug, previous.GUEST_MEDIA[t.slug]])) }
+    : await measureTracks();
   const art = (slug) => `${MEDIA_URL}/covers/${slug.replace(/_/g, '-')}`;
   const src = `// Generated by tools/build-media.mjs from the files in public/. Do not edit by hand.
 // Durations are measured from the MP3s (seconds).

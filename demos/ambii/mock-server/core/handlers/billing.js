@@ -126,9 +126,15 @@ function companyDocs(ctx, name) {
 }
 
 // POST /v3/auth/subscription {cardId}: upgrade to Premium. Like the server, every location, schedule and
-// announcement is activated first. Queues lose their ads (players pick that up at their next track end).
+// announcement is activated. Queues lose their ads (players pick that up at their next track end). A refusal
+// (no location, no card) changes nothing: the checks come before the activation (when they came after it, a free
+// business that tried without a card was left with every store switched on).
 export function subscribe(ctx) {
   if (ctx.company.subscribed) return send('ALREADY_SUBSCRIBED', {});
+  var count = companyDocs(ctx, 'locations').length;
+  if (count <= 0) return send('NO_LOCATIONS_FOUND', {});
+  var hasCard = ctx.tx.all('cards').some(function (c) { return !c.isDeleted && c.userId === ctx.user._id; });
+  if (!hasCard) return send('CARD_NOT_CONFIGURED', {}, 'User');
   ['locations', 'schedules', 'announcements'].forEach(function (name) {
     companyDocs(ctx, name).forEach(function (d) {
       if (!d.isActive) {
@@ -137,10 +143,6 @@ export function subscribe(ctx) {
       }
     });
   });
-  var count = companyDocs(ctx, 'locations').length;
-  if (count <= 0) return send('NO_LOCATIONS_FOUND', {});
-  var hasCard = ctx.tx.all('cards').some(function (c) { return !c.isDeleted && c.userId === ctx.user._id; });
-  if (!hasCard) return send('CARD_NOT_CONFIGURED', {}, 'User');
   ctx.user.subscriptionId = 'sub_demo_' + randomToken(ctx.random, 10);
   ctx.tx.put('users', stamp(ctx.user, ctx.now()));
   ctx.company.subscribed = true;

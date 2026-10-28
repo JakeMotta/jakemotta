@@ -197,3 +197,25 @@ test('new business: Reset demo (a cleared storage) and a reseed start it over', 
   assert.equal(r.body.data.company.name, '');
   assert.deepEqual((await s.call('GET', '/v3/auth/location', null, NEW_BIZ)).body.data, []);
 });
+
+test('new business: a subscription that fails (no card yet) changes nothing, so the free plan still has one active store', async () => {
+  var s = makeServer();
+  await s.call('POST', '/v3/auth/signup', SIGNUP, NEW_BIZ);
+  var second = (await s.call('POST', '/v3/auth/location/', { name: 'Second Bluebird', state: 'CA' }, NEW_BIZ)).body.data;
+  var uploaded = (await s.call('POST', '/v3/auth/location/upload', [row('Third Bluebird')], NEW_BIZ)).body.data[0].data;
+  assert.equal(second.isActive, false);
+  assert.equal(uploaded.isActive, false);
+  var r = await s.call('POST', '/v3/auth/subscription', { cardId: 'card_none' }, NEW_BIZ);
+  assert.equal(r.body.message, 'User please add a card');
+  var locations = s.collection('locations');
+  assert.equal(locations[second._id].isActive, false);
+  assert.equal(locations[uploaded._id].isActive, false);
+  assert.equal(s.collection('companies')[NEW_BUSINESS_IDS.company].subscribed, false);
+  assert.equal((await s.call('GET', '/v3/auth/invoice', null, NEW_BIZ)).body.type, 'NO_DATA_FOUND');
+  // With a card it goes through, and every store is switched on.
+  await s.call('POST', '/v3/auth/card', { nameOnCard: 'Sam Park', brand: 'Visa', cardNumber: '4242', expMonth: '12', expYear: '2030' }, NEW_BIZ);
+  r = await s.call('POST', '/v3/auth/subscription', { cardId: 'x' }, NEW_BIZ);
+  assert.equal(r.body.message, 'User subscription success');
+  locations = s.collection('locations');
+  assert.ok([second._id, uploaded._id].every((id) => locations[id].isActive));
+});

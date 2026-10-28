@@ -247,24 +247,60 @@ export function simulatedNowPlaying(ctx, loc) {
   return simulatedPosition(ctx.tx.get('trackSchedules', loc.trackSchedule), ctx.now().getTime());
 }
 
+// The block whose start came last, within the past week (honouring its days), and that start in epoch ms:
+// with no block due, what a player that has followed the schedule all along is still playing, since a player
+// keeps its station when a block ends and no other is due. Null when no block has started in that week.
+export function lastStartedBlock(blocks, now) {
+  var best = null, bestStart = -Infinity;
+  blocks.forEach(function (b) {
+    if (!b || b.isDeleted) return;
+    var secs = Number(b.startTime);
+    if (!isFinite(secs)) return;
+    var days = Array.isArray(b.days) ? b.days.map(Number) : [];
+    for (var back = 0; back <= 7; back++) {
+      // In local time: the Date constructor folds the seconds into the local day (see followSchedule).
+      var start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - back, 0, 0, secs);
+      if (start.getTime() > now.getTime() || (days.length && days.indexOf(start.getDay()) < 0)) continue;
+      if (start.getTime() >= bestStart) { // a tie goes to the later block, as in dueBlock
+        best = b;
+        bestStart = start.getTime();
+      }
+      break; // its starts on earlier days are earlier still
+    }
+  });
+  return best ? { block: best, start: bestStart } : null;
+}
+
 // A simulated store on a schedule moves to the block that is due now, as its player would have at the
 // first track end after the boundary. The new queue counts as started when the block began, so the store
-// is mid-queue rather than on its first track. Called by the dashboard's GET (it writes, inside that
-// request's transaction); returns true when the station changed.
+// is mid-queue rather than on its first track. With no block due, a store already on one of the schedule's
+// block stations moves to the block that ran last (its player would have switched to it and kept it after it
+// ended, even though nobody looked meanwhile); a store on a station of its own keeps it (Weekend Brunch first
+// seen on a weekday). Called by the dashboard's GET (it writes, inside that request's transaction); returns
+// true when the station changed.
 export function followSchedule(ctx, loc) {
   var tx = ctx.tx, now = ctx.now();
   if (!loc || loc.isDeleted || loc.isActive === false || !simulatedPlayerAt(ctx, loc)) return false;
   var schedule = loc.schedule ? tx.get('schedules', loc.schedule) : null;
   if (!schedule || schedule.isDeleted) return false;
-  var block = dueBlock(blocksOf(tx, schedule), now);
-  if (!block || !block.station || !getStation(tx, block.station) || block.station === loc.station) return false;
+  var blocks = blocksOf(tx, schedule);
+  var block = dueBlock(blocks, now), start = NaN;
+  if (block) {
+    // The block's start in local time (the Date constructor folds the seconds into the local day, so a
+    // daylight-saving change that day doesn't shift it); a block that started before midnight began yesterday.
+    var secs = Number(block.startTime);
+    start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, secs).getTime();
+    if (start > now.getTime()) start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 0, 0, secs).getTime();
+  } else {
+    var following = blocks.some(function (b) { return b.station && b.station === loc.station; });
+    var last = following ? lastStartedBlock(blocks, now) : null;
+    if (!last) return false;
+    block = last.block;
+    start = last.start;
+  }
+  if (!block.station || !getStation(tx, block.station) || block.station === loc.station) return false;
   assignStation(ctx, [loc._id], block.station, schedule);
   var ts = tx.get('trackSchedules', loc.trackSchedule);
-  // The block's start in local time (the Date constructor folds the seconds into the local day, so a
-  // daylight-saving change that day doesn't shift it); a block that started before midnight began yesterday.
-  var secs = Number(block.startTime);
-  var start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, secs).getTime();
-  if (start > now.getTime()) start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 0, 0, secs).getTime();
   if (ts && isFinite(start)) {
     ts.createdAt = new Date(start).toISOString();
     tx.put('trackSchedules', ts);

@@ -4,7 +4,7 @@ Three apps from the Ambii Business product (2019–2022, background music for st
 
 | Demo | Upstream repo and commit | Served from |
 |---|---|---|
-| Business dashboard | [shariqs/ambii_business_web](https://github.com/shariqs/ambii_business_web) `master` 6d56131 (2022-01-07), plus the one-line fix from `fix/tempo-fix` 723d5e7 | `/projects/ambii-business/dashboard/` |
+| Business dashboard | [shariqs/ambii_business_web](https://github.com/shariqs/ambii_business_web) `master` 6d56131 (2022-01-07), plus the one-line fix from `fix/tempo-fix` 723d5e7 and the CSV location upload from `develop` (8794c19, a406e61, 03edb53; PR #53, never deployed) | `/projects/ambii-business/dashboard/` |
 | Web player | [shariqs/ambii-web-player](https://github.com/shariqs/ambii-web-player) `master` acc33d4 (2022-01-07). `main` is an empty initial commit. | `/projects/ambii-business/player/` |
 | Mobile app | [shariqs/ambii_business_music](https://github.com/shariqs/ambii_business_music) `development` b3f5284 (2021-12-11), React Native 0.61 run through react-native-web | `/projects/ambii-business/mobile/` |
 | (the API they all call) | [shariqs/ambii_business_server](https://github.com/shariqs/ambii_business_server) `master` 61e7757 (2022-01-07), reimplemented in `mock-server/` | nowhere: answered in the browser |
@@ -26,10 +26,15 @@ demos/ambii/
   music-app/          mobile app source + web/ (webpack 5, react-native-web,        not committed
                       native-module shims, phone-frame page)
 public/projects/ambii-business/
-  index.html          the hub the site's project card frames: what Ambii Business was, and a way into each app
+  index.html          the hub the site's project card frames: what Ambii Business was, a way into each app, the music
+                      credits (written by mock-server/tools/build-media.mjs)
+  invoice.html        stand-in for Stripe's hosted invoice page; reads ambii-demo:invoices (hand-written)
   dashboard/  player/  mobile/   built output, committed (like the converted PHP sites)
-  media/              demo media: cover art, announcement and ad audio, logos
-public/music/*.mp3    13 of Jake's own tracks (TRACKS in mock-server/tools/build-media.mjs) double as the demo music catalogue
+  media/              demo media: guest tracks (tracks/), 128 kbps copies of Jake's larger tracks (music/), cover art
+                      (covers/, albums/), artist pictures, announcement and ad audio, music beds (beds/), logos,
+                      the hub's screenshots (hub/), the CSV upload's sample (sample-locations.csv)
+public/music/*.mp3    14 of Jake's own tracks (TRACKS in mock-server/tools/build-media.mjs) are in the demo catalogue,
+                      beside the 67 guest tracks of mock-server/core/guests.js
 ```
 
 ### The mock server (`mock-server/`)
@@ -47,11 +52,13 @@ public/music/*.mp3    13 of Jake's own tracks (TRACKS in mock-server/tools/build
   - Data is kept in `localStorage` under keys that start with `ambii-demo:`. It is seeded on first use and re-read on every request, because the three apps run in separate documents (same origin) and share it.
   - Writes are serialized with `navigator.locks`.
   - Uploaded announcement audio is kept in IndexedDB (database `ambii-demo`).
-- **What the demos share.** The three apps share one demo company. A station assigned in the dashboard reaches a connected player at its next track change, exactly as with the real server. The players never polled; they learned about changes from `finishedTrack`.
+- **What the demos share.** The three apps share one demo company, plus the visitor's own business once they start one from the dashboard (below). A station assigned in the dashboard reaches a connected player at its next track change, exactly as with the real server. The players never polled; they learned about changes from `finishedTrack`.
 - **Media URLs.**
   - Uploaded audio is served at `${API_BASE}/media/<id>.mp3`. XHR downloads of those URLs are answered from IndexedDB.
   - For an `<audio>` element, call `await resolveMediaUrl(url)`, which returns an object URL. Any other URL is returned unchanged.
-- **Text-to-speech.** The server rendered announcements with Google Cloud TTS, which is gone. The seeded announcements are pre-rendered MP3s in `public/projects/ambii-business/media/`. Announcements created in the demo get a URL under `${API_BASE}/tts/`. Players check `isTtsAnnouncement(announcement)` and play those with `await speakAnnouncement(announcement, { volume })`, which uses the browser's `speechSynthesis`.
+- **Text-to-speech.** The server rendered announcements with Google Cloud TTS, which is gone. The seeded announcements are pre-rendered MP3s in `public/projects/ambii-business/media/`. Announcements created in the demo get a URL under `${API_BASE}/tts/`. Players check `isTtsAnnouncement(announcement)` and play those with `await speakAnnouncement(announcement, { volume })`, which uses the browser's `speechSynthesis` over the announcement's music bed (`backgroundMusic` 2–6), on the server's timeline: 3 s of bed, the voice, 3 s more. Such an announcement's `duration` includes those 6 s when it has a bed.
+  - `cancelSpeech()` stops voice and bed together. The players call it on Pause (and on skip, Disconnect and a reload), then speak the announcement again from the start on Play, since speech can't be resumed mid-sentence reliably. `pauseSpeech()` and `resumeSpeech()` exist but the players don't use them.
+  - `setSpeechBed(backgroundMusic)` crossfades to another bed while one is spoken; the dashboard's preview calls it when Background Music changes.
 - **Pausing the site's music.** jakemotta.com plays its own background music. When a demo starts playing, the mock posts `{ type: 'jakemotta:media-playing' }` to `window.top` so the site can pause its own track:
   - `<audio>` and `<video>` elements in the document are caught by a capture-phase `play` listener;
   - other sound must call `notifyMediaPlaying()`.
@@ -73,11 +80,16 @@ All three demos (and jakemotta.com) share one origin, so they share `localStorag
 
 - **Dashboard to player.** "Play on Web" opens `/projects/ambii-business/player/index.html#/<storeCode>`. The dashboard and the web player use hash routing (the phone app has no URL routes), because `/projects/` has no SPA fallback on Apache, and in development CRA answers unknown paths with the site itself.
 - **Player to dashboard.** "Sign up" and "Admin panel" open `/projects/ambii-business/dashboard/index.html`.
+- **Starting a new business.** `dashboard/index.html?signup#/<route>` (also with `?inApp=1&signup`) stores the dashboard's second sign-in token, `ambii-demo-newbiz`, and drops `signup` from the address. The mock keeps a separate, blank business for that token (the mock's README, "How a request runs"). A signed-out visitor's Favorite, or Assign in the phone app, does the same. Sign In returns to the seeded owner.
+- **Dashboard to invoice page.** Settings > Invoices opens each invoice's `hosted_invoice_url`, `/projects/ambii-business/invoice.html?id=<invoice id>`, which reads the invoice from `ambii-demo:invoices`.
 - **Mobile app to dashboard (WebView).**
   - The mobile app's WebView is an `<iframe>` of `/projects/ambii-business/dashboard/index.html?inApp=1#/<route>`.
   - The dashboard defines `window.ReactNativeWebView.postMessage(string)` when it is framed in in-app mode. That function posts `{ type: 'ambii-webview-message', data: string }` to its parent.
   - The WebView shim turns that message into `onMessage({ nativeEvent: { data } })`.
   - `injectJavaScript` runs in the frame directly, which works because the frame has the same origin.
+  - The phone sends `locationId` to the dashboard again after pairing (Sign In / Sign Up pairs from inside the WebView), and when it re-shows the address already loaded: `signup` and Stations both open `?inApp=1#/stations`, and a WebView doesn't reload for the same address.
+  - When the dashboard gets the phone's `introLogin` message, `App.js` also fires the window event `ambii-demo:introLogin`, so Stations pairs the phone at once (`player/<storeCode>`) even when its locations had already loaded.
+  - When the WebView screen loses focus (Back, the drawer's Playing At row, an Assign), the phone stops what the dashboard frame plays: it presses the dashboard's own Stop Preview, pauses every `<audio>` and `<video>`, and stops any `play` until the screen is shown again.
 
 ## Rebuilding
 
@@ -87,6 +99,7 @@ To work on one app, run `npm ci --legacy-peer-deps` and then `npm run demo:build
 
 ### Toolchain changes
 
-- FontAwesome Pro is aliased to `shared/fontawesome-pro/`.
+- FontAwesome Pro is aliased to `shared/fontawesome-pro/`: free icons under the Pro names, and small icons drawn in `substitutes.js` where the free sets have nothing close (the tempo animals, the waveform, the Stations signal, the beds' piano and triangle). All three apps bundle it, so a change there means rebuilding them all.
 - `node-sass` is replaced by `sass`.
 - The `git://` dependency on Jake's react-native-track-player fork is replaced by an HTML5-audio shim.
+- The dashboard's CSV upload (from `develop`) reads files with a small local stand-in for `react-papaparse`, which isn't in its lockfile.

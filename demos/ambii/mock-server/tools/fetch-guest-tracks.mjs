@@ -24,6 +24,7 @@ const OWN_OUT = join(REPO, 'public/projects/ambii-business/media/music');
 
 // Integrated loudness (EBU R128 / BS.1770) every track is brought to, unless that would clip: about
 // the median of Jake's own 13 demo tracks (-14.6 LUFS), so the guests sit at the same level between his.
+// PEAK_LIMIT is the highest sample the encoded file may decode to (see encodeWithinPeak).
 const TARGET_LUFS = -14;
 const PEAK_LIMIT = 0.98;
 const KBPS = 128;
@@ -175,6 +176,18 @@ async function encode(channels, rate, gain) {
   return Buffer.concat(parts);
 }
 
+// The encoded file can peak above its input (an MP3 rings a little around sharp transients: two guest tracks
+// decoded at 1.01 and 1.04 from a 0.98 input), so the decoded result is measured, and the track encoded again
+// that much quieter until it stays within PEAK_LIMIT. Returns the MP3 and the gain it took.
+async function encodeWithinPeak(channels, rate, gain) {
+  for (let tries = 0; ; tries++) {
+    const mp3 = await encode(channels, rate, gain);
+    const decodedPeak = peak((await decode(mp3)).channels);
+    if (decodedPeak <= PEAK_LIMIT || tries >= 3) return { mp3, gain };
+    gain *= (PEAK_LIMIT / decodedPeak) * 0.998;
+  }
+}
+
 function synchsafe(n) {
   return Buffer.from([(n >> 21) & 0x7f, (n >> 14) & 0x7f, (n >> 7) & 0x7f, n & 0x7f]);
 }
@@ -217,13 +230,18 @@ export function creditLine(track) {
 
 // ---------- main ----------
 
+// The cache is keyed by slug, so each download notes its URL beside it (<file>.url): when a track's `file` changes in
+// guests.js, the old download is not reused. (A cached file with no note predates the notes and is kept.)
 async function download(track, cacheDir) {
   const file = join(cacheDir, track.slug + (/\.ogg(\?|$)/i.test(track.file) ? '.ogg' : '.mp3'));
-  if (existsSync(file) && !process.argv.includes('--force')) return readFileSync(file);
+  const note = file + '.url';
+  const sameSource = !existsSync(note) || readFileSync(note, 'utf8').trim() === track.file;
+  if (existsSync(file) && sameSource && !process.argv.includes('--force')) return readFileSync(file);
   const res = await fetch(track.file, { redirect: 'follow', headers: { 'User-Agent': 'curl/8.9.1', Accept: '*/*' } });
   if (!res.ok) throw new Error(`${track.slug}: HTTP ${res.status} from ${track.file}`);
   const buf = Buffer.from(await res.arrayBuffer());
   writeFileSync(file, buf);
+  writeFileSync(note, track.file);
   return buf;
 }
 
@@ -242,6 +260,8 @@ async function main() {
   mkdirSync(OUT, { recursive: true });
   const only = arg('--only') ? arg('--only').split(',') : null;
   // Jake's larger tracks: re-encoded at their own level (no loudness change), tagged with title and artist.
+  // Masters that already clip keep a few clipped samples in the copy: keeping them under PEAK_LIMIT would take
+  // "She wants my package" 2.6 dB below the rest, which is easier to hear than the clipping.
   mkdirSync(OWN_OUT, { recursive: true });
   for (const [slug, title] of Object.entries(OWN_TRACKS_REENCODED)) {
     if (only && only.indexOf(slug) < 0) continue;
@@ -259,8 +279,9 @@ async function main() {
       const { channels, rate } = await decode(await download(track, cacheDir));
       const stereo = channels.slice(0, 2);
       const lufs = loudness(stereo, rate), pk = peak(stereo);
-      const gain = Math.min(Math.pow(10, (TARGET_LUFS - lufs) / 20), PEAK_LIMIT / pk);
-      const mp3 = Buffer.concat([id3(track), await encode(stereo, rate, gain)]);
+      const encoded = await encodeWithinPeak(stereo, rate, Math.min(Math.pow(10, (TARGET_LUFS - lufs) / 20), PEAK_LIMIT / pk));
+      const gain = encoded.gain;
+      const mp3 = Buffer.concat([id3(track), encoded.mp3]);
       writeFileSync(join(OUT, track.slug + '.mp3'), mp3);
       console.log(JSON.stringify({ slug: track.slug, seconds: +(stereo[0].length / rate).toFixed(1), rate, lufsIn: +lufs.toFixed(2), gainDb: +(20 * Math.log10(gain)).toFixed(2), bpmEstimate: estimateBpm(stereo, rate), bytes: mp3.length }));
     } catch (err) {

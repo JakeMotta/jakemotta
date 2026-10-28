@@ -379,7 +379,7 @@ export var GUEST_MEDIA = {
   "waiting-stillness": {
     "url": "/projects/ambii-business/media/tracks/waiting-stillness.mp3",
     "duration": 181.416,
-    "bytes": 2903390
+    "bytes": 2903420
   },
   "blues-and-tooth": {
     "url": "/projects/ambii-business/media/tracks/blues-and-tooth.mp3",

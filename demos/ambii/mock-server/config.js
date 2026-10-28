@@ -16,8 +16,9 @@ export var STORAGE_PREFIX = 'ambii-demo:';
 // Keys removed by resetDemo(): the mock's own, then each app's.
 export var RESET_PREFIXES = ['ambii-demo:', 'ambii-business:', 'ambii-player:', 'ambii-music:'];
 
-// Bump to reseed every visitor's demo data on their next request.
-export var SEED_VERSION = 2;
+// Bump to reseed every visitor's demo data on their next request. (3: version 2 was first built from a
+// work-in-progress catalogue whose stored queues and stations name four tracks since removed.)
+export var SEED_VERSION = 3;
 
 // navigator.locks name that serializes reads and writes across the three apps' documents.
 export var LOCK_NAME = 'ambii-demo-db';

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ambii Business</title>
-    <meta name="description" content="Working demos of the Ambii Business dashboard, web player and phone app, running in your browser." />
+    <meta name="description" content="Play with the real Ambii Business dashboard, web player and phone app, and a coffee chain's worth of stores." />
     <link rel="icon" href="media/brand/ambii-logo-120.jpg" />
     <!--
       The hub the jakemotta.com project card frames: what Ambii Business was, and a way into each demo.
@@ -341,6 +341,59 @@
         color: var(--text);
       }
 
+      .credits {
+        margin: 18px 0 0;
+      }
+
+      .credits p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .credits summary {
+        margin-top: 14px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .credits__list {
+        margin: 16px 0 0;
+        padding: 0;
+        list-style: none;
+        columns: 3 240px;
+        column-gap: 28px;
+      }
+
+      .credits__list > li {
+        margin: 0 0 14px;
+        break-inside: avoid;
+        font-weight: 800;
+      }
+
+      .credits__list ul {
+        margin: 4px 0 0;
+        padding: 0;
+        list-style: none;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 400;
+      }
+
+      .credits__list ul li {
+        margin: 3px 0 0;
+      }
+
+      .credits a {
+        text-decoration-color: var(--pink);
+        text-underline-offset: 3px;
+      }
+
+      /* "CC BY-SA 4.0" and "source" never split across lines */
+      .credits__list ul a {
+        white-space: nowrap;
+      }
+
       footer {
         display: flex;
         flex-wrap: wrap;
@@ -480,8 +533,8 @@
       <div class="note">
         <span class="dot" aria-hidden="true"></span>
         <p>
-          The servers behind it are long gone, so these are the real apps running on a stand-in for the old API that lives in your browser. You're signed in as Maya, who
-          runs the three stores of Bean &amp; Beat Coffee Co. Change whatever you like: it's saved in this browser only, and nothing leaves it.
+          The servers behind it are long gone, so the real apps run here on a stand-in I wrote for them. You're signed in as Maya, who runs the seven stores of Bean &amp;
+          Beat Coffee Co. Change whatever you like: it's kept in your browser and goes nowhere else.
         </p>
       </div>
 
@@ -522,17 +575,28 @@
         <section class="panel try" aria-labelledby="try-title">
           <h2 id="try-title">Things to try</h2>
           <ol>
-            <li><strong>Play a store.</strong> Open the <a href="player/index.html#/LBEAN7">web player</a> for Downtown Café and press play.</li>
             <li>
-              <strong>Change what it plays.</strong> In the dashboard's <a href="dashboard/index.html#/stations">Stations</a>, open one and assign it to Downtown Café. The player
-              switches when the song ends, as it did with the real server.
+              <strong>Play a store.</strong> Open the <a href="player/index.html#/LBEAN7">web player</a> for Downtown Café and press play. Stick around for a couple of minutes and
+              a welcome announcement plays over the music.
             </li>
             <li>
-              <strong>Make an announcement.</strong> Under <a href="dashboard/index.html#/announcements">Announcements</a>, type one, pick a voice, set it to play today two minutes
+              <strong>Change what it plays.</strong> In the dashboard's <a href="dashboard/index.html#/stations">Stations</a>, open one and assign it to Downtown Café. The player
+              switches when the song ends, just as it always did.
+            </li>
+            <li>
+              <strong>Make an announcement.</strong> Under <a href="dashboard/index.html#/announcements">Announcements</a>, type one, pick a voice and some background music, set it to play today two minutes
               from now and assign it to Downtown Café. Press skip in the web player so it picks the new one up. At that minute the music fades down and your browser reads it
               out.
             </li>
             <li><strong>Steal the store.</strong> Pair the <a href="mobile/index.html">phone app</a> with LBEAN7 while the web player is on it, and watch them hand over.</li>
+            <li>
+              <strong>Open stores from a spreadsheet.</strong> Under <a href="dashboard/index.html#/locations">Locations</a>, Upload CSV adds a whole list of stores at once.
+              There's a sample file to try it with.
+            </li>
+            <li>
+              <strong>Start your own business.</strong> Open the dashboard <a href="dashboard/index.html?signup#/stations">as a new customer</a>, set up your first store and play
+              it. Sign in again to get back to Maya.
+            </li>
             <li>
               <strong>Drop to the free plan.</strong> Cancel the subscription under <a href="dashboard/index.html#/choose-plan">Upgrade</a>, the crown in the dashboard's menu: ads
               play between songs and the extra stores switch off. Subscribe again there to bring them back.
@@ -554,6 +618,26 @@
               <dd>Runs a schedule; another device has it</dd>
             </div>
             <div>
+              <dt>LCSTR6</dt>
+              <dd>Castro Street Café</dd>
+              <dd>Runs a schedule; no player has it yet</dd>
+            </div>
+            <div>
+              <dt>LJACK5</dt>
+              <dd>Jack London Square</dd>
+              <dd>Late-night schedule; the bar's iPad has it</dd>
+            </div>
+            <div>
+              <dt>LPAVE8</dt>
+              <dd>Palo Alto Roastery</dd>
+              <dd>Weekend brunch schedule; a tablet has it</dd>
+            </div>
+            <div>
+              <dt>LSURF8</dt>
+              <dd>Santa Cruz Surf Shack</dd>
+              <dd>Weekend brunch schedule; a tablet has it</dd>
+            </div>
+            <div>
               <dt>LGATE3</dt>
               <dd>Airport Pop-up</dd>
               <dd>Switched off, so players are turned away</dd>
@@ -565,11 +649,198 @@
       <section class="panel different" aria-labelledby="different-title">
         <h2 id="different-title">What's different from the real thing</h2>
         <ul>
-          <li><strong>The music</strong>My own tracks stand in for the catalogue the stations used to draw from.</li>
-          <li><strong>The voices</strong>Announcements you make are read by your browser's voices instead of Google's. The four that come with the demo are recordings.</li>
+          <li><strong>The music</strong>The licensed catalogue the stations drew from is gone. My own tracks and free music by other artists, credited below, play instead.</li>
+          <li><strong>The voices</strong>Announcements you make are read by your browser's voices instead of Google's. The ones that come with the demo are recordings.</li>
           <li><strong>Payments</strong>Nothing is charged and no card details are asked for. Subscribing uses a sample card.</li>
           <li><strong>Sign-in</strong>You're already signed in. Signing out and back in takes one click, no password.</li>
         </ul>
+      </section>
+
+      <section class="panel credits" aria-labelledby="credits-title">
+        <h2 id="credits-title">Music credits</h2>
+        <!-- credits:start -->
+          <!-- Written by demos/ambii/mock-server/tools/build-media.mjs from core/guests.js. Edit that file, not this list. -->
+          <p>
+            Besides 14 of my own tracks, the stations play 67 songs by 26 artists who share their music freely, under Creative
+            Commons licences or in the public domain. Thank you, all of you. The covers you see in the apps are mine, made for the demo, not the artists' own.
+          </p>
+          <details>
+            <summary>Every song, where it's from and its licence</summary>
+            <ul class="credits__list">
+              <li><a href="https://freemusicarchive.org/music/1000-handz">1000 Handz</a>
+                <ul>
+                  <li>“Midnight In C Minor”&nbsp;· <a href="https://freemusicarchive.org/music/1000-handz/cc-by-free-to-use-chillstudylounge-instrumentals/midnight-in-c-minor/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://freemusicarchive.org/music/Andy_G_Cohen">Andy G. Cohen</a>
+                <ul>
+                  <li>“Bathed in Fine Dust”, from <cite>MUL / DIV</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Andy_G_Cohen/MUL__DIV_1198/Andy_G_Cohen_-_MULDIV_-_07_-_Bathed_in_Fine_Dust/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://freemusicarchive.org/music/Broke_For_Free">Broke For Free</a>
+                <ul>
+                  <li>“Night Owl”, from <cite>Directionless EP</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Broke_For_Free/Directionless_EP/Broke_For_Free_-_Directionless_EP_-_01_Night_Owl/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://brylie.music">Brylie Christopher</a>
+                <ul>
+                  <li>“Waiting Stillness”, from <cite>Itse</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Brylie_Christopher_Oxley/itse/waiting-stillness/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://cxong.github.io">congusbongus</a>
+                <ul>
+                  <li>“Raspberry Jam”&nbsp;· <a href="https://opengameart.org/content/raspberry-jam">source</a>&nbsp;· <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://freemusicarchive.org/music/Doctor_Turtle">Doctor Turtle</a>
+                <ul>
+                  <li>“Yellow Sticker Blues”, from <cite>Why Don't Birds Sing?</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Doctor_Turtle/why-dont-birds-sing/yellow-sticker-blues/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://freemusicarchive.org/music/ethos">Ethos</a>
+                <ul>
+                  <li>“Blues and Tooth”, from <cite>Deserted</cite>&nbsp;· <a href="https://freemusicarchive.org/music/ethos/deserted/blues-and-tooth/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://holiznacc0.bandcamp.com">HoliznaCC0</a>
+                <ul>
+                  <li>“Blue Skies”, from <cite>Happy Lo-Fi</cite>&nbsp;· <a href="https://opengameart.org/content/happy-lo-fi-lofi-collection">source</a>&nbsp;· <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></li>
+                  <li>“Autumn”, from <cite>Chill Beats</cite>&nbsp;· <a href="https://opengameart.org/content/chill-beats-collection">source</a>&nbsp;· <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://www.betterwithmusic.com">Jahzzar</a>
+                <ul>
+                  <li>“Railroad's Whiskey Co.”, from <cite>Home</cite>&nbsp;· <a href="https://www.betterwithmusic.com/home/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+                  <li>“Going to”, from <cite>Home</cite>&nbsp;· <a href="https://www.betterwithmusic.com/home/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+                  <li>“Chiado”, from <cite>París, Lisboa</cite>&nbsp;· <a href="https://www.betterwithmusic.com/paris-lisboa-2/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+                  <li>“Siesta”, from <cite>Traveller's Guide</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Jahzzar/Travellers_Guide/Siesta/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></li>
+                  <li>“Take Me Higher”, from <cite>Tumbling Dishes Like Old-Man's Wishes</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Jahzzar/Tumbling_Dishes_Like_Old-Mans_Wishes/Take_Me_Higher_1626/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+                  <li>“Roads that burned our boots”, from <cite>Blinded by Dust</cite>&nbsp;· <a href="https://www.betterwithmusic.com/blinded-by-dust/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+                  <li>“Last Dance”, from <cite>Blinded by Dust</cite>&nbsp;· <a href="https://www.betterwithmusic.com/blinded-by-dust/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://www.joshwoodward.com">Josh Woodward</a>
+                <ul>
+                  <li>“Good to Go”, from <cite>The Simple Life</cite>&nbsp;· <a href="https://www.joshwoodward.com/song/GoodtoGo">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Little Tomcat”, from <cite>The Wake</cite>&nbsp;· <a href="https://www.joshwoodward.com/song/LittleTomcat">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Water in the Creek”, from <cite>The Wake</cite>&nbsp;· <a href="https://www.joshwoodward.com/song/WaterintheCreek">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Airplane Mode”, from <cite>The Beautiful Machine</cite>&nbsp;· <a href="https://www.joshwoodward.com/song/AirplaneMode">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“California Lullabye”, from <cite>The Beautiful Machine</cite>&nbsp;· <a href="https://www.joshwoodward.com/song/CaliforniaLullabye">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Follow the Road”, from <cite>The Beautiful Machine</cite>&nbsp;· <a href="https://www.joshwoodward.com/song/FollowtheRoad">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Afterglow”, from <cite>The Simple Life</cite>&nbsp;· <a href="https://www.joshwoodward.com/song/Afterglow">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Morning Blue”, from <cite>The Simple Life</cite>&nbsp;· <a href="https://www.joshwoodward.com/song/MorningBlue">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://incompetech.com">Kevin MacLeod</a>
+                <ul>
+                  <li>“Bossa Antigua”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700069">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Slow Burn”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100609">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Gymnopedie No. 1”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100787">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Sheep May Safely Graze - BWV 208”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100079">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Fireflies and Stardust”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600061">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Still Pickin”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1900033">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Wallpaper”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100843">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Werq”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1800005">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Surf Shimmy”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700018">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Surf Inspector”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100497">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Disco Medusae”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1500041">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Chill Wave”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600048">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Got Funk”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200005">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Smooth Lovin”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700077">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Island Meet and Greet”&nbsp;· <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN2000004">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://www.opengoldbergvariations.org">Kimiko Ishizaka</a>
+                <ul>
+                  <li>“Goldberg Variations, BWV 988: Aria”, from <cite>The Open Goldberg Variations</cite>&nbsp;· <a href="https://archive.org/details/The_Open_Goldberg_Variations-11823">source</a>&nbsp;· <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></li>
+                  <li>“Goldberg Variations, BWV 988: Variatio 1”, from <cite>The Open Goldberg Variations</cite>&nbsp;· <a href="https://archive.org/details/The_Open_Goldberg_Variations-11823">source</a>&nbsp;· <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://loyaltyfreakmusic.com">Komiku</a>
+                <ul>
+                  <li>“Down the river”, from <cite>It's time for adventure! Vol. 2</cite>&nbsp;· <a href="https://opengameart.org/content/down-the-river">source</a>&nbsp;· <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://freemusicarchive.org/music/lee-rosevere">Lee Rosevere</a>
+                <ul>
+                  <li>“Southside”, from <cite>Music for Podcasts: Beats</cite>&nbsp;· <a href="https://freemusicarchive.org/music/lee-rosevere/music-for-podcasts-beats/southside/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://freemusicarchive.org/music/mr-smith">Mr Smith</a>
+                <ul>
+                  <li>“Circles Round the Sun”, from <cite>Streamliner</cite>&nbsp;· <a href="https://freemusicarchive.org/music/mr-smith/streamliner/circles-round-the-sun/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Hollow Body Blues”, from <cite>A New Roar</cite>&nbsp;· <a href="https://freemusicarchive.org/music/mr-smith/a-new-roar/hollow-body-blues/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Be Cool”, from <cite>Streamliner</cite>&nbsp;· <a href="https://freemusicarchive.org/music/mr-smith/streamliner/be-cool/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Sundown In Twang Town”, from <cite>Guitarista</cite>&nbsp;· <a href="https://freemusicarchive.org/music/mr-smith/guitarista/sundown-in-twang-town/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“The Stevie Shuffle”, from <cite>A New Roar</cite>&nbsp;· <a href="https://freemusicarchive.org/music/mr-smith/a-new-roar/the-stevie-shuffle/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Neo Soul”, from <cite>A New Roar</cite>&nbsp;· <a href="https://freemusicarchive.org/music/mr-smith/a-new-roar/neo-soul/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://musopen.org">Musopen</a>
+                <ul>
+                  <li>“Nocturne Op. 9 No. 2 in E-flat major (Chopin)”, from <cite>The Complete Chopin Collection</cite>&nbsp;· <a href="https://archive.org/details/musopen-chopin">source</a>&nbsp;· <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></li>
+                  <li>“Waltz Op. 64 No. 2 in C-sharp minor (Chopin)”, from <cite>The Complete Chopin Collection</cite>&nbsp;· <a href="https://archive.org/details/musopen-chopin">source</a>&nbsp;· <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://www.nihilore.com">Nihilore</a>
+                <ul>
+                  <li>“Moonlit Skyline”, from <cite>Titan</cite>&nbsp;· <a href="https://www.nihilore.com/license">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Swings and Roundabouts”&nbsp;· <a href="https://www.nihilore.com/license">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Aletheia”&nbsp;· <a href="https://www.nihilore.com/license">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://freemusicarchive.org/music/Pierce_Murphy">Pierce Murphy</a>
+                <ul>
+                  <li>“Satellite”, from <cite>The Joke Isn't Funny But It Goes Like This</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Pierce_Murphy/the-joke-isnt-funny-but-it-goes-like-this/satellite-2/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Caldera Blue”, from <cite>Through The Olive Branches</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Pierce_Murphy/through-the-olive-branches/caldera-blue/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://primallightmusic.bandcamp.com">Primal Light</a>
+                <ul>
+                  <li>“New Hip Hop Beat”, from <cite>Hiphop / Old School / Chill Themes</cite>&nbsp;· <a href="https://opengameart.org/content/hiphop-old-school-chill-themes">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://freemusicarchive.org/music/Rolemusic">Rolemusic</a>
+                <ul>
+                  <li>“Ants”, from <cite>Pop Singles Compilation 2014</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Rolemusic/Pop_Singles_Compilation_2014/02_rolemusic_-_ants/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Python”, from <cite>Pop Singles Compilation 2014</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Rolemusic/Pop_Singles_Compilation_2014/03_rolemusic_-_python/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://freemusicarchive.org/music/Spinning_Clocks">Spinning Clocks</a>
+                <ul>
+                  <li>“Around the Mountain”, from <cite>Spirits in the Juice</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Spinning_Clocks/Spirits_in_the_Juice/Around_the_Mountain/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Circle Round”, from <cite>Spirits in the Juice</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Spinning_Clocks/Spirits_in_the_Juice/Circle_Round/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://www.teknoaxe.com">TeknoAXE</a>
+                <ul>
+                  <li>“Summer Highway Cruising”&nbsp;· <a href="https://www.teknoaxe.com/Link_Code_3.php?q=1731">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                  <li>“Breakfast on a New Day”&nbsp;· <a href="https://www.teknoaxe.com/Link_Code_3.php?q=1879">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://opengameart.org/users/tcarisland">Thor Arisland</a>
+                <ul>
+                  <li>“Jumping Jamboree”&nbsp;· <a href="https://opengameart.org/content/jumping-jamboree">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://freemusicarchive.org/music/Tours">Tours</a>
+                <ul>
+                  <li>“Enthusiast”, from <cite>Enthusiast</cite>&nbsp;· <a href="https://freemusicarchive.org/music/Tours/Enthusiast/Tours_-_Enthusiast/">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://opengameart.org/users/yubatake">Yubatake</a>
+                <ul>
+                  <li>“Funkotron”&nbsp;· <a href="https://opengameart.org/content/funkotron">source</a>&nbsp;· <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+                </ul>
+              </li>
+              <li><a href="https://ko-fi.com/zanelittle">Zane Little Music</a>
+                <ul>
+                  <li>“Wednesday Night [Funk Fusion]”&nbsp;· <a href="https://opengameart.org/content/wednesday-night-funk-fusion">source</a>&nbsp;· <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></li>
+                </ul>
+              </li>
+            </ul>
+          </details>
+          <!-- credits:end -->
       </section>
 
       <footer>

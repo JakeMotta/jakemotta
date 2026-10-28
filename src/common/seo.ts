@@ -23,6 +23,12 @@ const OVERLAYS: Record<string, Omit<PageMeta, 'path'>> = {
 
 export const pageMeta = (pathname: string): PageMeta => {
     const path = pathname.replace(/(.)\/+$/, '$1');
+    const [, id, slug] = path.match(/^\/project\/([^/]+)\/([^/]+)$/) || [];
+    const hub = id && homeProjectList.find((item) => item.id === id);
+    const page = hub && hub.pages?.find((item) => item.slug === slug);
+    if (hub && page) {
+        return { title: `${page.title} · ${hub.title} (${hub.date})`, description: `${page.title}, from ${hub.title}: ${hub.description || `a project by Jake Motta from ${hub.date}.`}`, path };
+    }
     const project = path.startsWith('/project/') && homeProjectList.find((item) => `/project/${item.id}` === path);
     if (project) {
         return {

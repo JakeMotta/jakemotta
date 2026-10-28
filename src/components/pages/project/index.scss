@@ -149,6 +149,38 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
     }
 
+    // On a hub's page, the way back to the hub
+    &__crumb {
+        display: inline-flex;
+        align-self: flex-start;
+        align-items: center;
+        gap: 6px;
+        padding: 0;
+        border: 0;
+        background: none;
+        color: inherit;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+        opacity: 0.8;
+        transition:
+            opacity 0.15s ease,
+            transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        &:hover {
+            opacity: 1;
+            transform: translateX(-3px);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-primary-light);
+            outline-offset: 3px;
+        }
+    }
+
     &__title {
         display: flex;
         min-height: 48px;

@@ -22,6 +22,21 @@
     var resetFlag = false;
     var runToggleFlag = false;
     var soundStarted = false;
+    // Every game plays at half volume, as Jake asked on 2026-10-28
+    var VOLUME = 0.5;
+    // The sounds playing (or paused by Pause), which Pause, Play and Start over act on as Greenfoot's own controls do
+    var playing = [];
+    var pausedByRun = [];
+
+    function forget(list, sound) {
+        var at = list.indexOf(sound);
+        if (at >= 0) list.splice(at, 1);
+    }
+
+    function startAudio(sound) {
+        var started = sound.audio.play();
+        if (started && started.catch) started.catch(function () {});
+    }
 
     function context(canvas) {
         return canvas.getContext('2d');
@@ -201,10 +216,32 @@
             console.error('Greenfoot: ' + message);
             if (options.onError) options.onError(message);
         },
+        // Pause pauses the game's sounds and Play picks them up again, as in Greenfoot
         setRunning: function (running) {
+            if (running) {
+                pausedByRun.forEach(startAudio);
+                pausedByRun = [];
+            } else {
+                pausedByRun = playing.filter(function (sound) { return !sound.audio.paused; });
+                pausedByRun.forEach(function (sound) { sound.audio.pause(); });
+            }
             if (options.onRunning) options.onRunning(running);
         },
-        resetRequested: function () { var flag = resetFlag; resetFlag = false; return flag; },
+        // Start over stops every sound before the world is built again, as Greenfoot's Reset does; otherwise the
+        // old world's music plays on under the new world's
+        resetRequested: function () {
+            var flag = resetFlag;
+            resetFlag = false;
+            if (flag) {
+                playing.forEach(function (sound) {
+                    sound.audio.pause();
+                    sound.audio.currentTime = 0;
+                });
+                playing = [];
+                pausedByRun = [];
+            }
+            return flag;
+        },
         runToggleRequested: function () { var flag = runToggleFlag; runToggleFlag = false; return flag; },
 
         image: function (name) {
@@ -372,7 +409,10 @@
             var audio = new Audio();
             audio.preload = 'none';
             audio.src = base + path;
-            return { audio: audio, volume: 100 };
+            audio.volume = VOLUME;
+            var sound = { audio: audio, volume: 100 };
+            audio.addEventListener('ended', function () { if (!audio.loop) forget(playing, sound); });
+            return sound;
         },
         playSound: function (sound, loop) {
             if (!soundStarted) {
@@ -381,21 +421,22 @@
             }
             sound.audio.loop = loop;
             if (sound.audio.ended) sound.audio.currentTime = 0;
-            if (sound.audio.paused) {
-                var playing = sound.audio.play();
-                if (playing && playing.catch) playing.catch(function () {});
-            }
+            if (playing.indexOf(sound) < 0) playing.push(sound);
+            forget(pausedByRun, sound);
+            if (sound.audio.paused) startAudio(sound);
         },
         stopSound: function (sound, rewind) {
             sound.audio.pause();
             if (rewind) sound.audio.currentTime = 0;
+            forget(playing, sound);
+            forget(pausedByRun, sound);
         },
         isSoundPlaying: function (sound) {
             return !sound.audio.paused && !sound.audio.ended;
         },
         setSoundVolume: function (sound, volume) {
             sound.volume = volume;
-            sound.audio.volume = Math.max(0, Math.min(1, volume / 100));
+            sound.audio.volume = Math.max(0, Math.min(1, volume / 100)) * VOLUME;
         }
     };
 

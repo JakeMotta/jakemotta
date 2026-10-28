@@ -33,6 +33,18 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `jakes-index` | `/projects/highschool/flashIndex/FlashIndex.static.html` | [jakes-index.md](jakes-index.md) |
 | `pivot` | `/projects/pivot/index.html` (a hand-written gallery) | [pivot.md](pivot.md) |
 
+## Hub pages
+
+A preview that's a hub for a project's parts lists them as `pages` in its `homeProjectList` entry: `{ slug, title, preview }`. Each part gets its own address, `/project/<id>/<slug>`, framing its `preview`. Jake asked for this on 2026-10-28, so that Escape on an app closes back to the hub rather than to the board.
+
+- **The two hubs with pages:**
+  - **Ambii Business:** `/project/ambii-business/dashboard`, `/player` and `/phone`.
+  - **Ambii:** `/project/ambii/landing-2018`, `/template-site` and `/site-2019`.
+- **Opening a page from the hub:** a click on a link to a page's file (matched by path) opens that page's address, carrying the link's own query and hash. For example, `dashboard/index.html#/locations` opens `/project/ambii-business/dashboard` on Locations. A link the hub's `pages` don't name (Ambii's "landing page as it stood then") still opens inside the frame.
+- **Closing a page:** Escape, the close button, and the page title's "← Ambii Business" crumb all go back to the hub. The hub, as before, closes to the board or the all-projects overlay. Back and Forward step between projects.
+- **Each page address is a full entry point:** it can be opened directly, gets its own tab title (`Dashboard · Ambii Business (2022)`), and is in the sitemap.
+- **A new page:** add it to `pages` and the hub's links pick it up. Check that its `preview` path is the one the hub links to.
+
 ## How previews run
 
 A preview has to run in the browser with no server code: the host is static, and every `.php` under `public/projects/` is pruned from the build (`scripts/prune-build.mjs`).
@@ -46,7 +58,7 @@ A preview has to run in the browser with no server code: the host is static, and
   - the site's literal `replace` fixes.
 
   Personal Site, Dan James and JAKE's Index work this way; the card's `preview` names the `.static.html` page.
-- **One project, one card:** a folder that holds several sites or games (`motorsport/`, `highschool/`, `cs134/`) gives each its own card, framing that project's own page. Don't put a hub page in front of them; Jake asked on 2026-10-27 for every project to be its own card. Hubs that front one project's parts, like Ambii Business's three apps, are fine. Collections of small works in one category (Flash, Pivot, Sketchbook) stay one card each, as Jake decided the same day.
+- **One project, one card:** a folder that holds several sites or games (`motorsport/`, `highschool/`, `cs134/`) gives each its own card, framing that project's own page. Don't put a hub page in front of them; Jake asked on 2026-10-27 for every project to be its own card. Hubs that front one project's parts, like Ambii Business's three apps, are fine. Each part gets its own address one step in (Hub pages, below). Collections of small works in one category (Flash, Pivot, Sketchbook) stay one card each, as Jake decided the same day.
 - **Galleries and videos:** work that was never a website (animations, drawings, a film, loose Flash movies) gets a hand-written page in its own folder: Pivot, Sketchbook, Escaping Confinement, Flash.
   - **Files:** keep the original files where browsers can show them (GIFs), and convert where they can't (TIFF to JPEG, MPEG to H.264 MP4). Each project's page says which originals were used and what was left out.
   - **Sound:** a page that plays sound pauses the site's music when it starts (see [escaping-confinement.md](escaping-confinement.md)). Under the dev server Claude starts, every preview plays silently ([music.md](../music.md#silent-while-claude-previews)).
@@ -108,5 +120,5 @@ A Greenfoot game has its own steps, which cover all of these: [greenfoot-web.md]
 2. Add an entry to `homeProjectList`, one per project (see One project, one card above), newest first (so a new project becomes the featured tile): `id`, `title`, `date`, `category` (which section of the all-projects overlay it goes in: `website`, `app`, `game`, `art` or `animation`; a new one goes in `projectCategories`), `tags` (what kind of thing it is, shown as pills in the viewer: "Website", "Java Game", "School"…), `download` for a game with a desktop build (see Downloads above), a one-sentence `description` in Jake's voice that says what it is rather than how the preview runs, `preview`, and `image: '/images/projects/<id>.webp'`.
 3. Add a `SHOTS` entry to `scripts/screenshot-projects.mjs`, run `yarn projects:screenshot <id>` and look at the result.
 4. Write `docs/projects/<id>.md` and add it to the table above.
-5. Open `/project/<id>` in the dev server, click around inside the frame, and check the console.
+5. Open `/project/<id>` in the dev server, click around inside the frame, and check the console. A hub for a project's parts lists them as `pages` (Hub pages above).
 6. Check that nothing with credentials comes along: grep the copy for passwords, keys and connection strings, and leave those files out.

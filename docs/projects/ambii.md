@@ -6,6 +6,13 @@ A music app for listening together: everyone's favorite music, with any group, a
 
 The card opens `public/projects/ambii/story/index.html`, a hand-written hub that tells Ambii's story in four short sections and links to or embeds each piece. The 2018 landing page that used to be the preview is the first of them.
 
+Its three sites have their own addresses in the viewer, one step in from the story (`pages` in its `homeProjectList` entry; [README.md](README.md#hub-pages)):
+- `/project/ambii/landing-2018`: the 2018 landing page;
+- `/project/ambii/template-site`: Join the Party!, the template site;
+- `/project/ambii/site-2019`: the 2019 site.
+
+The story's site cards open them there, and Escape returns to the story.
+
 ### The 2018 landing page
 
 `public/projects/ambii/` is the static landing page, copied from the `JakeMotta/ambii_landing_page` repository at commit `41bff74` (2018-10-05). Only the files the page serves are here; its SCSS and gulp sources stay in that repo (`SOURCE.txt` says the same). It runs as-is, with no conversion. The story page links to it as `../index.html`; nothing outside `story/` was changed when the story page was added.

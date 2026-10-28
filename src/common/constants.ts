@@ -186,11 +186,24 @@ export interface HomeProject {
      */
     preview?: string;
     /**
+     * The separate things a hub preview opens, like Ambii Business's three apps. Each gets its own
+     * address under the project's, /project/:id/:slug, which frames its `preview`, so Escape steps
+     * back to the hub instead of closing the viewer. A link in the hub to a page's file opens it
+     * there, keeping the link's own query and hash.
+     */
+    pages?: ProjectPage[];
+    /**
      * A copy to take home, shown as a Download button in the viewer: every game that has a desktop
      * build gets one. `label` is the button's text and `note` the small print under it (what it
      * needs to run). Downloads live in the project's folder under /projects/, usually in download/.
      */
     download?: { url: string; label: string; note?: string };
+}
+
+export interface ProjectPage {
+    slug: string;
+    title: string;
+    preview: string;
 }
 
 /** Cards that held several projects before each got its own, so links to their old ids still land on one. */
@@ -237,6 +250,11 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Web App', 'Mobile App'],
         description: 'Background music for cafés and shops: the dashboard, the web player and the phone app, all working again.',
         preview: '/projects/ambii-business/index.html',
+        pages: [
+            { slug: 'dashboard', title: 'Dashboard', preview: '/projects/ambii-business/dashboard/index.html' },
+            { slug: 'player', title: 'Web player', preview: '/projects/ambii-business/player/index.html#/LBEAN7' },
+            { slug: 'phone', title: 'Phone app', preview: '/projects/ambii-business/mobile/index.html' },
+        ],
     },
     {
         id: 'ambii',
@@ -247,6 +265,11 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Startup', 'App', 'Website'],
         description: 'My startup from 2017 to 2021: a music app for listening together, where everyone in the room gets a say in what plays next.',
         preview: '/projects/ambii/story/index.html',
+        pages: [
+            { slug: 'landing-2018', title: 'Play Music Together', preview: '/projects/ambii/index.html' },
+            { slug: 'template-site', title: 'Join the Party!', preview: '/projects/ambii/story/sites/2019-02/index.static.html' },
+            { slug: 'site-2019', title: 'Your Music. Everywhere.', preview: '/projects/ambii/story/sites/2019-09/alora/index.html' },
+        ],
     },
     {
         id: 'floor-is-lava',

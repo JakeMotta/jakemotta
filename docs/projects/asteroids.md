@@ -28,7 +28,8 @@ vram_texture_compression/for_desktop=true
 vram_texture_compression/for_mobile=false
 html/export_icon=true
 html/canvas_resize_policy=2
-html/head_include="<script>(function(){var done=false;function pause(){if(done)return;done=true;if(window.top!==window)window.top.postMessage({type:'jakemotta:media-playing'},location.origin)}addEventListener('pointerdown',pause);addEventListener('keydown',pause)})();</script>"
+html/head_include="<script>(function(){var connect=AudioNode.prototype.connect;AudioNode.prototype.connect=function(target){if(target instanceof AudioDestinationNode){var c=target.context;if(!c.jakemottaGain){c.jakemottaGain=c.createGain();c.jakemottaGain.gain.value=0.5;connect.call(c.jakemottaGain,target)}arguments[0]=c.jakemottaGain}return connect.apply(this,arguments)}})();</script>
+<script>(function(){var done=false;function pause(){if(done)return;done=true;if(window.top!==window)window.top.postMessage({type:'jakemotta:media-playing'},location.origin)}addEventListener('pointerdown',pause);addEventListener('keydown',pause)})();</script>"
 html/focus_canvas_on_start=true
 progressive_web_app/enabled=false
 
@@ -70,6 +71,8 @@ Godot_v4.5-stable_win64_console.exe --headless --path <copy> --export-release "W
 Then copy `web/` over `public/projects/asteroids/`, leaving out the `*.png.import` files Godot writes beside the icons. Stop `yarn dev` first, since copying into `public/` while it runs can crash it.
 
 **Music.** The game plays its own music, so the `head_include` script asks the site's player to pause (the `jakemotta:media-playing` message) on the first click or key press in the frame, the same way the film and Flash pages do. It was switched to the message after the export, in both the preset above and the published `index.html`, where Godot had copied the line as is.
+
+**Volume.** The game plays at half volume, as Jake asked for every game on 2026-10-28. The first `head_include` script does it without touching the game: it routes anything Godot connects to the speakers through one gain node at 0.5. It was added to the published `index.html` by hand, like the message, and is in the preset above for the next export.
 
 **Hosting notes.**
 - **The `.wasm` type:** `public/.htaccess` doesn't declare one. If the host serves `.wasm` without `application/wasm`, the loader logs a warning and falls back to a slower, non-streaming load; it still runs.

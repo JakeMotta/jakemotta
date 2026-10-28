@@ -78,7 +78,7 @@ const AppContent = () => {
             <Route path="devlog" element={<Devlog />} />
             {/* /project, singular: /projects/ is the standalone sites' folder, which the server keeps from the app */}
             <Route path="project" element={<ProjectGallery />} />
-            <Route path="project/:id" element={<ProjectViewer />} />
+            <Route path="project/:id/:page?" element={<ProjectViewer />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

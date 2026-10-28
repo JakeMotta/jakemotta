@@ -53,7 +53,28 @@ Each game's `index.html` is hand-written, like the CheerpJ ones: a poster and a 
 - **Running:** the game starts running at once, with no Run bar. Under it, Pause/Play and Start over (Greenfoot's Reset: a new start world). The canvas takes keyboard focus on start, so the keys work without a click.
 - **Size:** the canvas is the world's size and is scaled down by CSS to fit a narrower screen; clicks are mapped back through the scale. A game whose worlds differ in size (Pokémon: an 800×600 town, a 600×400 title and battle) gets `onResize(width, height)` from the host when the world changes, and its page shows each world at its own scale, centred in the largest one's frame, as Greenfoot's viewer did.
 - **Music:** the first time the game plays a sound, the page posts `jakemotta:media-playing` to the site's player, as the CheerpJ pages did on Play. A game with no sound leaves the music alone without a setting.
+- **Sound follows the buttons, as in Greenfoot** (`host.js`, since 2026-10-28):
+  - **Start over** stops every sound before the start world is built again. Before that, the old world's music kept playing under the new world's, so isGuy's songs doubled up on every Start over.
+  - **Pause** pauses whatever is playing, and **Play** picks it up again.
+  - A game's own `stop()` or `pause()` takes a sound out of that list.
+- **Half volume:** every game plays at half the volume it sets, as Jake asked on 2026-10-28. `VOLUME` in `host.js` multiplies each sound's own volume, so isGuy's music, which the game sets to 50, plays at 25%. Asteroids, the one other game with sound, does the same through a gain node ([asteroids.md](asteroids.md)).
 - **`#play`** starts it without a click, for `yarn projects:screenshot`.
+
+## Fixing a game's own bugs
+
+Fix a bug that Greenfoot plays the same way only when Jake asks for it, as he did for NinjaDonut's on 2026-10-28 ([ninjadonut-game.md](ninjadonut-game.md#fixes)). The original files and jar stay as they are. Instead:
+
+1. **Copy** each class's `.java` into `demos/greenfoot/fixes/<id>/`, unchanged.
+2. **Edit the copy.** Start the file with a line saying it's a fixed copy, and mark every change with a `FIXED:` comment that says what was wrong.
+3. **Compile and pack** the copies against the game's jar, with the JDK in `~/.jdks/` (Java 8 classes, as the games are):
+   ```bash
+   javac --release 8 -encoding UTF-8 -cp public/projects/<id>/<game>.jar -d <empty folder> demos/greenfoot/fixes/<id>/*.java
+   jar --create --no-manifest --date=1980-01-01T00:00:02Z --file public/projects/<id>/fixes.jar -C <that folder> .
+   ```
+4. **Build:** list `fixes.jar` first in the game's `GAMES` entry, since an earlier jar wins. Then run `yarn projects:greenfoot <id>` and check the game (step 5 below).
+5. **Document it:** each change and why, on the game's page.
+
+If the game has no `.java` source, a fix jar can still replace a class's bytecode, as Pokémon's `closed-sign.jar` does, but write down exactly what was changed.
 
 ## Converting a game
 
@@ -71,7 +92,8 @@ The steps that took isGuy, Rebound and NinjaDonut: The Game from their jars and 
 
 **2. Build it.** Add `{ id: '<id>', jars: ['<name>.jar'] }` to `GAMES` in `scripts/build-greenfoot.mjs`. List any small fix jars first: earlier jars win, as Coloris's `game-speed.jar` does. Leave out CheerpJ-only fixes like `browser-timer.jar`. Then run `yarn projects:greenfoot <id>`.
 - **Check:** read its summary line, `<id>: <start world> at speed <n>, <n> images, <n> sounds`. The speed should be what the game was saved at, usually 50.
-- **If it stops on a `java.awt` class** other than `Color` and `Font`, or a Greenfoot call the runtime doesn't have, teach the runtime in `demos/greenfoot/runtime/greenfoot/`. Never change the game's classes. Then rebuild every game in `GAMES` (`yarn projects:greenfoot` with no id), since they share the runtime, and smoke-test them all (step 5).
+- **If it stops on a `java.awt` class** other than `Color` and `Font`, or a Greenfoot call the runtime doesn't have, teach the runtime in `demos/greenfoot/runtime/greenfoot/`. Never change the game's classes to make it build.
+- **A bug that's the game's own**, one Greenfoot plays the same way, is fixed only when Jake asks, and never in the original: see Fixing a game's own bugs below. Then rebuild every game in `GAMES` (`yarn projects:greenfoot` with no id), since they share the runtime, and smoke-test them all (step 5).
 - **Commit** the jar and `web/`. Don't edit `web/` by hand.
 
 **3. Write the page.**

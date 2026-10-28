@@ -43,10 +43,11 @@ const GAMES = [
         id: 'isguy',
         jars: ['isGuyFinal.jar'],
     },
-    // Assembled from the scenario in Ninjai/ (docs/projects/ninjadonut-game.md)
+    // Assembled from the scenario in Ninjai/; fixes.jar fixes the floor, the jump and stuck enemies, from the
+    // sources in demos/greenfoot/fixes/ninjadonut-game/ (docs/projects/ninjadonut-game.md)
     {
         id: 'ninjadonut-game',
-        jars: ['ninjadonut.jar'],
+        jars: ['fixes.jar', 'ninjadonut.jar'],
     },
     {
         // start-at-title.jar opens on the title instead of the town; closed-sign.jar skips text the town drew and

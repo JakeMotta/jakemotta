@@ -1,6 +1,12 @@
 # Greenfoot games without Java
 
-How the Greenfoot games can run as JavaScript instead of as their jars in CheerpJ. Coloris runs this way since 2026-10-27 ([coloris.md](coloris.md)); isGuy and Pokémon still run through CheerpJ ([isguy.md](isguy.md)), and moving them is the next step (see Not done yet).
+How the Greenfoot games can run as JavaScript instead of as their jars in CheerpJ. Since 2026-10-27 four games run this way:
+- Coloris ([coloris.md](coloris.md));
+- isGuy ([isguy.md](isguy.md));
+- Rebound ([rebound.md](rebound.md));
+- NinjaDonut: The Game ([ninjadonut-game.md](ninjadonut-game.md)).
+
+Jake chose this route after comparing it with a hand port and with CheerpJ on Rebound. Pokémon still runs through CheerpJ (see Not done yet).
 
 ## Why
 
@@ -13,11 +19,12 @@ On 2026-10-27, after the speed fixes in [isguy.md](isguy.md#speed), Jake still f
 
 The games use almost nothing from Java beyond Greenfoot's own API. Scanning the three jars' classes, everything else they touch is `java.lang`, `java.util` lists, `System.out`, and `java.awt.Color` and `java.awt.Font` for drawing text and filling shapes. So the game's compiled classes can be compiled again, ahead of time, into JavaScript, as long as Greenfoot itself is replaced with something that draws on a canvas. That is what greenfoot.org has done with uploaded scenarios since 2017, with the same compiler, TeaVM. Its conversion code isn't published, so this is our own.
 
-Two other games on the site run as JavaScript by hand-translation instead: Rebound, translated class by class onto `greenfoot.js` ([rebound.md](rebound.md)), and The Floor is Lava, which isn't Greenfoot but JOGL, translated from its bytecode ([floor-is-lava.md](floor-is-lava.md)). This route needs no translating, so it scales to isGuy's 72 classes and Pokémon's 65. Rebound is built this way too (`teavm.html`), to compare with its hand port, which its card still frames; the two ran equally fast ([rebound.md](rebound.md#compared-with-the-coloris-way)).
+The Floor is Lava runs as JavaScript by hand-translation instead: it isn't Greenfoot but JOGL, translated from its bytecode ([floor-is-lava.md](floor-is-lava.md)). Rebound was hand-translated first too, onto `greenfoot.js`; on 2026-10-27 it was built this way as well, ran just as fast, and Jake picked this version for its card, keeping the hand port as `port.html` ([rebound.md](rebound.md#compared-with-the-coloris-way)). This route needs no translating, so it scales to isGuy's 72 classes and Pokémon's 65.
 
 - **[TeaVM](https://teavm.org/)** (0.12) compiles Java bytecode to JavaScript. It needs no source: it reads the `.class` files.
 - **The runtime**, `demos/greenfoot/runtime/greenfoot/`, is our own Java implementation of Greenfoot's API (`World`, `Actor`, `GreenfootImage`, `Greenfoot`, `GreenfootSound`, `MouseInfo`, `Color`, `Font`), written against Greenfoot 3.0.4's classes in the jars. The rules that change how a game plays were copied from that bytecode: an actor's image is centred on its cell, the bounding box uses Greenfoot's own integer arithmetic, boxes touch only when they overlap (right and bottom edges exclusive), the world acts before its actors, actors act and paint in the order they were added unless `setActOrder` or `setPaintOrder` say otherwise (unlisted classes paint below), a background smaller than the world is tiled on white, an actor without an image shows the Greenfoot logo, keys pressed during an act still count as down for that act, and the speed slider's delay is Greenfoot's formula (speed 50 is an act every 16.2 ms).
 - **The browser side**, `demos/greenfoot/host.js`, is plain JavaScript: canvases, images, keyboard and mouse, sound, and the frame loop. The Java calls it through `@JSBody` methods in `Host.java`. Images are passed around as handles (an `<img>` or a `<canvas>`), copied only when drawn on, as Greenfoot does.
+- **A start world that switches away:** if the start world's constructor calls `Greenfoot.setWorld`, the game starts on that world, on Reset too, as in Greenfoot 3. isGuy's `worldOne` opens its title screen this way; until 2026-10-27 the runtime replaced it with `worldOne` once the constructor returned. Rebuilding Coloris with the change gave it new script names and nothing else.
 - **The frame loop** acts at the game's speed on `requestAnimationFrame`: once a frame when the speed is within 10% of the display's rate (speed 50 on a 60 Hz screen), otherwise as many acts as the time allows, up to 8 a frame. It paints after any frame that acted.
 - **`java.awt.Color` and `java.awt.Font`** don't exist in a browser. The build renames them to `greenfoot.Color` and `greenfoot.Font` in the game's classes (a constant-pool rewrite, nothing else changed), and those two classes carry both Greenfoot 3's API and the AWT one old scenarios used. Any other `java.awt` class stops the build with its name.
 - **`System.out` is quiet.** The games' debug prints went to a Java console nobody saw; in the browser they would fill the console every act (Coloris prints Huey's color 60 times a second). `System.err` still prints.
@@ -58,7 +65,8 @@ Not measured: on a real phone.
 
 ## Not done yet
 
-- **isGuy and Pokémon.** Both need what Coloris didn't: sound (isGuy's six songs and its effects, Pokémon's `BattleMusic3.mp3`, which Greenfoot decoded with JLayer and a browser plays itself), mouse menus (isGuy), `drawString` and fonts (both), and Pokémon's `start-at-title.jar` and `closed-sign.jar`, which the build applies like any jar in the list. Each is a `GAMES` entry, a page like Coloris's, and checking every level against the CheerpJ version. `cheerpj.html` stays beside each page until then.
+- **Pokémon.** It needs its `BattleMusic3.mp3` to play (Greenfoot decoded it with JLayer; a browser plays it itself), and its `start-at-title.jar` and `closed-sign.jar`, which the build applies like any jar in the list. That's a `GAMES` entry, a page like the others, and checking it against the CheerpJ version. Its `index.html` stays the CheerpJ page until then.
+- **isGuy's other levels.** It moved on 2026-10-27 with level 1, its title screen and its sounds checked; the other four levels and the menus haven't been compared with `cheerpj.html` yet ([isguy.md](isguy.md)).
 - **Touch controls.** The games still need a keyboard. On-screen arrows that set the same keys would make them playable on a phone.
 - **What's left of CheerpJ.** Once no page uses it, the CheerpJ license note in [README.md](README.md) and CLAUDE.md can go, and so can `browser-timer.jar` and the other CheerpJ-only fix jars (they'd stay in the repo as part of the record).
 

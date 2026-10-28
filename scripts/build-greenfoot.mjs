@@ -33,10 +33,20 @@ const GAMES = [
         id: 'coloris',
         jars: ['game-speed.jar', 'coloris.jar'],
     },
-    // Built to compare with Rebound's hand port (docs/projects/rebound.md), from the jar its CheerpJ copy runs
+    // From the jar its CheerpJ copy runs (docs/projects/rebound.md)
     {
         id: 'rebound',
         jars: ['java/rebound.jar'],
+    },
+    // browser-timer.jar is a CheerpJ-only fix, so only the original jar
+    {
+        id: 'isguy',
+        jars: ['isGuyFinal.jar'],
+    },
+    // Assembled from the scenario in Ninjai/ (docs/projects/ninjadonut-game.md)
+    {
+        id: 'ninjadonut-game',
+        jars: ['ninjadonut.jar'],
     },
 ];
 

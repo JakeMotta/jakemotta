@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- Rebound's hand port, kept to compare (compare.html) after Jake picked the compiled version (index.html) for the card. TargetFinder/ is the scenario as it
+     came out of Rebound.gfar, unchanged; rebound.js is its Java translated class by class, and greenfoot.js the parts of
+     Greenfoot it needs. docs/projects/rebound.md explains how and why. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rebound</title>
+<style>
+    html, body { margin: 0; background: #141414; color: #eee; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 20px 16px 32px; box-sizing: border-box; }
+    main { width: min(100%, 600px); margin: 0 auto; }
+    h1 { font-size: 26px; font-weight: 800; line-height: 1.2; margin: 0 0 2px; }
+    h2 { font-size: 18px; font-weight: 800; margin: 26px 0 8px; }
+    p { margin: 0; }
+    a { color: #fff; }
+    .meta { color: #999; margin-bottom: 14px; }
+    .frame { position: relative; border-radius: 10px; overflow: hidden; background: #fff; }
+    canvas { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; touch-action: none; cursor: crosshair; outline: none; }
+    .error { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 24px; background: rgba(0, 0, 0, .85); color: #fff; text-align: center; font-weight: 700; }
+    .error.shown { display: flex; }
+    .bar { display: flex; gap: 8px; margin-top: 10px; }
+    .bar button {
+        border: 0; border-radius: 8px; padding: 7px 16px; background: #2a2a2a; color: #fff; font: 700 15px/1.2 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        cursor: pointer; transition: transform .25s cubic-bezier(.34, 1.56, .64, 1), background .15s;
+    }
+    .bar button:hover { background: #383838; transform: translateY(-1px) rotate(-2deg); }
+    .bar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .hint { margin-top: 12px; padding: 10px 14px; background: #222; border-radius: 8px; color: #ccc; font-size: 15px; }
+    .hint strong { color: #fff; }
+    dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+    dt { font-weight: 700; white-space: nowrap; }
+    dd { margin: 0; color: #ccc; }
+    kbd { display: inline-block; min-width: 1.4em; padding: 1px 6px; border: 1px solid #555; border-bottom-width: 2px; border-radius: 5px; background: #222; font: 600 14px/1.4 ui-monospace, Consolas, monospace; text-align: center; color: #fff; }
+    .note { margin-top: 22px; color: #999; font-size: 14px; }
+    .note p + p { margin-top: 8px; }
+    @media (prefers-reduced-motion: reduce) { .bar button, .bar button:hover { transition: none; transform: none; } }
+</style>
+</head>
+<body>
+<main>
+    <h1>Rebound</h1>
+    <p class="meta">Greenfoot game · 2013 · unfinished · no sound</p>
+
+    <div class="frame">
+        <canvas id="game" width="600" height="400" tabindex="0" aria-label="Rebound"></canvas>
+        <div class="error" id="error"></div>
+    </div>
+    <div class="bar">
+        <button type="button" id="pause">Pause</button>
+        <button type="button" id="reset">Reset</button>
+    </div>
+    <p class="hint">Aim with the mouse and click to shoot. Bank the ball off the walls into the target.</p>
+
+    <h2>Controls</h2>
+    <dl>
+        <dt>Mouse</dt><dd>Aim. The further away you point, the harder the shot</dd>
+        <dt>Click</dt><dd>Shoot</dd>
+        <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Look around the level (or <kbd>A</kbd> <kbd>D</kbd>)</dd>
+        <dt><kbd>R</kbd></dt><dd>Start the level over</dd>
+    </dl>
+
+    <div class="note">
+        <p>A bounce-shot game I made in Greenfoot in April 2013. You get two shots to bank the ball into the target on the first level, and three on the second. That's as far as it goes: the second level's target doesn't do anything yet, and neither does the Retry button, so press R to go again.</p>
+        <p>On a phone, drag to aim and let go to shoot.</p>
+    </div>
+</main>
+<script src="greenfoot.js"></script>
+<script src="rebound.js"></script>
+<script>
+(function () {
+    var canvas = document.getElementById('game');
+    var pause = document.getElementById('pause');
+    var error = document.getElementById('error');
+
+    window.greenfoot.start(canvas, {
+        images: 'TargetFinder/images/',
+        classImages: window.rebound.classImages,
+        world: window.rebound.world,
+        // project.greenfoot's simulation.speed=50, Greenfoot's default: at most one act every 16.2 ms
+        actsPerSecond: 61.6,
+        onError: function (e) {
+            console.error(e);
+            error.textContent = 'The game stopped: ' + e.message + '. Press Reset to start again.';
+            error.classList.add('shown');
+            pause.textContent = 'Run';
+        },
+    }).then(function (game) {
+        game.run();
+        pause.addEventListener('click', function () {
+            if (game.isRunning()) game.pause();
+            else game.run();
+            pause.textContent = game.isRunning() ? 'Pause' : 'Run';
+        });
+        document.getElementById('reset').addEventListener('click', function () {
+            error.classList.remove('shown');
+            game.reset();
+            game.run();
+            pause.textContent = 'Pause';
+            canvas.focus();
+        });
+    });
+})();
+</script>
+</body>
+</html>

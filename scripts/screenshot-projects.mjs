@@ -70,16 +70,20 @@ const SHOTS = [
     { id: 'worxxx', url: '/projects/motorsport/worxxx/index.static.html', settle: 2500 },
     // The page opens on just its header; the About panel has his photo and story
     { id: 'noah-garza', url: '/projects/motorsport/noah-garza/index.static.html', settle: 2500, width: 1000, run: 'aboutDiv()' },
-    // The Java games: their pages before Play, with the title-screen poster (the game itself is black until Run)
+    // Coloris and Pokémon: their pages before Play, with the poster
     { id: 'coloris', url: '/projects/coloris/index.html', settle: 2000 },
-    { id: 'isguy', url: '/projects/isguy/index.html', settle: 2000 },
+    // The title screen, once its opening wipe has passed; #play starts it without a click
+    { id: 'isguy', url: '/projects/isguy/index.html#play', settle: 5000 },
+    // A few seconds in, once the first enemy donut has run in
+    { id: 'ninjadonut-game', url: '/projects/ninjadonut-game/index.html#play', settle: 6000 },
     { id: 'greenfoot-pokemon', url: '/projects/greenfoot-pokemon/index.html', settle: 2000 },
-    // Mid-shot, with the ball's trail behind it: aim down and to the right, then click
+    // Mid-shot, with the ball's trail behind it: aim down and to the right, then click. A synthetic pointer can't be
+    // captured, so capture is stubbed out first, or the host's press handler would throw before recording the click.
     {
         id: 'rebound',
-        url: '/projects/rebound/index.html',
-        settle: 1200,
-        run: "const c = document.getElementById('game'), b = c.getBoundingClientRect(), p = (type) => c.dispatchEvent(new PointerEvent(type, { pointerType: 'mouse', clientX: b.left + (420 * b.width) / 600, clientY: b.top + (330 * b.height) / 400, buttons: type === 'pointerdown' ? 1 : 0, bubbles: true })); setTimeout(() => p('pointermove'), 300); setTimeout(() => p('pointerdown'), 500)",
+        url: '/projects/rebound/index.html#play',
+        settle: 1700,
+        run: "const q = () => document.querySelector('#frame canvas'), p = (type) => { const c = q(), b = c.getBoundingClientRect(); c.setPointerCapture = () => {}; c.dispatchEvent(new PointerEvent(type, { pointerType: 'mouse', clientX: b.left + (420 * b.width) / 600, clientY: b.top + (330 * b.height) / 400, buttons: type === 'pointerdown' ? 1 : 0, bubbles: true })); }; setTimeout(() => p('pointermove'), 800); setTimeout(() => p('pointerdown'), 1000)",
     },
 ];
 

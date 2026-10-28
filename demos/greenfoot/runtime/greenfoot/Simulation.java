@@ -24,6 +24,9 @@ public final class Simulation {
 
     private static WorldFactory factory;
     private static World world;
+    // While the start world is being built: the world its constructor switched to, if any
+    private static boolean creating;
+    private static World switchedTo;
     private static boolean running;
     private static boolean dirty = true;
     private static int speed;
@@ -54,7 +57,7 @@ public final class Simulation {
         factory = worldFactory;
         setSpeed(initialSpeed);
         try {
-            setWorld(factory.create());
+            setWorld(createStartWorld());
         } catch (Throwable e) {
             fail(e);
             return;
@@ -86,7 +89,29 @@ public final class Simulation {
         return cls == null || cls.isInstance(object);
     }
 
+    /**
+     * Builds the start world. A constructor that switches to another world with Greenfoot.setWorld gets that world, as
+     * in Greenfoot 3: isGuy's worldOne opens its title screen this way.
+     */
+    private static World createStartWorld() {
+        creating = true;
+        switchedTo = null;
+        try {
+            World created = factory.create();
+            return switchedTo != null ? switchedTo : created;
+        } finally {
+            creating = false;
+            switchedTo = null;
+        }
+    }
+
     static void setWorld(World newWorld) {
+        if (creating) {
+            if (newWorld != null) {
+                switchedTo = newWorld;
+            }
+            return;
+        }
         if (newWorld == null || newWorld == world) {
             return;
         }
@@ -198,7 +223,7 @@ public final class Simulation {
 
     private static void reset() {
         try {
-            World fresh = factory.create();
+            World fresh = createStartWorld();
             boolean wasRunning = running;
             setRunning(false);
             world = fresh;

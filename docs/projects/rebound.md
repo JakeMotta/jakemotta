@@ -6,7 +6,14 @@ Jake sent it on 2026-10-27 as `Rebound.gfar` (174 KB, 84 files) and asked for it
 
 ## How it runs
 
-Unlike isGuy and Pokémon, which run their jars through CheerpJ ([isguy.md](isguy.md)), and Coloris, whose own compiled classes run as JavaScript ([greenfoot-web.md](greenfoot-web.md)), Rebound is a port: `greenfoot.js` is the part of Greenfoot 2.2.1 the game uses, written for a canvas, and `rebound.js` is the game's Java translated into JavaScript class by class. The page loads in a moment, scales to any width, and takes touch.
+The card frames `index.html`: the game's own 2013 classes, unchanged, compiled to JavaScript the way Coloris, isGuy and NinjaDonut: The Game run ([greenfoot-web.md](greenfoot-web.md)). It got there by way of a comparison the same day:
+- **First, a hand port:** the game written out again in JavaScript (below), now `port.html`.
+- **Then the comparison:** Jake asked to see it beside the Coloris way, and picked the compiled version (see Compared with the Coloris way). Both JavaScript versions ran equally fast, and the compiled one is his original code rather than a retyped copy.
+- **What's left over:** `port.html`, the CheerpJ copy in `java/` and `compare.html` stay for the record. None is linked from the site, and the game isn't changed for phones.
+
+## The hand port (`port.html`)
+
+Unlike the CheerpJ games ([isguy.md](isguy.md)) and the compiled ones ([greenfoot-web.md](greenfoot-web.md)), the hand port is a translation: `greenfoot.js` is the part of Greenfoot 2.2.1 the game uses, written for a canvas, and `rebound.js` is the game's Java translated into JavaScript class by class. The page loads in a moment, scales to any width, and takes touch.
 
 **Why not Greenfoot's own conversion.** Greenfoot's only route to HTML5 is publishing the scenario on greenfoot.org: the site converts it on its own servers with TeaVM and its own JavaScript version of the Greenfoot API, and the conversion isn't available to run anywhere else. Greenfoot 3.8.2 (December 2023) also dropped exporting a standalone jar. Going that way would have meant publishing the game on greenfoot.org under Jake's account, then framing it from there. Greenfoot 3 also wouldn't compile the 2013 code as it is, because it uses `java.awt.Color` and `Font`, which Greenfoot 3 replaced with its own. CheerpJ would have worked, as it did for Coloris then, but the game is small enough (21 classes, about 1,700 lines, only basic drawing) that a port came out lighter and truer to a browser. The same day, greenfoot.org's route was rebuilt here for Coloris: TeaVM and our own Greenfoot runtime, compiling the game's unchanged classes, with `Color` and `Font` renamed in the bytecode ([greenfoot-web.md](greenfoot-web.md)). Rebound's classes could likely go through it too, which hasn't been tried.
 
@@ -46,11 +53,11 @@ A few locals that shared a class's name are renamed, and the four walls (`bF`, `
 ## Compared with the Coloris way
 
 On 2026-10-27 Jake asked to see the hand port beside the same game made the way Coloris runs. Coloris had just moved from CheerpJ to its classes compiled to JavaScript ([greenfoot-web.md](greenfoot-web.md)), and Rebound now has both:
-- `teavm.html`: the compiled version, like Coloris's page now;
+- `index.html` (`teavm.html` until Jake picked it): the compiled version, like Coloris's page;
 - `java/`: the CheerpJ version, the way Coloris ran before;
 - `compare.html`: the port and the compiled version side by side, with the CheerpJ one under them.
 
-None of these is linked from the site: the card still frames the port. Open `/projects/rebound/compare.html` directly.
+Jake then picked the compiled version for the card, and the hand port moved to `port.html`. Neither `java/` nor `compare.html` is linked from the site; open `/projects/rebound/compare.html` directly.
 
 **`java/rebound.jar`** (554 KB, 296 entries) is what both of the others are made from. It was assembled the way `coloris.jar` was ([coloris.md](coloris.md)), with a Python script (`zipfile`; not kept), and nothing in it was changed or recompiled. In it:
 - **The game:** the 24 `.class` files and `project.greenfoot` from `TargetFinder/`, and its eight `.png` images under `images/`. The `.java`, `.ctxt` and `.fla` files are left out.
@@ -59,7 +66,7 @@ None of these is linked from the site: the card still frames the port. Open `/pr
 
 **The compiled version.**
 - **The build:** `rebound` is an entry in `scripts/build-greenfoot.mjs`'s `GAMES`, reading `java/rebound.jar`, and `yarn projects:greenfoot rebound` writes `web/`. That's a 195 KB game script, the shared host and 7 images; the build output is committed and isn't edited by hand.
-- **The page:** `teavm.html` is Coloris's page with the game's name, controls and note swapped in. It borrows `java/poster.webp`.
+- **The page:** `index.html` is Coloris's page with the game's name, controls and note swapped in. It borrows `java/poster.webp`. It says plainly that a phone needs a mouse: nothing was added for touch, as Jake asked.
 - **The runtime:** it ran Rebound without any change. `drawString`, fonts, transparency, ovals and the paint order already worked.
 
 **The CheerpJ version.** `java/browser-timer.jar` is Coloris's, unchanged ([isguy.md](isguy.md#speed)). There's no `game-speed.jar`, since Rebound was saved at speed 50 already. `java/index.html` is Coloris's old CheerpJ page with the game swapped in, and the CheerpJ credit kept. `java/poster.webp` is the starting view, cut from a screenshot of the game in CheerpJ.
@@ -81,26 +88,34 @@ The Browser pane is no good for timing any of this. When it's hidden its page ru
 
 ## Files
 
-- `TargetFinder/` is the whole `.gfar`, unpacked and unchanged: the 21 `.java` files with their compiled `.class` and `.ctxt` files, `project.greenfoot`, `README.TXT` (BlueJ's empty template), `soundindex.list` and `images/`, `.fla` sources included. The page reads its images from `TargetFinder/images/`.
-- `greenfoot.js` and `rebound.js`: the port, written on 2026-10-27.
-- `index.html`: the page, with the canvas, the controls and a note in Jake's voice. The game has no sound, so it leaves the site's music playing.
-- `teavm.html` and `web/`, `java/`, and `compare.html`: the compiled version, the CheerpJ version and the side-by-side page (see Compared with the Coloris way).
+- `TargetFinder/` is the whole `.gfar`, unpacked and unchanged: the 21 `.java` files with their compiled `.class` and `.ctxt` files, `project.greenfoot`, `README.TXT` (BlueJ's empty template), `soundindex.list` and `images/`, `.fla` sources included.
+- `index.html` and `web/`: the compiled version, which the card frames.
+- `greenfoot.js`, `rebound.js` and `port.html`: the hand port, written on 2026-10-27. The page reads its images from `TargetFinder/images/`.
+- `java/` and `compare.html`: the CheerpJ version and the side-by-side page (see Compared with the Coloris way).
+- None has sound, so none pauses the site's music.
 
 ## Verified
 
-On 2026-10-27, in headless Chrome driven over the DevTools protocol, with the page opened from disk:
+**The compiled version**, on 2026-10-27, in headless Chrome against `yarn dev`, and booted inside the site's project viewer at its full 600×400:
+- aiming, shooting, the bounces and the trail, the same as the other two;
+- full speed (the comparison table);
+- no console errors.
+
+**The hand port**, earlier the same day, with the page opened from disk:
 - **The first level:** aiming, shooting, bouncing and the trail; scrolling both ways mid-shot (no error); a second shot that happened to land, switching to level two with the score carried over.
 - **Running out of shots:** the dim screen falls, Retry slides in, it lights up on hover, and clicking it does nothing. R restarts the level.
 - **Level two:** it draws, and scrolls to show its target.
 - **Touch** emulation: drag to aim, lift to shoot.
 - **No console errors.**
 
-It hasn't been checked inside the site's viewer. The dev server this was tested with served another checkout, so the test opened the file from disk instead.
+It was later checked in the site's viewer too, when it was still the card's page: aiming, shooting and arrow-key scrolling.
 
 ## Card image
 
-`public/images/projects/rebound.webp` shows a shot in flight. Its `SHOTS` entry in `scripts/screenshot-projects.mjs` aims and clicks with synthetic pointer events, then waits 1.2 s. The shapes falling behind the level are random, so every retake differs.
+`public/images/projects/rebound.webp` shows a shot in flight in the compiled version. Its `SHOTS` entry in `scripts/screenshot-projects.mjs` opens `index.html#play`, aims and clicks with synthetic pointer events, and waits 1.7 s.
+- **Pointer capture:** the entry stubs out the canvas's `setPointerCapture` first. A synthetic pointer can't be captured, so the host's press handler would throw before recording the click.
+- **Every retake differs:** the shapes falling behind the level are random.
 
 ## Download
 
-None yet. Greenfoot never exported Rebound, so there's no desktop build to offer. One could be assembled the way Coloris's was ([coloris.md](coloris.md)): the compiled classes, `project.greenfoot` and `images/` in a jar with the Greenfoot runtime, and a launcher.
+None yet. Greenfoot never exported Rebound. `java/rebound.jar` has the Greenfoot runtime and a manifest, so it could become one, like Coloris's zip ([coloris.md](coloris.md)), once it has been tried on a desktop.

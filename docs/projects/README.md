@@ -21,8 +21,9 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `team-safe` | `/projects/motorsport/team-safe/About.html` | [team-safe.md](team-safe.md) |
 | `coloris` | `/projects/coloris/index.html` (Java compiled to JavaScript) | [coloris.md](coloris.md) |
 | `worxxx` | `/projects/motorsport/worxxx/index.static.html` | [worxxx.md](worxxx.md) |
-| `rebound` | `/projects/rebound/index.html` (Greenfoot, ported to JavaScript) | [rebound.md](rebound.md) |
-| `isguy` | `/projects/isguy/index.html` (Java, through CheerpJ) | [isguy.md](isguy.md) |
+| `ninjadonut-game` | `/projects/ninjadonut-game/index.html` (Greenfoot, compiled to JavaScript) | [ninjadonut-game.md](ninjadonut-game.md) |
+| `rebound` | `/projects/rebound/index.html` (Greenfoot, compiled to JavaScript) | [rebound.md](rebound.md) |
+| `isguy` | `/projects/isguy/index.html` (Greenfoot, compiled to JavaScript) | [isguy.md](isguy.md) |
 | `noah-garza` | `/projects/motorsport/noah-garza/index.static.html` | [noah-garza.md](noah-garza.md) |
 | `sketchbook` | `/projects/sketchbook/index.html` (a hand-written gallery) | [sketchbook.md](sketchbook.md) |
 | `flash` | `/projects/flash/index.html` (a hand-written gallery) | [flash.md](flash.md) |
@@ -52,9 +53,9 @@ A preview has to run in the browser with no server code: the host is static, and
 - **Apps with a real back end** (CS160) get hand-written static pages that fake the back end in JS.
 - **Apps whose source survives** (Ambii Business) are built from that source, with the old API answered by a mock that runs in the browser. The mock and the build tooling live in `demos/`, outside `public/`, and only the build output is published. The apps' own source isn't committed at all, because its upstream repositories are private ([ambii-business.md](ambii-business.md#where-the-source-lives)).
 - **Flash** plays through Ruffle, self-hosted in `public/vendor/ruffle/`.
-- **Java desktop games** (isGuy, Pokémon) run as the original jars through CheerpJ, which loads only when the visitor presses Play. CheerpJ's free Community License covers a personal site only while it loads from `cjrtnc.leaningtech.com` and the page credits it; self-hosting it would need a paid license. How those pages work is in [isguy.md](isguy.md).
-- **Greenfoot games compiled to JavaScript** (Coloris, since 2026-10-27): `yarn projects:greenfoot` compiles the game's own classes, taken unchanged from its jar, with TeaVM against our own Greenfoot runtime in `demos/greenfoot/`, into `public/projects/<id>/web/`. It loads in seconds, runs at full speed and scales to fit. This is the route greenfoot.org uses for published scenarios, rebuilt here. How it works and what's left (isGuy and Pokémon): [greenfoot-web.md](greenfoot-web.md). Coloris's CheerpJ page stays beside it as `cheerpj.html`.
-- **Small Greenfoot games** (Rebound) can be ported instead: `greenfoot.js`, a canvas version of the Greenfoot 2 API, with the game's Java translated class by class beside it and the original scenario kept unchanged ([rebound.md](rebound.md)).
+- **Java desktop games** (Pokémon) run as the original jars through CheerpJ, which loads only when the visitor presses Play. CheerpJ's free Community License covers a personal site only while it loads from `cjrtnc.leaningtech.com` and the page credits it; self-hosting it would need a paid license. How those pages work is in [isguy.md](isguy.md).
+- **Greenfoot games compiled to JavaScript** (Coloris, isGuy, Rebound and NinjaDonut: The Game, since 2026-10-27): `yarn projects:greenfoot` compiles the game's own classes, taken unchanged from its jar, with TeaVM against our own Greenfoot runtime in `demos/greenfoot/`, into `public/projects/<id>/web/`. It loads in seconds, runs at full speed and scales to fit. This is the route greenfoot.org uses for published scenarios, rebuilt here. How it works and what's left (Pokémon): [greenfoot-web.md](greenfoot-web.md). Coloris's and isGuy's CheerpJ pages stay beside them as `cheerpj.html`.
+- **A hand port** of Rebound (`port.html`) is kept only for comparison: its Java translated class by class onto `greenfoot.js`. Jake compared it with the compiled version and CheerpJ on 2026-10-27 and picked the compiled one ([rebound.md](rebound.md)).
 - **Godot games** (Asteroids) are Godot's own web export, with threads off so the static host needs no special headers ([asteroids.md](asteroids.md)).
 - **Java + OpenGL games** can't run in CheerpJ: JOGL needs native libraries. The Floor is Lava is translated into JavaScript from its compiled classes, line for line, and draws its own sprites on a canvas ([floor-is-lava.md](floor-is-lava.md)). Scott Pilgrim still has a recorded clip.
 - **Games that can't run in a browser at all** get a case study of their design and art (Survivor, Fooder).
@@ -72,7 +73,7 @@ Every game with a desktop build has a Download button in the viewer, from the en
 | isGuy | `isguy/isGuyFinal.jar`, the preview's own jar | [isguy.md](isguy.md) |
 | Pokémon | `greenfoot-pokemon/download/pokemon-green-foot-edition.zip`, the jars plus a launcher | [greenfoot-pokemon.md](greenfoot-pokemon.md) |
 
-Three games have none. TapSlayDie isn't out on the App Store or Google Play yet (its site says "Coming soon"); link the store pages once it is. Survivor never had a finished build. Rebound was never exported from Greenfoot; one could be assembled the way Coloris's was ([rebound.md](rebound.md)). The deploy compares files by size only, so a rebuilt download needs a new name, or an explicit `put` in the workflow, to reach the server.
+Four games have none. TapSlayDie isn't out on the App Store or Google Play yet (its site says "Coming soon"); link the store pages once it is. Survivor never had a finished build. Rebound and NinjaDonut: The Game were never exported from Greenfoot. The jars assembled for their builds (`rebound/java/rebound.jar`, `ninjadonut-game/ninjadonut.jar`) haven't been tried on a desktop ([rebound.md](rebound.md), [ninjadonut-game.md](ninjadonut-game.md)). The deploy compares files by size only, so a rebuilt download needs a new name, or an explicit `put` in the workflow, to reach the server.
 - **Live sites** on their own domain (TapSlayDie) are framed at their address. Their document is cross-origin, so the viewer's link handling can't reach inside them.
 
 **Embedded third-party forms stay live.** JotForm embeds (Dan James's contact page, Pistol Art's register page, the 2012 high school page and its NinjaDonut copy) still submit for real. Jake decided on 2026-10-26 to leave them, along with his old contact details on the 2012 pages. Only the sites' own mail handlers are rerouted, because they'd need the PHP that isn't published.

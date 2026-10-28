@@ -13,6 +13,8 @@ type Dock = (typeof DOCKS)[number];
 const STORAGE_KEY = 'jakemotta:player-dock';
 // Past this many pixels a press is a drag, not a click on the controls
 const DRAG_THRESHOLD = 6;
+// How long the music has to stay stopped before the player goes, so the gap between songs doesn't blink it
+const HIDE_DELAY = 1500;
 
 const savedDock = (): Dock => {
     try {
@@ -43,6 +45,8 @@ const dockAt = (x: number, y: number): Dock => {
  * The music, wherever the Now Playing tile is out of sight: a circle of the cover, ringed with the
  * song's progress, that a click opens into the full controls and a click anywhere else closes. Drag it
  * by the cover to any corner or edge middle; it snaps there and stays there on later visits.
+ * With nothing playing it isn't shown, unless it's open (pausing from it doesn't pull it out from under
+ * the pointer) or the song is from YouTube, whose paused video still needs somewhere to sit.
  */
 export const FloatingPlayer = () => {
     const [dock, setDock] = useState<Dock>(savedDock);
@@ -55,6 +59,18 @@ export const FloatingPlayer = () => {
     const streamed = useAudioStore((store) => isStreamed(store.audioUrl));
     // A song from YouTube shows its video here when no player card is in sight
     const inFloating = useVideoStore((store) => store.inFloating);
+    const playing = useAudioStore((store) => store.isPlaying);
+    const [shown, setShown] = useState(playing);
+
+    // Shown as soon as something plays, gone a moment after it stops
+    useEffect(() => {
+        if (playing) {
+            setShown(true);
+            return;
+        }
+        const timer = setTimeout(() => setShown(false), HIDE_DELAY);
+        return () => clearTimeout(timer);
+    }, [playing]);
 
     // Open, a click anywhere else closes it
     useEffect(() => {
@@ -125,6 +141,8 @@ export const FloatingPlayer = () => {
     };
 
     const upward = !dock.startsWith('top');
+
+    if (!shown && !open && !streamed) return null;
 
     return createPortal(
         <div

@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { lazy, useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Devlog, Home, Minecraft, MusicLibrary, ProjectGallery, ProjectViewer } from './components/pages';
-import { ConfigProvider } from 'antd';
-import { ThemeProvider, useTheme, generateRandomHue } from './contexts/ThemeContext';
+import { Home } from './components/pages/home';
+import { ThemeProvider, useTheme, generateRandomHue, applyHue } from './contexts/ThemeContext';
 import { useCommonStore } from './store/common';
 import { TsParticleBackground, MusicPlayer, ListenAlong, YouTubePlayer } from './components/atoms';
 
@@ -10,54 +9,61 @@ import 'antd/dist/reset.css';
 import './global.scss';
 import './App.scss';
 
-const AppContent = () => {
-  const { randomStartHue, primaryDark, setPrimaryColor } = useTheme();
-  // While an overlay is open the cycle rests, which gives a framed project (a Java game above all) the
-  // thread it shares with the board; it picks up where it stopped. The cycle's clock only counts
-  // time it ran, so the hue doesn't jump when it resumes.
-  const overlayOpen = useCommonStore((store) => store.overlayOpen);
-  const cycled = useRef(0);
+// Each overlay is a chunk of its own, so the board, which everyone sees first, loads without them. They're
+// fetched as soon as the browser is idle after that, so opening one doesn't wait on the network.
+const loadLibrary = () => import('./components/pages/music');
+const loadMinecraft = () => import('./components/pages/minecraft');
+const loadDevlog = () => import('./components/pages/devlog');
+const loadGallery = () => import('./components/pages/project-gallery');
+const loadViewer = () => import('./components/pages/project');
+const MusicLibrary = lazy(() => loadLibrary().then((page) => ({ default: page.MusicLibrary })));
+const Minecraft = lazy(() => loadMinecraft().then((page) => ({ default: page.Minecraft })));
+const Devlog = lazy(() => loadDevlog().then((page) => ({ default: page.Devlog })));
+const ProjectGallery = lazy(() => loadGallery().then((page) => ({ default: page.ProjectGallery })));
+const ProjectViewer = lazy(() => loadViewer().then((page) => ({ default: page.ProjectViewer })));
 
+const preloadOverlays = () => [loadLibrary, loadMinecraft, loadDevlog, loadGallery, loadViewer].forEach((load) => load().catch(() => {}));
+
+const AppContent = () => {
   useEffect(() => {
-    if (overlayOpen) return;
+    if ('requestIdleCallback' in window) {
+      const idle = window.requestIdleCallback(preloadOverlays, { timeout: 4000 });
+      return () => window.cancelIdleCallback(idle);
+    }
+    const timer = setTimeout(preloadOverlays, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const { randomStartHue } = useTheme();
+
+  // The hue goes round once every 30s, without pause, even behind an overlay. It's written straight onto
+  // the CSS variables, and only when the whole-degree hue changes, so the page restyles about twelve
+  // times a second and React never re-renders for it. Behind an overlay it moves at the same speed in
+  // 2° steps, half as many restyles, which leaves more of the thread to a framed game; a 2° step on the
+  // overlay's dark panel is too small to see.
+  useEffect(() => {
     const duration = 30000; // 30 seconds in milliseconds
-    let last = performance.now();
+    const start = performance.now();
+    let shown = randomStartHue;
     let frame = 0;
 
     const updateColor = (now: number) => {
-      // Clamp, so a backgrounded tab doesn't leap the hue when it comes back
-      cycled.current += Math.min(now - last, 100);
-      last = now;
-      const progress = (cycled.current % duration) / duration;
-      const hue = (randomStartHue + Math.floor(progress * 360)) % 360;
-      setPrimaryColor(`hsl(${hue}, 40%, 60%)`);
-
-      // Pastel colors (soft, light)
-      // setPrimaryColor(`hsl(${hue}, 70%, 85%)`);
-
-      // Warm colors (rich, vibrant)
-      // setPrimaryColor(`hsl(${hue}, 80%, 65%)`);
-
-      // Earth tones (natural, subdued)
-      // setPrimaryColor(`hsl(${hue}, 30%, 45%)`);
-
-      // Current implementation (balanced)
-      // setPrimaryColor(`hsl(${hue}, 50%, 80%)`);
+      const progress = ((now - start) % duration) / duration;
+      const step = useCommonStore.getState().overlayOpen ? 2 : 1;
+      const hue = (randomStartHue + Math.floor((progress * 360) / step) * step) % 360;
+      if (hue !== shown) {
+        shown = hue;
+        applyHue(hue);
+      }
       frame = requestAnimationFrame(updateColor);
     };
 
     frame = requestAnimationFrame(updateColor);
     return () => cancelAnimationFrame(frame);
-  }, [setPrimaryColor, randomStartHue, overlayOpen]);
+  }, [randomStartHue]);
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: primaryDark,
-        }
-      }}
-    >
+    <>
       <BrowserRouter>
         <Routes>
           {/* The board stays mounted; each opened tile is a route drawn over it */}
@@ -90,7 +96,7 @@ const AppContent = () => {
       {/* Listen along: the YouTube copy of what Jake has on Spotify. Beside the player, so it survives navigation too */}
       <ListenAlong />
 
-    </ConfigProvider >
+    </>
   );
 };
 

@@ -11,16 +11,21 @@ const RING_RADIUS = 25;
 const RING_LENGTH = 2 * Math.PI * RING_RADIUS;
 
 // How far through the song it is, drawn round the cover. Like the visualizer, it's written straight
-// onto the circle every frame through a ref, never through React state.
+// onto the circle through a ref, never through React state, and only when it has moved.
 const ProgressRing = () => {
     const fillRef = useRef<SVGCircleElement>(null);
 
     useEffect(() => {
         let frame = 0;
+        let shown = '';
         const tick = () => {
             const media = useAudioStore.getState().media();
             const progress = media && media.duration ? media.currentTime / media.duration : 0;
-            if (fillRef.current) fillRef.current.style.strokeDashoffset = String(RING_LENGTH * (1 - progress));
+            const offset = (RING_LENGTH * (1 - progress)).toFixed(1);
+            if (fillRef.current && offset !== shown) {
+                fillRef.current.style.strokeDashoffset = offset;
+                shown = offset;
+            }
             frame = requestAnimationFrame(tick);
         };
         frame = requestAnimationFrame(tick);

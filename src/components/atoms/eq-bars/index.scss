@@ -12,5 +12,7 @@
         background: currentColor;
         transform: scaleY(0.2);
         transform-origin: 50% 100%;
+        // Each bar on a layer of its own, so its bounce is the compositor's work and doesn't repaint the page
+        will-change: transform;
     }
 }

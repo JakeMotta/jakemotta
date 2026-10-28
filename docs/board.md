@@ -44,6 +44,8 @@ Playing anything from anywhere also counts as choosing sound. The choice is the 
 
 ## Overlays
 
+**The board rests behind an overlay.** While one is open, the hue cycle in `App.tsx` and the particles pause (`overlayOpen` in `store/common.ts`, which the board sets), and the hue picks up where it stopped when the overlay closes: its clock only counts the time it ran. The board is dimmed then anyway, and a framed project runs on the same browser thread. A Java game in the viewer ran at half speed while they kept going ([projects/isguy.md](projects/isguy.md)). The music's visualizer and eq bars keep moving.
+
 A tile opens as an overlay route drawn over the board, which stays mounted behind it, blurred and `inert`. The routes are children of the board's layout route in `App.tsx`, rendered into its `<Outlet />`. An overlay's path must not match a folder in `public/` (`downloads`, `images`, `music`, `projects`, `vendor`): on the live server a refresh or a shared link would get the folder, not the app. That's why the library is at `/library`, not `/music`, which redirected to a file listing of the audio.
 
 | Route | Page | What it is |

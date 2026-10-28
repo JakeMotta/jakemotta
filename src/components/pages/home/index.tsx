@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { ColorShiftingBackground } from '../../templates';
 import { FloatingPlayer } from '../../atoms';
 import { useAudioStore } from '../../../store/audio';
+import { useCommonStore } from '../../../store/common';
 import { usePageMeta } from '../../../common/seo';
 import { EarsTile, FeaturedTile, HeroTile, ModpackTile, NowPlayingTile, ProjectsTile, SayHiTile, UpNextTile } from './tiles';
 import './index.scss';
@@ -31,6 +32,11 @@ export const Home = () => {
         board.toggleAttribute('inert', overlayOpen);
         board.querySelectorAll('.tile:not(.tile-now)').forEach((tile) => tile.toggleAttribute('inert', waiting));
     }, [overlayOpen, waiting]);
+
+    // Tell the board's animations (the hue cycle in App, the particles) to rest while an overlay is up
+    useEffect(() => {
+        useCommonStore.setState({ overlayOpen });
+    }, [overlayOpen]);
 
     // On phones the Now Playing tile scrolls away; the floating player takes over until it's back
     useEffect(() => {

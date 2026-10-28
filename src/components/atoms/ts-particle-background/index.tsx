@@ -1,14 +1,23 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { type Container, type ISourceOptions, MoveDirection, OutMode } from "@tsparticles/engine";
 import { loadAll } from "@tsparticles/all"; // if you are going to use `loadAll`, install the "@tsparticles/all" package too.
 import React from "react";
+import { useCommonStore } from "../../../store/common";
 // import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
 // import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 // import { loadBasic } from "@tsparticles/basic"; // if you are going to use `loadBasic`, install the "@tsparticles/basic" package too.
 
 const TsParticleBackground = React.memo(() => {
   const [init, setInit] = useState(false);
+  const containerRef = useRef<Container | undefined>(undefined);
+  // Paused behind an overlay, like the hue cycle in App: the board is dimmed, and a framed project needs the thread
+  const overlayOpen = useCommonStore((store) => store.overlayOpen);
+
+  useEffect(() => {
+    if (overlayOpen) containerRef.current?.pause();
+    else containerRef.current?.play();
+  }, [overlayOpen]);
 
   // this should be run only once per application lifetime
   useEffect(() => {
@@ -26,7 +35,8 @@ const TsParticleBackground = React.memo(() => {
   }, []);
 
   const particlesLoaded = async (container?: Container): Promise<void> => {
-    console.log(container);
+    containerRef.current = container;
+    if (useCommonStore.getState().overlayOpen) container?.pause();
   };
 
   const options: ISourceOptions = useMemo(

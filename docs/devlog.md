@@ -5,7 +5,7 @@
 | Tile | What it shows | Where it comes from |
 | --- | --- | --- |
 | **Updates** (left, both rows on a desktop) | Jake's posts, newest first | Markdown files in `src/devlog/posts/` |
-| **Me & Claude** | Hours, tokens and sessions; a bar per day since the first session (hours or tokens, stacked by project, with a hover/focus tooltip); each project's totals; when it was last updated | `src/devlog/stats.json` |
+| **Me & Claude** | Hours, tokens and sessions; a chart since the first session (hours or tokens, stacked by project, with a hover/focus tooltip), a bar per day, week (Monday on) or month, which Jake asked for on 2026-10-28; each project's totals; when it was last updated | `src/devlog/stats.json` |
 | **Latest commits** | The newest commits of the public repositories, linked to GitHub | `src/devlog/stats.json` |
 
 On tablets and phones the tiles stack and the overlay scrolls.

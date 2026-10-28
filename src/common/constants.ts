@@ -114,23 +114,6 @@ export const musicList: MusicItemProps[] = [
     },
 ]
 
-export const favoriteArtists: MusicItemProps[] = [
-    {
-        image: '/images/music/marceline.jpg',
-        title: 'S3RL',
-        description: '',
-        url: '/music/marceline.mp3',
-        date: '2021'
-    },
-    {
-        image: '/images/music/super_bitch.jpg',
-        title: 'WeAreCastor',
-        description: '',
-        url: '/music/super_bitch.wav',
-        date: '2021'
-    },
-]
-
 /**
  * Songs that play from YouTube, in the shuffle with everything else. `url` is `youtube:` and the
  * video's ID (the part after `v=` in its link). Leave `image` empty to use the video's thumbnail,

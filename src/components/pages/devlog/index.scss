@@ -306,9 +306,9 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
     &__bar {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
-        justify-content: space-between;
-        gap: 10px;
+        gap: 8px 10px;
     }
 
     &__toggle {
@@ -338,6 +338,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     &__peak {
+        margin-left: auto;
         font-size: 12px;
         font-weight: 800;
         opacity: 0.85;
@@ -356,6 +357,15 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         gap: 2px;
         padding: 0;
         list-style: none;
+
+        // Fewer, wider bars get more room between them
+        &--week {
+            gap: 6px;
+        }
+
+        &--month {
+            gap: 14px;
+        }
 
         li {
             display: flex;

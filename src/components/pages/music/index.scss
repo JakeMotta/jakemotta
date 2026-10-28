@@ -188,25 +188,28 @@
         }
     }
 
-    &__grid {
-        display: grid;
+    // The songs (or artists) as a list of rows (atoms/music-row), scrolling inside the panel
+    &__rows {
+        display: flex;
         min-height: 0;
         flex: 1;
-        align-content: start;
-        gap: 18px;
-        // Room for the playing song's 8px ring and the hover lift, which the scrolling box would otherwise cut;
-        // the margin takes the same room back so the grid stays where it was
-        margin: -8px -8px 0;
+        flex-direction: column;
+        gap: 4px;
+        // Room for the hover nudge and the focus rings, which the scrolling box would otherwise cut;
+        // the margin takes the same room back so the list stays where it was
+        margin: -4px -8px 0;
         overflow: auto;
-        padding: 12px 12px 28px;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        padding: 4px 8px 28px;
+        list-style: none;
 
         @media (max-width: 899px) {
             overflow: visible;
         }
+    }
 
-        @media (max-width: 639px) {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
+    &__empty {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 800;
     }
 }

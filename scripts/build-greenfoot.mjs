@@ -38,6 +38,12 @@ const GAMES = [
         id: 'rebound',
         jars: ['java/rebound.jar'],
     },
+    {
+        // start-at-title.jar opens on the title instead of the town; closed-sign.jar skips text the town drew and
+        // threw away every act (docs/projects/greenfoot-pokemon.md)
+        id: 'greenfoot-pokemon',
+        jars: ['start-at-title.jar', 'closed-sign.jar', 'V10.jar'],
+    },
 ];
 
 const TEAVM_VERSION = '0.12.0';
@@ -68,8 +74,9 @@ const TEAVM_JARS = [
     'joda-time/joda-time/2.12.2/joda-time-2.12.2.jar',
 ]);
 
-// The jar's Greenfoot itself, which our runtime replaces
-const GREENFOOT_PREFIXES = ['greenfoot/', 'bluej/', 'javazoom/', 'META-INF/'];
+// The jar's Greenfoot itself, which our runtime replaces, and the resource folders, where an old copy of a project
+// can sit with its classes (Pokémon's images/PokemonGameV1/)
+const GREENFOOT_PREFIXES = ['greenfoot/', 'bluej/', 'javazoom/', 'META-INF/', 'images/', 'sounds/'];
 const IMAGE = /\.(png|gif|jpe?g|bmp)$/i;
 const SOUND = /\.(wav|mp3|aiff?|au|mid|ogg)$/i;
 const RENAMES = { 'java/awt/Color': 'greenfoot/Color', 'java/awt/Font': 'greenfoot/Font' };
@@ -233,6 +240,11 @@ async function build(game, tools, teavm) {
         const awtLeft = new Set();
         for (const [name, bytes] of Object.entries(files)) {
             if (!name.endsWith('.class') || GREENFOOT_PREFIXES.some((prefix) => name.startsWith(prefix)) || name.includes('..')) continue;
+            // Not a class name: a stray copy, like Pokémon's "BattleWorld (Lost Boy's conflicted copy 2012-05-28).class"
+            if (!/^[\w$/]+\.class$/.test(name)) {
+                console.log(`  ${game.id}: skipping ${name}`);
+                continue;
+            }
             const rewritten = rewriteClass(bytes, renameAwt);
             for (const text of rewritten.strings) {
                 strings.add(text);

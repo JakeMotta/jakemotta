@@ -60,7 +60,25 @@ public final class Simulation {
             return;
         }
         setRunning(true);
+        Host.exposeDump(Simulation::dumpWorld);
         Host.run(Simulation::frame);
+    }
+
+    /** One line per actor, in the order added: class, cell, image size and rotation */
+    private static String dumpWorld() {
+        StringBuilder out = new StringBuilder(world.getClass().getName()).append('\n');
+        for (Actor actor : world.actors()) {
+            GreenfootImage image = actor.getImage();
+            out.append(actor.getClass().getName()).append(' ').append(actor.x).append(',').append(actor.y);
+            if (image != null) {
+                out.append(' ').append(image.getWidth()).append('x').append(image.getHeight());
+            }
+            if (actor.rotation != 0) {
+                out.append(" r").append(actor.rotation);
+            }
+            out.append('\n');
+        }
+        return out.toString();
     }
 
     static GreenfootImage classImage(Class<?> cls) {

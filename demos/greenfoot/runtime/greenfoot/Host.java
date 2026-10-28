@@ -20,6 +20,15 @@ final class Host {
     @JSBody(params = { "callback" }, script = "GF.run(callback);")
     static native void run(FrameCallback callback);
 
+    @JSFunctor
+    interface DumpCallback extends JSObject {
+        String dump();
+    }
+
+    /** GF.dumpWorld() in the console lists the world's actors, for debugging a port */
+    @JSBody(params = { "callback" }, script = "GF.dumpWorld = callback;")
+    static native void exposeDump(DumpCallback callback);
+
     @JSBody(params = { "message" }, script = "GF.error(message);")
     static native void error(String message);
 

@@ -1,7 +1,7 @@
 // /v3/auth/location*, /v3/auth/zone*
 import { send } from '../envelope.js';
 import { clone, pick, stamp, newId, randomCode, fullStateName } from '../util.js';
-import { assignStation, locationFull, locationList } from '../music.js';
+import { assignStation, locationFull, locationList, followSchedule } from '../music.js';
 import { DEFAULT_STATION_ID } from '../../config.js';
 
 var LOCATION_FIELDS = ['name', 'addressLineOne', 'addressLineTwo', 'city', 'country', 'postalCode', 'phoneNumber', 'explicitAllowed', 'isActive', 'allowPlayerToChangeStation', 'state'];
@@ -51,15 +51,19 @@ export function createLocation(ctx, data, isActive) {
   return loc;
 }
 
-// GET /v3/auth/location
+// GET /v3/auth/location. A store with a simulated player (demo only) first moves to its schedule's due
+// block, as its player would have; then each location's Now Playing is read off the wall clock.
 export function getLocations(ctx) {
-  return send('DATA_FOUND', myLocations(ctx).map(function (l) { return locationList(ctx, l); }), 'Location');
+  var list = myLocations(ctx);
+  list.forEach(function (l) { followSchedule(ctx, l); });
+  return send('DATA_FOUND', list.map(function (l) { return locationList(ctx, l); }), 'Location');
 }
 
 // GET /v3/auth/location/:id (no client calls it)
 export function getLocation(ctx) {
   var loc = myLocations(ctx).filter(function (l) { return l._id === ctx.params.id; })[0];
   if (!loc) return send('INTERNAL_SERVER_ERROR');
+  followSchedule(ctx, loc);
   return send('DATA_FOUND', locationList(ctx, loc), 'Location');
 }
 

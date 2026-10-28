@@ -2,18 +2,27 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { makeServer, connect, finishedBody, todayAt, PLAYER } from './helpers.js';
 import { withAds, dueBlock, musicQueue } from '../core/music.js';
-import { TRACKS, STATIONS, isAdId, trackById } from '../core/catalogue.js';
-import { seededRandom } from '../core/util.js';
+import { TRACKS, ALBUMS, STATIONS, GENRE_KEYS, isAdId, trackById } from '../core/catalogue.js';
+import { GUEST_TRACKS } from '../core/guests.js';
+import { seededRandom, fixedId } from '../core/util.js';
 import { IDS } from '../core/seed.js';
 import { DEFAULT_STATION_ID } from '../config.js';
 
 var HOUR = 3600 * 1000;
 
-test('catalogue: 13 tracks with measured durations, every genre key covered, stations with >= 8 tracks', () => {
+test('catalogue: Jake\'s 14 tracks plus the guests, with measured durations, every genre key covered, stations with >= 8 tracks', () => {
   var tracks = Object.values(TRACKS);
-  assert.equal(tracks.length, 13);
-  assert.ok(tracks.every((t) => t.duration > 60 && t.url.indexOf('/music/') === 0 && t.url.endsWith('.mp3') && t.artist.name === 'Jake Motta'));
+  var own = tracks.filter((t) => t.artist.name === 'Jake Motta');
+  assert.equal(own.length, 14);
+  assert.equal(tracks.length, 14 + GUEST_TRACKS.length);
+  assert.ok(own.every((t) => /^(\/music\/|\/projects\/ambii-business\/media\/music\/)/.test(t.url)));
+  assert.ok(tracks.filter((t) => own.indexOf(t) < 0).every((t) => t.url.indexOf('/projects/ambii-business/media/tracks/') === 0));
+  assert.ok(tracks.every((t) => t.duration > 60 && t.url.endsWith('.mp3') && t.album && t.album.genres.length && t.album.genres.every((g) => GENRE_KEYS.indexOf(g) >= 0)));
   assert.ok(!tracks.some((t) => /super_bitch/.test(t.url)));
+  // ids and ISRCs are unique, and no ISRC looks like an ad or announcement to the web player
+  assert.equal(new Set(tracks.map((t) => t.isrc)).size, tracks.length);
+  assert.ok(!tracks.some((t) => /ADVERT_|ISM_/.test(t.isrc)));
+  assert.ok(!Object.keys(ALBUMS).some((id) => id === fixedId('61a7ab', 255)), 'no album takes the ad album id');
   var genres = new Set(tracks.flatMap((t) => t.album.genres));
   for (var g of ['pop', 'rock', 'alternative', 'dance', 'electro', 'rap/hip hop', 'r&b', 'folk', 'country', 'jazz', 'blues', 'classical', 'soul & funk']) assert.ok(genres.has(g), g);
   var bands = [[0, 110], [111, 120], [121, 127], [128, 140], [141, 900]];
@@ -23,7 +32,8 @@ test('catalogue: 13 tracks with measured durations, every genre key covered, sta
 });
 
 test('ads: none when subscribed; one before the first track after each 15 minutes otherwise', () => {
-  var ids = Object.keys(TRACKS);
+  // Jake's first 13 tracks: a ~49 minute queue, as a station would hold
+  var ids = Object.keys(TRACKS).slice(0, 13);
   assert.deepEqual(withAds(ids, true), ids);
   var q = withAds(ids, false);
   var played = 0, adBreaks = 0;
@@ -139,8 +149,8 @@ test('schedule CRUD: create applies it now, edit makes new block stations, delet
   assert.equal(ft.body.data.schedule.name, 'Weekdays');
   var list = (await s.call('GET', '/v3/auth/schedule')).body;
   assert.equal(list.message, 'Schedule data found');
-  assert.equal(list.data.schedules.length, 2);
-  assert.equal(list.data.scheduleBlocks.length, 8);
+  assert.equal(list.data.schedules.length, 4); // the three seeded ones and this one
+  assert.equal(list.data.scheduleBlocks.length, 14);
   assert.equal(typeof list.data.scheduleBlocks[0].station, 'string');
   // edit the afternoon block: new generated station, location follows
   var stored = list.data.scheduleBlocks.find((b) => b.name === 'Afternoon' && list.data.schedules.find((x) => x._id === sched._id).scheduleBlocks.indexOf(b._id) >= 0);
@@ -159,7 +169,7 @@ test('schedule CRUD: create applies it now, edit makes new block stations, delet
   var d = await s.call('DELETE', '/v3/auth/schedule/' + sched._id);
   assert.equal(d.body.message, 'Schedule successfully deleted');
   assert.ok(d.body.data.locations.every((l) => l.schedule === null && l.station));
-  assert.equal((await s.call('GET', '/v3/auth/schedule')).body.data.schedules.length, 1);
+  assert.equal((await s.call('GET', '/v3/auth/schedule')).body.data.schedules.length, 3);
 });
 
 test('removing a location from a schedule gives it the default station', async () => {

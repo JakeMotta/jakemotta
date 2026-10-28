@@ -147,7 +147,7 @@ export function subscribe(ctx) {
   ctx.company.cancellationReason = null;
   ctx.company.cancellationDescription = '';
   ctx.tx.put('companies', stamp(ctx.company, ctx.now()));
-  addInvoice(ctx.tx, ctx.now(), count, 'DEMO-' + randomToken(ctx.random, 6).toUpperCase());
+  addInvoice(ctx.tx, ctx.now(), count, 'DEMO-' + randomToken(ctx.random, 6).toUpperCase(), { userId: ctx.user._id });
   companyDocs(ctx, 'locations').forEach(function (l) { refreshAds(ctx, l); });
   return send('STRIPE_USER_UPDATE_SUBSCRIPTION_SUCCESS', null, 'User');
 }
@@ -179,7 +179,8 @@ export function cancelSubscription(ctx) {
   return send('STRIPE_USER_CANCEL_SUBSCRIPTION_SUCCESS', null, 'User');
 }
 
-// GET /v3/auth/invoice
+// GET /v3/auth/invoice. Each invoice's hosted_invoice_url is the demo's invoice page (invoice.html?id=),
+// which the dashboard's Settings > Invoices opens in a new tab.
 export function getInvoices(ctx) {
   var list = ctx.tx.all('invoices').filter(function (i) { return i.userId === ctx.user._id; })
     .sort(function (a, b) { return b.created - a.created; }).map(function (i) {

@@ -1,6 +1,6 @@
 // Music logic ported from ambii_business_server: track schedules (queues), ads, station assignment,
 // schedule blocks with generated ("dynamic") stations, and the populated shapes the clients read.
-import { TRACKS, STATIONS, ARTIST, trackById, adId, isAdId, allTrackIds, genreWeights, bpmStats, artistById } from './catalogue.js';
+import { TRACKS, STATIONS, trackById, adId, isAdId, allTrackIds, genreWeights, bpmStats, artistById, topTracks, topArtists } from './catalogue.js';
 import { newId, shuffle, clone, stamp, hash32, toNumber } from './util.js';
 import { DEFAULT_STATION_ID, AD_INTERVAL_SECONDS, MIN_DYNAMIC_TRACKS, IDLE_OFFLINE_MS } from '../config.js';
 
@@ -129,7 +129,8 @@ export function blocksOf(tx, schedule) {
 // block's tempo range. The server fell back to every genre match when fewer than 100 tracks were in range,
 // so tempo never mattered with a small catalogue. Here the range is inclusive (so the five tempo bands
 // tile), and the station is topped up to MIN_DYNAMIC_TRACKS with the closest tempos: genre matches
-// first, then the rest of the catalogue.
+// first, then the rest of the catalogue. A track whose first genre is one of the block's counts as a
+// closer match than one that only lists it second, at the same tempo distance.
 export function createDynamicStation(ctx, schedule, block, fixedStationId) {
   var keys = Object.keys(block.genres || {});
   var tempo = block.tempo || {};
@@ -139,10 +140,12 @@ export function createDynamicStation(ctx, schedule, block, fixedStationId) {
   var genreMatch = all.filter(function (t) { return t.album.genres.some(function (g) { return keys.indexOf(g) >= 0; }); });
   function inTempo(t) { return hasTempo && t.bpm >= min && t.bpm <= max; }
   function distance(t) { return !hasTempo || inTempo(t) ? 0 : Math.min(Math.abs(t.bpm - min), Math.abs(t.bpm - max)); }
+  function lead(t) { return keys.indexOf(t.album.genres[0]) >= 0 ? 0 : 1; }
   var chosen = hasTempo ? genreMatch.filter(inTempo) : genreMatch.slice();
+  chosen.sort(function (a, b) { return lead(a) - lead(b); });
   function topUp(from) {
     from.filter(function (t) { return chosen.indexOf(t) < 0; })
-      .sort(function (a, b) { return distance(a) - distance(b); })
+      .sort(function (a, b) { return distance(a) + lead(a) * 8 - (distance(b) + lead(b) * 8); })
       .forEach(function (t) { if (chosen.length < MIN_DYNAMIC_TRACKS) chosen.push(t); });
   }
   if (chosen.length < MIN_DYNAMIC_TRACKS) topUp(genreMatch);
@@ -150,8 +153,8 @@ export function createDynamicStation(ctx, schedule, block, fixedStationId) {
   var ids = chosen.map(function (t) { return t._id; });
   var station = {
     _id: fixedStationId || newId(ctx), name: block.name || 'Schedule', type: 'dynamic', isPublic: false, description: '',
-    genres: genreWeights(ids), bpm: bpmStats(ids), tags: [], era: {}, supersets: [], tracks: ids, top_tracks: ids.slice(0, 6),
-    top_artists: [ARTIST._id], locationHistory: (schedule.assignedLocations || []).slice(), isDeleted: false,
+    genres: genreWeights(ids), bpm: bpmStats(ids), tags: [], era: {}, supersets: [], tracks: ids, top_tracks: topTracks(ids),
+    top_artists: topArtists(ids), locationHistory: (schedule.assignedLocations || []).slice(), isDeleted: false,
   };
   stamp(station, ctx.now(), true);
   ctx.tx.put('stations', station);
@@ -188,6 +191,85 @@ export function collectDynamicStations(tx) {
   tx.all('scheduleBlocks').forEach(function (b) { if (!b.isDeleted && b.station) used[b.station] = true; });
   tx.all('locations').forEach(function (l) { if (l.station) used[l.station] = true; });
   tx.all('stations').forEach(function (s) { if (!used[s._id]) tx.remove('stations', s._id); });
+}
+
+// ---------- simulated in-store players (demo only) ----------
+
+// The seeded stores' players are stand-ins, not devices: a player document with the demo-only field
+// `simulated: true` plays in its store all day, so the dashboard's Locations page shows stores Online with
+// Now Playing on a first visit (a real company's stores were playing whenever the owner looked). Nothing
+// runs in the background: the position is worked out from the wall clock whenever a location is read.
+// A real player that connects with override replaces it, and the simulation stops for that store.
+export function isSimulatedPlayer(p) {
+  return !!(p && p.simulated && !p.isDeleted);
+}
+
+export function simulatedPlayerAt(ctx, loc) {
+  var p = loc && loc.pairedDevice ? ctx.tx.get('players', loc.pairedDevice) : null;
+  return isSimulatedPlayer(p) ? p : null;
+}
+
+// Where a queue that started playing at trackSchedule.createdAt and loops forever is at `nowMs`: the
+// elapsed time modulo the queue's total length, walked through the tracks' durations (ads included).
+// lastTrack is the music track before it, as finishedTrack records it (never an ad; none before the
+// first track of the first pass). Null for an empty queue.
+export function simulatedPosition(ts, nowMs) {
+  var queue = ts && Array.isArray(ts.queue) ? ts.queue : [];
+  var durations = queue.map(function (id) {
+    var t = trackById(id);
+    return t ? Math.max(0, Number(t.duration) || 0) : 0;
+  });
+  var total = durations.reduce(function (a, b) { return a + b; }, 0);
+  if (!(total > 0)) return null;
+  var elapsed = Math.max(0, (nowMs - new Date(ts.createdAt || 0).getTime()) / 1000);
+  var loops = Math.floor(elapsed / total);
+  var t = elapsed - loops * total;
+  var index = 0;
+  while (index < queue.length - 1 && t >= durations[index]) {
+    t -= durations[index];
+    index += 1;
+  }
+  var lastTrack = null;
+  for (var k = 1; k < queue.length && !lastTrack; k++) {
+    var j = index - k;
+    if (j < 0) {
+      if (loops === 0) break;
+      j += queue.length;
+    }
+    if (!isAdId(queue[j])) lastTrack = queue[j];
+  }
+  return { currentTrackNumber: index, currentTrack: queue[index], lastTrack: lastTrack, offset: t, loops: loops };
+}
+
+// What a simulated store is playing now, or null when the location has no simulated player.
+export function simulatedNowPlaying(ctx, loc) {
+  if (!simulatedPlayerAt(ctx, loc)) return null;
+  return simulatedPosition(ctx.tx.get('trackSchedules', loc.trackSchedule), ctx.now().getTime());
+}
+
+// A simulated store on a schedule moves to the block that is due now, as its player would have at the
+// first track end after the boundary. The new queue counts as started when the block began, so the store
+// is mid-queue rather than on its first track. Called by the dashboard's GET (it writes, inside that
+// request's transaction); returns true when the station changed.
+export function followSchedule(ctx, loc) {
+  var tx = ctx.tx, now = ctx.now();
+  if (!loc || loc.isDeleted || loc.isActive === false || !simulatedPlayerAt(ctx, loc)) return false;
+  var schedule = loc.schedule ? tx.get('schedules', loc.schedule) : null;
+  if (!schedule || schedule.isDeleted) return false;
+  var block = dueBlock(blocksOf(tx, schedule), now);
+  if (!block || !block.station || !getStation(tx, block.station) || block.station === loc.station) return false;
+  assignStation(ctx, [loc._id], block.station, schedule);
+  var ts = tx.get('trackSchedules', loc.trackSchedule);
+  // The block's start in local time (the Date constructor folds the seconds into the local day, so a
+  // daylight-saving change that day doesn't shift it); a block that started before midnight began yesterday.
+  var secs = Number(block.startTime);
+  var start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, secs).getTime();
+  if (start > now.getTime()) start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 0, 0, secs).getTime();
+  if (ts && isFinite(start)) {
+    ts.createdAt = new Date(start).toISOString();
+    tx.put('trackSchedules', ts);
+  }
+  return true;
 }
 
 // ---------- populated shapes ----------
@@ -227,10 +309,16 @@ export function trackScheduleFull(ts) {
 
 // Online/offline, computed on read (the server flipped isPlaying off after 15 idle minutes). A track longer
 // than that (none in the catalogue, but uploads...) does not make a playing device look offline.
+// A simulated player (demo only) is playing whenever its location is active.
 export function playerView(ctx, playerId, location) {
   var p = playerId ? ctx.tx.get('players', playerId) : null;
   if (!p) return null;
   var v = clone(p);
+  if (isSimulatedPlayer(p)) {
+    v.isPlaying = !location || location.isActive !== false;
+    if (v.isPlaying) v.lastActive = ctx.now().toISOString();
+    return v;
+  }
   var current = location ? trackById(location.currentTrack) : null;
   var limit = Math.max(IDLE_OFFLINE_MS, current ? current.duration * 1000 + 120000 : 0);
   var last = new Date(p.lastActive || 0).getTime();
@@ -247,8 +335,15 @@ export function locationFull(ctx, loc) {
   var schedule = loc.schedule ? tx.get('schedules', loc.schedule) : null;
   v.schedule = schedule && !schedule.isDeleted ? scheduleWithBlocks(tx, schedule) : null;
   v.trackSchedule = trackScheduleFull(tx.get('trackSchedules', loc.trackSchedule));
-  v.currentTrack = trackById(loc.currentTrack);
-  v.lastTrack = trackById(loc.lastTrack);
+  var sim = simulatedNowPlaying(ctx, loc);
+  if (sim) {
+    v.currentTrackNumber = sim.currentTrackNumber;
+    v.currentTrack = trackById(sim.currentTrack);
+    v.lastTrack = trackById(sim.lastTrack);
+  } else {
+    v.currentTrack = trackById(loc.currentTrack);
+    v.lastTrack = trackById(loc.lastTrack);
+  }
   v.pairedDevice = playerView(ctx, loc.pairedDevice, loc);
   v.subscription = null;
   return v;
@@ -261,7 +356,12 @@ export function locationList(ctx, loc) {
   v.station = stationLite(getStation(tx, loc.station));
   var schedule = loc.schedule ? tx.get('schedules', loc.schedule) : null;
   v.schedule = schedule && !schedule.isDeleted ? clone(schedule) : null;
-  v.currentTrack = trackById(loc.currentTrack);
+  var sim = simulatedNowPlaying(ctx, loc);
+  if (sim) {
+    v.currentTrackNumber = sim.currentTrackNumber;
+    v.lastTrack = sim.lastTrack;
+  }
+  v.currentTrack = trackById(sim ? sim.currentTrack : loc.currentTrack);
   v.pairedDevice = playerView(ctx, loc.pairedDevice, loc);
   v.subscription = null;
   return v;

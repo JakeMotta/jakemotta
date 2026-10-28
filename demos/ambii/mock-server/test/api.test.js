@@ -51,12 +51,12 @@ test('seed is deterministic apart from time-relative fields', async () => {
   assert.deepEqual(a.collection('trackSchedules'), b.collection('trackSchedules'));
 });
 
-test('dashboard locations: three seeded locations, shapes the cards read', async () => {
+test('dashboard locations: seven seeded locations, shapes the cards read', async () => {
   var s = makeServer({ time: todayAt(9, 30) });
   var r = await s.call('GET', '/v3/auth/location');
   assert.equal(r.body.message, 'Location data found');
   var byCode = Object.fromEntries(r.body.data.map((l) => [l.storeCode, l]));
-  assert.deepEqual(Object.keys(byCode).sort(), ['LBEAN7', 'LGATE3', 'LMKT42']);
+  assert.deepEqual(Object.keys(byCode).sort(), ['LBEAN7', 'LCSTR6', 'LGATE3', 'LJACK5', 'LMKT42', 'LPAVE8', 'LSURF8']);
   assert.equal(byCode.LBEAN7.isActive, true);
   assert.equal(byCode.LGATE3.isActive, false);
   assert.equal(byCode.LBEAN7.station.name, 'Morning Pour-Over');
@@ -65,7 +65,7 @@ test('dashboard locations: three seeded locations, shapes the cards read', async
   assert.equal(byCode.LMKT42.station.name, 'Morning'); // 9:30 is in the Morning block
   assert.equal(byCode.LMKT42.station.type, 'dynamic');
   assert.equal(byCode.LMKT42.pairedDevice.deviceName, 'Back Office iPad');
-  assert.equal(byCode.LMKT42.pairedDevice.isPlaying, false);
+  assert.equal(byCode.LMKT42.pairedDevice.isPlaying, true); // a simulated in-store player
   assert.equal(byCode.LGATE3.station._id, DEFAULT_STATION_ID);
   for (var l of r.body.data) {
     assert.equal(typeof l.addressLineTwo, 'string');
@@ -85,16 +85,23 @@ test('stations: list for the dashboard, pages of 15 for the web player, detail w
   assert.ok(all.data.every((st) => st.type === 'static' && st.tracks === undefined && Array.isArray(st.tags) && Array.isArray(st.supersets)));
   assert.ok(all.data.every((st) => st.bpm.mean > 0 && st.bpm.mean < 999 && Object.keys(st.genres).length > 0));
   var supersets = new Set(all.data.flatMap((st) => st.supersets));
-  for (var row of ['Popular Today', 'Coffee Curiosity', 'Bookstore Barista', 'Classical Cappuccino', 'Boba Beats', 'Countryside Cafe', 'Late Night Study ']) assert.ok(supersets.has(row), row);
+  var rows = ['Popular Today', 'Coffee Curiosity', 'Bookstore Barista', 'Classical Cappuccino', 'Boba Beats', 'Countryside Cafe', 'Late Night Study ',
+    'Hamburger Hits', 'Barbecue Bash', 'Asian Eats', 'Taco Truck Temposetter', 'Royalty Dining'];
+  // every cafe and restaurant row has at least three stations
+  for (var row of rows) assert.ok(all.data.filter((st) => st.supersets.indexOf(row) >= 0).length >= 3, row);
   assert.ok(all.data.some((st) => st._id === DEFAULT_STATION_ID));
   var page1 = (await s.call('GET', '/v3/api/station?page=1')).body.data;
   assert.equal(page1.length, Math.min(15, all.data.length));
   assert.equal(page1[0]._id, all.data[0]._id);
   assert.deepEqual((await s.call('GET', '/v3/api/station?page=2')).body.data, all.data.slice(15, 30));
-  var detail = (await s.call('GET', '/v3/api/station/' + all.data[1]._id)).body.data;
-  assert.ok(detail.top_tracks.length >= 3);
-  assert.ok(detail.top_tracks.some((t) => t.preview && !t.explicit_lyrics));
-  assert.equal(detail.top_artists[0].name, 'Jake Motta');
+  assert.ok((await s.call('GET', '/v3/api/station?page=3')).body.data.length > 0, 'Load More has a third page');
+  // the preview modal's full lists: 10 popular songs and 5 featured artists
+  for (var st of all.data) {
+    var detail = (await s.call('GET', '/v3/api/station/' + st._id)).body.data;
+    assert.equal(detail.top_tracks.length, 10, st.name);
+    assert.ok(detail.top_tracks.some((t) => t.preview && !t.explicit_lyrics), st.name);
+    assert.equal(new Set(detail.top_artists.map((a) => a.name)).size, 5, st.name);
+  }
   var missing = await s.call('GET', '/v3/api/station/000000000000000000000000');
   assert.equal(missing.status, 404);
   assert.equal(missing.body.message, 'Cannot find required data');
@@ -231,7 +238,7 @@ test('deactivating or deleting a location kicks its player at the next track end
   var gone = await s.call('POST', '/v3/api/player/finishedTrack', finishedBody(loc, 0), h);
   assert.equal(gone.body.type, 'LOCATION_DOES_NOT_EXIST');
   var list = (await s.call('GET', '/v3/auth/location')).body.data;
-  assert.equal(list.length, 2);
+  assert.equal(list.length, 6);
   var anns = (await s.call('GET', '/v3/api/announcement/?hash=')).body.data.announcements;
   assert.ok(anns.every((a) => a.assignedLocations.indexOf(IDS.downtown) < 0));
   var dk = await s.call('DELETE', '/v3/auth/location/' + IDS.market);
@@ -306,13 +313,13 @@ test('user, company, zones', async () => {
   assert.equal((await s.call('GET', '/v3/auth/jwt')).body.data.company.state, 'New York');
   var z = await s.call('GET', '/v3/auth/zone');
   assert.equal(z.body.message, 'Zone data found');
-  assert.equal(z.body.data.length, 3);
+  assert.equal(z.body.data.length, 7);
   assert.equal(z.body.data[0].location, undefined);
   var zp = await s.call('PATCH', '/v3/auth/zone/' + z.body.data[0]._id, { name: 'Front' });
   assert.equal(zp.body.message, 'Zone successfully updated');
   var zd = await s.call('DELETE', '/v3/auth/zone/' + z.body.data[0]._id);
   assert.equal(zd.body.message, 'Zone successfully deleted');
-  assert.equal((await s.call('GET', '/v3/auth/zone')).body.data.length, 2);
+  assert.equal((await s.call('GET', '/v3/auth/zone')).body.data.length, 6);
 });
 
 test('new location: store code, default station, owner gets it, free plan creates it inactive', async () => {
@@ -325,7 +332,7 @@ test('new location: store code, default station, owner gets it, free plan create
   assert.equal(loc.station._id, DEFAULT_STATION_ID);
   assert.equal(loc.isActive, true);
   assert.ok(loc.trackSchedule.queue.length >= 8);
-  assert.equal((await s.call('GET', '/v3/auth/location')).body.data.length, 4);
+  assert.equal((await s.call('GET', '/v3/auth/location')).body.data.length, 8);
   assert.equal((await connect(s, loc.storeCode)).body.type, 'SUCCESSFUL_PAIRED');
   await s.call('PATCH', '/v3/auth/subscription', {});
   var free = await s.call('POST', '/v3/auth/location/', { name: 'Second' });
@@ -366,9 +373,11 @@ test('billing: addresses, cards (last four only), invoices', async () => {
   assert.equal(patch.body.data.brand, 'visa');
   var inv = await s.call('GET', '/v3/auth/invoice');
   assert.equal(inv.body.message, 'Invoice data found');
-  assert.equal(inv.body.data.length, 3);
-  assert.ok(inv.body.data.every((i) => i.status === 'paid' && i.total > 0 && i.createdAt && i.hosted_invoice_url === null));
-  assert.ok(new Date(inv.body.data[0].createdAt) > new Date(inv.body.data[2].createdAt));
+  assert.equal(inv.body.data.length, 13);
+  assert.equal(inv.body.data[0].status, 'open');
+  assert.ok(inv.body.data.slice(1).every((i) => i.status === 'paid'));
+  assert.ok(inv.body.data.every((i) => i.total > 0 && i.createdAt && i.hosted_invoice_url === '/projects/ambii-business/invoice.html?id=' + i.id));
+  assert.ok(new Date(inv.body.data[0].createdAt) > new Date(inv.body.data[12].createdAt));
 });
 
 test('subscription: cancel deactivates all but the first, adds ads; a second cancel is a 400; subscribing again restores', async () => {
@@ -381,7 +390,7 @@ test('subscription: cancel deactivates all but the first, adds ads; a second can
   assert.equal(cancel.body.message, 'User cancel subscription success');
   assert.equal((await s.call('GET', '/v3/auth/jwt')).body.data.company.subscribed, false);
   var list = (await s.call('GET', '/v3/auth/location')).body.data;
-  assert.deepEqual(list.map((l) => [l.storeCode, l.isActive]), [['LBEAN7', true], ['LMKT42', false], ['LGATE3', false]]);
+  assert.deepEqual(list.map((l) => [l.storeCode, l.isActive]), [['LBEAN7', true], ['LMKT42', false], ['LGATE3', false], ['LJACK5', false], ['LPAVE8', false], ['LSURF8', false], ['LCSTR6', false]]);
   // the player at the kept location gets a queue with ads at its next track end
   var ft = await s.call('POST', '/v3/api/player/finishedTrack', finishedBody(loc, 0), h);
   assert.equal(ft.body.data.newTrackSchedule, true);
@@ -398,7 +407,7 @@ test('subscription: cancel deactivates all but the first, adds ads; a second can
   assert.equal(sub.body.message, 'User subscription success');
   list = (await s.call('GET', '/v3/auth/location')).body.data;
   assert.ok(list.every((l) => l.isActive));
-  assert.equal((await s.call('GET', '/v3/auth/invoice')).body.data.length, 4);
+  assert.equal((await s.call('GET', '/v3/auth/invoice')).body.data.length, 14);
 });
 
 test('zero-card account cannot subscribe', async () => {

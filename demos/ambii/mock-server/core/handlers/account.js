@@ -1,6 +1,6 @@
 // /v3/auth/jwt, /v3/auth/signup, /v3/auth/user*, /v3/auth/company
 import { send } from '../envelope.js';
-import { clone, pick, stamp, fullStateName } from '../util.js';
+import { clone, pick, stamp, fullStateName, fixedId } from '../util.js';
 import { getStation, stationLite, locationFull } from '../music.js';
 import { createLocation } from './locations.js';
 
@@ -11,13 +11,44 @@ export function userView(ctx, user) {
   return v;
 }
 
-// GET /v3/auth/jwt: the dashboard's bootstrap. The demo owner is always signed in.
+// The dashboard's sign-in stand-in (its Auth0Helper) stores one of these and sends it as "Authorization: Bearer <token>".
+// Sign In stores the owner's; a signed-out visitor's Favorite (Auth0 sign-up in the original) stores the new business's.
+export var DEMO_TOKENS = { owner: 'ambii-demo-owner', newBusiness: 'ambii-demo-newbiz' };
+export var NEW_BUSINESS_IDS = { company: fixedId('61c0c0', 1), user: fixedId('61c0e0', 1) };
+
+// The user a dashboard token names, or null for the seeded owner (no token, the owner's, or any other). The new
+// business is created on first use, as the server's createUserIfNonExistent did at a first Auth0 sign-in: an owner
+// with no names, and a company with no name (which opens the dashboard's "Let's set up your first location!"
+// modal), on the free plan, with no locations and no businessType (so the dashboard shows the restaurant rows, as it
+// did for every real customer). It lives beside the seeded company in the same storage, so Reset demo and a reseed
+// clear it, and players connect to its store codes like any other.
+export function userForToken(ctx, token) {
+  if (token !== DEMO_TOKENS.newBusiness) return null;
+  var tx = ctx.tx, now = ctx.now();
+  var user = tx.get('users', NEW_BUSINESS_IDS.user);
+  if (user && !user.isDeleted && tx.get('companies', user.company)) return user;
+  tx.put('companies', stamp({
+    _id: NEW_BUSINESS_IDS.company, name: '', addressLineOne: '', addressLineTwo: '', city: '', state: '', country: 'United States', postalCode: '',
+    phoneNumber: '', cords: [], subscribed: false, adFreeUntil: new Date(now.getTime() + 14 * 86400000).toISOString(), cancellationReason: null,
+    cancellationDescription: '', isDeleted: false,
+  }, now, true));
+  user = stamp({
+    _id: NEW_BUSINESS_IDS.user, email: 'you@new-business.example', name: '', phoneNumber: '', firstName: '', lastName: '',
+    company: NEW_BUSINESS_IDS.company, role: 'owner', inviteCode: '', isVerified: false, favorites: [], assignedLocations: [],
+    stripeCustomerId: '', productId: '', priceId: '', subscriptionId: '', defaultPaymentMethodId: null, defaultBillingAddressId: null,
+    isDeleted: false,
+  }, now, true);
+  tx.put('users', user);
+  return user;
+}
+
+// GET /v3/auth/jwt: the dashboard's bootstrap: the user its token names (the demo owner unless it started a business).
 export function getJwt(ctx) {
   if (!ctx.user || ctx.user.isDeleted) return send('NO_USERS_FOUND');
   return send('DATA_FOUND', userView(ctx, ctx.user), 'User');
 }
 
-// POST /v3/auth/signup: the onboarding modal (only shown when the company has no name).
+// POST /v3/auth/signup: the onboarding modal (only shown when the company has no name: the business a visitor starts).
 export function signup(ctx) {
   var b = ctx.body || {};
   var user = ctx.user, company = ctx.company;

@@ -5,9 +5,9 @@ export var MEDIA_URL = "/projects/ambii-business/media";
 
 export var TRACK_MEDIA = {
   "uprising": {
-    "url": "/music/uprising.mp3",
-    "duration": 149.786,
-    "bytes": 5992579,
+    "url": "/projects/ambii-business/media/music/uprising.mp3",
+    "duration": 149.76,
+    "bytes": 2396805,
     "cover": "/projects/ambii-business/media/covers/uprising"
   },
   "marceline": {
@@ -35,15 +35,15 @@ export var TRACK_MEDIA = {
     "cover": "/projects/ambii-business/media/covers/anguish"
   },
   "breathe": {
-    "url": "/music/breathe.mp3",
-    "duration": 192.078,
-    "bytes": 7689880,
+    "url": "/projects/ambii-business/media/music/breathe.mp3",
+    "duration": 192.104,
+    "bytes": 3074315,
     "cover": "/projects/ambii-business/media/covers/breathe"
   },
   "fearless": {
-    "url": "/music/fearless.mp3",
+    "url": "/projects/ambii-business/media/music/fearless.mp3",
     "duration": 203.833,
-    "bytes": 6525471,
+    "bytes": 3261981,
     "cover": "/projects/ambii-business/media/covers/fearless"
   },
   "hide_and_seek": {
@@ -53,21 +53,21 @@ export var TRACK_MEDIA = {
     "cover": "/projects/ambii-business/media/covers/hide-and-seek"
   },
   "transition": {
-    "url": "/music/transition.mp3",
-    "duration": 190.72,
-    "bytes": 7629913,
+    "url": "/projects/ambii-business/media/music/transition.mp3",
+    "duration": 190.746,
+    "bytes": 3052587,
     "cover": "/projects/ambii-business/media/covers/transition"
   },
   "identity": {
-    "url": "/music/identity.mp3",
-    "duration": 304.953,
-    "bytes": 12199252,
+    "url": "/projects/ambii-business/media/music/identity.mp3",
+    "duration": 304.98,
+    "bytes": 4880319,
     "cover": "/projects/ambii-business/media/covers/identity"
   },
   "stepping_clouds": {
-    "url": "/music/stepping_clouds.mp3",
-    "duration": 555.99,
-    "bytes": 22241768,
+    "url": "/projects/ambii-business/media/music/stepping_clouds.mp3",
+    "duration": 556.016,
+    "bytes": 8897339,
     "cover": "/projects/ambii-business/media/covers/stepping-clouds"
   },
   "innocence": {
@@ -81,6 +81,370 @@ export var TRACK_MEDIA = {
     "duration": 194.52,
     "bytes": 4669101,
     "cover": "/projects/ambii-business/media/covers/dancin"
+  },
+  "she_wants_my_package": {
+    "url": "/projects/ambii-business/media/music/she_wants_my_package.mp3",
+    "duration": 337.868,
+    "bytes": 5406554,
+    "cover": "/projects/ambii-business/media/covers/she-wants-my-package"
+  }
+};
+
+export var GUEST_MEDIA = {
+  "bossa-antigua": {
+    "url": "/projects/ambii-business/media/tracks/bossa-antigua.mp3",
+    "duration": 283.35,
+    "bytes": 4534751
+  },
+  "slow-burn": {
+    "url": "/projects/ambii-business/media/tracks/slow-burn.mp3",
+    "duration": 228.78,
+    "bytes": 3661610
+  },
+  "gymnopedie-no-1": {
+    "url": "/projects/ambii-business/media/tracks/gymnopedie-no-1.mp3",
+    "duration": 187.089,
+    "bytes": 2994589
+  },
+  "sheep-may-safely-graze": {
+    "url": "/projects/ambii-business/media/tracks/sheep-may-safely-graze.mp3",
+    "duration": 237.531,
+    "bytes": 3801764
+  },
+  "goldberg-aria": {
+    "url": "/projects/ambii-business/media/tracks/goldberg-aria.mp3",
+    "duration": 299.52,
+    "bytes": 4793542
+  },
+  "goldberg-variatio-1": {
+    "url": "/projects/ambii-business/media/tracks/goldberg-variatio-1.mp3",
+    "duration": 115.513,
+    "bytes": 1849044
+  },
+  "chopin-nocturne-op-9-2": {
+    "url": "/projects/ambii-business/media/tracks/chopin-nocturne-op-9-2.mp3",
+    "duration": 276.648,
+    "bytes": 4427181
+  },
+  "chopin-waltz-op-64-2": {
+    "url": "/projects/ambii-business/media/tracks/chopin-waltz-op-64-2.mp3",
+    "duration": 230.088,
+    "bytes": 3682217
+  },
+  "good-to-go": {
+    "url": "/projects/ambii-business/media/tracks/good-to-go.mp3",
+    "duration": 189.44,
+    "bytes": 3032152
+  },
+  "little-tomcat": {
+    "url": "/projects/ambii-business/media/tracks/little-tomcat.mp3",
+    "duration": 197.642,
+    "bytes": 3163394
+  },
+  "water-in-the-creek": {
+    "url": "/projects/ambii-business/media/tracks/water-in-the-creek.mp3",
+    "duration": 183.902,
+    "bytes": 2943570
+  },
+  "fireflies-and-stardust": {
+    "url": "/projects/ambii-business/media/tracks/fireflies-and-stardust.mp3",
+    "duration": 255.06,
+    "bytes": 4082155
+  },
+  "still-pickin": {
+    "url": "/projects/ambii-business/media/tracks/still-pickin.mp3",
+    "duration": 297.665,
+    "bytes": 4763786
+  },
+  "railroads-whiskey-co": {
+    "url": "/projects/ambii-business/media/tracks/railroads-whiskey-co.mp3",
+    "duration": 227.37,
+    "bytes": 3639041
+  },
+  "going-to": {
+    "url": "/projects/ambii-business/media/tracks/going-to.mp3",
+    "duration": 152.216,
+    "bytes": 2436517
+  },
+  "chiado": {
+    "url": "/projects/ambii-business/media/tracks/chiado.mp3",
+    "duration": 256.052,
+    "bytes": 4097924
+  },
+  "jumping-jamboree": {
+    "url": "/projects/ambii-business/media/tracks/jumping-jamboree.mp3",
+    "duration": 187.533,
+    "bytes": 3001669
+  },
+  "down-the-river": {
+    "url": "/projects/ambii-business/media/tracks/down-the-river.mp3",
+    "duration": 114.547,
+    "bytes": 1833412
+  },
+  "airplane-mode": {
+    "url": "/projects/ambii-business/media/tracks/airplane-mode.mp3",
+    "duration": 216.869,
+    "bytes": 3471038
+  },
+  "california-lullabye": {
+    "url": "/projects/ambii-business/media/tracks/california-lullabye.mp3",
+    "duration": 253.806,
+    "bytes": 4062062
+  },
+  "follow-the-road": {
+    "url": "/projects/ambii-business/media/tracks/follow-the-road.mp3",
+    "duration": 297.456,
+    "bytes": 4760451
+  },
+  "siesta": {
+    "url": "/projects/ambii-business/media/tracks/siesta.mp3",
+    "duration": 139.677,
+    "bytes": 2235944
+  },
+  "take-me-higher": {
+    "url": "/projects/ambii-business/media/tracks/take-me-higher.mp3",
+    "duration": 175.073,
+    "bytes": 2802384
+  },
+  "wallpaper": {
+    "url": "/projects/ambii-business/media/tracks/wallpaper.mp3",
+    "duration": 220.056,
+    "bytes": 3522012
+  },
+  "werq": {
+    "url": "/projects/ambii-business/media/tracks/werq.mp3",
+    "duration": 162.299,
+    "bytes": 2597874
+  },
+  "night-owl": {
+    "url": "/projects/ambii-business/media/tracks/night-owl.mp3",
+    "duration": 194.09,
+    "bytes": 3106589
+  },
+  "ants": {
+    "url": "/projects/ambii-business/media/tracks/ants.mp3",
+    "duration": 211.958,
+    "bytes": 3392425
+  },
+  "python": {
+    "url": "/projects/ambii-business/media/tracks/python.mp3",
+    "duration": 160.94,
+    "bytes": 2576161
+  },
+  "enthusiast": {
+    "url": "/projects/ambii-business/media/tracks/enthusiast.mp3",
+    "duration": 171.024,
+    "bytes": 2737424
+  },
+  "afterglow": {
+    "url": "/projects/ambii-business/media/tracks/afterglow.mp3",
+    "duration": 207.804,
+    "bytes": 3325975
+  },
+  "morning-blue": {
+    "url": "/projects/ambii-business/media/tracks/morning-blue.mp3",
+    "duration": 246.883,
+    "bytes": 3951256
+  },
+  "surf-shimmy": {
+    "url": "/projects/ambii-business/media/tracks/surf-shimmy.mp3",
+    "duration": 122.906,
+    "bytes": 1967215
+  },
+  "surf-inspector": {
+    "url": "/projects/ambii-business/media/tracks/surf-inspector.mp3",
+    "duration": 200.072,
+    "bytes": 3202303
+  },
+  "roads-that-burned-our-boots": {
+    "url": "/projects/ambii-business/media/tracks/roads-that-burned-our-boots.mp3",
+    "duration": 189.649,
+    "bytes": 3035561
+  },
+  "last-dance": {
+    "url": "/projects/ambii-business/media/tracks/last-dance.mp3",
+    "duration": 180.01,
+    "bytes": 2881266
+  },
+  "summer-highway-cruising": {
+    "url": "/projects/ambii-business/media/tracks/summer-highway-cruising.mp3",
+    "duration": 266.031,
+    "bytes": 4257644
+  },
+  "breakfast-on-a-new-day": {
+    "url": "/projects/ambii-business/media/tracks/breakfast-on-a-new-day.mp3",
+    "duration": 200.02,
+    "bytes": 3201455
+  },
+  "disco-medusae": {
+    "url": "/projects/ambii-business/media/tracks/disco-medusae.mp3",
+    "duration": 221.283,
+    "bytes": 3541680
+  },
+  "chill-wave": {
+    "url": "/projects/ambii-business/media/tracks/chill-wave.mp3",
+    "duration": 240.065,
+    "bytes": 3842174
+  },
+  "blue-skies": {
+    "url": "/projects/ambii-business/media/tracks/blue-skies.mp3",
+    "duration": 175.608,
+    "bytes": 2810370
+  },
+  "autumn": {
+    "url": "/projects/ambii-business/media/tracks/autumn.mp3",
+    "duration": 169.848,
+    "bytes": 2718189
+  },
+  "southside": {
+    "url": "/projects/ambii-business/media/tracks/southside.mp3",
+    "duration": 194.9,
+    "bytes": 3119519
+  },
+  "got-funk": {
+    "url": "/projects/ambii-business/media/tracks/got-funk.mp3",
+    "duration": 281.078,
+    "bytes": 4498358
+  },
+  "smooth-lovin": {
+    "url": "/projects/ambii-business/media/tracks/smooth-lovin.mp3",
+    "duration": 259.396,
+    "bytes": 4151476
+  },
+  "moonlit-skyline": {
+    "url": "/projects/ambii-business/media/tracks/moonlit-skyline.mp3",
+    "duration": 292.65,
+    "bytes": 4683461
+  },
+  "swings-and-roundabouts": {
+    "url": "/projects/ambii-business/media/tracks/swings-and-roundabouts.mp3",
+    "duration": 333.218,
+    "bytes": 5332614
+  },
+  "aletheia": {
+    "url": "/projects/ambii-business/media/tracks/aletheia.mp3",
+    "duration": 298.736,
+    "bytes": 4780824
+  },
+  "new-hip-hop-beat": {
+    "url": "/projects/ambii-business/media/tracks/new-hip-hop-beat.mp3",
+    "duration": 127.974,
+    "bytes": 2048315
+  },
+  "wednesday-night": {
+    "url": "/projects/ambii-business/media/tracks/wednesday-night.mp3",
+    "duration": 176.64,
+    "bytes": 2827453
+  },
+  "raspberry-jam": {
+    "url": "/projects/ambii-business/media/tracks/raspberry-jam.mp3",
+    "duration": 174.55,
+    "bytes": 2793877
+  },
+  "funkotron": {
+    "url": "/projects/ambii-business/media/tracks/funkotron.mp3",
+    "duration": 222.168,
+    "bytes": 3555298
+  },
+  "urbania": {
+    "url": "/projects/ambii-business/media/tracks/urbania.mp3",
+    "duration": 133.773,
+    "bytes": 2141045
+  },
+  "island-meet-and-greet": {
+    "url": "/projects/ambii-business/media/tracks/island-meet-and-greet.mp3",
+    "duration": 216.973,
+    "bytes": 3472764
+  },
+  "micro-climas": {
+    "url": "/projects/ambii-business/media/tracks/micro-climas.mp3",
+    "duration": 182.7,
+    "bytes": 2924465
+  },
+  "dont-wait-right-now": {
+    "url": "/projects/ambii-business/media/tracks/dont-wait-right-now.mp3",
+    "duration": 321.254,
+    "bytes": 5141356
+  },
+  "fallen-leaves": {
+    "url": "/projects/ambii-business/media/tracks/fallen-leaves.mp3",
+    "duration": 302.942,
+    "bytes": 4848167
+  },
+  "circles-round-the-sun": {
+    "url": "/projects/ambii-business/media/tracks/circles-round-the-sun.mp3",
+    "duration": 234.005,
+    "bytes": 3745195
+  },
+  "hollow-body-blues": {
+    "url": "/projects/ambii-business/media/tracks/hollow-body-blues.mp3",
+    "duration": 132.963,
+    "bytes": 2128088
+  },
+  "be-cool": {
+    "url": "/projects/ambii-business/media/tracks/be-cool.mp3",
+    "duration": 128.784,
+    "bytes": 2061167
+  },
+  "around-the-mountain": {
+    "url": "/projects/ambii-business/media/tracks/around-the-mountain.mp3",
+    "duration": 307.069,
+    "bytes": 4914293
+  },
+  "circle-round": {
+    "url": "/projects/ambii-business/media/tracks/circle-round.mp3",
+    "duration": 276.558,
+    "bytes": 4426081
+  },
+  "waiting-stillness": {
+    "url": "/projects/ambii-business/media/tracks/waiting-stillness.mp3",
+    "duration": 181.416,
+    "bytes": 2903390
+  },
+  "blues-and-tooth": {
+    "url": "/projects/ambii-business/media/tracks/blues-and-tooth.mp3",
+    "duration": 175.308,
+    "bytes": 2805981
+  },
+  "yellow-sticker-blues": {
+    "url": "/projects/ambii-business/media/tracks/yellow-sticker-blues.mp3",
+    "duration": 182.568,
+    "bytes": 2921845
+  },
+  "bathed-in-fine-dust": {
+    "url": "/projects/ambii-business/media/tracks/bathed-in-fine-dust.mp3",
+    "duration": 170.815,
+    "bytes": 2734203
+  },
+  "sundown-in-twang-town": {
+    "url": "/projects/ambii-business/media/tracks/sundown-in-twang-town.mp3",
+    "duration": 165.146,
+    "bytes": 2643451
+  },
+  "the-stevie-shuffle": {
+    "url": "/projects/ambii-business/media/tracks/the-stevie-shuffle.mp3",
+    "duration": 139.024,
+    "bytes": 2225477
+  },
+  "neo-soul": {
+    "url": "/projects/ambii-business/media/tracks/neo-soul.mp3",
+    "duration": 156.526,
+    "bytes": 2505460
+  },
+  "satellite": {
+    "url": "/projects/ambii-business/media/tracks/satellite.mp3",
+    "duration": 246.57,
+    "bytes": 3946302
+  },
+  "caldera-blue": {
+    "url": "/projects/ambii-business/media/tracks/caldera-blue.mp3",
+    "duration": 320.914,
+    "bytes": 5135780
+  },
+  "midnight-in-c-minor": {
+    "url": "/projects/ambii-business/media/tracks/midnight-in-c-minor.mp3",
+    "duration": 146.834,
+    "bytes": 2350522
   }
 };
 

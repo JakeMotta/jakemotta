@@ -6,6 +6,7 @@ import { seed, IDS } from './seed.js';
 import { SILENCE_MP3_BASE64 } from './media-data.js';
 import * as account from './handlers/account.js';
 import * as locations from './handlers/locations.js';
+import * as upload from './handlers/upload.js';
 import * as stations from './handlers/stations.js';
 import * as player from './handlers/player.js';
 import * as schedules from './handlers/schedules.js';
@@ -26,6 +27,7 @@ export var ROUTES = [
 
   ['GET', 'v3/auth/location', locations.getLocations],
   ['POST', 'v3/auth/location', locations.postLocation],
+  ['POST', 'v3/auth/location/upload', upload.uploadLocations],
   ['GET', 'v3/auth/location/:id', locations.getLocation],
   ['PATCH', 'v3/auth/location/:id', locations.patchLocation],
   ['DELETE', 'v3/auth/location/:id', locations.deleteLocation],
@@ -179,13 +181,18 @@ export function createServer(options) {
     });
   }
 
+  // The dashboard's token names its user (account.userForToken): the seeded owner, or the business a visitor starts.
+  // On /v3/auth it always decides; on /v3/api it decides when there is no player token (the dashboard's station
+  // assign is POST /v3/api/station/:id). With no token, or any other, it is the seeded owner.
   function identify(ctx, area, headers, template) {
     var tx = ctx.tx;
-    var user = tx.get('users', IDS.user) || tx.findOne('users', function (u) { return !u.isDeleted; });
+    var bearer = /^Bearer\s+(\S+)/i.exec(String(headers.authorization || ''));
+    var signedIn = bearer ? account.userForToken(ctx, bearer[1]) : null;
+    var user = signedIn || tx.get('users', IDS.user) || tx.findOne('users', function (u) { return !u.isDeleted; });
     ctx.user = user;
     var companyId = user ? user.company : null;
     if (area === 'api') {
-      // The dashboard's Authorization header is ignored on /v3/api; a player token identifies a player.
+      // A player token identifies a player, and its location's company.
       var token = headers.ambii_player_jwt;
       if (token && token !== 'null' && token !== 'undefined') {
         var jwt = tx.get('playerJWTs', token);

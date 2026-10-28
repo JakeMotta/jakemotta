@@ -14,11 +14,11 @@ test('seeded announcements: the four frequencies, arrays everywhere, playable UR
   var r = await s.call('GET', '/v3/api/announcement/?hash=');
   assert.equal(r.body.message, 'Announcement data found');
   var list = r.body.data.announcements;
-  assert.deepEqual(list.map((a) => a.frequency).sort(), ['0', '15', '60', 'specific time']);
+  assert.deepEqual(list.map((a) => a.frequency).sort(), ['0', '15', '60', 'specific time', 'specific time']);
   assert.ok(list.every((a) => Array.isArray(a.specifiedTimes) && Array.isArray(a.assignedLocations) && a.url && a.duration > 3));
   assert.ok(list.every((a) => a.frequency !== '180'));
   assert.equal(r.body.data.announcementHash, r.body.data.messageHash);
-  var closing = list.find((a) => a.frequency === 'specific time');
+  var closing = list.find((a) => a.title === 'Closing Soon');
   assert.match(closing.specifiedTimes[0].time.selectedTime.substring(0, 5), /^21:45$/);
   assert.deepEqual(closing.specifiedTimes[0].days, ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']);
   var uploaded = list.find((a) => a.uploaded);
@@ -34,7 +34,7 @@ test('players see only their location\'s active announcements', async () => {
   var c = await connect(s, 'LBEAN7');
   var h = { ambii_player_jwt: c.body.data.ambii_player_jwt };
   var r = await s.call('GET', '/v3/api/announcement/?locationId=' + IDS.downtown + '&hash=undefined', null, h);
-  assert.deepEqual(r.body.data.announcements.map((a) => a.title).sort(), ['Closing Soon', 'Happy Hour']);
+  assert.deepEqual(r.body.data.announcements.map((a) => a.title).sort(), ['Closing Soon', 'Happy Hour', 'Welcome']);
   var dash = (await s.call('GET', '/v3/api/announcement/?hash=')).body.data.announcements;
   var happy = dash.find((a) => a.title === 'Happy Hour');
   // deactivate through a cancel (keeps only the first announcement active)

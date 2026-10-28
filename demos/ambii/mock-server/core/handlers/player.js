@@ -4,12 +4,33 @@ import { stamp, newId, randomToken, toNumber } from '../util.js';
 import { trackById, isAdId } from '../catalogue.js';
 import {
   getStation, assignStation, buildTrackSchedule, blocksOf, dueBlock, stationLite, stationDetail, scheduleWithBlocks, trackScheduleFull, locationFull,
+  isSimulatedPlayer, simulatedNowPlaying,
 } from '../music.js';
+import { welcomeTime } from '../seed.js';
 import { DEFAULT_STATION_ID } from '../../config.js';
 
 function activeSchedule(tx, loc) {
   var s = loc.schedule ? tx.get('schedules', loc.schedule) : null;
   return s && !s.isDeleted ? s : null;
+}
+
+// Demo only: an announcement with demoAutoTime (the seeded "Welcome") is moved to just after each connect
+// to one of its locations, so a short visit hears it once. It stays put between connects, so it plays once,
+// not at every track end. Once its time is edited in the dashboard, demoAutoTime no longer matches and the
+// visitor's time is kept.
+function retimeWelcome(ctx, loc) {
+  var tx = ctx.tx, now = ctx.now();
+  tx.all('announcements').forEach(function (a) {
+    if (a.isDeleted || !a.isActive || !a.demoAutoTime || a.frequency !== 'specific time') return;
+    if ((a.assignedLocations || []).indexOf(loc._id) < 0) return;
+    var times = Array.isArray(a.specifiedTimes) ? a.specifiedTimes : [];
+    if (times.length !== 1 || !times[0].time || Number(times[0].time.unixTimeStamp) !== Number(a.demoAutoTime)) return;
+    var t = welcomeTime(now);
+    a.specifiedTimes = [t];
+    a.demoAutoTime = t.time.unixTimeStamp;
+    stamp(a, now);
+    tx.put('announcements', a);
+  });
 }
 
 // POST /v3/api/player/connect
@@ -23,6 +44,17 @@ export function connect(ctx) {
 
   var paired = loc.pairedDevice ? tx.get('players', loc.pairedDevice) : null;
   if (paired && paired.deviceId && paired.deviceId !== b.deviceId && !b.override) return send('DEVICE_ALREADY_PAIRED', 'DEVICE_ALREADY_PAIRED');
+
+  // Demo only: taking over from a simulated in-store player carries on from the song the store is playing
+  // (the players start at location.currentTrackNumber).
+  if (isSimulatedPlayer(paired)) {
+    var sim = simulatedNowPlaying(ctx, loc);
+    if (sim) {
+      loc.currentTrack = sim.currentTrack;
+      loc.currentTrackNumber = sim.currentTrackNumber;
+      loc.lastTrack = sim.lastTrack;
+    }
+  }
 
   // A scheduled location switches to the block that is due now.
   var schedule = activeSchedule(tx, loc);
@@ -68,6 +100,7 @@ export function connect(ctx) {
   }
   stamp(loc, now);
   tx.put('locations', loc);
+  retimeWelcome(ctx, loc);
 
   // Pairing revokes every other token of this location (that is how another device gets kicked: its next
   // request answers 401 TOKEN_INVALID). A valid token the device already holds for this location is kept.

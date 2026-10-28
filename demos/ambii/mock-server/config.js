@@ -6,6 +6,10 @@ export var API_BASE = '/projects/ambii-business/api';
 // Hub page that links the three demos (written separately).
 export var HUB_URL = '/projects/ambii-business/index.html';
 
+// Hand-written page that shows one demo invoice from localStorage (?id=<invoice id>): the invoices'
+// hosted_invoice_url, standing in for Stripe's hosted invoice page.
+export var INVOICE_PAGE_URL = '/projects/ambii-business/invoice.html';
+
 // localStorage keys of the mock: one key per collection, plus "meta".
 export var STORAGE_PREFIX = 'ambii-demo:';
 
@@ -13,7 +17,7 @@ export var STORAGE_PREFIX = 'ambii-demo:';
 export var RESET_PREFIXES = ['ambii-demo:', 'ambii-business:', 'ambii-player:', 'ambii-music:'];
 
 // Bump to reseed every visitor's demo data on their next request.
-export var SEED_VERSION = 1;
+export var SEED_VERSION = 2;
 
 // navigator.locks name that serializes reads and writes across the three apps' documents.
 export var LOCK_NAME = 'ambii-demo-db';
@@ -30,8 +34,9 @@ export var IDLE_OFFLINE_MS = 15 * 60 * 1000;
 // One ad before the first track that starts after each 15 minutes of play (free plan only).
 export var AD_INTERVAL_SECONDS = 900;
 
-// A schedule block's generated station gets at least this many tracks (the catalogue has 13).
-export var MIN_DYNAMIC_TRACKS = 8;
+// A schedule block's generated station gets at least this many tracks: its genre and tempo matches, topped up
+// with the closest tempos (most of the catalogue sits at 110 BPM and under, so the faster bands need topping up).
+export var MIN_DYNAMIC_TRACKS = 12;
 
 // Simulated network latency of the mock, in milliseconds.
 export var LATENCY_MS = [100, 350];

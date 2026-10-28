@@ -8,11 +8,11 @@ import { createServer } from './core/server.js';
 import { memoryStorage, keysWithPrefix } from './core/store.js';
 import { installXhr, installFetch } from './browser/transport.js';
 import { idbMedia, idbFence, resolveMediaUrl, decodeDuration, deleteMediaDb } from './browser/media.js';
-import { isTtsAnnouncement, speakAnnouncement, cancelSpeech } from './browser/tts.js';
+import { isTtsAnnouncement, speakAnnouncement, cancelSpeech, pauseSpeech, resumeSpeech, setSpeechBed } from './browser/tts.js';
 import { notifyMediaPlaying, installPlayNotifier } from './browser/notify.js';
 import { mountBadge } from './browser/badge.js';
 
-export { API_BASE, resolveMediaUrl, isTtsAnnouncement, speakAnnouncement, cancelSpeech, notifyMediaPlaying };
+export { API_BASE, resolveMediaUrl, isTtsAnnouncement, speakAnnouncement, cancelSpeech, pauseSpeech, resumeSpeech, setSpeechBed, notifyMediaPlaying };
 
 var localChain = Promise.resolve();
 
@@ -84,7 +84,8 @@ export function installAmbiiDemo(options) {
   if (opts.badge !== false) mountBadge(opts.badge, function () { resetDemo(); });
   var api = {
     app: opts.app || null, API_BASE: API_BASE, server: server, resetDemo: resetDemo, resolveMediaUrl: resolveMediaUrl,
-    isTtsAnnouncement: isTtsAnnouncement, speakAnnouncement: speakAnnouncement, cancelSpeech: cancelSpeech, notifyMediaPlaying: notifyMediaPlaying,
+    isTtsAnnouncement: isTtsAnnouncement, speakAnnouncement: speakAnnouncement, cancelSpeech: cancelSpeech, pauseSpeech: pauseSpeech, resumeSpeech: resumeSpeech,
+    setSpeechBed: setSpeechBed, notifyMediaPlaying: notifyMediaPlaying,
   };
   window.__ambiiDemo = api;
   return api;

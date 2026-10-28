@@ -14,7 +14,7 @@ A Pokémon fan game Jake made with his classmate Logan Lovell in May 2012, in Gr
 
 **No sound.** `BattleMusic3.mp3` is in the jar's `sounds/` and its `soundindex.list`, and the manifest pulls in JLayer to decode MP3s, but no class plays it or any other sound (checked on 2026-10-27 by searching every class file, the stray copies included). So the game is silent in CheerpJ too.
 
-**Cesar's photo.** The Pong paddle is `Cesar.png`/`Cesar.gif`, a full-length photo of a person, stored upside down and turned upright by the game's `setRotation(180)`. Who it is isn't recorded. It has been in the published jar since the CheerpJ page went up; it's noted here because nothing on the site mentioned it before, and whether it stays is Jake's call.
+**Cesar's photo.** The Pong paddle is `Cesar.png`/`Cesar.gif`, a full-length photo of a person, stored upside down and turned upright by the game's `setRotation(180)`. Who it is isn't recorded. It has been in the published jar since the CheerpJ page went up. Jake chose on 2026-10-28 to keep it as it is, so don't swap, blur or remove it.
 
 Controls, from the source:
 - Space on the title screen;

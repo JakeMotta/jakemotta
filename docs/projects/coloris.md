@@ -74,4 +74,4 @@ To rebuild: a short Python `zipfile` script writes the launcher (fixed entry dat
 
 ## Card image
 
-`public/images/projects/coloris.webp`, the page before Play: the poster under the Play button. Retaken on 2026-10-27 with the new poster. With `#play` it would show the game itself, which looks the same.
+`public/images/projects/coloris.webp` is just the game: the starting view 2 seconds after `#play`, the middle 4:3 of the 600×400 canvas, with Huey in the centre. Retaken on 2026-10-27 without the page or its Play button.

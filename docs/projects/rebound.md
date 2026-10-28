@@ -112,7 +112,7 @@ It was later checked in the site's viewer too, when it was still the card's page
 
 ## Card image
 
-`public/images/projects/rebound.webp` shows a shot in flight in the compiled version. Its `SHOTS` entry in `scripts/screenshot-projects.mjs` opens `index.html#play`, aims and clicks with synthetic pointer events, and waits 1.7 s.
+`public/images/projects/rebound.webp` is just the game: a shot in flight in the compiled version, the left 4:3 of the canvas, with the ball's trail and the target. Its `SHOTS` entry in `scripts/screenshot-projects.mjs` opens `index.html#play`, aims and clicks with synthetic pointer events, and waits 1.7 s.
 - **Pointer capture:** the entry stubs out the canvas's `setPointerCapture` first. A synthetic pointer can't be captured, so the host's press handler would throw before recording the click.
 - **Every retake differs:** the shapes falling behind the level are random.
 

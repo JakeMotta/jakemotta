@@ -31,7 +31,7 @@ Not played through to see whether the ninja can die, or how.
 
 ## Card image
 
-`public/images/projects/ninjadonut-game.webp`: the game six seconds after `#play`, once the first enemies have run in (its `SHOTS` entry). Enemies arrive at random, so every retake differs.
+`public/images/projects/ninjadonut-game.webp` is just the game, ten seconds after `#play`: the middle 4:3 of the 960×400 canvas, with the ninja in the centre and, with luck, an enemy beside him. Enemies arrive at random, so every retake differs; retake it if none made it into the shot.
 
 ## Download
 

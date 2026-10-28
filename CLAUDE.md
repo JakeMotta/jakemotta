@@ -97,7 +97,7 @@ The README in `docs/projects/` has the details of each.
 
 Apart from regenerating the converted output, treat `public/projects/` as an archive: don't reformat or modify the original files. (`.cursorrules` likewise contains just `projects/`.)
 
-**Card images** are screenshots of each running preview, taken by `yarn projects:screenshot` (`scripts/screenshot-projects.mjs`) as `public/images/projects/<id>.webp`. A new project needs an entry in that script's `SHOTS` list too.
+**Card images** are screenshots of each running preview, taken by `yarn projects:screenshot` (`scripts/screenshot-projects.mjs`) as `public/images/projects/<id>.webp`. A new project needs an entry in that script's `SHOTS` list too. A game's card is just the game, clipped from its page with the shot's `clip` (no page, no Play button), as Jake asked on 2026-10-27 ([`docs/projects/README.md`](docs/projects/README.md#card-images)).
 
 **Search and link previews.** The site is named "Jake Motta" everywhere a browser or search engine reads it.
 - **Before the app runs:** `public/index.html` holds the tab title, the meta description, the Open Graph and `twitter:` tags for shared links, and a schema.org `Person` (name, site, GitHub). The shared-link image is `public/images/og.jpg`, 1200×630: a screenshot of the board after "Play with sound", taken in a 1600×840 window. Retake it when the board changes a lot.

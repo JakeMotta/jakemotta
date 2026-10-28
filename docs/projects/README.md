@@ -83,6 +83,11 @@ Treat the originals under `public/projects/` as an archive: don't reformat or mo
 ## Card images
 
 Card images are screenshots of each running preview, taken by `yarn projects:screenshot` (`scripts/screenshot-projects.mjs`) with `yarn dev` running. It drives headless Chrome, Edge or Brave and writes `public/images/projects/<id>.webp` at 960×720, the cards' 4:3.
+
+**A game's card is just the game**, as Jake asked on 2026-10-27: never its page, and never a Play button.
+- **How:** the shot's `clip` names the game's canvas, video or image. The script squares off the rounded corners around it, leaves out its border, and takes the largest 4:3 area inside, placed by `focus`.
+- **Where the game can't be shown running in time:** the card uses what stands in for it. Pokémon's is its poster, captured from CheerpJ, without the button; Survivor's is its mockup.
+- **The one exception** is TapSlayDie, whose site has no gameplay to clip ([tapslaydie.md](tapslaydie.md)).
 - **Shots:** each project's shot is an entry in the script's `SHOTS` list. It says how long to let the page settle and, for a narrow fixed-width site, a narrower viewport so the site fills the frame. A shot can name a page inside the preview rather than its front page (Ambii's card shoots its 2018 landing page, not the story page), `scroll` down to the part worth showing (Pivot's grid), or `run` a line of script first, to open a panel (Noah Garza's About) or keep something off the card (the high school portfolio's phone number).
 - **Audio and autoplay:** the browser runs muted, with autoplay allowed, so Ruffle starts the Flash instead of waiting behind its play button.
 

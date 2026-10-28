@@ -34,6 +34,11 @@ const QUALITY = 85;
 // `width` narrows the viewport for a fixed-width site that would otherwise sit in empty
 // margins; `scroll` moves the page down first, for a site whose best view isn't at the top;
 // `run` is a line of script run once the page loads, to open a panel or hide something.
+// `clip` shoots just one element, for the games, so the card is the game and not its page:
+// `selector` names it, `inset` ([top, right, bottom, left], in CSS pixels) trims more off
+// it, and the card is the largest 4:3 area left, placed by `focus` ([x, y], 0 to 1, centred
+// by default), scaled to 960×720. The element's own border is left out, and the rounded
+// corners of it and its frames are squared off first, so no page shows in the corners.
 const SHOTS = [
     // The 2018 landing page rather than the story page in front of it
     { id: 'ambii', url: '/projects/ambii/index.html', settle: 2500 },
@@ -45,7 +50,8 @@ const SHOTS = [
     // Mid-animation, so the face mesh is drawn
     { id: 'cs160', url: '/projects/cs160/index.html', settle: 3500 },
     { id: 'tapslaydie', url: 'https://tapslaydie.com/', settle: 4000 },
-    // The title screen, with its attract-mode asteroids drifting; the engine takes a few seconds to load
+    // The title screen, with its attract-mode asteroids drifting; the engine takes a few seconds to load. Its canvas
+    // fills the page, so the page is already just the game.
     { id: 'asteroids', url: '/projects/asteroids/index.html', settle: 8000 },
     // The clouds and balloons bounce in over the first couple of seconds
     { id: 'personal-site', url: '/projects/personal-site/index%20(2).static.html', settle: 3000 },
@@ -61,28 +67,42 @@ const SHOTS = [
     { id: 'escaping-confinement', url: '/projects/escaping-confinement/index.html', settle: 1500 },
     // Down past the three wide ones, onto the grid of smaller GIFs mid-animation
     { id: 'pivot', url: '/projects/pivot/index.html', settle: 3000, scroll: 2010 },
-    { id: 'floor-is-lava', url: '/projects/cs134/floor-is-lava.html#play', settle: 2500 },
-    { id: 'scott-pilgrim', url: '/projects/cs134/scott-pilgrim.html', settle: 2500 },
+    // The game is portrait, so the card is its bottom: the miner on the bricks over the lava
+    { id: 'floor-is-lava', url: '/projects/cs134/floor-is-lava.html#play', settle: 2500, clip: { selector: 'canvas', focus: [0.5, 1] } },
+    // The recording itself, without the page around it
+    { id: 'scott-pilgrim', url: '/projects/cs134/scott-pilgrim.html', settle: 2500, clip: { selector: 'video.screen' } },
     { id: 'fooder', url: '/projects/fooder/index.html', settle: 1500 },
-    { id: 'survivor', url: '/projects/survivor/index.html', settle: 1500 },
+    // It never had a finished build, so the card is the case study's mockup of a level
+    { id: 'survivor', url: '/projects/survivor/index.html', settle: 1500, clip: { selector: 'img[src$="design.png"]' } },
     // On the slideshow's first slide
     { id: 'team-safe', url: '/projects/motorsport/team-safe/About.html', settle: 2500 },
     { id: 'worxxx', url: '/projects/motorsport/worxxx/index.static.html', settle: 2500 },
     // The page opens on just its header; the About panel has his photo and story
     { id: 'noah-garza', url: '/projects/motorsport/noah-garza/index.static.html', settle: 2500, width: 1000, run: 'aboutDiv()' },
-    // Coloris and Pokémon: their pages before Play, with the poster
-    { id: 'coloris', url: '/projects/coloris/index.html', settle: 2000 },
-    // The title screen, once its opening wipe has passed; #play starts it without a click
-    { id: 'isguy', url: '/projects/isguy/index.html#play', settle: 5000 },
-    // A few seconds in, once the first enemy donut has run in
-    { id: 'ninjadonut-game', url: '/projects/ninjadonut-game/index.html#play', settle: 6000 },
-    { id: 'greenfoot-pokemon', url: '/projects/greenfoot-pokemon/index.html', settle: 2000 },
+    // The Greenfoot games: just the running game (#play starts it without a click), cropped to 4:3
+    { id: 'coloris', url: '/projects/coloris/index.html#play', settle: 2000, clip: { selector: '#frame canvas' } },
+    // The title screen, once its opening wipe has passed; the world is 4:3 already
+    { id: 'isguy', url: '/projects/isguy/index.html#play', settle: 5000, clip: { selector: '#frame canvas' } },
+    // Ten seconds in, once enemy donuts have had time to run in at the ninja in the middle (they come at random)
+    { id: 'ninjadonut-game', url: '/projects/ninjadonut-game/index.html#play', settle: 10000, clip: { selector: '#frame canvas' } },
+    // Still through CheerpJ, which takes a minute or more to start, so the card is the poster: TrainingVille, captured
+    // from the running game. The Play button comes off and the poster is shown at full strength; the inset trims
+    // Greenfoot's border and control bar off the 816×669 applet, leaving the 800×600 world.
+    {
+        id: 'greenfoot-pokemon',
+        url: '/projects/greenfoot-pokemon/index.html',
+        settle: 1500,
+        run: "document.querySelector('.play').remove(); document.querySelector('.poster').style.opacity = 1",
+        clip: { selector: '.poster', inset: [8, 8, 61, 8] },
+    },
     // Mid-shot, with the ball's trail behind it: aim down and to the right, then click. A synthetic pointer can't be
     // captured, so capture is stubbed out first, or the host's press handler would throw before recording the click.
     {
         id: 'rebound',
         url: '/projects/rebound/index.html#play',
         settle: 1700,
+        // The left of the world, where the ball, its trail and the target are
+        clip: { selector: '#frame canvas', focus: [0, 0.5] },
         run: "const q = () => document.querySelector('#frame canvas'), p = (type) => { const c = q(), b = c.getBoundingClientRect(); c.setPointerCapture = () => {}; c.dispatchEvent(new PointerEvent(type, { pointerType: 'mouse', clientX: b.left + (420 * b.width) / 600, clientY: b.top + (330 * b.height) / 400, buttons: type === 'pointerdown' ? 1 : 0, bubbles: true })); }; setTimeout(() => p('pointermove'), 800); setTimeout(() => p('pointerdown'), 1000)",
     },
 ];
@@ -182,6 +202,30 @@ const connect = (endpoint) =>
 
 const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
 
+// The largest 4:3 area of an element (less its inset), in document coordinates, scaled to the card's width
+const clipOf = async (cdp, sessionId, { selector, inset = [0, 0, 0, 0], focus = [0.5, 0.5] }) => {
+    const { result } = await cdp.send(
+        'Runtime.evaluate',
+        {
+            expression: `(() => {
+                const e = document.querySelector(${JSON.stringify(selector)});
+                if (!e) return null;
+                for (let n = e; n && n !== document.body; n = n.parentElement) n.style.borderRadius = '0';
+                const b = e.getBoundingClientRect();
+                return [b.left + scrollX + e.clientLeft, b.top + scrollY + e.clientTop, e.clientWidth, e.clientHeight];
+            })()`,
+            returnByValue: true,
+        },
+        sessionId,
+    );
+    if (!result.value) throw new Error(`nothing matches ${selector}`);
+    const [left, top, width, height] = result.value;
+    const box = { x: left + inset[3], y: top + inset[0], width: width - inset[1] - inset[3], height: height - inset[0] - inset[2] };
+    const w = Math.min(box.width, (box.height * 4) / 3);
+    const h = (w * 3) / 4;
+    return { x: box.x + (box.width - w) * focus[0], y: box.y + (box.height - h) * focus[1], width: w, height: h, scale: OUTPUT_WIDTH / w };
+};
+
 const shoot = async (cdp, shot) => {
     const url = /^https?:/.test(shot.url) ? shot.url : `${BASE_URL}${shot.url}`;
     const viewport = { width: shot.width ?? DEFAULT_WIDTH, height: Math.round(((shot.width ?? DEFAULT_WIDTH) * 3) / 4) };
@@ -208,7 +252,9 @@ const shoot = async (cdp, shot) => {
 
         const { data } = await cdp.send(
             'Page.captureScreenshot',
-            { format: 'webp', quality: QUALITY, clip: { x: 0, y: scrolled.value, ...viewport, scale: OUTPUT_WIDTH / viewport.width }, captureBeyondViewport: false },
+            shot.clip
+                ? { format: 'webp', quality: QUALITY, clip: await clipOf(cdp, sessionId, shot.clip), captureBeyondViewport: true }
+                : { format: 'webp', quality: QUALITY, clip: { x: 0, y: scrolled.value, ...viewport, scale: OUTPUT_WIDTH / viewport.width }, captureBeyondViewport: false },
             sessionId,
         );
         const file = join(OUT_DIR, `${shot.id}.webp`);

@@ -100,4 +100,4 @@ The download is the jar itself, `public/projects/isguy/isGuyFinal.jar` (39.9 MB)
 
 ## Card image
 
-`public/images/projects/isguy.webp`, the page before Play: the title screen poster under the Play button. Before Run the game itself is a black screen (the level's fade-in), so a `#play` shot would show black.
+`public/images/projects/isguy.webp` is just the game: the title screen, 5 seconds after `#play` (once its opening wipe has passed), clipped to the 800×600 canvas, already 4:3. Before 2026-10-27 it was the CheerpJ page with the Play button.

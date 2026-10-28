@@ -23,7 +23,7 @@ State lives in `src/store/audio.ts` (zustand):
 | `shuffled` | What plays next: the whole library, shuffled, kept topped up. This is the only "queue"; visitors don't build one. |
 | `history` | Tracks that played before this one, for Previous (the last 50). |
 | `entry` | Whether the visitor has chosen yet: `waiting`, `sound` or `silent` (see [board.md](board.md)). |
-| `isPlaying`, `volume` | Mirrored from whichever player has the current track. |
+| `isPlaying`, `volume` | Mirrored from whichever player has the current track. `volume` starts at 0.5, as Jake asked on 2026-10-27. |
 | `audioElement`, `audioContext` | The player's element and Web Audio context, registered by `MusicPlayer` so any control can drive them. |
 | `youtube` | The YouTube player, dressed as an `<audio>` element (`paused`, `currentTime`, `duration`, `play`, `pause`), registered by `YouTubePlayer` once it's ready. |
 | `media()` | Whichever of the two has the current track. Every control goes through it, never straight to `audioElement`. |
@@ -103,7 +103,7 @@ Everything that needs the Worker stays hidden until it answers.
 - **Audio graph:** it builds the Web Audio graph once, on the first track: a `MediaElementAudioSourceNode` feeding the output and, beside it, an `AnalyserNode` (`fftSize` 2048). An `<audio>` element can only ever feed one source node, so the graph is reused for every later track.
 - **The analyser's second input:** while a visitor listens along with Jake ([listening.md](listening.md#listen-along)), the YouTube player is a cross-origin frame the analyser can't hear, so the vignette rests. If they opt in to sharing the tab's sound, the store's `capture` stream is connected to the analyser too, never to the output, since the tab is already playing it. The analyser listens beside the output rather than in front of it so that this second input stays silent.
 - **Two bands:** each frame, a `requestAnimationFrame` loop reads the frequency data for the lows (30–150 Hz: kick and bass) and the highs (4–12 kHz: hats and air). Each band adapts to the range the current track actually uses, so quiet and loud masters both swing from rest to full. The ranges reset on every new track.
-- **Drawing:** the lows push the dark inset vignette in, and the highs flicker a tighter rim. Both are written straight onto `.audio-visualizer`'s `box-shadow` through a ref.
+- **Drawing:** the lows push the dark inset vignette in, and the highs flicker a tighter rim. Each is a layer inside `.audio-visualizer` with its inset shadow painted once at full strength; the loop stretches it past the screen's edges (`transform: scale`) and fades it (`opacity`) through a ref, so the compositor does the work and nothing repaints. It writes only when a level moves by a hundredth. It used to rewrite the `box-shadow` every frame, which repainted the whole screen 60 times a second ([performance.md](performance.md#the-vignette)).
 - **Eq bars:** the same loop writes both levels (0 to 1) to `audioLevels` (`music-player/levels.ts`). Each `EqBars` runs its own small loop that reads them and scales its bars: the first follows the lows, the last the highs, the ones between blend the two. So the bars on the tiles bounce with the real track, and rest when it's paused.
 - **Keep per-frame values off React state.** Anything that changes every frame goes analyser → ref or canvas, inside an animation loop. The seek slider works the same way: it writes its position onto the input each frame.
 

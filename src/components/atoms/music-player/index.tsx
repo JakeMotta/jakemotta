@@ -61,6 +61,12 @@ const updateBand = (band: Band, data: Uint8Array, hzPerBin: number, dt: number) 
  * through the audio store, where this registers it. Songs from YouTube play in atoms/youtube-player
  * instead, whose cross-origin frame the analyser can't hear, so the vignette rests through them.
  */
+// Stretches a full-screen layer so its edges sit `px` past the screen's on every side, and fades it to `opacity`
+const pushOut = (layer: HTMLElement, px: number, opacity: number) => {
+    layer.style.transform = `scale(${(1 + (2 * px) / window.innerWidth).toFixed(4)}, ${(1 + (2 * px) / window.innerHeight).toFixed(4)})`;
+    layer.style.opacity = String(opacity);
+};
+
 export const MusicPlayer = () => {
     const audioUrl = useAudioStore((store) => store.audioUrl);
     const playNext = useAudioStore((store) => store.playNext);
@@ -71,7 +77,8 @@ export const MusicPlayer = () => {
     const analyzerNode = useRef<AnalyserNode | null>(null);
     const animationFrame = useRef<number | null>(null);
     const bands = useRef(createBands());
-    const visualizerRef = useRef<HTMLDivElement>(null);
+    const vignetteRef = useRef<HTMLDivElement>(null);
+    const rimRef = useRef<HTMLDivElement>(null);
 
     // Hand the element to the store, and tear the audio graph down on unmount
     useEffect(() => {
@@ -124,10 +131,13 @@ export const MusicPlayer = () => {
         const data = new Uint8Array(analyzer.frequencyBinCount);
         const hzPerBin = context.sampleRate / analyzer.fftSize;
         let lastTime = performance.now();
+        let shown = '';
 
         const analyze = (now: number) => {
             animationFrame.current = requestAnimationFrame(analyze);
-            if (!analyzerNode.current || !visualizerRef.current) return;
+            const vignette = vignetteRef.current;
+            const rim = rimRef.current;
+            if (!analyzerNode.current || !vignette || !rim) return;
 
             // Clamp so a backgrounded tab doesn't jump the envelopes when it comes back
             const dt = Math.min((now - lastTime) / 1000, 0.1);
@@ -139,10 +149,17 @@ export const MusicPlayer = () => {
             audioLevels.lows = lows;
             audioLevels.highs = highs;
 
-            // Lows push the dark vignette in; highs flicker a tighter dark rim on top of it
-            const rim = `inset 0 0 ${4 + 10 * highs}px ${1 + 4 * highs}px rgba(0, 0, 0, ${(highs * 0.45).toFixed(3)})`;
-            const vignette = `inset 0 0 ${8 + 28 * lows}px ${2 + 16 * lows}px rgba(0, 0, 0, ${(0.4 + 0.25 * lows).toFixed(3)})`;
-            visualizerRef.current.style.boxShadow = `${rim}, ${vignette}`;
+            // Lows push the dark vignette in; highs flicker a tighter dark rim on top of it. Each is a layer
+            // with its shadow painted once, at full strength: stretching it past the screen's edges and
+            // fading it is all the compositor's work, so nothing repaints as the music plays.
+            const low = Math.round(lows * 100) / 100;
+            const high = Math.round(highs * 100) / 100;
+            const key = `${low}|${high}`;
+            if (key === shown) return;
+            shown = key;
+            // Faded in on a curve, so the quieter beats still show, as they did when the shadow itself grew
+            pushOut(vignette, 24 * (1 - low), Math.sqrt(low));
+            pushOut(rim, 8 * (1 - high), high);
         };
 
         animationFrame.current = requestAnimationFrame(analyze);
@@ -206,7 +223,10 @@ export const MusicPlayer = () => {
     return (
         <>
             {/* Visualizer */}
-            <div ref={visualizerRef} className="audio-visualizer" />
+            <div className="audio-visualizer">
+                <div ref={vignetteRef} className="audio-visualizer__vignette" />
+                <div ref={rimRef} className="audio-visualizer__rim" />
+            </div>
 
             <audio
                 ref={audioRef}

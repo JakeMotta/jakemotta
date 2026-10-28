@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { ColorShiftingBackground } from '../../templates';
 import { FloatingPlayer } from '../../atoms';
@@ -68,7 +68,10 @@ export const Home = () => {
             {/* The music, wherever the Now Playing tile is out of sight: behind an overlay, or scrolled away on a phone */}
             {!waiting && (overlayOpen || !nowInView) && <FloatingPlayer />}
 
-            <Outlet />
+            {/* The overlays load in their own chunks (App.tsx); nothing shows until the one asked for arrives */}
+            <Suspense fallback={null}>
+                <Outlet />
+            </Suspense>
         </ColorShiftingBackground>
     );
 };

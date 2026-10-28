@@ -56,6 +56,17 @@ Two small jars sit in front of it in the applet's `archive`, both made on 2026-1
 
 Not verified for the JavaScript build: inside the site's own project viewer, and the blood and injury effects (switched off in the code).
 
+## Download
+
+`public/projects/coloris/download/coloris.zip` (5.6 MB), made on 2026-10-27, unzips to a `coloris/` folder:
+- `coloris.jar`, unchanged;
+- `play-coloris.jar` (2 KB), a launcher with no code: its manifest names `greenfoot.export.GreenfootScenarioMain` with `Class-Path: coloris.jar`, and it holds `game-speed.jar`'s `project.greenfoot`. Being first on the class path, that copy is the one Greenfoot reads, so the desktop game runs at speed 50 like the site's instead of the saved 67 (see Speed above). Its name can't be `Coloris.jar`: on Windows and macOS that's the same file as `coloris.jar`;
+- `README.txt`: open `play-coloris.jar`, press Run, the controls.
+
+A visitor needs Java 8 or newer and keeps the two jars together; it runs from any folder. `browser-timer.jar` is left out, since it only matters in CheerpJ. `coloris.jar` on its own still opens the game, at the old speed. Verified on 2026-10-27 with Java 25 on Windows 10: `java -jar play-coloris.jar` started from another folder opens the "Coloris" window with nothing on stderr. The speed itself wasn't measured on the desktop.
+
+To rebuild: a short Python `zipfile` script writes the launcher (fixed entry dates, deflated) and zips the three files; it wasn't kept, and the steps above are all it does. The deploy compares files by size only (see CLAUDE.md), so a rebuilt zip of the same length wouldn't be uploaded: give it a new name.
+
 ## Left out on purpose
 
 - The other three copies, the `.java` sources and the unused sprites.

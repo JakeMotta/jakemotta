@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<!-- Hand-written for the preview: The Floor is Lava, Jake's CS 134 final (SJSU, 2017), a Java + JOGL desktop
-     program that can't run in a browser. The clip was recorded from the original build on 2026-10-26.
+<!-- Hand-written for the preview: The Floor is Lava, Jake's CS 134 final (SJSU, 2017). The original is a Java + JOGL
+     desktop program that can't run in a browser, so floor-is-lava/game.js is a translation of its compiled classes,
+     drawing the game's own sprites (converted from its .tga files) on a canvas. Laid out like the Coloris page.
      See docs/projects/floor-is-lava.md. -->
 <html lang="en">
 <head>
@@ -8,56 +9,106 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Floor is Lava</title>
 <style>
-    html, body { margin: 0; background: #14121b; color: #ece8f4; }
-    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 28px 16px 48px; }
-    main { max-width: 1000px; margin: 0 auto; }
-    .kicker { margin: 0; color: #9d97ad; font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-    h1 { font-size: 34px; font-weight: 900; margin: 2px 0 20px; letter-spacing: -.5px; color: #ff7a52; }
-
-    /* The clip is 2:3, so it sits beside the text rather than above it */
-    .game { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 32px; align-items: start; }
-    .screen { display: block; width: 100%; height: auto; aspect-ratio: 640 / 960; background: #000; border: 3px solid #000; border-radius: 12px; box-shadow: 6px 6px 0 #ff4a1c; transition: transform .25s cubic-bezier(.3, 1.6, .5, 1); }
-    .screen:hover { transform: rotate(-1deg) translateY(-3px); }
-    .meta { margin: 0 0 6px; color: #9d97ad; font-size: 14px; }
-    p { margin: 6px 0 12px; }
-    .keys { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0 18px; padding: 0; list-style: none; font-size: 14px; color: #c9c3d6; }
-    kbd { display: inline-block; min-width: 1.4em; padding: 1px 6px; margin-right: 3px; border: 1px solid #4a4458; border-bottom-width: 3px; border-radius: 5px; background: #221f2b; color: #fff; font-family: inherit; font-size: 12px; font-weight: 700; line-height: 1.5; text-align: center; }
-    .credit { color: #9d97ad; font-size: 14px; }
-
-    @media (max-width: 760px) {
-        .game { grid-template-columns: 1fr; }
-        /* Keep the tall clip from filling more than most of the screen */
-        .screen { width: min(100%, calc(72vh * 2 / 3)); }
+    html, body { margin: 0; background: #141414; color: #eee; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 20px 16px 32px; box-sizing: border-box; }
+    main { width: min(100%, 640px); margin: 0 auto; }
+    h1 { font-size: 26px; font-weight: 800; line-height: 1.2; margin: 0 0 2px; }
+    h2 { font-size: 18px; font-weight: 800; margin: 26px 0 8px; }
+    p { margin: 0; }
+    a { color: #fff; }
+    .meta { color: #999; margin-bottom: 14px; }
+    /* The game is 640×960. It scales down to the width there is, and to the height of the window, so all of it is
+       on screen while you play */
+    .frame {
+        position: relative; width: min(100%, 640px, calc((100vh - 24px) * 2 / 3)); aspect-ratio: 640 / 960;
+        margin: 0 auto; background: #000; border-radius: 10px; overflow: hidden;
     }
+    .frame canvas, .poster { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .frame canvas { image-rendering: pixelated; outline: none; }
+    .poster { object-fit: cover; opacity: .55; }
+    .play {
+        position: absolute; inset: 0; margin: auto; width: 150px; height: 150px; border: 0; border-radius: 50%;
+        background: #fff; color: #141414; font: 800 22px/1 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, .6); transition: transform .25s cubic-bezier(.34, 1.56, .64, 1);
+    }
+    .play::before { content: ''; border-style: solid; border-width: 18px 0 18px 30px; border-color: transparent transparent transparent currentColor; margin-left: 8px; }
+    .play:hover { transform: scale(1.07) rotate(-4deg); }
+    .play:focus-visible { outline: 3px solid #fff; outline-offset: 5px; }
+    .loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px; font-size: 18px; font-weight: 700; }
+    .hint { margin-top: 12px; padding: 10px 14px; background: #222; border-radius: 8px; color: #ccc; font-size: 15px; }
+    .hint strong { color: #fff; }
+    dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+    dt { font-weight: 700; white-space: nowrap; }
+    dd { margin: 0; color: #ccc; }
+    kbd { display: inline-block; min-width: 1.4em; padding: 1px 6px; border: 1px solid #555; border-bottom-width: 2px; border-radius: 5px; background: #222; font: 600 14px/1.4 ui-monospace, Consolas, monospace; text-align: center; color: #fff; }
+    .note { margin-top: 22px; color: #999; font-size: 14px; }
+    .note p + p { margin-top: 8px; }
 </style>
 </head>
 <body>
 <main>
-    <p class="kicker">SJSU CS 134 · 2017</p>
     <h1>The Floor is Lava</h1>
+    <p class="meta">Java + OpenGL game · SJSU CS 134 · 2017 · no sound</p>
 
-    <div class="game">
-        <video class="screen" autoplay muted loop playsinline controls preload="auto" poster="floor-is-lava.jpg" src="floor-is-lava.mp4" aria-label="The Floor is Lava being played"></video>
-        <div>
-            <p class="meta">Final project for my game programming class · November 2017</p>
-            <p>Blocks rain down, the lava rises and the floor sinks into it. A miner digs blocks loose with his pickaxe, picks them up and stacks them under his feet to stay on top.</p>
-            <p>It's written in Java straight on top of OpenGL (JOGL). There was no engine, so the sprite loading, animation, camera and collisions are mine too.</p>
-            <ul class="keys">
-                <li><kbd>←</kbd><kbd>→</kbd> step</li>
-                <li><kbd>↑</kbd> jump</li>
-                <li><kbd>Z</kbd> mine</li>
-                <li><kbd>Space</kbd> drop a block under you</li>
-                <li><kbd>Ctrl</kbd> + arrow turn</li>
-            </ul>
-            <p class="credit">The clip was recorded in 2026 from the original 2017 build, with the music off. A small bot that reads the screen plays the miner.</p>
-        </div>
+    <div class="frame" id="frame">
+        <img class="poster" id="poster" src="floor-is-lava.jpg" alt="">
+        <button class="play" id="play" type="button">Play</button>
+    </div>
+    <p class="hint" id="hint">It needs a keyboard.</p>
+
+    <h2>Controls</h2>
+    <dl>
+        <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Step one block</dd>
+        <dt><kbd>↑</kbd></dt><dd>Jump one block</dd>
+        <dt><kbd>Z</kbd> (hold)</dt><dd>Mine the block you're facing</dd>
+        <dt><kbd>Space</kbd></dt><dd>Put a block you're carrying down where you're facing</dd>
+        <dt><kbd>↓</kbd></dt><dd>Put one down under you: jump first</dd>
+        <dt><kbd>Ctrl</kbd> + arrow</dt><dd>Turn without moving</dd>
+        <dt><kbd>Enter</kbd></dt><dd>Play again after Game Over</dd>
+    </dl>
+
+    <div class="note">
+        <p>Blocks drop from the sky (a red ! warns you where), the lava keeps rising, and it speeds up as you go. Dig blocks loose with the pickaxe, grab what falls out, and stack it under your feet to stay on top. You can carry three at a time. Apples heal you, and standing inside a falling block doesn't.</p>
+        <p>My final project for my game programming class, November 2017, written in Java straight on top of OpenGL with no engine. That can't run in a browser, so this is the same game rebuilt line for line from the original, with its own sprites. The music is off.</p>
     </div>
 </main>
+<script src="floor-is-lava/game.js"></script>
 <script>
-    // The clip is silent, so it leaves the site's music alone. Someone who asked for less motion gets it paused.
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.querySelectorAll('video').forEach(function (video) { video.removeAttribute('autoplay'); video.pause(); });
+(function () {
+    var frame = document.getElementById('frame');
+    var hint = document.getElementById('hint');
+    var started = false;
+
+    function start() {
+        if (started) return;
+        started = true;
+        frame.innerHTML = '<div class="loading">Loading…</div>';
+        var canvas = document.createElement('canvas');
+        canvas.width = 640;
+        canvas.height = 960;
+        canvas.tabIndex = 0;
+        canvas.setAttribute('aria-label', 'The Floor is Lava');
+        startFloorIsLava(canvas, 'floor-is-lava/', true)
+            .then(function () {
+                frame.innerHTML = '';
+                frame.appendChild(canvas);
+                canvas.focus();
+                hint.innerHTML = 'Mine with <strong>Z</strong>, climb with <strong>↑</strong>, stack with <strong>Space</strong>. Click the game first if the keys don’t answer.';
+                // Make sure the whole game is in view
+                if (frame.getBoundingClientRect().top < 0 || frame.getBoundingClientRect().bottom > window.innerHeight) frame.scrollIntoView({ block: 'center' });
+            })
+            .catch(function (error) {
+                frame.innerHTML = '<div class="loading">The game didn’t load.</div>';
+                hint.textContent = String(error && error.message || error);
+            });
     }
+
+    document.getElementById('play').addEventListener('click', start);
+
+    // #play starts it without a click, for the card screenshot (yarn projects:screenshot)
+    if (location.hash === '#play') start();
+})();
 </script>
 </body>
 </html>

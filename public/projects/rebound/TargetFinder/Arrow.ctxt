@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Arrow()
+comment1.params=
+comment1.target=void\ act()
+comment2.params=
+comment2.target=void\ makeArrow()
+comment3.params=
+comment3.target=void\ checkMouse()
+comment4.params=recievedPower
+comment4.target=void\ updateArrow(double)
+comment5.params=canMove
+comment5.target=void\ updateBall(boolean)
+numComments=6

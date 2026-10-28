@@ -82,7 +82,7 @@ export const useAudioStore = create<AudioStore>((set, get) => ({
     history: [],
     entry: 'waiting',
     isPlaying: false,
-    volume: 1,
+    volume: 0.5,
     audioElement: null,
     audioContext: null,
     youtube: null,

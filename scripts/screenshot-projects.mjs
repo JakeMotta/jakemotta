@@ -61,7 +61,7 @@ const SHOTS = [
     { id: 'escaping-confinement', url: '/projects/escaping-confinement/index.html', settle: 1500 },
     // Down past the three wide ones, onto the grid of smaller GIFs mid-animation
     { id: 'pivot', url: '/projects/pivot/index.html', settle: 3000, scroll: 2010 },
-    { id: 'floor-is-lava', url: '/projects/cs134/floor-is-lava.html', settle: 2500 },
+    { id: 'floor-is-lava', url: '/projects/cs134/floor-is-lava.html#play', settle: 2500 },
     { id: 'scott-pilgrim', url: '/projects/cs134/scott-pilgrim.html', settle: 2500 },
     { id: 'fooder', url: '/projects/fooder/index.html', settle: 1500 },
     { id: 'survivor', url: '/projects/survivor/index.html', settle: 1500 },
@@ -74,6 +74,13 @@ const SHOTS = [
     { id: 'coloris', url: '/projects/coloris/index.html', settle: 2000 },
     { id: 'isguy', url: '/projects/isguy/index.html', settle: 2000 },
     { id: 'greenfoot-pokemon', url: '/projects/greenfoot-pokemon/index.html', settle: 2000 },
+    // Mid-shot, with the ball's trail behind it: aim down and to the right, then click
+    {
+        id: 'rebound',
+        url: '/projects/rebound/index.html',
+        settle: 1200,
+        run: "const c = document.getElementById('game'), b = c.getBoundingClientRect(), p = (type) => c.dispatchEvent(new PointerEvent(type, { pointerType: 'mouse', clientX: b.left + (420 * b.width) / 600, clientY: b.top + (330 * b.height) / 400, buttons: type === 'pointerdown' ? 1 : 0, bubbles: true })); setTimeout(() => p('pointermove'), 300); setTimeout(() => p('pointerdown'), 500)",
+    },
 ];
 
 const fail = (message) => {

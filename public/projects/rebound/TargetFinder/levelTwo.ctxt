@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.params=score
+comment0.target=levelTwo(int)
+comment0.text=\r\n\ Creates\ a\ scrolling\ world\ using\ a\ main\ actor,\ a\ background,\ some\ obstacles,\ and\ a\ non-scrolling\ score.\r\n
+comment1.params=
+comment1.target=void\ act()
+comment2.params=
+comment2.target=void\ addPlayer()
+comment3.params=
+comment3.target=void\ addText()
+comment4.params=ballScore
+comment4.target=void\ updateScore(int)
+comment5.params=shots
+comment5.target=void\ updateShots(int)
+comment6.params=
+comment6.target=void\ levelFailed()
+comment7.params=
+comment7.target=void\ checkRetry()
+comment8.params=
+comment8.target=void\ addShapes()
+comment9.params=
+comment9.target=void\ prepare()
+numComments=10

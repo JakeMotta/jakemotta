@@ -59,7 +59,7 @@ const SHOTS = [
     { id: 'dan-james', url: '/projects/dan-james/index.static.html', settle: 4000 },
     { id: 'jakes-index', url: '/projects/highschool/flashIndex/FlashIndex.static.html', settle: 5000 },
     // The old phone number and email stay on the page but not on the card, which shows on the board itself
-    { id: 'highschool-portfolio', url: '/projects/highschool/oldSite/index.html', settle: 2500, run: "document.getElementById('contact').style.visibility = 'hidden'" },
+    { id: 'highschool-portfolio', url: '/projects/highschool/oldSite/index.static.html', settle: 2500, run: "document.getElementById('contact').style.visibility = 'hidden'" },
     { id: 'sketchbook', url: '/projects/sketchbook/index.html', settle: 1500 },
     // Its thumbnails load lazily, which a background tab never gets round to
     { id: 'flash', url: '/projects/flash/index.html', settle: 1500, run: "document.querySelectorAll('img[loading]').forEach((img) => (img.loading = 'eager'))" },

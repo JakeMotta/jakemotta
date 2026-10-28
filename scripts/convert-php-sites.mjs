@@ -104,14 +104,14 @@ const SITES = [
         dir: 'highschool',
         origins: [],
         forms: {},
-        // The Flash homepage needs Ruffle to play.
-        pages: ['flashIndex/FlashIndex.html'],
-        // The movie is pinned at 1280x768 and runs off the edge of anything smaller, like the
-        // viewer's frame. Resizing the player doesn't work: the movie changes its own scale
-        // mode once it's clicked and shrinks into a corner. So the player keeps its size and
-        // the page scales the whole thing down to fit, centred.
+        // The Flash homepage needs Ruffle to play, and the 2012 portfolio's skyline stopped scrolling.
+        pages: ['flashIndex/FlashIndex.html', 'oldSite/index.html'],
         replace: [
-            ['#flashContent { width:100%; height:100%; }', '#flashContent { width:1280px; height:768px; position:absolute; transform-origin:0 0; }'],
+            // The movie is pinned at 1280x768 and runs off the edge of anything smaller, like the
+            // viewer's frame. Resizing the player doesn't work: the movie changes its own scale
+            // mode once it's clicked and shrinks into a corner. So the player keeps its size and
+            // the page scales the whole thing down to fit, centred.
+            ['#flashContent { width:100%; height:100%; }', '#flashContent { width:1280px; height:768px; position:absolute; transform-origin:0 0; }', 'flashIndex/'],
             [
                 '</body>',
                 '<script>\n(function () {\n' +
@@ -125,7 +125,12 @@ const SITES = [
                     "    addEventListener('resize', fit);\n" +
                     '    fit();\n' +
                     '})();\n</script>\n</body>',
+                'flashIndex/',
             ],
+            // Spritely took window.Touch to mean an iPhone, which only iPhones had in 2012. Every
+            // browser has it now, so Spritely's iPhone path runs for the bird sprite the page
+            // doesn't have, throws, and the clouds and cities never start panning.
+            ['if (window.Touch) {', "if (window.Touch && 'ontouchstart' in window && $(this)[0]) {", 'oldSite/'],
         ],
     },
     {
@@ -438,9 +443,10 @@ const stripTrackers = (text) =>
 /** Scripts from services that no longer exist only fail to load (Adobe's Muse web fonts). */
 const stripDeadServices = (text) => text.replace(/<script\b[^>]*\bsrc=["'][^"']*webfonts\.creativecloud\.com[^"']*["'][^>]*>\s*<\/script>/gi, '');
 
-/** The site's literal fixes (see SITES). */
-const applyReplace = (text, site) => {
-    for (const [from, to] of site.replace ?? []) text = text.split(from).join(to);
+/** The site's literal fixes (see SITES); one with a third entry applies only to files under that folder of the site. */
+const applyReplace = (text, site, file) => {
+    const path = relative(join(PROJECTS, site.dir), file).split(sep).join('/');
+    for (const [from, to, only] of site.replace ?? []) if (!only || path.startsWith(only)) text = text.split(from).join(to);
     return text;
 };
 
@@ -514,7 +520,7 @@ for (const site of SITES) {
     const assetCopy = (path) => {
         if (!assetCopies.has(path)) {
             const source = existsSync(path) ? read(path) : '';
-            const rewritten = applyReplace(rewriteLinks(source, site), site);
+            const rewritten = applyReplace(rewriteLinks(source, site), site, path);
             const copy = rewritten === source ? null : path.replace(/\.(js|css)$/, '.static.$1');
             if (copy) {
                 write(copy, rewritten);
@@ -542,7 +548,7 @@ for (const site of SITES) {
         html = stripTrackers(html);
         html = stripDeadServices(html);
         html = upgradeHttp(html);
-        html = applyReplace(html, site);
+        html = applyReplace(html, site, file);
         html = useAssetCopies(html, file);
         if (hasFlash(html)) html = addRuffle(html);
         return html;

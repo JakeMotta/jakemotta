@@ -215,7 +215,7 @@ export const homeProjectList: HomeProject[] = [
     },
     {
         id: 'asteroids',
-        image: '/images/projects/asteroids.webp',
+        image: '/images/projects/asteroids.webp?v=2',
         title: 'Asteroids',
         date: '2026',
         category: 'game',
@@ -358,7 +358,7 @@ export const homeProjectList: HomeProject[] = [
     },
     {
         id: 'coloris',
-        image: '/images/projects/coloris.webp',
+        image: '/images/projects/coloris.webp?v=2',
         title: 'Coloris',
         date: '2014',
         category: 'game',
@@ -379,7 +379,7 @@ export const homeProjectList: HomeProject[] = [
     },
     {
         id: 'isguy',
-        image: '/images/projects/isguy.webp',
+        image: '/images/projects/isguy.webp?v=2',
         title: 'The Adventures of isGuy',
         date: '2013',
         category: 'game',
@@ -390,7 +390,7 @@ export const homeProjectList: HomeProject[] = [
     },
     {
         id: 'personal-site',
-        image: '/images/projects/personal-site.webp',
+        image: '/images/projects/personal-site.webp?v=2',
         title: 'Personal Site',
         date: '2012',
         category: 'website',
@@ -426,11 +426,11 @@ export const homeProjectList: HomeProject[] = [
         category: 'website',
         tags: ['Website'],
         description: 'My portfolio from the end of high school, with a parallax city skyline scrolling behind it.',
-        preview: '/projects/highschool/oldSite/index.html',
+        preview: '/projects/highschool/oldSite/index.static.html',
     },
     {
         id: 'greenfoot-pokemon',
-        image: '/images/projects/greenfoot-pokemon.webp',
+        image: '/images/projects/greenfoot-pokemon.webp?v=2',
         title: 'Pokémon: Green Foot Edition',
         date: '2012',
         category: 'game',

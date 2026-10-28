@@ -59,7 +59,7 @@ On 2026-10-27 Jake asked to see the hand port beside the same game made the way 
 
 Jake then picked the compiled version for the card, and the hand port moved to `port.html`. Neither `java/` nor `compare.html` is linked from the site; open `/projects/rebound/compare.html` directly.
 
-**`java/rebound.jar`** (554 KB, 296 entries) is what both of the others are made from. It was assembled the way `coloris.jar` was ([coloris.md](coloris.md)), with a Python script (`zipfile`; not kept), and nothing in it was changed or recompiled. In it:
+**`java/rebound.jar`** (554 KB, 296 entries) is what both of the others are made from. It was assembled the way `coloris.jar` was ([coloris.md](coloris.md)), first with a one-off Python script; `yarn projects:greenfoot-pack public/projects/rebound/TargetFinder public/projects/rebound/java/rebound.jar Rebound` now packs the same contents ([greenfoot-web.md](greenfoot-web.md#converting-a-game)). Nothing in it was changed or recompiled. In it:
 - **The game:** the 24 `.class` files and `project.greenfoot` from `TargetFinder/`, and its eight `.png` images under `images/`. The `.java`, `.ctxt` and `.fla` files are left out.
 - **The Greenfoot 3.0.4 runtime:** `greenfoot/`, `bluej/`, `javazoom/` and the six control-bar icons, 260 entries copied byte for byte from `coloris.jar`, which took them from `isGuyFinal.jar`.
 - **Settings:** `coloris.jar`'s `standalone.properties` with `main.class=levelOne` and `project.name=Rebound`, an empty `soundindex.list`, and its manifest, so `java -jar rebound.jar` should run it on the desktop too (not tried).

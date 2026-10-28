@@ -102,6 +102,8 @@ The older images in `public/images/projects/` (`ambii.png`, `pistolArt.png` and 
 
 ## Adding a project
 
+A Greenfoot game has its own steps, which cover all of these: [greenfoot-web.md](greenfoot-web.md#converting-a-game).
+
 1. Get it running as a preview: a static copy in `public/projects/<folder>/` (a new `SITES` entry if it's PHP, or if some of its plain pages need fixes), or the address of a live site that allows framing (check its response headers for `X-Frame-Options` and `frame-ancestors`). On Windows, copying a batch of files into `public/` while `yarn dev` runs can crash the dev server (chokidar's `EBUSY: resource busy or locked`). Copy first and start the server after, or just restart it.
 2. Add an entry to `homeProjectList`, one per project (see One project, one card above), newest first (so a new project becomes the featured tile): `id`, `title`, `date`, `category` (which section of the all-projects overlay it goes in: `website`, `app`, `game`, `art` or `animation`; a new one goes in `projectCategories`), `tags` (what kind of thing it is, shown as pills in the viewer: "Website", "Java Game", "School"…), `download` for a game with a desktop build (see Downloads above), a one-sentence `description` in Jake's voice that says what it is rather than how the preview runs, `preview`, and `image: '/images/projects/<id>.webp'`.
 3. Add a `SHOTS` entry to `scripts/screenshot-projects.mjs`, run `yarn projects:screenshot <id>` and look at the result.

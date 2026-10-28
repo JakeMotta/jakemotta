@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<!-- Hand-written for the preview: Jake's 2013 Greenfoot game, played in the browser. TargetFinder/ is the scenario as it
-     came out of Rebound.gfar, unchanged; rebound.js is its Java translated class by class, and greenfoot.js the parts of
-     Greenfoot it needs. docs/projects/rebound.md explains how and why. -->
+<!-- Hand-written for the preview: Jake's 2013 Greenfoot game. Its compiled classes, taken unchanged from java/rebound.jar,
+     are compiled to JavaScript by scripts/build-greenfoot.mjs (yarn projects:greenfoot) into web/, and run on the Greenfoot
+     runtime in demos/greenfoot/. See docs/projects/rebound.md and docs/projects/greenfoot-web.md. port.html is the earlier
+     hand port, java/index.html the same jar through CheerpJ, and compare.html all three side by side. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -16,17 +17,32 @@
     p { margin: 0; }
     a { color: #fff; }
     .meta { color: #999; margin-bottom: 14px; }
-    .frame { position: relative; border-radius: 10px; overflow: hidden; background: #fff; }
-    canvas { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; touch-action: none; cursor: crosshair; outline: none; }
-    .error { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 24px; background: rgba(0, 0, 0, .85); color: #fff; text-align: center; font-weight: 700; }
-    .error.shown { display: flex; }
-    .bar { display: flex; gap: 8px; margin-top: 10px; }
-    .bar button {
-        border: 0; border-radius: 8px; padding: 7px 16px; background: #2a2a2a; color: #fff; font: 700 15px/1.2 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-        cursor: pointer; transition: transform .25s cubic-bezier(.34, 1.56, .64, 1), background .15s;
+    /* The world is 600×400: shown at its own size, and scaled down to fit a narrower screen */
+    .frame { position: relative; width: 100%; aspect-ratio: 600 / 400; background: #000; border-radius: 10px; overflow: hidden; }
+    .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+    .play {
+        position: absolute; inset: 0; margin: auto; width: 150px; height: 150px; border: 0; border-radius: 50%;
+        background: #fff; color: #141414; font: 800 22px/1 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, .6); transition: transform .25s cubic-bezier(.34, 1.56, .64, 1);
     }
-    .bar button:hover { background: #383838; transform: translateY(-1px) rotate(-2deg); }
-    .bar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .play::before { content: ''; border-style: solid; border-width: 18px 0 18px 30px; border-color: transparent transparent transparent currentColor; margin-left: 8px; }
+    .play:hover { transform: scale(1.07) rotate(-4deg); }
+    .play:focus-visible { outline: 3px solid #fff; outline-offset: 5px; }
+    canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; outline: none; touch-action: none; }
+    .loading { position: absolute; inset: 0; z-index: 2; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 24px; font-size: 18px; font-weight: 700; }
+    .loading small { font-size: 14px; font-weight: 400; color: #aaa; max-width: 34em; }
+    .spinner { width: 34px; height: 34px; border: 4px solid #444; border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .bar { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+    .bar[hidden] { display: none; }
+    .bar button {
+        border: 0; border-radius: 999px; padding: 7px 16px; background: #fff; color: #141414; cursor: pointer;
+        font: 800 14px/1.2 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; transition: transform .2s cubic-bezier(.34, 1.56, .64, 1);
+    }
+    .bar button.quiet { background: #2a2a2a; color: #eee; }
+    .bar button:hover { transform: translateY(-1px) rotate(-2deg); }
+    .bar button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     .hint { margin-top: 12px; padding: 10px 14px; background: #222; border-radius: 8px; color: #ccc; font-size: 15px; }
     .hint strong { color: #fff; }
     dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
@@ -35,7 +51,7 @@
     kbd { display: inline-block; min-width: 1.4em; padding: 1px 6px; border: 1px solid #555; border-bottom-width: 2px; border-radius: 5px; background: #222; font: 600 14px/1.4 ui-monospace, Consolas, monospace; text-align: center; color: #fff; }
     .note { margin-top: 22px; color: #999; font-size: 14px; }
     .note p + p { margin-top: 8px; }
-    @media (prefers-reduced-motion: reduce) { .bar button, .bar button:hover { transition: none; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .play, .bar button { transition: none; } .play:hover, .bar button:hover { transform: none; } }
 </style>
 </head>
 <body>
@@ -43,15 +59,15 @@
     <h1>Rebound</h1>
     <p class="meta">Greenfoot game · 2013 · unfinished · no sound</p>
 
-    <div class="frame">
-        <canvas id="game" width="600" height="400" tabindex="0" aria-label="Rebound"></canvas>
-        <div class="error" id="error"></div>
+    <div class="frame" id="frame">
+        <img class="poster" id="poster" src="java/poster.webp" alt="">
+        <button class="play" id="play" type="button">Play</button>
     </div>
-    <div class="bar">
+    <div class="bar" id="bar" hidden>
         <button type="button" id="pause">Pause</button>
-        <button type="button" id="reset">Reset</button>
+        <button type="button" class="quiet" id="restart">Start over</button>
     </div>
-    <p class="hint">Aim with the mouse and click to shoot. Bank the ball off the walls into the target.</p>
+    <p class="hint" id="hint">It needs a mouse.</p>
 
     <h2>Controls</h2>
     <dl>
@@ -63,44 +79,97 @@
 
     <div class="note">
         <p>A bounce-shot game I made in Greenfoot in April 2013. You get two shots to bank the ball into the target on the first level, and three on the second. That's as far as it goes: the second level's target doesn't do anything yet, and neither does the Retry button, so press R to go again.</p>
-        <p>On a phone, drag to aim and let go to shoot.</p>
+        <p>This is my original 2013 Greenfoot code, playing just as I left it. On a phone it will load, but you'll need a mouse to play.</p>
     </div>
 </main>
-<script src="greenfoot.js"></script>
-<script src="rebound.js"></script>
 <script>
 (function () {
-    var canvas = document.getElementById('game');
-    var pause = document.getElementById('pause');
-    var error = document.getElementById('error');
+    // The site's player pauses when the game first plays a sound. Rebound has none, so the music keeps going.
+    var READY_HINT = 'Aim with the mouse and click to shoot. Bank the ball off the walls into the target.';
 
-    window.greenfoot.start(canvas, {
-        images: 'TargetFinder/images/',
-        classImages: window.rebound.classImages,
-        world: window.rebound.world,
-        // project.greenfoot's simulation.speed=50, Greenfoot's default: at most one act every 16.2 ms
-        actsPerSecond: 61.6,
-        onError: function (e) {
-            console.error(e);
-            error.textContent = 'The game stopped: ' + e.message + '. Press Reset to start again.';
-            error.classList.add('shown');
-            pause.textContent = 'Run';
-        },
-    }).then(function (game) {
-        game.run();
-        pause.addEventListener('click', function () {
-            if (game.isRunning()) game.pause();
-            else game.run();
-            pause.textContent = game.isRunning() ? 'Pause' : 'Run';
+    var frame = document.getElementById('frame');
+    var hint = document.getElementById('hint');
+    var bar = document.getElementById('bar');
+    var pause = document.getElementById('pause');
+    var started = false;
+
+    function loadScript(src) {
+        return new Promise(function (resolve, reject) {
+            var script = document.createElement('script');
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = function () { reject(new Error('could not load ' + src)); };
+            document.head.appendChild(script);
         });
-        document.getElementById('reset').addEventListener('click', function () {
-            error.classList.remove('shown');
-            game.reset();
-            game.run();
-            pause.textContent = 'Pause';
-            canvas.focus();
-        });
-    });
+    }
+
+    function showError(message) {
+        var loading = frame.querySelector('.loading');
+        if (!loading) {
+            frame.insertAdjacentHTML('beforeend', '<div class="loading"></div>');
+            loading = frame.querySelector('.loading');
+        }
+        loading.innerHTML = 'The game stopped.<small>' + String(message).replace(/</g, '&lt;') + '</small>';
+        hint.textContent = 'Try reloading the page.';
+    }
+
+    function start() {
+        if (started) return;
+        started = true;
+        document.getElementById('play').remove();
+        frame.insertAdjacentHTML('beforeend', '<div class="loading"><div class="spinner"></div><span id="progress">Loading…</span></div>');
+        hint.textContent = 'Loading…';
+        var canvas = document.createElement('canvas');
+        canvas.width = 600;
+        canvas.height = 400;
+        canvas.setAttribute('aria-label', 'Rebound');
+
+        // manifest.json names the game's scripts (by content hash) and its images
+        var manifest;
+        fetch('web/manifest.json', { cache: 'no-cache' })
+            .then(function (response) {
+                if (!response.ok) throw new Error('Could not load the game (' + response.status + ')');
+                return response.json();
+            })
+            .then(function (loaded) {
+                manifest = loaded;
+                return loadScript('web/' + manifest.host);
+            })
+            .then(function () { return loadScript('web/' + manifest.game); })
+            .then(function () {
+                return GF.boot({
+                    canvas: canvas,
+                    base: 'web/',
+                    manifest: manifest,
+                    onProgress: function (loaded, total) {
+                        var progress = document.getElementById('progress');
+                        if (progress) progress.textContent = 'Loading… ' + Math.round(loaded / Math.max(total, 1) * 100) + '%';
+                    },
+                    onReady: function () {
+                        document.getElementById('poster').remove();
+                        frame.querySelector('.loading').remove();
+                        frame.appendChild(canvas);
+                        bar.hidden = false;
+                        hint.innerHTML = READY_HINT;
+                        GF.focus();
+                        document.documentElement.classList.add('game-ready');
+                    },
+                    onRunning: function (running) { pause.textContent = running ? 'Pause' : 'Play'; },
+                    onError: showError,
+                    onSound: function () {
+                        if (window.top !== window) window.top.postMessage({ type: 'jakemotta:media-playing' }, location.origin);
+                    }
+                });
+            })
+            .catch(function (error) { showError(error && error.message || error); });
+    }
+
+    document.getElementById('play').addEventListener('click', start);
+    pause.addEventListener('click', function () { GF.toggleRun(); GF.focus(); });
+    document.getElementById('restart').addEventListener('click', function () { GF.reset(); GF.focus(); });
+
+    // #play starts it without a click, for the card screenshot (yarn projects:screenshot)
+    if (location.hash === '#play') start();
 })();
 </script>
 </body>

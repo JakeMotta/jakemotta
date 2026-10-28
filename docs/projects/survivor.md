@@ -28,4 +28,4 @@ The sprites in `sprites/` are the original PNGs, copied unchanged with their own
 
 ## Card image
 
-`public/images/projects/survivor.webp`, the top of the page: the mockup, the description and the running prisoner.
+`public/images/projects/survivor.webp` is the design mockup of a level, clipped from the page (`design.png`, 4:3 already). There was never a finished build to shoot.

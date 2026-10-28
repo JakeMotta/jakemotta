@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=medText
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ smallText\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=text
+comment1.target=medText(java.lang.String)
+comment2.params=
+comment2.target=void\ act()
+comment2.text=\r\n\ Act\ -\ do\ whatever\ the\ smallText\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment3.params=text
+comment3.target=void\ makeBoard(java.lang.String)
+comment4.params=text
+comment4.target=void\ setGameText(java.lang.String)
+numComments=5

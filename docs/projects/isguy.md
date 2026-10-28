@@ -2,11 +2,23 @@
 
 The Adventures of isGuy, a five-level platformer Jake made in Greenfoot (Java) in March 2013: a stick figure with a gun, lasers, ladders, keys, doors, falling blocks and UFOs. It was published as a Java applet on NinjaDonut ("Project isGuy is finally here!"). The folder is `public/projects/isguy/`; the card id is `isguy`.
 
-This page also covers how the Greenfoot games run through CheerpJ, since they share it. Pokémon ([greenfoot-pokemon.md](greenfoot-pokemon.md)) and Coloris ([coloris.md](coloris.md)) only describe what differs. Since 2026-10-27 Coloris and Pokémon run as JavaScript instead, with no Java VM, and isGuy could follow ([greenfoot-web.md](greenfoot-web.md)); their CheerpJ pages stay as `cheerpj.html`.
+**Since 2026-10-27 isGuy runs as JavaScript**, the way Coloris does ([greenfoot-web.md](greenfoot-web.md)). Jake picked that route over CheerpJ after comparing the two on Rebound ([rebound.md](rebound.md#compared-with-the-coloris-way)).
+- **The build:** `yarn projects:greenfoot isguy` compiles the jar's 72 classes, unchanged, into `web/`, with the 194 images and 9 sounds the game names. Its `GAMES` entry reads only `isGuyFinal.jar`: `browser-timer.jar` fixes a CheerpJ problem.
+- **The page:** `index.html` is Coloris's page with isGuy's name, size (800×600), controls and note. Its music pauses the site's player the first time the game plays a sound.
+- **The title screen:** `worldOne`, the start world, switches to the title screen (`gameStartWorld`) from its constructor. Greenfoot 3 keeps the world a constructor switches to, but the runtime first opened level 1 straight away; it now keeps it too (greenfoot-web.md).
+- **Verified** on 2026-10-27 in headless Chrome against `yarn dev`:
+  - playable 0.5–1.1 s after Play, at 60 acts and 60 frames a second with the main thread 8–9% busy;
+  - the title screen with its song, Start into level 1, walking, jumping and shooting;
+  - sound: the title song, the button's coin and the gunshot all played after a real click on Play;
+  - in the site's viewer it boots at its full 800×600;
+  - no console errors.
+- **Not checked yet:** the other four levels, How to Play and Game Info, and the game-over and victory screens, against the CheerpJ version.
 
-## Preview
+The rest of this page describes the CheerpJ version, which is still how Pokémon runs ([greenfoot-pokemon.md](greenfoot-pokemon.md)) and what Coloris's ([coloris.md](coloris.md)) and isGuy's own `cheerpj.html` copies do.
 
-`index.html` is a hand-written page: the game's frame with a poster and a Play button, a hint line under it, the controls from the game's own How to Play screen, and a note about the game and CheerpJ. Pokémon's and Coloris's `cheerpj.html` pages are copies of it with their own text and settings (the variables at the top of the script).
+## Preview through CheerpJ
+
+`cheerpj.html` (the page's `index.html` until 2026-10-27) is a hand-written page: the game's frame with a poster and a Play button, a hint line under it, the controls from the game's own How to Play screen, and a note about the game and CheerpJ. Pokémon's and Coloris's `cheerpj.html` pages are copies of it with their own text and settings (the variables at the top of the script).
 
 **How the Java runs.** [CheerpJ](https://cheerpj.com/) (Leaning Technologies) runs Java 8 in the browser in WebAssembly.
 - **Loading:** nothing loads until Play. Then the page adds CheerpJ's `loader.js` (version 4.3) from `https://cjrtnc.leaningtech.com/4.3/` and calls `cheerpjInit({ status: 'none' })`. CheerpJ fetches its runtime from that CDN and then downloads the whole jar in one request; it doesn't use range requests. isGuy's jar is 40 MB, so the first load is slow.
@@ -25,7 +37,7 @@ This page also covers how the Greenfoot games run through CheerpJ, since they sh
 **Files.**
 - `isGuyFinal.jar` (39.9 MB) is `Old Computer/Documents/Greenfoot/isGuy/isGuyFinal.jar`, copied unchanged. Jake re-exported the March 2013 project from Greenfoot 3.0.4 on 2017-11-10 (Java 8 classes); its 215 images match the 2013 export. It runs as is with `java -jar` too.
 - `browser-timer.jar` (2 KB) is new, made on 2026-10-27. It holds one class, `greenfoot/util/HDTimer.class`, listed before `isGuyFinal.jar` so it replaces the jar's copy. See Speed below.
-- `poster.webp` is the title screen, captured from the game running in CheerpJ.
+- `poster.webp` is the title screen, captured from the game running in CheerpJ. Both pages show it before Play.
 
 **The music.** About 38 MB of the jar is six songs by other artists: The Orbiters, Tiesto & Allure, Adhesive Wombat, Soulero, and Trampboat & Soulero. The game credits them on its Game Info screen and the page names them. They're published as part of the jar: on 2026-10-26 Jake decided to keep them rather than ship a rebuilt, silent jar. Don't strip them unless he asks.
 
@@ -88,4 +100,4 @@ The download is the jar itself, `public/projects/isguy/isGuyFinal.jar` (39.9 MB)
 
 ## Card image
 
-`public/images/projects/isguy.webp`, the page before Play: the title screen poster under the Play button. Before Run the game itself is a black screen (the level's fade-in), so a `#play` shot would show black.
+`public/images/projects/isguy.webp` is just the game: the title screen, 5 seconds after `#play` (once its opening wipe has passed), clipped to the 800×600 canvas, already 4:3. Before 2026-10-27 it was the CheerpJ page with the Play button.

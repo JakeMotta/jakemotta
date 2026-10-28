@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<!-- Jake asked on 2026-10-27 to see Rebound's hand port beside the same game made the way Coloris runs. Top: the port the
-     card frames (index.html) and the 2013 classes compiled to JavaScript like Coloris (teavm.html). Below: the same jar
+<!-- Jake asked on 2026-10-27 to see Rebound's hand port beside the same game made the way Coloris runs, then picked the
+     compiled one for the card. Top: the hand port (port.html) and the 2013 classes compiled to JavaScript like Coloris, which
+     the card frames (index.html). Below: the same jar
      through CheerpJ, the way Coloris ran before (java/index.html). Not linked from the site; each frame is its page
      exactly as it runs on its own. See docs/projects/rebound.md. -->
 <html lang="en">
@@ -23,15 +24,15 @@
 </head>
 <body>
     <h1>Rebound, side by side</h1>
-    <p class="lede">Left, the hand port the site's card shows. Right, the 2013 classes compiled to JavaScript, the way Coloris runs now. Underneath, the same game through CheerpJ, the way Coloris used to run. Everything here shares this computer while it runs, so pause the others to give one all of it.</p>
+    <p class="lede">Left, the hand port. Right, the 2013 classes compiled to JavaScript, the way Coloris runs, which the site's card shows. Underneath, the same game through CheerpJ, the way Coloris used to run. Everything here shares this computer while it runs, so pause the others to give one all of it.</p>
     <div class="pair">
         <figure>
-            <figcaption>Hand port <small>index.html</small></figcaption>
-            <iframe src="index.html" title="Rebound, hand port"></iframe>
+            <figcaption>Hand port <small>port.html</small></figcaption>
+            <iframe src="port.html" title="Rebound, hand port"></iframe>
         </figure>
         <figure>
-            <figcaption>Compiled, like Coloris <small>teavm.html</small></figcaption>
-            <iframe src="teavm.html" title="Rebound, compiled from its classes"></iframe>
+            <figcaption>Compiled, like Coloris <small>index.html</small></figcaption>
+            <iframe src="index.html" title="Rebound, compiled from its classes"></iframe>
         </figure>
     </div>
     <div class="pair">

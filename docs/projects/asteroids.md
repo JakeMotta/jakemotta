@@ -99,4 +99,4 @@ The site doesn't link to the download yet.
 
 ## Card image
 
-`public/images/projects/asteroids.webp`, the title screen, with an 8-second `settle` while the engine loads.
+`public/images/projects/asteroids.webp`, the title screen, with an 8-second `settle` while the engine loads. Godot's canvas fills the page, so the page is already just the game.

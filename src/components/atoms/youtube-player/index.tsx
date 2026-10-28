@@ -121,8 +121,9 @@ const asMedia = (player: Player): Media => ({
  * shuffle as the rest, through the same controls. It's YouTube's own embedded player, made the first
  * time one comes up and laid over the cover of whichever player is on screen.
  *
- * YouTube's rules shape it (docs/music.md): the video is always visible while it plays, never under
- * 200×200, and it pauses whenever the tab is hidden.
+ * YouTube's rules shape it (docs/music.md): the video is always visible while it plays, and never
+ * under 200×200. It keeps playing in a hidden tab, like the site's own tracks, which Jake chose
+ * knowing YouTube's policies forbid it.
  *
  * It also brings in the songs on Jake's Spotify playlist, when the listening Worker is there.
  */
@@ -214,25 +215,6 @@ export const YouTubePlayer = () => {
             if (store.volume !== previous.volume) player.current?.setVolume(store.volume * 100);
         });
     }, [ready]);
-
-    // No background play: pause when the tab is hidden, and carry on when it's back
-    useEffect(() => {
-        if (!streamed || !ready) return;
-        let pausedForHidden = false;
-        const onVisibility = () => {
-            const yt = player.current;
-            if (!yt) return;
-            if (document.visibilityState === 'hidden' && yt.getPlayerState() === PLAYING) {
-                pausedForHidden = true;
-                yt.pauseVideo();
-            } else if (document.visibilityState === 'visible' && pausedForHidden) {
-                pausedForHidden = false;
-                yt.playVideo();
-            }
-        };
-        document.addEventListener('visibilitychange', onVisibility);
-        return () => document.removeEventListener('visibilitychange', onVisibility);
-    }, [streamed, ready]);
 
     // Lay the player over the slot on screen, every frame, written straight onto the element like the
     // visualizer. Under 200×200 it grows past the slot, centred on it.

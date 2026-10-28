@@ -93,7 +93,7 @@ Everything that needs the Worker stays hidden until it answers.
 - **YouTube's rules** ([API Services Developer Policies](https://developers.google.com/youtube/terms/developer-policies)), as for listen-along:
   - **Visible:** the video is always visible while it plays. It's at z-index 105, above the overlays (60), the floating player (80) and the vignette (100), and under listen-along's (110).
   - **Size:** it's never under 200×200. The slots' minimums keep it there, and a smaller slot gets a player that grows past it, centred.
-  - **No background play:** it pauses when the tab is hidden, and carries on when the visitor comes back.
+  - **It plays on in a hidden tab, against YouTube's rules.** Section III.I.9 forbids playing YouTube audio from a player that isn't on screen. Until 2026-10-28 the player paused whenever the tab was hidden. That day Jake chose to let it play on, like his own tracks. He knew the risk: YouTube can suspend or revoke the project's API access (III.J.3). That would stop the listening Worker finding YouTube copies, so the playlist, the Recent listens play buttons and listen-along would stop working. If that happens, or YouTube writes about it, putting back the `visibilitychange` effect (removed in that change) restores the pause. Listen-along's player still pauses in a hidden tab.
   - **Ads:** YouTube's ads aren't blocked.
 - **The vignette rests during these songs.** YouTube's frame is cross-origin, so the analyser can't hear it, and the eq bars rest too. Listen-along's opt-in tab capture ([listening.md](listening.md#the-visualizer-while-listening-along-opt-in)) isn't offered here yet.
 

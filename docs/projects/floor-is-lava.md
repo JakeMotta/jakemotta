@@ -48,4 +48,4 @@ Shipping the music means hosting a 40 MB track whose origin isn't recorded, as i
 
 ## Card image
 
-`public/images/projects/floor-is-lava.webp`, taken with the clip a couple of seconds in. Retake it with `#play` so it shows the game itself.
+`public/images/projects/floor-is-lava.webp` is just the game, 2.5 seconds after `#play`. The canvas is portrait, so the card is the bottom 4:3 of it: the miner on the bricks over the lava.

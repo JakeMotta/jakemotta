@@ -80,4 +80,4 @@ How the three Greenfoot games were measured in CheerpJ and what was wrong with t
 
 ## Card image
 
-`public/images/projects/greenfoot-pokemon.webp`, the page before Play: TrainingVille under the Play button. Retaken on 2026-10-27 with the new poster. With `#play`, the page would show the title screen.
+`public/images/projects/greenfoot-pokemon.webp` is just the game: TrainingVille at the start, shot from the running JavaScript build like the other Greenfoot games' cards. The shot opens the page with `#play`, presses Space past the title and Enter for a starter, and clips to the 800×600 canvas. Until 2026-10-27 it was clipped from the CheerpJ poster instead, because CheerpJ took a minute or more to start.

@@ -341,6 +341,16 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/motorsport/team-safe/About.html',
     },
     {
+        id: 'ninjadonut-game',
+        image: '/images/projects/ninjadonut-game.webp',
+        title: 'NinjaDonut: The Game',
+        date: '2014',
+        category: 'game',
+        tags: ['Java Game'],
+        description: 'The NinjaDonut donut against an endless run of enemy donuts, with ninja stars and a sword.',
+        preview: '/projects/ninjadonut-game/index.html',
+    },
+    {
         id: 'coloris',
         image: '/images/projects/coloris.webp',
         title: 'Coloris',

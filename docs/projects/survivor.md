@@ -1,10 +1,12 @@
 # Survivor
 
+**Off the project list since 2026-10-28,** as Jake asked, when Psycho, the class's other game and the one he made himself, took its place ([psycho.md](psycho.md)): no card and no `SHOTS` entry. The page stays as archive, live at its address until removed in cPanel. To bring it back, restore its `homeProjectList` and `SHOTS` entries from git history (before `claude/psycho`).
+
 A GameMaker Studio 2 platformer Jake designed with a classmate in March–April 2017 for SJSU's CS 108 (game design). An innocent prisoner tries to escape a detention center past moving platforms, electric barriers, fake floors, elevators and spikes. The plan: one screen per level, crossed left to right; five levels; one life with a little health; one clock for the whole escape. The page is `public/projects/survivor/index.html`; the card id is `survivor`. The sources are in `Z:\Google Drive\School\College\CS 108\`, plus the later sprites in `Z:\Old Computer\Documents\Old Save\School\108\`.
 
 The same class's other game, the tabletop Arena King, is no longer on the site.
 - **Removed on 2026-10-27:** until that morning the two shared this card and one page, as "Survivor & Arena King". Arena King got a card of its own (`survivor/arena-king.html`), and later the same day Jake asked for it to be taken off the site. Its page, card image and doc were deleted; its sources are still in `Z:\Google Drive\School\College\CS 108\`. The page was already deployed, so it stays live until it's moved to the Trash in cPanel.
-- **Old links:** `/project/survivor` still opens this card.
+- **Old links:** `/project/survivor` opened this card until 2026-10-28; it now says the project doesn't exist.
 
 ## Preview
 

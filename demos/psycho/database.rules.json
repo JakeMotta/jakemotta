@@ -1,0 +1,21 @@
+{
+  "rules": {
+    "psychoPlayers": {
+      ".read": true,
+      ".indexOn": ["playerScore"],
+      "$entry": {
+        ".write": "newData.exists() && (!data.exists() || (newData.child('playerName').val() === data.child('playerName').val() && newData.child('playerScore').val() >= data.child('playerScore').val()))",
+        ".validate": "newData.hasChildren(['playerName', 'playerScore'])",
+        "playerName": {
+          ".validate": "newData.isString() && newData.val().matches(/^[0-9a-zA-Z ]{3,15}$/)"
+        },
+        "playerScore": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 200"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  }
+}

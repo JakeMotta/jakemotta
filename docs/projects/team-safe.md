@@ -2,7 +2,7 @@
 
 A client site Jake built for Team SAFE Racing, an inline speed-skating team sponsored by SAFE Security (2014, kept up until 2019). The folder is `public/projects/motorsport/team-safe/`; the card id is `team-safe`.
 
-`public/projects/motorsport/` holds three client sites Jake built for people who race. Each is its own card: this one, [Worxxx PM](worxxx.md) and [Noah Garza Racing](noah-garza.md).
+`public/projects/motorsport/` holds three client sites Jake built for people who race: this one, [Worxxx PM](worxxx.md) and [Noah Garza Racing](noah-garza.md). Each had its own card; since 2026-10-28 only this one does.
 - **One card each since 2026-10-27:** until then they shared a single "Motorsport Sites" card (`motorsport`) that framed a hand-written hub page linking all three. Jake asked for every project to be its own card, so the hub (`motorsport/index.html`) was deleted. The deployed copy stays live until it's removed in cPanel.
 - **Old links:** `/project/motorsport` redirects to this card (`movedProjects` in `constants.ts`).
 - **The old card image:** `motorsport.webp` stays in `public/images/projects/` as archive.

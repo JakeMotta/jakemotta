@@ -72,13 +72,16 @@ const SHOTS = [
     // The recording itself, without the page around it
     { id: 'scott-pilgrim', url: '/projects/cs134/scott-pilgrim.html', settle: 2500, clip: { selector: 'video.screen' } },
     { id: 'fooder', url: '/projects/fooder/index.html', settle: 1500 },
-    // It never had a finished build, so the card is the case study's mockup of a level
-    { id: 'survivor', url: '/projects/survivor/index.html', settle: 1500, clip: { selector: 'img[src$="design.png"]' } },
+    // The start screen, once a name is in: the red title over the square, without the page's instructions and leaderboard
+    {
+        id: 'psycho',
+        url: '/projects/psycho/play.html',
+        settle: 1500,
+        clip: { selector: 'canvas#context', focus: [0.5, 0.55] },
+        run: "document.getElementById('name').value = 'Jake'; document.querySelector('.addValue').click()",
+    },
     // On the slideshow's first slide
     { id: 'team-safe', url: '/projects/motorsport/team-safe/About.html', settle: 2500 },
-    { id: 'worxxx', url: '/projects/motorsport/worxxx/index.static.html', settle: 2500 },
-    // The page opens on just its header; the About panel has his photo and story
-    { id: 'noah-garza', url: '/projects/motorsport/noah-garza/index.static.html', settle: 2500, width: 1000, run: 'aboutDiv()' },
     // The Greenfoot games: just the running game (#play starts it without a click), cropped to 4:3
     { id: 'coloris', url: '/projects/coloris/index.html#play', settle: 2000, clip: { selector: '#frame canvas' } },
     // The title screen, once its opening wipe has passed; the world is 4:3 already

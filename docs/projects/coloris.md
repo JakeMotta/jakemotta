@@ -54,7 +54,7 @@ Two small jars sit in front of it in the applet's `archive`, both made on 2026-1
 - with `game-speed.jar` and `browser-timer.jar`, on 2026-10-27: Run, walking and the scrolling, at the rates above;
 - the JavaScript build, on 2026-10-27, served from `public/` by a static server: the starting view, walking and scrolling, the trees blocking Huey, the number keys, Pause and Start over, at 375 px wide (the world scales to fit), and in a same-origin frame with real key presses.
 
-Not verified for the JavaScript build: inside the site's own project viewer, and the blood and injury effects (switched off in the code).
+Also in the site's project viewer under `yarn dev`: Play, walking and the color keys, at 61 acts a second. Not verified for the JavaScript build: the blood and injury effects (switched off in the code).
 
 ## Download
 

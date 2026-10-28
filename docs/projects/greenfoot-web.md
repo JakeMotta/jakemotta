@@ -52,7 +52,9 @@ Coloris, 2026-10-27, served from `public/` by a static server on Jake's desktop:
 - **Loading:** about 2.4 MB in all (the game's script is 72 KB, the rest its images), against CheerpJ's runtime plus the 5.7 MB jar. Playable 0.3 seconds after Play in the preview browser with a warm cache, and 1.6 seconds from a cold headless start.
 - **The game:** the starting view matches the CheerpJ capture pixel for pixel in layout; walking scrolls the world, the trees block Huey, the number keys change his color, Pause and Start over work, and in a same-origin frame real key presses reach the game straight after Play.
 
-Not measured: inside the site's own project viewer (the preview browser could only run the worktree's `public/` from a static server at the time), and on a real phone.
+- **In the site's project viewer** (`/project/coloris` under `yarn dev`, the board behind it): 61 acts a second, with real clicks and key presses (Play, walking, the color keys). Through CheerpJ it was about 46.
+
+Not measured: on a real phone.
 
 ## Not done yet
 

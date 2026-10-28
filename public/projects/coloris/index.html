@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<!-- Hand-written for the preview: Jake's unfinished Greenfoot RPG. Greenfoot never exported it, so coloris.jar was assembled
-     in 2026 from its 2014 compiled classes, its images and the Greenfoot runtime out of isGuyFinal.jar, and runs as an applet
-     through CheerpJ. docs/projects/coloris.md lists exactly what went into the jar. -->
+<!-- Hand-written for the preview: Jake's unfinished Greenfoot RPG. Its 2014 compiled classes, taken unchanged from
+     coloris.jar, are compiled to JavaScript by scripts/build-greenfoot.mjs (yarn projects:greenfoot) into web/, and run on
+     the Greenfoot runtime in demos/greenfoot/. See docs/projects/coloris.md and docs/projects/greenfoot-web.md.
+     cheerpj.html is the earlier page, which runs coloris.jar itself through CheerpJ. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -10,15 +11,14 @@
 <style>
     html, body { margin: 0; background: #141414; color: #eee; }
     body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding: 20px 16px 32px; box-sizing: border-box; }
-    main { width: min(100%, 616px); margin: 0 auto; }
+    main { width: min(100%, 600px); margin: 0 auto; }
     h1 { font-size: 26px; font-weight: 800; line-height: 1.2; margin: 0 0 2px; }
     h2 { font-size: 18px; font-weight: 800; margin: 26px 0 8px; }
     p { margin: 0; }
     a { color: #fff; }
     .meta { color: #999; margin-bottom: 14px; }
-    /* The applet is a fixed 616×469; on a narrower screen the stage is scaled down to fit */
-    .frame { position: relative; width: 100%; aspect-ratio: 616 / 469; background: #000; border-radius: 10px; overflow: hidden; }
-    .stage { position: absolute; left: 0; top: 0; width: 616px; height: 469px; transform-origin: 0 0; }
+    /* The world is 600×400: shown at its own size, and scaled down to fit a narrower screen */
+    .frame { position: relative; width: 100%; aspect-ratio: 600 / 400; background: #000; border-radius: 10px; overflow: hidden; }
     .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
     .play {
         position: absolute; inset: 0; margin: auto; width: 150px; height: 150px; border: 0; border-radius: 50%;
@@ -29,12 +29,20 @@
     .play::before { content: ''; border-style: solid; border-width: 18px 0 18px 30px; border-color: transparent transparent transparent currentColor; margin-left: 8px; }
     .play:hover { transform: scale(1.07) rotate(-4deg); }
     .play:focus-visible { outline: 3px solid #fff; outline-offset: 5px; }
-    .frame.live { aspect-ratio: auto; overflow-x: auto; overflow-y: hidden; }
-    .stage > object, .stage > cheerpj-applet { position: absolute; left: 0; top: 0; }
+    canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; outline: none; touch-action: none; }
     .loading { position: absolute; inset: 0; z-index: 2; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 24px; font-size: 18px; font-weight: 700; }
     .loading small { font-size: 14px; font-weight: 400; color: #aaa; max-width: 34em; }
     .spinner { width: 34px; height: 34px; border: 4px solid #444; border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .bar { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+    .bar[hidden] { display: none; }
+    .bar button {
+        border: 0; border-radius: 999px; padding: 7px 16px; background: #fff; color: #141414; cursor: pointer;
+        font: 800 14px/1.2 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; transition: transform .2s cubic-bezier(.34, 1.56, .64, 1);
+    }
+    .bar button.quiet { background: #2a2a2a; color: #eee; }
+    .bar button:hover { transform: translateY(-1px) rotate(-2deg); }
+    .bar button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     .hint { margin-top: 12px; padding: 10px 14px; background: #222; border-radius: 8px; color: #ccc; font-size: 15px; }
     .hint strong { color: #fff; }
     dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
@@ -43,6 +51,7 @@
     kbd { display: inline-block; min-width: 1.4em; padding: 1px 6px; border: 1px solid #555; border-bottom-width: 2px; border-radius: 5px; background: #222; font: 600 14px/1.4 ui-monospace, Consolas, monospace; text-align: center; color: #fff; }
     .note { margin-top: 22px; color: #999; font-size: 14px; }
     .note p + p { margin-top: 8px; }
+    @media (prefers-reduced-motion: reduce) { .play, .bar button { transition: none; } .play:hover, .bar button:hover { transform: none; } }
 </style>
 </head>
 <body>
@@ -51,12 +60,14 @@
     <p class="meta">Greenfoot top-down RPG · 2014 · unfinished · no sound</p>
 
     <div class="frame" id="frame">
-        <div class="stage" id="stage">
-            <img class="poster" src="poster.webp" alt="">
-            <button class="play" id="play" type="button">Play</button>
-        </div>
+        <img class="poster" id="poster" src="poster.webp" alt="">
+        <button class="play" id="play" type="button">Play</button>
     </div>
-    <p class="hint" id="hint">The original Java game, about a 6&nbsp;MB download. It needs a keyboard.</p>
+    <div class="bar" id="bar" hidden>
+        <button type="button" id="pause">Pause</button>
+        <button type="button" class="quiet" id="restart">Start over</button>
+    </div>
+    <p class="hint" id="hint">It needs a keyboard.</p>
 
     <h2>Controls</h2>
     <dl>
@@ -66,39 +77,19 @@
 
     <div class="note">
         <p>Coloris never got past its first map: Huey walks west through the forest, past a cliff and its stairs, changing color as he goes. There are no enemies, goals or sounds yet. The scrolling comes from danpost's SWorld class, shared on greenfoot.org.</p>
-        <p>This is the original Java game, built in Greenfoot in 2014, running in your browser as an applet. Greenfoot never exported it, so in 2026 its compiled classes were packed into a jar with the Greenfoot runtime. Java runs through <a href="https://cheerpj.com/" target="_blank" rel="noopener">CheerpJ</a> by Leaning Technologies, which loads from its own servers when you press Play. On a phone it will load, but you'll need a keyboard to play.</p>
+        <p>This is my original 2014 Greenfoot code, playing just as I left it. On a phone it will load, but you'll need a keyboard to play.</p>
     </div>
 </main>
 <script>
 (function () {
-    var W = 616, H = 469;
-    // game-speed.jar sets the speed to Greenfoot's default, 50, instead of the 67 the project was saved at, and
-    // browser-timer.jar replaces Greenfoot's busy-waiting timer with a plain sleep. See docs/projects/coloris.md.
-    var JARS = 'game-speed.jar,browser-timer.jar,coloris.jar';
-    var CHEERPJ = 'https://cjrtnc.leaningtech.com/4.3/loader.js';
-    var PAUSE_SITE_MUSIC = false; // Coloris has no sound, so the site's music can keep playing
-    var READY_HINT = 'Press <strong>Run</strong> under the game, then walk with the arrow keys. Click the game first if the keys don’t answer.';
+    // The site's player pauses when the game first plays a sound. Coloris has none, so the music keeps going.
+    var READY_HINT = 'Walk with the arrow keys. Click the game first if the keys don’t answer.';
 
     var frame = document.getElementById('frame');
-    var stage = document.getElementById('stage');
     var hint = document.getElementById('hint');
+    var bar = document.getElementById('bar');
+    var pause = document.getElementById('pause');
     var started = false;
-
-    // Before Play, scale the poster down to the width there is; never up, which would blur it. Once the game runs it
-    // stays at its own size, and a narrow frame scrolls sideways instead: CheerpJ doesn't map clicks through a CSS
-    // transform, so a scaled game couldn't be clicked (its Run button included).
-    function fit() {
-        var scale = started ? 1 : Math.min(1, frame.clientWidth / W);
-        stage.style.transform = scale < 1 ? 'scale(' + scale + ')' : '';
-    }
-    fit();
-    window.addEventListener('resize', fit);
-
-    // The site's music keeps playing in the page around this frame. Ask its player to pause when the
-    // game starts, so the two don't play over each other. Standalone there's no player to ask.
-    function pauseSiteMusic() {
-        if (window.top !== window) window.top.postMessage({ type: 'jakemotta:media-playing' }, location.origin);
-    }
 
     function loadScript(src) {
         return new Promise(function (resolve, reject) {
@@ -110,77 +101,70 @@
         });
     }
 
-    // CheerpJ swaps the applet for an <object> and draws its window on canvases, white at first. Greenfoot then
-    // takes a while to load the world's images. Keep the loading message up until a pixel in the world turns
-    // from that blank white to the game, or for 30 more seconds at most.
-    function painted() {
-        var canvases = stage.querySelectorAll('.cjWindow canvas');
-        for (var i = 0; i < canvases.length; i++) {
-            var canvas = canvases[i], context = null;
-            try { context = canvas.getContext('2d'); } catch (e) {}
-            if (!context || !canvas.width) continue;
-            try {
-                var pixel = context.getImageData(Math.floor(canvas.width / 2), Math.floor(canvas.height / 3), 1, 1).data;
-                if (pixel[3] && (pixel[0] < 250 || pixel[1] < 250 || pixel[2] < 250)) return true;
-            } catch (e) { return true; }
+    function showError(message) {
+        var loading = frame.querySelector('.loading');
+        if (!loading) {
+            frame.insertAdjacentHTML('beforeend', '<div class="loading"></div>');
+            loading = frame.querySelector('.loading');
         }
-        return false;
-    }
-
-    function waitForGame() {
-        var windowSince = 0;
-        var timer = setInterval(function () {
-            if (!stage.querySelector('.cjWindow')) return;
-            windowSince = windowSince || Date.now();
-            if (!painted() && Date.now() - windowSince < 30000) return;
-            clearInterval(timer);
-            var loading = frame.querySelector('.loading');
-            if (loading) loading.remove();
-            hint.innerHTML = READY_HINT + (frame.clientWidth < W ? ' The game is wider than this screen: scroll it sideways.' : '');
-            document.documentElement.classList.add('game-ready');
-        }, 500);
+        loading.innerHTML = 'The game stopped.<small>' + String(message).replace(/</g, '&lt;') + '</small>';
+        hint.textContent = 'Try reloading the page.';
     }
 
     function start() {
         if (started) return;
         started = true;
-        if (PAUSE_SITE_MUSIC) pauseSiteMusic();
-        stage.innerHTML = '';
-        frame.classList.add('live');
-        frame.style.height = H + 'px';
-        fit();
-        frame.insertAdjacentHTML('beforeend', '<div class="loading"><div class="spinner"></div>Starting Java…<small>CheerpJ is loading a Java runtime into your browser, then the game. The first time can take a minute or two.</small></div>');
+        document.getElementById('play').remove();
+        frame.insertAdjacentHTML('beforeend', '<div class="loading"><div class="spinner"></div><span id="progress">Loading…</span></div>');
         hint.textContent = 'Loading…';
+        var canvas = document.createElement('canvas');
+        canvas.width = 600;
+        canvas.height = 400;
+        canvas.setAttribute('aria-label', 'Coloris');
 
-        loadScript(CHEERPJ)
-            .then(function () { return cheerpjInit({ status: 'none' }); })
-            .then(function () {
-                var applet = document.createElement('cheerpj-applet');
-                applet.setAttribute('archive', JARS);
-                applet.setAttribute('code', 'greenfoot.export.GreenfootScenarioViewer');
-                applet.setAttribute('width', W);
-                applet.setAttribute('height', H);
-                // Don't ask the server for every resource missing from the jar; there's nothing else there
-                var param = document.createElement('param');
-                param.setAttribute('name', 'codebase_lookup');
-                param.setAttribute('value', 'false');
-                applet.appendChild(param);
-                stage.appendChild(applet);
-                waitForGame();
+        // manifest.json names the game's scripts (by content hash) and its images
+        var manifest;
+        fetch('web/manifest.json', { cache: 'no-cache' })
+            .then(function (response) {
+                if (!response.ok) throw new Error('Could not load the game (' + response.status + ')');
+                return response.json();
             })
-            .catch(function (error) {
-                var loading = frame.querySelector('.loading');
-                if (loading) loading.innerHTML = 'Java didn’t start in this browser.<small>' + String(error && error.message || error).replace(/</g, '&lt;') + '</small>';
-                hint.textContent = 'Try a desktop browser such as Chrome, Edge, Firefox or Safari.';
-            });
+            .then(function (loaded) {
+                manifest = loaded;
+                return loadScript('web/' + manifest.host);
+            })
+            .then(function () { return loadScript('web/' + manifest.game); })
+            .then(function () {
+                return GF.boot({
+                    canvas: canvas,
+                    base: 'web/',
+                    manifest: manifest,
+                    onProgress: function (loaded, total) {
+                        var progress = document.getElementById('progress');
+                        if (progress) progress.textContent = 'Loading… ' + Math.round(loaded / Math.max(total, 1) * 100) + '%';
+                    },
+                    onReady: function () {
+                        document.getElementById('poster').remove();
+                        frame.querySelector('.loading').remove();
+                        frame.appendChild(canvas);
+                        bar.hidden = false;
+                        hint.innerHTML = READY_HINT;
+                        GF.focus();
+                        document.documentElement.classList.add('game-ready');
+                    },
+                    onRunning: function (running) { pause.textContent = running ? 'Pause' : 'Play'; },
+                    onError: showError,
+                    onSound: function () {
+                        if (window.top !== window) window.top.postMessage({ type: 'jakemotta:media-playing' }, location.origin);
+                    }
+                });
+            })
+            .catch(function (error) { showError(error && error.message || error); });
     }
 
     document.getElementById('play').addEventListener('click', start);
-
-    // Arrow keys and Space shouldn't scroll the page while the game is up
-    window.addEventListener('keydown', function (event) {
-        if (started && [' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(event.key) >= 0 && !stage.contains(event.target)) event.preventDefault();
-    });
+    pause.addEventListener('click', function () { GF.toggleRun(); GF.focus(); });
+    document.getElementById('restart').addEventListener('click', function () { GF.reset(); GF.focus(); });
 
     // #play starts it without a click, for the card screenshot (yarn projects:screenshot)
     if (location.hash === '#play') start();

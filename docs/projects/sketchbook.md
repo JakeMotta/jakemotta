@@ -28,7 +28,7 @@ The archive's `Sketchbook` folder has 27 files, but most subjects were saved sev
 - **NinjaDonut:** the other copies of the space scene (`Ninjadonut1.jpg`, `Ninjadonut2.jpg`) and the earlier saves of the framed drawing (`NinjaDrawing.tif`, `NinjaDrawing1.png`, `NinjaDrawing2.tif`).
 - **Kyle:** the first sketch (`Kyle.tif`).
 - **Self-portrait:** the second copy (`Myself.jpg`).
-- **Taken off by Jake on 2026-10-27:** Kyak (`kyak.tif`), Girl in a hoodie (`girl1.tif`), Girl (`girl.tif`) and Elipse (`Elipse.tif`, and `weapon.tif`, the same drawing). Their JPEG copies were deleted from the repo; the ones already deployed stay on the server until they're moved to the Trash in cPanel.
+- **Taken off by Jake on 2026-10-27:** Kyak (`kyak.tif`), Girl in a hoodie (`girl1.tif`), Girl (`girl.tif`) and Elipse (`Elipse.tif`, and `weapon.tif`, the same drawing). Their JPEG copies were deleted from the repo, and the deployed ones (`drawings/kyak.jpg`, `girl-hoodie.jpg`, `girl.jpg`, `elipse.jpg`) were moved to cPanel's Trash the same day.
 - **CAD:** `First.dwg`, an AutoCAD file.
 
 ## Card image

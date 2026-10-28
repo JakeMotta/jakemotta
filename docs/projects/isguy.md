@@ -2,11 +2,11 @@
 
 The Adventures of isGuy, a five-level platformer Jake made in Greenfoot (Java) in March 2013: a stick figure with a gun, lasers, ladders, keys, doors, falling blocks and UFOs. It was published as a Java applet on NinjaDonut ("Project isGuy is finally here!"). The folder is `public/projects/isguy/`; the card id is `isguy`.
 
-This page also covers how all three Greenfoot games run, since they share it. Pokémon ([greenfoot-pokemon.md](greenfoot-pokemon.md)) and Coloris ([coloris.md](coloris.md)) only describe what differs.
+This page also covers how the Greenfoot games run through CheerpJ, since they share it. Pokémon ([greenfoot-pokemon.md](greenfoot-pokemon.md)) and Coloris ([coloris.md](coloris.md)) only describe what differs. Since 2026-10-27 Coloris runs as JavaScript instead, with no Java VM, and isGuy and Pokémon are meant to follow ([greenfoot-web.md](greenfoot-web.md)); Coloris's CheerpJ page stays as `cheerpj.html`.
 
 ## Preview
 
-`index.html` is a hand-written page: the game's frame with a poster and a Play button, a hint line under it, the controls from the game's own How to Play screen, and a note about the game and CheerpJ. The Pokémon and Coloris pages are copies of it with their own text and settings (the variables at the top of the script).
+`index.html` is a hand-written page: the game's frame with a poster and a Play button, a hint line under it, the controls from the game's own How to Play screen, and a note about the game and CheerpJ. The Pokémon page and Coloris's `cheerpj.html` are copies of it with their own text and settings (the variables at the top of the script).
 
 **How the Java runs.** [CheerpJ](https://cheerpj.com/) (Leaning Technologies) runs Java 8 in the browser in WebAssembly.
 - **Loading:** nothing loads until Play. Then the page adds CheerpJ's `loader.js` (version 4.3) from `https://cjrtnc.leaningtech.com/4.3/` and calls `cheerpjInit({ status: 'none' })`. CheerpJ fetches its runtime from that CDN and then downloads the whole jar in one request; it doesn't use range requests. isGuy's jar is 40 MB, so the first load is slow.

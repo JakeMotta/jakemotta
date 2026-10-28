@@ -146,11 +146,33 @@ public abstract class Actor {
         return result;
     }
 
+    // The box of an unturned image (or one turned a multiple of 90°), worked out without allocating: the town asks
+    // about it hundreds of times an act
+
+    private int boxWidth() {
+        return rotation % 180 == 0 ? image.getWidth() : image.getHeight();
+    }
+
+    private int boxHeight() {
+        return rotation % 180 == 0 ? image.getHeight() : image.getWidth();
+    }
+
+    private boolean square() {
+        return image != null && rotation % 90 == 0;
+    }
+
     protected boolean intersects(Actor other) {
+        if (square() && other.square()) {
+            int cell = world.getCellSize();
+            int aw = boxWidth(), ah = boxHeight(), bw = other.boxWidth(), bh = other.boxHeight();
+            int ax = cell * x + (cell - aw - 1) / 2, ay = cell * y + (cell - ah - 1) / 2;
+            int bx = cell * other.x + (cell - bw - 1) / 2, by = cell * other.y + (cell - bh - 1) / 2;
+            // Rect.intersects: right and bottom edges are exclusive
+            return bx < ax + aw && ax < bx + bw && by < ay + ah && ay < by + bh;
+        }
         double[] a = corners();
         double[] b = other.corners();
         if (rotation % 90 == 0 && other.rotation % 90 == 0) {
-            // Rect.intersects: right and bottom edges are exclusive
             return b[0] < a[2] && a[0] < b[2] && b[1] < a[5] && a[1] < b[5];
         }
         return !separated(a, b) && !separated(b, a);
@@ -179,10 +201,16 @@ public abstract class Actor {
 
     /** Whether the image covers the given world pixel */
     boolean containsPoint(double px, double py) {
-        double[] c = corners();
-        if (rotation % 90 == 0) {
-            return px >= c[0] && px < c[2] && py >= c[1] && py < c[5];
+        if (image == null) {
+            return false;
         }
+        if (square()) {
+            int cell = world.getCellSize();
+            int w = boxWidth(), h = boxHeight();
+            int left = cell * x + (cell - w - 1) / 2, top = cell * y + (cell - h - 1) / 2;
+            return px >= left && px < left + w && py >= top && py < top + h;
+        }
+        double[] c = corners();
         boolean inside = false;
         for (int i = 0, j = 3; i < 4; j = i++) {
             double xi = c[i * 2], yi = c[i * 2 + 1], xj = c[j * 2], yj = c[j * 2 + 1];
@@ -197,8 +225,8 @@ public abstract class Actor {
     protected <A> List<A> getIntersectingObjects(Class<A> cls) {
         failIfNotInWorld();
         List<A> result = new ArrayList<>();
-        for (Actor actor : world.actors()) {
-            if (actor != this && Simulation.isInstance(cls, actor) && intersects(actor)) {
+        for (Actor actor : world.actorsOf(cls)) {
+            if (actor != this && intersects(actor)) {
                 result.add((A) actor);
             }
         }
@@ -207,8 +235,8 @@ public abstract class Actor {
 
     protected Actor getOneIntersectingObject(Class<?> cls) {
         failIfNotInWorld();
-        for (Actor actor : world.actors()) {
-            if (actor != this && Simulation.isInstance(cls, actor) && intersects(actor)) {
+        for (Actor actor : world.actorsOf(cls)) {
+            if (actor != this && intersects(actor)) {
                 return actor;
             }
         }
@@ -230,8 +258,8 @@ public abstract class Actor {
     protected <A> List<A> getObjectsAtOffset(int dx, int dy, Class<A> cls) {
         failIfNotInWorld();
         List<A> result = new ArrayList<>();
-        for (Actor actor : world.objectsAtCell(x + dx, y + dy)) {
-            if (actor != this && Simulation.isInstance(cls, actor)) {
+        for (Actor actor : world.objectsAtCell(x + dx, y + dy, cls)) {
+            if (actor != this) {
                 result.add((A) actor);
             }
         }
@@ -240,8 +268,8 @@ public abstract class Actor {
 
     protected Actor getOneObjectAtOffset(int dx, int dy, Class<?> cls) {
         failIfNotInWorld();
-        for (Actor actor : world.objectsAtCell(x + dx, y + dy)) {
-            if (actor != this && Simulation.isInstance(cls, actor)) {
+        for (Actor actor : world.objectsAtCell(x + dx, y + dy, cls)) {
+            if (actor != this) {
                 return actor;
             }
         }
@@ -252,8 +280,8 @@ public abstract class Actor {
     protected <A> List<A> getObjectsInRange(int radius, Class<A> cls) {
         failIfNotInWorld();
         List<A> result = new ArrayList<>();
-        for (Actor actor : world.actors()) {
-            if (actor != this && Simulation.isInstance(cls, actor)) {
+        for (Actor actor : world.actorsOf(cls)) {
+            if (actor != this) {
                 long ddx = actor.x - x;
                 long ddy = actor.y - y;
                 if (ddx * ddx + ddy * ddy <= (long) radius * radius) {
@@ -268,8 +296,8 @@ public abstract class Actor {
     protected <A> List<A> getNeighbours(int distance, boolean diagonal, Class<A> cls) {
         failIfNotInWorld();
         List<A> result = new ArrayList<>();
-        for (Actor actor : world.actors()) {
-            if (actor == this || !Simulation.isInstance(cls, actor)) {
+        for (Actor actor : world.actorsOf(cls)) {
+            if (actor == this) {
                 continue;
             }
             int ddx = Math.abs(actor.x - x);

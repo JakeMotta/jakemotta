@@ -136,7 +136,8 @@
         /**
          * Loads the game's images and starts it. options: canvas, base (the web/ folder's URL), manifest (its
          * manifest.json), and the callbacks onProgress(loaded, total), onReady(), onError(message),
-         * onRunning(running), onSound(). The page loads this script and the game's, both named in the manifest.
+         * onRunning(running), onSound(), and onResize(width, height) when a world of another size is shown. The page
+         * loads this script and the game's, both named in the manifest.
          */
         boot: function (opts) {
             options = opts;
@@ -304,6 +305,7 @@
             if (screen.width !== width || screen.height !== height) {
                 screen.width = width;
                 screen.height = height;
+                if (options.onResize) options.onResize(width, height);
             }
             screenContext.globalAlpha = 1;
             screenContext.setTransform(1, 0, 0, 1, 0, 0);

@@ -18,7 +18,7 @@ The rest of this page describes the CheerpJ version, which is still how Pokémon
 
 ## Preview through CheerpJ
 
-`cheerpj.html` (the page's `index.html` until 2026-10-27) is a hand-written page: the game's frame with a poster and a Play button, a hint line under it, the controls from the game's own How to Play screen, and a note about the game and CheerpJ. The Pokémon page and Coloris's `cheerpj.html` are copies of it with their own text and settings (the variables at the top of the script).
+`cheerpj.html` (the page's `index.html` until 2026-10-27) is a hand-written page: the game's frame with a poster and a Play button, a hint line under it, the controls from the game's own How to Play screen, and a note about the game and CheerpJ. Pokémon's and Coloris's `cheerpj.html` pages are copies of it with their own text and settings (the variables at the top of the script).
 
 **How the Java runs.** [CheerpJ](https://cheerpj.com/) (Leaning Technologies) runs Java 8 in the browser in WebAssembly.
 - **Loading:** nothing loads until Play. Then the page adds CheerpJ's `loader.js` (version 4.3) from `https://cjrtnc.leaningtech.com/4.3/` and calls `cheerpjInit({ status: 'none' })`. CheerpJ fetches its runtime from that CDN and then downloads the whole jar in one request; it doesn't use range requests. isGuy's jar is 40 MB, so the first load is slow.

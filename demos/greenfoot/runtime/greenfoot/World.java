@@ -16,6 +16,8 @@ public abstract class World {
     private final int cellSize;
     private final boolean bounded;
     private final List<Actor> actors = new ArrayList<>();
+    /** The actors of each class asked about, rebuilt after any add or remove (see actorsOf) */
+    private final Map<Class<?>, List<Actor>> byClass = new HashMap<>();
     private GreenfootImage background;
     private Class<?>[] paintOrder;
     private Class<?>[] actOrder;
@@ -132,6 +134,7 @@ public abstract class World {
         object.y = y;
         object.world = this;
         actors.add(object);
+        byClass.clear();
         object.addedToWorld(this);
     }
 
@@ -140,6 +143,7 @@ public abstract class World {
             return;
         }
         actors.remove(object);
+        byClass.clear();
         object.world = null;
     }
 
@@ -151,31 +155,43 @@ public abstract class World {
 
     @SuppressWarnings("unchecked")
     public <A> List<A> getObjects(Class<A> cls) {
-        List<A> result = new ArrayList<>();
-        for (Actor actor : actors) {
-            if (Simulation.isInstance(cls, actor)) {
-                result.add((A) actor);
-            }
+        return new ArrayList<>((List<A>) actorsOf(cls));
+    }
+
+    /**
+     * The actors that are instances of cls (all of them for null), in the order they were added. Greenfoot looks
+     * collisions up in a spatial tree; here a query for one class only tests that class's actors, which is what keeps
+     * Pokémon's town (742 patches of grass, each asking every act whether Ash is on it) cheap. The list is shared:
+     * don't change it. An add or remove makes a new one, so a caller looping over the old one is safe.
+     */
+    List<Actor> actorsOf(Class<?> cls) {
+        if (cls == null) {
+            return actors;
         }
-        return result;
+        List<Actor> list = byClass.get(cls);
+        if (list == null) {
+            list = new ArrayList<>();
+            for (Actor actor : actors) {
+                if (cls.isInstance(actor)) {
+                    list.add(actor);
+                }
+            }
+            byClass.put(cls, list);
+        }
+        return list;
     }
 
     @SuppressWarnings("unchecked")
     public <A> List<A> getObjectsAt(int x, int y, Class<A> cls) {
-        List<A> result = new ArrayList<>();
-        for (Actor actor : objectsAtCell(x, y)) {
-            if (Simulation.isInstance(cls, actor)) {
-                result.add((A) actor);
-            }
-        }
-        return result;
+        return (List<A>) objectsAtCell(x, y, cls);
     }
 
-    List<Actor> objectsAtCell(int x, int y) {
+    /** The actors of a class whose images cover a cell's centre, as Greenfoot's point lookup does */
+    List<Actor> objectsAtCell(int x, int y, Class<?> cls) {
         double px = x * cellSize + cellSize / 2;
         double py = y * cellSize + cellSize / 2;
         List<Actor> result = new ArrayList<>();
-        for (Actor actor : actors) {
+        for (Actor actor : actorsOf(cls)) {
             if (actor.containsPoint(px, py)) {
                 result.add(actor);
             }

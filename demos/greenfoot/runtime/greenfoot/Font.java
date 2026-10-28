@@ -97,7 +97,12 @@ public class Font {
             case "monospaced":
                 return "\"Courier New\", Courier, monospace";
             default:
-                return "\"" + name + "\", Arial, sans-serif";
+                // A named font falls back to its own kind, as Java's font lookup would
+                String lower = name.toLowerCase();
+                String generic = lower.contains("courier") || lower.contains("mono") ? "\"Courier New\", Courier, monospace"
+                        : lower.contains("times") || lower.contains("serif") && !lower.contains("sans") ? "\"Times New Roman\", Times, serif"
+                        : "Arial, Helvetica, sans-serif";
+                return "\"" + name + "\", " + generic;
         }
     }
 

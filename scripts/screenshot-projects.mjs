@@ -85,15 +85,13 @@ const SHOTS = [
     { id: 'isguy', url: '/projects/isguy/index.html#play', settle: 5000, clip: { selector: '#frame canvas' } },
     // Ten seconds in, once enemy donuts have had time to run in at the ninja in the middle (they come at random)
     { id: 'ninjadonut-game', url: '/projects/ninjadonut-game/index.html#play', settle: 10000, clip: { selector: '#frame canvas' } },
-    // Still through CheerpJ, which takes a minute or more to start, so the card is the poster: TrainingVille, captured
-    // from the running game. The Play button comes off and the poster is shown at full strength; the inset trims
-    // Greenfoot's border and control bar off the 816×669 applet, leaving the 800×600 world.
+    // TrainingVille, the 800×600 town: Space past the title, Enter for the starter the pointer is on, then the town
     {
         id: 'greenfoot-pokemon',
-        url: '/projects/greenfoot-pokemon/index.html',
-        settle: 1500,
-        run: "document.querySelector('.play').remove(); document.querySelector('.poster').style.opacity = 1",
-        clip: { selector: '.poster', inset: [8, 8, 61, 8] },
+        url: '/projects/greenfoot-pokemon/index.html#play',
+        settle: 7000,
+        run: "(async () => { const press = async (key, code) => { window.dispatchEvent(new KeyboardEvent('keydown', { key, code })); await new Promise((r) => setTimeout(r, 100)); window.dispatchEvent(new KeyboardEvent('keyup', { key, code })); await new Promise((r) => setTimeout(r, 1200)); }; while (!document.documentElement.classList.contains('game-ready')) await new Promise((r) => setTimeout(r, 50)); await press(' ', 'Space'); await press('Enter', 'Enter'); })()",
+        clip: { selector: '#frame canvas' },
     },
     // Mid-shot, with the ball's trail behind it: aim down and to the right, then click. A synthetic pointer can't be
     // captured, so capture is stubbed out first, or the host's press handler would throw before recording the click.

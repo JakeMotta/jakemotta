@@ -65,7 +65,7 @@ export const Home = () => {
                 <SayHiTile />
             </main>
 
-            {/* The music, wherever the Now Playing tile is out of sight: behind an overlay, or scrolled away on a phone */}
+            {/* The music, wherever the Now Playing tile is out of sight: behind an overlay, or scrolled away on a phone. It hides itself while nothing plays. */}
             {!waiting && (overlayOpen || !nowInView) && <FloatingPlayer />}
 
             {/* The overlays load in their own chunks (App.tsx); nothing shows until the one asked for arrives */}

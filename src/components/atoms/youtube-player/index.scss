@@ -1,19 +1,23 @@
 // Laid over the slot on screen by the component, every frame. Above the overlays (60), the floating
 // player (80) and the vignette (100), since nothing may cover a YouTube player; under listen-along's (110).
+// It's made ahead of time and kept invisible, not undisplayed, so YouTube's frame can finish loading;
+// it shows once the song's video starts.
 .youtube-player {
     position: fixed;
     z-index: 105;
     top: 0;
     left: 0;
-    display: none;
     overflow: hidden;
     width: 200px;
     height: 200px;
     background: #000;
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    visibility: hidden;
 
     &--on {
-        display: block;
+        pointer-events: auto;
+        visibility: visible;
     }
 
     iframe {

@@ -67,6 +67,7 @@ Create React App (react-scripts 5) + TypeScript, React 19, react-router v7, Ant 
   - **Which tracks:** a track whose `url` is `youtube:<id>`, `spotify:<id>` or `song:<artist>/<title>` (`isStreamed()` in `common/music.ts`) plays in `atoms/youtube-player`, YouTube's embedded player, not the `<audio>`. The last two are matched through the listening Worker.
   - **Where they come from:** `youtubeSongs` in `constants.ts`, Jake's Spotify playlist (dealt into the shuffle when the Worker sends it) and play buttons on the Recent listens rows.
   - **Controls go through `media()`** in the store, never straight to `audioElement`, so they drive whichever player has the song.
+  - **Ready ahead:** the player is made once the visitor is in and the browser is idle, kept invisible until a song's video starts, and always given the site's volume, since YouTube brings back a volume of its own when a video loads (2026-10-28).
   - **The video:** it shows where the cover would, over a `VideoSlot` (the player card's, or the floating player's when no card is in sight). It's never moved in the page, since moving an iframe reloads it; it's laid over the slot every frame instead.
   - **YouTube's rules apply,** as for listen-along: always visible, never under 200×200. The exception is the hidden tab: since 2026-10-28 these songs play on there, as Jake chose, knowing YouTube's policies forbid it ([`docs/music.md`](docs/music.md#songs-from-youtube)). The vignette rests through these songs.
 - `realtime-bpm-analyzer` and `react-use-audio-player` are installed but not used yet.

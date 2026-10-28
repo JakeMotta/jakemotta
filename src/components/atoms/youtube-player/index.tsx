@@ -81,7 +81,7 @@ const clipAround = (x: number, y: number, width: number, height: number) => {
     return `polygon(${points.join(', ')})`;
 };
 
-// The Worker's answers, kept for the visit
+// The Worker's answers, kept for the visit. A miss isn't kept, so it's asked again when the song comes up.
 const matches = new Map<string, Promise<string | null>>();
 
 const findVideo = (url: string) => {
@@ -91,10 +91,37 @@ const findVideo = (url: string) => {
         const song = source.spotify ? { spotify: source.spotify } : { artist: source.artist ?? '', title: source.title ?? '' };
         matches.set(
             url,
-            matchSong(song).then((match) => match?.videoId ?? null),
+            matchSong(song)
+                .catch(() => null)
+                .then((match) => {
+                    if (!match?.videoId) matches.delete(url);
+                    return match?.videoId ?? null;
+                }),
         );
     }
     return matches.get(url)!;
+};
+
+/**
+ * Puts the site's volume on the player. YouTube's player keeps a volume and mute of its own, which it
+ * brings back when a video loads, so this runs then too, not only when the site's slider moves.
+ */
+const applyVolume = (player: Player) => {
+    const volume = Math.round(useAudioStore.getState().volume * 100);
+    if (MUTED || volume === 0) return player.mute();
+    player.unMute();
+    player.setVolume(volume);
+};
+
+// Make the player ahead of time, once the visitor is in and the browser has a moment, so the first
+// song from YouTube doesn't wait for YouTube's script and frame to load
+const whenIdle = (run: () => void) => {
+    if ('requestIdleCallback' in window) {
+        const id = window.requestIdleCallback(run, { timeout: 4000 });
+        return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(run, 2000);
+    return () => clearTimeout(id);
 };
 
 // The YouTube player, looking like the <audio> element to the store and the controls
@@ -118,8 +145,9 @@ const asMedia = (player: Player): Media => ({
 
 /**
  * The site's YouTube player: songs whose `url` isn't a file (common/music.ts) play here, in the same
- * shuffle as the rest, through the same controls. It's YouTube's own embedded player, made the first
- * time one comes up and laid over the cover of whichever player is on screen.
+ * shuffle as the rest, through the same controls. It's YouTube's own embedded player, made ahead of
+ * time once the visitor is in (or as soon as a song needs it) and laid over the cover of whichever
+ * player is on screen. It stays hidden, with the cover showing, until the song's video starts.
  *
  * YouTube's rules shape it (docs/music.md): the video is always visible while it plays, and never
  * under 200×200. It keeps playing in a hidden tab, like the site's own tracks, which Jake chose
@@ -129,13 +157,18 @@ const asMedia = (player: Player): Media => ({
  */
 export const YouTubePlayer = () => {
     const audioUrl = useAudioStore((store) => store.audioUrl);
+    const entered = useAudioStore((store) => store.entry !== 'waiting');
+    const nextUrl = useAudioStore((store) => store.shuffled[0]);
     const streamed = isStreamed(audioUrl);
     const frameRef = useRef<HTMLDivElement>(null);
     const hostRef = useRef<HTMLDivElement>(null);
     const player = useRef<Player | null>(null);
     const [ready, setReady] = useState(false);
+    const [wanted, setWanted] = useState(false);
     // The track whose video is loaded
     const loaded = useRef<string>();
+    // The track whose video has started, which is when the player shows over the cover
+    const [started, setStarted] = useState<string>();
 
     // The Spotify playlist joins the shuffle
     useEffect(() => {
@@ -147,9 +180,16 @@ export const YouTubePlayer = () => {
         });
     }, []);
 
-    // Make the player the first time a song from YouTube comes up. It stays for the rest of the visit.
+    // The player is wanted once the visitor is in and the browser is idle, or straight away for a song from YouTube
     useEffect(() => {
-        if (!streamed || player.current) return;
+        if (streamed) setWanted(true);
+        if (wanted || !entered) return;
+        return whenIdle(() => setWanted(true));
+    }, [streamed, entered, wanted]);
+
+    // Make the player. It stays for the rest of the visit.
+    useEffect(() => {
+        if (!wanted || player.current) return;
         loadYouTubeApi().then((YT) => {
             if (player.current || !hostRef.current) return;
             const isCurrent = () => loaded.current === useAudioStore.getState().audioUrl;
@@ -159,25 +199,37 @@ export const YouTubePlayer = () => {
                 playerVars: { playsinline: 1, rel: 0 },
                 events: {
                     onReady: ({ target }: { target: Player }) => {
-                        if (MUTED) target.mute();
-                        target.setVolume(useAudioStore.getState().volume * 100);
+                        applyVolume(target);
                         useAudioStore.setState({ youtube: asMedia(target) });
                         setReady(true);
                     },
-                    onStateChange: ({ data }: { data: number }) => {
+                    onStateChange: ({ data, target }: { data: number; target: Player }) => {
                         // Only the current song's video speaks for the player
                         if (!isCurrent()) return;
-                        if (data === PLAYING) useAudioStore.setState({ isPlaying: true });
+                        if (data === PLAYING) {
+                            applyVolume(target);
+                            setStarted(loaded.current);
+                            useAudioStore.setState({ isPlaying: true });
+                        }
                         if (data === PAUSED || data === ENDED) useAudioStore.setState({ isPlaying: false });
                         if (data === ENDED) useAudioStore.getState().playNext();
                     },
                     // The owner doesn't allow embedding, or it's gone: on to the next song
                     onError: () => isCurrent() && useAudioStore.getState().playNext(),
-                    onAutoplayBlocked: () => useAudioStore.setState({ isPlaying: false }),
+                    // The browser wants a click in the player itself, so it shows to take one
+                    onAutoplayBlocked: () => {
+                        setStarted(loaded.current);
+                        useAudioStore.setState({ isPlaying: false });
+                    },
                 },
             });
         });
-    }, [streamed]);
+    }, [wanted]);
+
+    // Look up the next song's video while this one plays, so it starts sooner when its turn comes
+    useEffect(() => {
+        if (isStreamed(nextUrl)) findVideo(nextUrl);
+    }, [nextUrl]);
 
     // Load the current song's video, or stop it when the song isn't from YouTube
     useEffect(() => {
@@ -202,6 +254,7 @@ export const YouTubePlayer = () => {
             }
             loaded.current = audioUrl;
             yt.loadVideoById({ videoId });
+            applyVolume(yt);
         });
         return () => {
             cancelled = true;
@@ -212,7 +265,7 @@ export const YouTubePlayer = () => {
     useEffect(() => {
         if (!ready) return;
         return useAudioStore.subscribe((store, previous) => {
-            if (store.volume !== previous.volume) player.current?.setVolume(store.volume * 100);
+            if (store.volume !== previous.volume && player.current) applyVolume(player.current);
         });
     }, [ready]);
 
@@ -265,8 +318,9 @@ export const YouTubePlayer = () => {
     }, [streamed]);
 
     const track = findTrack(audioUrl);
+    const showing = streamed && started === audioUrl;
     return createPortal(
-        <div ref={frameRef} className={`youtube-player${streamed ? ' youtube-player--on' : ''}`} aria-label={track ? `${track.title} on YouTube` : undefined} role='region'>
+        <div ref={frameRef} className={`youtube-player${showing ? ' youtube-player--on' : ''}`} aria-label={track ? `${track.title} on YouTube` : undefined} aria-hidden={!showing} role='region'>
             <div ref={hostRef} />
         </div>,
         document.body,

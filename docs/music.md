@@ -23,7 +23,7 @@ State lives in `src/store/audio.ts` (zustand):
 | `shuffled` | What plays next: the whole library, shuffled, kept topped up. This is the only "queue"; visitors don't build one. |
 | `history` | Tracks that played before this one, for Previous (the last 50). |
 | `entry` | Whether the visitor has chosen yet: `waiting`, `sound` or `silent` (see [board.md](board.md)). |
-| `isPlaying`, `volume` | Mirrored from whichever player has the current track. |
+| `isPlaying`, `volume` | Mirrored from whichever player has the current track. `volume` starts at 0.5, as Jake asked on 2026-10-27. |
 | `audioElement`, `audioContext` | The player's element and Web Audio context, registered by `MusicPlayer` so any control can drive them. |
 | `youtube` | The YouTube player, dressed as an `<audio>` element (`paused`, `currentTime`, `duration`, `play`, `pause`), registered by `YouTubePlayer` once it's ready. |
 | `media()` | Whichever of the two has the current track. Every control goes through it, never straight to `audioElement`. |

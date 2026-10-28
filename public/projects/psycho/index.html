@@ -1,0 +1,961 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Psycho</title>
+
+<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+<link href="mainCSS.css" type="text/css" rel="stylesheet">
+<link href="cssReset.css" type="text/css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="container">
+	<canvas id="context" width="640" height="640" style="border: 2px solid black"></canvas>
+</div>
+
+<div id="nameBox">
+
+	<!-- Username input box -->
+	<div id="userInput">
+		<form method="post" name="playerForm" id="myForm">
+				  <div class="form-group">
+					<label for="name" class="smallText amatic">Name: </label>
+					<input type="text" class="form-control smallText amatic" id="name" required placeholder="Enter username">
+					<button type="submit" value="Submit" onclick="getPlayerName(); return false;" class="btn btn-primary addValue smallText amatic">Submit</button>
+				  </div>
+		</form>
+
+		<br><br>
+	</div>
+	
+	<hr>
+	
+	<div id="wrapper"> 
+		<div id="content">
+			<div id="howto">
+				<span class="medText amatic bold underline">How to Start:</span>
+
+				<span class="text arial">
+					<br><br> Step 1: Type username above <br> Step 2: Click black sqaure <br><br>
+
+					<span class="medText amatic bold underline">Instructions:</span> <br><br>
+					You have a total of <span class="red bold">3 minutes</span> to get as many clicks as possible in... but that's too easy.
+
+					<br><br> <span class="red bold">You can't click any later</span> than 10 seconds per click, and <span class="red bold">you can't press any sooner</span>  than... well... sometime between 8 seconds and 3 seconds per click.
+
+					<br><br> I'm not sure too be honest. That part, I'll leave up to you.
+
+					<br><br> <span class="red bold">The goal of this game</span> is to fight against yourself in determining when the best time to click would be. You can always get a <span class="red bold">successful click at 3 seconds or below</span>, but you'll never reach the top of the leaderboards if you're too cautious!
+				</span>
+			</div>
+
+			<!-- Loading gif from http://stackoverflow.com/questions/36389206/jquery-load-page-with-slowly-and-with-loading-gif-effect -->
+			<div id="highscore_div">
+				<div align="right"><span class="largeText amatic bold ">Leaderboard:</span> <span class="smallText amatic"> (Top 15)</span></div>
+				<table id="scoreTable">
+					<tr class="scoreRow"><td class="scoreDataLeft"><span class="smallText amatic bold">Player:</span></td><td class="scoreDataRight"><span class="smallText amatic bold">Score:</span></td></tr>
+				</table>
+				<table id="scoreTable_db">
+					<tr class="scoreRow_db"><td class="scoreDataLeft_db"><span class="smallText amatic bold">Fetching</span></td><td class="scoreDataRight_db"><span class="smallText amatic bold"><img src="loading_gif.gif"></span></td></tr>
+				</table>
+			</div>
+			<div id="footer"></div>
+		</div>
+	</div>
+
+	<!-- AUDIO -->
+	<audio id="successSound" src="successButton2.mp3"></audio>
+	<audio id="submitSound" src="submitClick3.mp3"></audio>
+	<audio id="gameOverSound" src="gameOver.mp3"></audio>
+	<audio id="mainMusic" src="108_game.mp3" loop></audio>
+
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="jquery-3.2.1.min.js"></script>
+
+<!-- Latest compiled and minified Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+
+<!-- Include Firebase Library -->
+<script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+
+<script>
+	// Firebase reference from http://time2hack.com/2015/03/intro-to-firebase-with-javascript-and-jquery.html
+
+	// Initialize Firebase
+	var config = {
+	  apiKey: "AIzaSyAu1NVukUsb3gj1UTGxkuf-hu__aar3dc8",
+	  authDomain: "psycho-c05a2.firebaseapp.com",
+	  databaseURL: "https://psycho-c05a2.firebaseio.com",
+	  projectId: "psycho-c05a2",
+	  storageBucket: "psycho-c05a2.appspot.com",
+	  messagingSenderId: "435872665747"
+	};
+	firebase.initializeApp(config);
+
+	//create firebase reference
+	var dbRef = new Firebase("https://psycho-c05a2.firebaseio.com");
+	var playerRef = dbRef.child('psychoPlayers');
+
+	// user's unique player ID
+	var playerID;
+
+	//load older conatcts as well as any newly added one...
+	playerRef.on("child_added", function(snap) {
+	  //console.log("key:" + snap.key() + ", val:" + snap.val());
+	  playerID = snap.key();
+	  document
+		.querySelector('#name')
+		.innerHTML += contactHtmlFromObject(snap.val());
+
+		// Load leaderboard after users are retrieved
+		getLeaderboard();
+	});
+
+	//save player
+	document
+	  .querySelector('.addValue')
+	  .addEventListener("click", function( event ) {
+		event.preventDefault();
+		var myName = document.querySelector('#name').value;
+		
+		if(checkNameRules(myName)) { // Checks if name requirements are met
+			if(hasUsername) { // Stops user from entering name more than once per page load
+			  playerRef
+				.push({
+				  playerName: myName,
+				  playerScore: pScore,
+				})
+				playerForm.reset();
+			}
+		}
+	  }, false);
+
+	//prepare conatct object's HTML
+	function contactHtmlFromObject(psychoPlayers) {
+	  //console.log( psychoPlayers );
+	  var html = '';
+	  html += '<li class="list-group-item psychoPlayers">';
+		  html += '<span id="smallText">'+psychoPlayers.name+'</span>';
+	  html += '</li>';
+	  return html;
+	}
+
+	// Update player highscore
+	function updateScore() {
+		playerRef.on("child_added", function(snap) {
+
+			//scrub through users
+			snap.forEach(function(childSnapshot) {
+				var key = childSnapshot.key();
+				var childData = childSnapshot.val();
+
+				//display user ID and current ID in loop
+				console.log("key:" + snap.key() + ", data:" + playerID)
+
+				// If hashed key in database matches current user's hash key
+				if(snap.key() == playerID) {
+					console.log("MATCH!")
+					playerRef.child(snap.key()).set({
+						"playerName" : pName,
+						"playerScore" : pScore
+					});
+				}
+			});
+		});
+
+		getLeaderboard();
+	}
+
+	// get leaderboard results
+	function getLeaderboard() {
+
+		var leaderboard_score = [];
+		var leaderboard_name = [];
+
+		// i is for going through name/score, j is for going through the arrays
+		var i = 0, j = 0, k = 0;
+
+		playerRef.on("child_added", function(snap) {
+
+			//scrub through users
+			snap.forEach(function(childSnapshot) {
+
+				var key = childSnapshot.key();
+				var childData = childSnapshot.val();
+
+				// switch between assigning name or score
+				if(i % 2 == 0) {
+					leaderboard_name[j] = childData;
+				} else {
+					leaderboard_score[j] = childData;
+					j++;
+				}
+
+				i++;
+
+			})
+		});
+
+		/**
+			for(k = 0; k < leaderboard_name.length; k++) {
+				console.log("lead_name: " + leaderboard_name[k] + ", lead_score: " + leaderboard_score[k]);
+			}
+		**/
+
+		// Call to sort leaderboard results
+		sortLeaderboard(leaderboard_name, leaderboard_score);
+	}
+
+	// Sort leaderboard results (Max -> Min)
+	function sortLeaderboard(leaderboard_name, leaderboard_score) {
+		var i, j, max;
+		var temp_name, temp_score = 0;
+		var arrSize = leaderboard_name.length;
+		var sorted_name = [], sorted_score = [];
+
+		for(i = 0; i < arrSize - 1; i++) {
+
+			max = i;
+
+			for(j = i + 1; j < arrSize; j++) {
+				if(leaderboard_score[j] > leaderboard_score[max]) {
+					max = j;
+				}
+			}
+
+			if(max != i) {
+				temp_name = leaderboard_name[max];
+				temp_score = leaderboard_score[max];
+
+				leaderboard_name[max] = leaderboard_name[i];
+				leaderboard_score[max] = leaderboard_score[i];
+
+				leaderboard_name[i] = temp_name;
+				leaderboard_score[i] = temp_score;
+			}
+		}
+
+		// Call to display leaderboard results
+		document
+		.querySelector('#scoreTable_db')
+		.innerHTML = displayLeaderboard(leaderboard_name, leaderboard_score);
+	}
+
+	// Display leaderboard results
+	function displayLeaderboard(leaderboard_name, leaderboard_score) {
+		var leaderboard = '';
+		var i, j;
+		var maxDisplay = 15;
+
+		for(i = 0; i < leaderboard_name.length; i++) {
+			if(i < maxDisplay) // Display only certain number of results
+			leaderboard += '<tr class="scoreRow_db"><td class="scoreDataLeft_db"><span class="smallText amatic">' + leaderboard_name[i] + ': ' + '</span></td><td class="scoreDataRight_db"><span class="smallText amatic">' + leaderboard_score[i] + '</span></td></tr>';
+			else
+				return leaderboard;
+		}
+
+		return leaderboard;
+	}
+
+	// Send highscore to database variable
+	function sendHighScore() {
+		pScore = player.highScore;
+		updateScore();
+	 }
+
+	// Get player name from input box
+	function getPlayerName() {
+		if(!hasUsername) {
+			pName = document.getElementById('name').value;
+			audioClip("submitSound");
+		} else {
+			alert("You've already entered a username, " + pName + "!");
+		}
+	 }
+	
+	// Checks name creation rules
+	function checkNameRules(name) {
+		
+		// Disregard until I get my external file going for this... Better here but hidden than not here and able to be dispayed
+		var filter = ["fuck","cum","nigger","nigga","cock","penis","bitch","cunt","pussy","shit","vagina","dick","twat","vulva","boner","queaf","orgy","kike","jack off","jerk off","fellatio","faggot","fag","ass","ejaculation","femdom","figging","fingerbang","fingering","fisting","foot fetish","footjob","doggie style","doggiestyle","doggy style","doggystyle","clit","clitoris","bukkake","bullshit","bitches","blowjob","blow job","blow your load","anal","anilingus","anus","asshole","bastard","date rape","daterape","deep throat","deepthroat","dildo","jizz","make me come","squirting","muffdiver","muffdiving","negro","rimjob","rimming","towelhead","tits","titties","titty","sodomize","sodomy","spic","splooge","splooge moose","spooge","spread legs"];
+		
+		var i = 0;
+		var acceptableName = true;
+		
+		// If name meets requirements, does it contain any bad language?
+		if(name != '' && name != null && name != '' && name != "" && name.length >= 3 && name.length <= 15 && /^[0-9a-zA-Z\s]+$/.test(name)) {			
+			for(i = 0; i < filter.length; i++) {
+				if((name.toLowerCase()).includes(filter[i].toLowerCase()))
+					acceptableName = false;
+			}
+		} else { // Username didn't meet the requirements
+			alert('Please enter a username. Must be between 3 and 15 characters.');
+			return false;
+		}
+			
+		// If name doesn't contain any foul material that I've defined, it's acceptable
+		if(acceptableName) {
+			hasUsername = true;
+			return true;
+		}
+		else { // Username contained something bad
+			alert("Please choose a different username");
+			return false;
+		}
+	}
+</script>
+
+<script>
+	var elem = document.getElementById('context'),
+    elemLeft = elem.offsetLeft,
+    elemTop = elem.offsetTop,
+    context = elem.getContext('2d'),
+    elements = [];
+
+	// Game speed
+	setInterval(update, 100);
+
+	// -------------------------------------   GAME OBJECTS   -------------------------------------------------
+
+	// Canvas Width/Height/Colors
+	var cWidth = 640;
+	var cHeight = 640;
+	var canvasTimer = 0;
+	var tT = 0; // Time timer
+
+	// Game variables
+	var gameOver = true;
+	var isGameOverScreen = false;
+	var canClick = false;
+	var isSuccess = false;
+	var successTimer = 0;
+	var turnNum = 0; 
+	
+	// Audio stuff
+	var mainMusic = document.getElementById('mainMusic');
+	var audioTimer = 0;
+	var audioTimer_GO = 0;
+	var audioVol = .5;
+	var muted = 0; // Easy to flip mute option
+	
+	//DB Player info
+	var pScore = 0; // Player score to send to database
+	var pName = null; // Player name to send to database
+	var hasUsername = false; // Has the player set a username?
+
+
+	// Rect Info
+	elements.push({
+		myFill:'black',
+		width: 74,
+		height: 74,
+		top: 400,
+		left: 283
+	});
+	
+	// Mute button
+	var muteButton = {
+		myFill:'black',
+		width: 135,
+		height: 25,
+		top: 605,
+		left: 500,
+		textX: 500,
+		textY: 625,
+		myFill:'#E4E4E4',
+		font:'24px Arial'
+	};
+
+	// Game Title
+	var gameTtle = {
+		myFill:'red',
+		font:'128px Amatic SC, cursive',
+		name:"Psycho!",
+		x:200,
+		y:225
+	};
+
+	// Large Text
+	var largeText = {
+		myFill:'#555555',
+		font:'36px Arial'
+	};
+
+	// Normal Text
+	var medText = {
+		myFill:'#555555',
+		font:'24px Arial'
+	};
+
+	// Small Text
+	var smallText = {
+		myFill:'#555555',
+		font:'12px Arial'
+	};
+
+	// Total Time for game
+	var gameTimer = {
+ 		time:180,
+		myFill:'black',
+		default:180
+	};
+
+	// Time left to clik
+	var clickMax = {
+		default:10,
+ 		time:10,
+		myFill:'black',
+	};
+
+	// Time until player can clik
+	var clickMin = {
+		default:7,
+ 		time:7,
+		maxNum:7,
+		myFill:'black',
+	};
+
+	// Time until start menu
+	var resetTime = {
+		default:3,
+ 		time:3,
+		myFill:'black',
+	};
+
+	// Player points
+	var player = {
+		points:0,
+		highScore:0,
+		myFill:'#555555',
+		font:'24px Arial'
+	};
+
+	// successful click
+	var successClick = {
+		font:'24px Arial',
+		myFill:'black',
+		vsp:3,
+		y:300,
+		rando:5,
+		defaultY:300
+	};
+
+	// -------------------------------------   FUNCTIONS   -------------------------------------------------
+
+	// Game-start splash screen
+	function gameStartScreen() {
+		context.clearRect(0,0,cWidth,cHeight);
+
+		// Reset gameover sound
+		audioTimer_GO = 0;
+
+		context.font = gameTtle.font;
+		context.fillStyle = gameTtle.myFill;
+		context.fillText(gameTtle.name, gameTtle.x, gameTtle.y);
+
+		context.font = medText.font;
+		context.fillStyle = medText.myFill;
+		context.fillText("Welcome, " + pName, 15, 35);
+
+		context.font = medText.font;
+		context.fillStyle = medText.myFill;
+		context.fillText("Your High Score: " + player.highScore, 225, 265);
+
+		context.font = medText.font;
+		context.fillStyle = medText.myFill;
+		context.fillText("Click the square to start!", 190, 500);
+
+		context.font = smallText.font;
+		context.fillStyle = smallText.myFill;
+		context.fillText("A game by Jake Motta!", 510, 630);
+
+		drawRect();
+	}
+
+	// Game-over splash screen display
+	function gameOverScreen() {
+		isGameOverScreen = true;
+
+		// Play gameover sound once
+		if(audioTimer_GO == 0)
+			audioClip("gameOverSound");
+
+		audioTimer_GO++;
+		turnNum = 0;
+
+		context.clearRect(0,0,cWidth,cHeight);
+		context.font = gameTtle.font;
+		context.fillStyle = gameTtle.myFill;
+		context.fillText("Game Over!", 125, 350);
+
+		var time = fancyTimeFormat(resetTime.time);
+
+		context.fillStyle = resetTime.myFill;
+		context.font = medText.font;
+		context.fillText(time, 300, 400);
+
+		if(tT % 10 == 0)
+			resetTime.time -= 1;
+
+		if(resetTime.time < 0)
+			resetGame();
+	}
+
+	// Time output from http://stackoverflow.com/questions/3733227/javascript-seconds-to-minutes-and-seconds
+	function fancyTimeFormat(time)
+	{
+		// Hours, minutes and seconds
+		var hrs = ~~(time / 3600);
+		var mins = ~~((time % 3600) / 60);
+		var secs = time % 60;
+
+		// Output like "1:01" or "4:03:59" or "123:03:59"
+		var ret = "";
+
+		if (hrs > 0) {
+			ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+		}
+
+		ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+		ret += "" + secs;
+
+
+		return ret;
+	}
+	
+	// Update score
+	function updatePlayer() {
+		context.font = player.font;
+		context.fill = player.myFill;
+		context.fillText("Points: " + player.points, 500, 45);
+	}
+
+	// Draw rectangle used for clicking
+	function drawRect() {
+		// Render elements.
+		elements.forEach(function(element) {
+			context.fillStyle = element.myFill;
+			context.fillRect(element.left, element.top, element.width, element.height);
+		});
+	}
+	
+	// Draw mute button
+	function drawMuteButton() {
+		context.font = muteButton.font;
+		context.fill = muteButton.myFill;
+		//context.fillRect(muteButton.left, muteButton.top, muteButton.width, muteButton.height);
+		context.fillText("Toggle Mute", muteButton.textX, muteButton.textY);
+	}
+
+	// Update time display for gameTimer
+	function updateTimer() {
+		var time = fancyTimeFormat(gameTimer.time);
+
+		context.fillStyle = gameTimer.myFill;
+		context.font = largeText.font;
+		context.fillText(time, 25, 50);
+
+		if(tT % 10 == 0)
+			gameTimer.time -= 1;
+	}
+
+	// Update time display for clickMax
+	function updateClickMax() {
+		var time = fancyTimeFormat(clickMax.time);
+
+		if(clickMax.time > 3)
+			context.fillStyle = clickMax.myFill;
+		else
+			context.fillStyle = 'red';
+
+		context.font = largeText.font;
+		context.fillText(time, 285, 375);
+
+		if(tT % 10 == 0)
+			clickMax.time -= 1;
+	}
+
+	// Update time display for clickMin
+	function updateClickMin() {
+		var time = fancyTimeFormat(clickMin.time);
+
+		context.fillStyle = clickMin.myFill;
+		context.font = largeText.font;
+		
+		
+		// Fade effect for when to click
+		if(turnNum == 0) {
+			context.fillText(time, 285, 525);
+		}
+		else if(turnNum > 0 && turnNum <= 1) {
+			context.fillStyle = "rgba(0, 0, 0, 0.7)";
+			context.fillText(time, 285, 525);
+		}
+		else if(turnNum > 1 && turnNum <= 2) {
+			context.fillStyle = "rgba(0, 0, 0, 0.5)";
+			context.fillText(time, 285, 525);
+		}
+		else if(turnNum > 2 && turnNum <= 3) {
+			context.fillStyle = "rgba(0, 0, 0, 0.3)";
+			context.fillText(time, 285, 525);
+		}
+		else
+			context.fillText(time, 285, 525, 0);
+		
+		
+		if(tT % 10 == 0 && clickMin.time > 0)
+			clickMin.time -= 1;
+	}
+
+	// Resest function
+	function resetClickMin() {
+		var random = Math.floor(Math.random() * clickMin.maxNum) + 1;
+		clickMin.time = random;
+	}
+
+	// Get random number
+	function getRandom(num) {
+		var random = Math.floor(Math.random() * num);
+		return random;
+	}
+
+	// Reset funtion
+	function resetClickMax() {
+		clickMax.time = clickMax.default;
+	}
+
+	// Check game timer. If time runs out without a click, game over!
+	function checkGame() {
+		
+		// If game timer hits 0
+		if(gameTimer.time <= 0) {
+			checkHighScore();
+			gameOverScreen();
+		}
+		
+		// If 10 second countdown hits 0
+		if(clickMax.time <= 0) {
+			checkHighScore();
+			gameOverScreen();
+		}
+	}
+
+	// Reset canvasTimer
+	function resetCanvas() {
+		canvasTimer = 0;
+	}
+
+	// What to do when the game needs to reset
+	function resetGame() {
+		isGameOverScreen = false;
+		gameOver = true;
+		resetClickMax();
+		clickMin.time = clickMin.default;
+		player.points = 0;
+		gameTimer.time = gameTimer.default;
+		resetTime.time = resetTime.default;
+		resetCanvas();
+	}
+
+	// Create feedback messages on successful clicks
+	function success() {
+		successTimer += 1;
+
+		context.font = successClick.font;
+		context.fillStyle = successClick.myFill;
+
+		successClick.y -= successClick.vsp;
+
+		switch (successClick.rando) {
+			case 0:
+				context.fillText("RAD!", 190, successClick.y);
+				break;
+			case 1:
+				context.fillText("NICE!", 190, successClick.y);
+				break;
+			case 2:
+				context.fillText("GOOD JOB!", 190, successClick.y);
+				break;
+			case 3:
+				context.fillText("SAVAGE!", 190, successClick.y);
+				break;
+			case 4:
+				context.fillText("MOM?", 190, successClick.y);
+				break;
+			case 5:
+				context.fillText("CS 108!", 190, successClick.y);
+				break;
+			case 6:
+				context.fillText("おめでとう!", 190, successClick.y);
+				break;
+			case 7:
+				context.fillText("TOP SHELF!", 190, successClick.y);
+				break;
+			case 8:
+				context.fillText("10100101", 190, successClick.y);
+				break;
+			case 9:
+				context.fillText("DAMN DANIEL!", 190, successClick.y);
+				break;
+			default:
+				context.fillText("WELL THEN...!", 190, successClick.y);
+				break;
+		}
+
+		if(successTimer >= 10) {
+			isSuccess = false;
+			successTimer = 0;
+			successClick.y = successClick.defaultY;
+			successClick.rando = getRandom(10);
+		}
+	}
+
+	// Update canvas color based on score
+	function updateCanvas() {
+
+		if(canvasTimer % 30 == 0)
+			canvasTimer = 0;
+
+		if(canvasTimer < 5)
+			context.fillStyle = '#FFFFFF';
+
+		if(canvasTimer >= 5 && canvasTimer < 10)
+			context.fillStyle = '#BAE1FF';
+
+		if(canvasTimer >= 10 && canvasTimer < 15)
+			context.fillStyle = '#BAFFC9';
+
+		if(canvasTimer >= 15 && canvasTimer < 20)
+			context.fillStyle = '#FFFFBA';
+
+		if(canvasTimer >= 20 && canvasTimer < 25)
+			context.fillStyle = '#FFDFBA';
+
+		if(canvasTimer >= 25 && canvasTimer < 30)
+			context.fillStyle = '#3BAFFF';
+
+		context.fillRect(0,0,cWidth,cHeight);
+	}
+
+	// Display for asking user for username
+	function askForUsername() {
+		context.clearRect(0,0,cWidth,cHeight);
+		context.font = gameTtle.font;
+		context.fillStyle = gameTtle.myFill;
+		context.fillText(gameTtle.name, gameTtle.x, gameTtle.y);
+
+		context.font = medText.font;
+		context.fillStyle = gameTtle.myFill;
+		context.fillText("Please enter username below to start!", 125, 600);
+		
+		context.font = smallText.font;
+		context.fillStyle = gameTtle.myFill;
+		context.fillText("And read the damn instructions too", 225, 615);
+	}
+
+	// Check if player's score is higher than any of their previous attempts
+	function checkHighScore() {
+		if(player.points > player.highScore) {
+			player.highScore = player.points;
+			sendHighScore(); // Send highscore to DB score variable
+		}
+	}
+
+	// Play different audio clips
+	function audioClip(audio) {
+
+		var curAudio;
+
+		switch (audio) {
+			case "successSound":
+				curAudio = document.getElementById('successSound');
+				break;
+			case "submitSound":
+				curAudio = document.getElementById('submitSound');
+				break;
+			case "gameOverSound":
+				curAudio = document.getElementById('gameOverSound');
+				break;
+			default:
+				console.log(audio + " did not play");
+				break;
+		}
+
+		curAudio.volume = audioVol;
+		curAudio.play();
+	}
+
+	// Plays main music
+	function playMainMusic() {
+		mainMusic.play();
+	}
+
+	// Stops main music
+	function stopMainMusic() {
+		audioTimer = -1;
+		document.getElementById('mainMusic').pause();
+		document.getElementById('mainMusic').currentTime = 0;
+	}
+	
+	function incTurn() {
+		turnNum += 1;
+	}
+	
+	function muteAudio() {
+		audioVol = 0;
+		mainMusic.volume = audioVol;
+	}
+	
+	function unMuteAudio() {
+		audioVol = .5;
+		mainMusic.volume = audioVol;
+	}
+	
+	// Fading game instruction text
+	function updateInstructions() {
+		
+		context.font = medText.font;
+		context.fillStyle = gameTtle.myFill;
+
+		// Fade effect for when to click
+		if(turnNum == 0) {
+			context.fillText("<< Click here", 384, 445);
+			context.fillText("Time until safe click >>", 13, 522);
+			context.fillText("Time left to click >>", 50, 372);
+		}
+		else if(turnNum > 0 && turnNum <= 1) {
+			context.fillStyle = "rgba(0, 0, 0, 0.7)";
+			context.fillText("<< Click here", 384, 445);
+			context.fillText("Time until safe click >>", 13, 522);
+			context.fillText("Time left to click >>", 50, 372);
+		}
+		else if(turnNum > 1 && turnNum <= 2) {
+			context.fillStyle = "rgba(0, 0, 0, 0.5)";
+			context.fillText("<< Click here", 384, 445);
+			context.fillText("Time until safe click >>", 13, 522);
+			context.fillText("Time left to click >>", 50, 372);
+		}
+		else if(turnNum > 2 && turnNum <= 3) {
+			context.fillStyle = "rgba(0, 0, 0, 0.3)";
+			context.fillText("<< Click here", 384, 445);
+			context.fillText("Time until safe click >>", 13, 522);
+			context.fillText("Time left to click >>", 50, 372);
+		}
+		else {
+			context.fillText("<< Click here", 384, 445, 0);
+			context.fillText("Time until safe click >>", 13, 522, 0);
+			context.fillText("Time left to click >>", 50, 372, 0);
+		}
+	}
+
+	// Main function calling for game updates
+	function update() {
+
+		// increase timer
+		tT += 1;
+		console.log("hasusername: " + hasUsername);
+		
+		if(hasUsername == false) {
+			askForUsername();
+		} else {
+			if(gameOver == true) {
+				gameStartScreen();
+				drawRect();
+			} else {
+				
+				if(isGameOverScreen == false) {
+					// clears the canvas each frame
+					context.clearRect(0,0,cWidth,cHeight);
+
+					updateCanvas();
+					updateTimer();
+					updateClickMax();
+					updateClickMin();
+					updatePlayer();
+					checkGame();
+					drawRect();
+					drawMuteButton();
+					updateInstructions();
+
+					// Success click feedback messages
+					if(isSuccess)
+						success();
+
+					// Play main music
+					if(audioTimer == 0)
+						playMainMusic();
+
+					audioTimer++;
+				} else {
+					stopMainMusic();
+					gameOverScreen();
+				}
+			}
+		}
+	}
+
+	// Clickable object reference from http://jsfiddle.net/BmeKr/
+	elem.addEventListener('click', function(event) {
+		var x = event.pageX - elemLeft,
+			y = event.pageY - elemTop;
+
+		elements.forEach(function(element) {
+
+			// Clicked on the rect
+			if (y > element.top && y < element.top + element.height && x > element.left && x < element.left + element.width) {
+
+				// If on start screen
+				if(gameOver) {
+					gameOver = false;// Starts the game
+					tT = 0; // reset timer
+				} else { // If in-game
+					// Clickced on the right time
+					if(clickMin.time <= 0 && clickMax.time >= 0) {
+						resetClickMax(); // reset max timer
+						resetClickMin(); // reset minimum timer
+						player.points += 1; // increase player's points
+						canvasTimer += 1; // changes bg color timer
+						audioClip("successSound");
+
+						successClick.rando = getRandom(10);
+						isSuccess = true;
+						
+						incTurn();
+					} else { // Not clicked on the right time
+
+						// If the player scores higher this round than previous
+						checkHighScore();
+						gameOverScreen();
+					}
+				}
+			}
+			
+			// Mute button click
+			if (y > muteButton.top && y < muteButton.top + muteButton.height && x > muteButton.left && x < muteButton.left + muteButton.width) {
+				muted += 1;
+				if(muted % 2 == 0) 
+					unMuteAudio();
+				else
+					muteAudio();
+			}
+		});
+
+	}, false);
+
+</script>
+</body>
+</html>

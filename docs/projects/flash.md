@@ -2,6 +2,8 @@
 
 The Flash pieces Jake picked on 2026-10-26 from his archive: cartoons (NinjaDonut, Rocket Kyle, Samus and others) and caricatures of friends. They date from 2012 to 2019. The folder is `public/projects/flash/`; the card id is `flash`.
 
+**Where it's listed:** in the Art section of the all-projects overlay, first, ahead of Sketchbook, as Jake asked on 2026-10-28. Until then it was in Animation. Its tags (Flash, Animation) are unchanged.
+
 ## Preview
 
 `index.html` is a hand-written gallery in two sections: Cartoons and Friends.

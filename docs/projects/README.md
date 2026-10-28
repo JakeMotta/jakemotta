@@ -14,24 +14,28 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `floor-is-lava` | `/projects/cs134/floor-is-lava.html` (a JavaScript port of the jar) | [floor-is-lava.md](floor-is-lava.md) |
 | `scott-pilgrim` | `/projects/cs134/scott-pilgrim.html` (a recorded clip) | [scott-pilgrim.md](scott-pilgrim.md) |
 | `fooder` | `/projects/fooder/index.html` (a case study) | [fooder.md](fooder.md) |
-| `survivor` | `/projects/survivor/index.html` (a case study) | [survivor.md](survivor.md) |
+| `psycho` | `/projects/psycho/play.html` (the 2017 page, with a new leaderboard) | [psycho.md](psycho.md) |
 | `cs160` | `/projects/cs160/index.html` | [cs160.md](cs160.md) |
 | `personal-site` | `/projects/personal-site/index%20(2).static.html` | [personal-site.md](personal-site.md) |
 | `dan-james` | `/projects/dan-james/index.static.html` | [dan-james.md](dan-james.md) |
 | `team-safe` | `/projects/motorsport/team-safe/About.html` | [team-safe.md](team-safe.md) |
 | `coloris` | `/projects/coloris/index.html` (Java compiled to JavaScript) | [coloris.md](coloris.md) |
-| `worxxx` | `/projects/motorsport/worxxx/index.static.html` | [worxxx.md](worxxx.md) |
 | `ninjadonut-game` | `/projects/ninjadonut-game/index.html` (Greenfoot, compiled to JavaScript) | [ninjadonut-game.md](ninjadonut-game.md) |
 | `rebound` | `/projects/rebound/index.html` (Greenfoot, compiled to JavaScript) | [rebound.md](rebound.md) |
 | `isguy` | `/projects/isguy/index.html` (Greenfoot, compiled to JavaScript) | [isguy.md](isguy.md) |
-| `noah-garza` | `/projects/motorsport/noah-garza/index.static.html` | [noah-garza.md](noah-garza.md) |
-| `sketchbook` | `/projects/sketchbook/index.html` (a hand-written gallery) | [sketchbook.md](sketchbook.md) |
 | `flash` | `/projects/flash/index.html` (a hand-written gallery) | [flash.md](flash.md) |
+| `sketchbook` | `/projects/sketchbook/index.html` (a hand-written gallery) | [sketchbook.md](sketchbook.md) |
 | `highschool-portfolio` | `/projects/highschool/oldSite/index.html` | [highschool-portfolio.md](highschool-portfolio.md) |
 | `greenfoot-pokemon` | `/projects/greenfoot-pokemon/index.html` (Java compiled to JavaScript) | [greenfoot-pokemon.md](greenfoot-pokemon.md) |
 | `escaping-confinement` | `/projects/escaping-confinement/index.html` (a video page) | [escaping-confinement.md](escaping-confinement.md) |
 | `jakes-index` | `/projects/highschool/flashIndex/FlashIndex.static.html` | [jakes-index.md](jakes-index.md) |
 | `pivot` | `/projects/pivot/index.html` (a hand-written gallery) | [pivot.md](pivot.md) |
+
+**Taken off the list.** These have pages here but no card, and their files stay in `public/projects/` as archive. They were deployed, so their pages are still live at their addresses until removed in cPanel, though nothing links to them; their old `/project/<id>` addresses say the project doesn't exist. Their card images stay too (CLAUDE.md, Old card images).
+- [Worxxx PM](worxxx.md) and [Noah Garza Racing](noah-garza.md), on 2026-10-28, as Jake asked. Their pages are still converted by `yarn projects:convert`.
+- [Survivor](survivor.md), on 2026-10-28, as Jake asked. Psycho, the same class's game, took its place.
+
+**Flash is in Art**, ahead of Sketchbook, as Jake asked on 2026-10-28; it had been in Animation with Pivot and Escaping Confinement. Within a section the projects go newest first, and ties keep their order in `homeProjectList`, so Flash's entry sits just before Sketchbook's.
 
 ## Hub pages
 
@@ -71,7 +75,7 @@ A preview has to run in the browser with no server code: the host is static, and
 - **A hand port** of Rebound (`port.html`) is kept only for comparison: its Java translated class by class onto `greenfoot.js`. Jake compared it with the compiled version and CheerpJ on 2026-10-27 and picked the compiled one ([rebound.md](rebound.md)).
 - **Godot games** (Asteroids) are Godot's own web export, with threads off so the static host needs no special headers ([asteroids.md](asteroids.md)).
 - **Java + OpenGL games** can't run in CheerpJ: JOGL needs native libraries. The Floor is Lava is translated into JavaScript from its compiled classes, line for line, and draws its own sprites on a canvas ([floor-is-lava.md](floor-is-lava.md)). Scott Pilgrim still has a recorded clip.
-- **Games that can't run in a browser at all** get a case study of their design and art (Survivor, Fooder).
+- **Games that can't run in a browser at all** get a case study of their design and art (Fooder; Survivor's, off the list since 2026-10-28, is the other).
 
 ## Downloads
 
@@ -86,7 +90,7 @@ Every game with a desktop build has a Download button in the viewer, from the en
 | isGuy | `isguy/isGuyFinal.jar`, the preview's own jar | [isguy.md](isguy.md) |
 | Pokémon | `greenfoot-pokemon/download/pokemon-green-foot-edition.zip`, the jars plus a launcher | [greenfoot-pokemon.md](greenfoot-pokemon.md) |
 
-Four games have none. TapSlayDie isn't out on the App Store or Google Play yet (its site says "Coming soon"); link the store pages once it is. Survivor never had a finished build. Rebound and NinjaDonut: The Game were never exported from Greenfoot. The jars assembled for their builds (`rebound/java/rebound.jar`, `ninjadonut-game/ninjadonut.jar`) haven't been tried on a desktop ([rebound.md](rebound.md), [ninjadonut-game.md](ninjadonut-game.md)). The deploy compares files by size only, so a rebuilt download needs a new name, or an explicit `put` in the workflow, to reach the server.
+Four games have none. TapSlayDie isn't out on the App Store or Google Play yet (its site says "Coming soon"); link the store pages once it is. Psycho is a web page and runs here. Rebound and NinjaDonut: The Game were never exported from Greenfoot. The jars assembled for their builds (`rebound/java/rebound.jar`, `ninjadonut-game/ninjadonut.jar`) haven't been tried on a desktop ([rebound.md](rebound.md), [ninjadonut-game.md](ninjadonut-game.md)). The deploy compares files by size only, so a rebuilt download needs a new name, or an explicit `put` in the workflow, to reach the server.
 - **Live sites** on their own domain (TapSlayDie) are framed at their address. Their document is cross-origin, so the viewer's link handling can't reach inside them.
 
 **Embedded third-party forms stay live.** JotForm embeds (Dan James's contact page, Pistol Art's register page, the 2012 high school page and its NinjaDonut copy) still submit for real. Jake decided on 2026-10-26 to leave them, along with his old contact details on the 2012 pages. Only the sites' own mail handlers are rerouted, because they'd need the PHP that isn't published.
@@ -99,7 +103,7 @@ Card images are screenshots of each running preview, taken by `yarn projects:scr
 
 **A game's card is just the game**, as Jake asked on 2026-10-27: never its page, and never a Play button.
 - **How:** the shot's `clip` names the game's canvas, video or image. The script squares off the rounded corners around it, leaves out its border, and takes the largest 4:3 area inside, placed by `focus`.
-- **Where the game can't be shown running in time:** the card uses what stands in for it. Pokémon's is its poster, captured from CheerpJ, without the button; Survivor's is its mockup.
+- **Where the game can't be shown running in time:** the card uses what stands in for it. Pokémon's is its poster, captured from CheerpJ, without the button.
 - **The one exception** is TapSlayDie, whose site has no gameplay to clip ([tapslaydie.md](tapslaydie.md)).
 - **Shots:** each project's shot is an entry in the script's `SHOTS` list. It says how long to let the page settle and, for a narrow fixed-width site, a narrower viewport so the site fills the frame. A shot can name a page inside the preview rather than its front page (Ambii's card shoots its 2018 landing page, not the story page), `scroll` down to the part worth showing (Pivot's grid), or `run` a line of script first, to open a panel (Noah Garza's About) or keep something off the card (the high school portfolio's phone number).
 - **Audio and autoplay:** the browser runs muted, with autoplay allowed, so Ruffle starts the Flash instead of waiting behind its play button.

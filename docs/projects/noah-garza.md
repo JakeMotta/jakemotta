@@ -1,5 +1,7 @@
 # Noah Garza Racing
 
+**Off the project list since 2026-10-28,** as Jake asked: no card, and no `SHOTS` entry. The files stay as archive and are still converted; the deployed pages stay live at their addresses until removed in cPanel. To bring it back, restore its `homeProjectList` entry and `SHOTS` entry from git history (before `claude/psycho`).
+
 A one-page client site Jake built for Noah Garza, a young kart racer (December 2012). The folder is `public/projects/motorsport/noah-garza/`; the card id is `noah-garza`.
 
 It's one of three motorsport sites that shared a "Motorsport Sites" card until 2026-10-27; why they were split, and where the old card's links go, is in [team-safe.md](team-safe.md).

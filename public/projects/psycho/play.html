@@ -1,5 +1,5 @@
-<!-- Psycho as it plays on jakemotta.com: index.html (2017, unchanged beside it) with the leaderboard on a new
-     database, at half volume, and a fix for clicks after a resize. The game's own script is unchanged.
+<!-- Psycho as it plays on jakemotta.com: index.html (2017, unchanged beside it) with the leaderboard on its 2017
+     database (switched back on), at half volume, and a fix for clicks after a resize. The game's own script is unchanged.
      See docs/projects/psycho.md. -->
 <!doctype html>
 <html>
@@ -92,17 +92,27 @@
 		}, true);
 	})();
 </script>
-<!-- The leaderboard, on a new Firebase Realtime Database (docs/projects/psycho.md). The 2017 one, psycho-c05a2,
-     has been deactivated, and the code here replaces the 2017 script, which used Firebase's retired 2.x library.
+<!-- The leaderboard, on the 2017 Firebase Realtime Database, psycho-c05a2, switched back on in 2026 with new rules
+     (docs/projects/psycho.md). The code here replaces the 2017 script, which used Firebase's retired 2.x library.
      Each visit adds one row, with its first score, and raises it with each new high score; the database's rules
      (demos/psycho/database.rules.json) take nothing else. Names are shown as text, never as HTML. -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-	// The new database's web config: not a secret, it's what every visitor's browser uses. null keeps the board offline.
-	var FIREBASE_CONFIG = null;
+	// The 2017 project's web config, as index.html has it: not a secret, it's what every visitor's browser uses.
+	// null would keep the board offline.
+	var FIREBASE_CONFIG = {
+	  apiKey: "AIzaSyAu1NVukUsb3gj1UTGxkuf-hu__aar3dc8",
+	  authDomain: "psycho-c05a2.firebaseapp.com",
+	  databaseURL: "https://psycho-c05a2.firebaseio.com",
+	  projectId: "psycho-c05a2",
+	  storageBucket: "psycho-c05a2.appspot.com",
+	  messagingSenderId: "435872665747"
+	};
 	var LEADERBOARD_SIZE = 15;
+	// Rows read to fill it: each name shows once, with its best score, and the 2017 bug left many repeats ("hii")
+	var ROWS_READ = 200;
 
 	var playerRef = null;
 	var myEntry = null; // this visit's row, made with its first score
@@ -110,10 +120,15 @@
 	if (FIREBASE_CONFIG && window.firebase) {
 		firebase.initializeApp(FIREBASE_CONFIG);
 		playerRef = firebase.database().ref('psychoPlayers');
-		playerRef.orderByChild('playerScore').limitToLast(LEADERBOARD_SIZE).on('value', function (snap) {
-			var rows = [];
+		playerRef.orderByChild('playerScore').limitToLast(ROWS_READ).on('value', function (snap) {
+			var rows = [], seen = {};
 			snap.forEach(function (child) { rows.push(child.val()); });
-			showLeaderboard(rows.reverse());
+			// Highest first, then the first (best) row of each name
+			rows = rows.reverse().filter(function (row) {
+				if (seen[row.playerName]) return false;
+				return (seen[row.playerName] = true);
+			});
+			showLeaderboard(rows.slice(0, LEADERBOARD_SIZE));
 		}, function () {
 			showLeaderboard(null);
 		});

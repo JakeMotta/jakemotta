@@ -5,6 +5,12 @@
 # cannot find and gets a 404 before React ever loads. Handing unknown paths to
 # index.html lets the router resolve them.
 
+# No folder listings. The server would otherwise answer a folder with no index
+# page (/projects/, /images/, /music/) with a list of every file in it, archive
+# leftovers included. Nothing on the site links to a listing. Sites under
+# /projects/ inherit this unless their own .htaccess sets Options.
+Options -Indexes
+
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /

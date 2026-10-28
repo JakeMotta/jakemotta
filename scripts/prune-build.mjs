@@ -4,6 +4,9 @@
 // which uploads build/ as-is, never sees these files.
 //
 // - pistol-art/myAdmin: the old CouchCMS admin, with its database settings.
+// - the Ambii build in pistol-art/files: a compiled Ambii web app whose source
+//   maps hold Ambii's private source, plus an old scraper's notes. Pistol Art's
+//   own files beside them (its CSS, scripts, partials and pdfs/) stay.
 // - every .php under projects/: the PHP sites are published as the static
 //   .html pages scripts/convert-php-sites.mjs writes beside them, and the
 //   originals include mail handlers that would send real email.
@@ -22,6 +25,13 @@ if (!existsSync(BUILD)) {
 
 rmSync(join(PROJECTS, 'pistol-art', 'myAdmin'), { recursive: true, force: true });
 
+const AMBII_BUILD = join(PROJECTS, 'pistol-art', 'files');
+const AMBII_FILES = ['static', '.htaccess', 'index.html', 'asset-manifest.json', 'manifest.json', 'service-worker.js', 'favicon.ico', 'icon.png', 'README.md', 'requirements.txt'];
+for (const name of AMBII_FILES) rmSync(join(AMBII_BUILD, name), { recursive: true, force: true });
+if (existsSync(AMBII_BUILD)) {
+    for (const name of readdirSync(AMBII_BUILD)) if (name.startsWith('precache-manifest.')) rmSync(join(AMBII_BUILD, name));
+}
+
 let removed = 0;
 const prune = (dir) => {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -35,4 +45,4 @@ const prune = (dir) => {
 };
 if (existsSync(PROJECTS)) prune(PROJECTS);
 
-console.log(`prune-build: removed pistol-art/myAdmin and ${removed} .php files`);
+console.log(`prune-build: removed pistol-art/myAdmin, the Ambii build in pistol-art/files and ${removed} .php files`);

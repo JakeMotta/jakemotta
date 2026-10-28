@@ -19,7 +19,7 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `personal-site` | `/projects/personal-site/index%20(2).static.html` | [personal-site.md](personal-site.md) |
 | `dan-james` | `/projects/dan-james/index.static.html` | [dan-james.md](dan-james.md) |
 | `team-safe` | `/projects/motorsport/team-safe/About.html` | [team-safe.md](team-safe.md) |
-| `coloris` | `/projects/coloris/index.html` (Java, through CheerpJ) | [coloris.md](coloris.md) |
+| `coloris` | `/projects/coloris/index.html` (Java compiled to JavaScript) | [coloris.md](coloris.md) |
 | `worxxx` | `/projects/motorsport/worxxx/index.static.html` | [worxxx.md](worxxx.md) |
 | `isguy` | `/projects/isguy/index.html` (Java, through CheerpJ) | [isguy.md](isguy.md) |
 | `noah-garza` | `/projects/motorsport/noah-garza/index.static.html` | [noah-garza.md](noah-garza.md) |
@@ -51,7 +51,9 @@ A preview has to run in the browser with no server code: the host is static, and
 - **Apps with a real back end** (CS160) get hand-written static pages that fake the back end in JS.
 - **Apps whose source survives** (Ambii Business) are built from that source, with the old API answered by a mock that runs in the browser. The mock and the build tooling live in `demos/`, outside `public/`, and only the build output is published. The apps' own source isn't committed at all, because its upstream repositories are private ([ambii-business.md](ambii-business.md#where-the-source-lives)).
 - **Flash** plays through Ruffle, self-hosted in `public/vendor/ruffle/`.
-- **Java desktop games** (isGuy, Pokémon, Coloris) run as the original jars through CheerpJ, which loads only when the visitor presses Play. CheerpJ's free Community License covers a personal site only while it loads from `cjrtnc.leaningtech.com` and the page credits it; self-hosting it would need a paid license. How the three pages work is in [isguy.md](isguy.md).
+- **Greenfoot games** are moving off CheerpJ:
+  - **Compiled to JavaScript** (Coloris, since 2026-10-27): `yarn projects:greenfoot` compiles the game's own classes, taken unchanged from its jar, with TeaVM against our own Greenfoot runtime in `demos/greenfoot/`, into `public/projects/<id>/web/`. It loads in seconds, runs at full speed and scales to fit. How it works and what's left: [greenfoot-web.md](greenfoot-web.md). The CheerpJ page stays beside it as `cheerpj.html`.
+  - **Through CheerpJ** (isGuy, Pokémon, for now): the original jars run in a Java VM in the page, which loads only when the visitor presses Play. CheerpJ's free Community License covers a personal site only while it loads from `cjrtnc.leaningtech.com` and the page credits it; self-hosting it would need a paid license. How those pages work is in [isguy.md](isguy.md).
 - **Godot games** (Asteroids) are Godot's own web export, with threads off so the static host needs no special headers ([asteroids.md](asteroids.md)).
 - **Games that can't run in a browser** get a short recorded clip (The Floor is Lava and Scott Pilgrim, recorded from the original jars) or a case study of their design and art (Survivor, Fooder).
 - **Live sites** on their own domain (TapSlayDie) are framed at their address. Their document is cross-origin, so the viewer's link handling can't reach inside them.

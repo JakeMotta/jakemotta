@@ -261,6 +261,15 @@ jobs:
               printf "put -O %s ./build/projects/ambii-business/%s\n" "$(dirname "$ambii/$file")/" "$file"
             done
 
+            # The Greenfoot games built to JavaScript (yarn projects:greenfoot)
+            # name their scripts by content hash, listed in each game's
+            # web/manifest.json, which a rebuild can change without changing
+            # its length.
+            for file in build/projects/*/web/manifest.json; do
+              [ -f "$file" ] || continue
+              printf "put -O %s ./%s\n" "${target%/}/$(dirname "${file#build/}")/" "$file"
+            done
+
             echo bye
           } > "$RUNNER_TEMP/deploy.lftp"
 

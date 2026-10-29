@@ -7,6 +7,7 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `tapslaydie` | live at `https://tapslaydie.com/` | [tapslaydie.md](tapslaydie.md) |
 | `asteroids` | `/projects/asteroids/index.html` (Godot's web export) | [asteroids.md](asteroids.md) |
 | `ambii` | `/projects/ambii/story/index.html` (a hand-written story page in front of the 2018 landing page) | [ambii.md](ambii.md) |
+| `black-chamber-2017` | `/projects/black-chamber-2017/index.static.html` (the 2017 Muse redesign) | [black-chamber-2017.md](black-chamber-2017.md) |
 | `black-chamber` | `/projects/black-chamber/index.html` | [black-chamber.md](black-chamber.md) |
 | `pistol-art` | `/projects/pistol-art/index.html` | [pistol-art.md](pistol-art.md) |
 | `ninjadonut` | `/projects/ninja-donut/index.html` | [ninjadonut.md](ninjadonut.md) |

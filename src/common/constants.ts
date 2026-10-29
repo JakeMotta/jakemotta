@@ -360,6 +360,16 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/psycho/play.html',
     },
     {
+        id: 'black-chamber-2017',
+        image: '/images/projects/black-chamber-2017.webp',
+        title: 'Black Chamber (2017)',
+        date: '2017',
+        category: 'website',
+        tags: ['Website'],
+        description: 'My 2017 redesign of the Silicon Valley Black Chamber of Commerce site, with its events, programs, media kit and radio show.',
+        preview: '/projects/black-chamber-2017/index.static.html',
+    },
+    {
         id: 'pistol-art',
         image: '/images/projects/pistol-art.webp',
         title: 'Pistol Art',

@@ -43,6 +43,7 @@ const SHOTS = [
     // The 2018 landing page rather than the story page in front of it
     { id: 'ambii', url: '/projects/ambii/index.html', settle: 2500 },
     { id: 'black-chamber', url: '/projects/black-chamber/index.html', settle: 2500, width: 1140 },
+    { id: 'black-chamber-2017', url: '/projects/black-chamber-2017/index.static.html', settle: 3000 },
     { id: 'pistol-art', url: '/projects/pistol-art/index.html', settle: 2000 },
     { id: 'ninjadonut', url: '/projects/ninja-donut/index.html', settle: 5000, width: 960 },
     // The hub, with a tile for each of the three apps

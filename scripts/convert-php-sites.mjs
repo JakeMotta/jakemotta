@@ -271,6 +271,115 @@ const SITES = [
             ['<form id="mc-form" class="group mc-form" novalidate="true">', '<form id="mc-form-off" class="group mc-form" novalidate="true" onsubmit="return false">'],
         ],
     },
+    {
+        // The 2017 Adobe Muse redesign of the Black Chamber site, as handed over in August 2017
+        // (docs/projects/black-chamber-2017.md). Every page links to the others at the Business
+        // Catalyst staging address it was built on.
+        dir: 'black-chamber-2017',
+        origins: ['http://scbc01.businesscatalyst.com/', 'https://scbc01.businesscatalyst.com/'],
+        forms: {},
+        pages: [
+            'about-us.html',
+            'advertising.html',
+            'african-diaspora-investment-symposium.html',
+            'bay-area-black-youth-tech-a-thon.html',
+            'black-legends-awards.html',
+            'blacks-‘n-business-blacks-‘n-technology-awards-ceremony.html',
+            'calendar.html',
+            'communication.html',
+            'contact-us.html',
+            'events.html',
+            'giving.html',
+            'global.html',
+            'global1.html',
+            'grant-writing-summit.html',
+            'index.html',
+            'initiatives.html',
+            'juneteenth.html',
+            'media-kit.html',
+            'members.html',
+            'mlk-luncheon-event.html',
+            'naacp-–-gala-event.html',
+            'newsletters.html',
+            'newslettersarchive.html',
+            'offerings.html',
+            'other-partnership-events.html',
+            'partners.html',
+            'picture-gallery.html',
+            'products-for-sale.html',
+            'programs.html',
+            'radio-show.html',
+            'services.html',
+            'sponsors.html',
+            'supplier-diversity-expo.html',
+            'supporters.html',
+            'video-collection.html',
+            'workshops.html',
+        ],
+        // Business Catalyst served the home page as home.html too and ignored case; this host doesn't.
+        redirects: {
+            'home.html': 'index.html',
+            'Initiatives.html': 'initiatives.html',
+            'Global1.html': 'global1.html',
+        },
+        replace: [
+            // Muse loads jQuery from Adobe's retired CDN on http pages; use its bundled copy.
+            ['http://musecdn.businesscatalyst.com/scripts/4.0/', 'scripts/'],
+            // Open Sans came from Adobe's Edge Web Fonts, which is gone (stripDeadServices drops
+            // its script). Google Fonts has the same typeface, under the name "Open Sans".
+            ['</head>', '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700&display=swap"/>\n</head>'],
+            ['open-sans, sans-serif', 'Open Sans, open-sans, sans-serif'],
+            // Muse loads RequireJS asynchronously, and the widgets' own libraries further down the page
+            // (the calendar's, the video gallery's) see its `define.amd` and register as RequireJS
+            // modules instead of globals, so the widgets find nothing and stay empty. Once RequireJS
+            // has run, only the scripts it loads itself are shown `define.amd`.
+            [
+                'onload="if (requirejs) requirejs.onError',
+                'onload="if (window.define && define.amd) (function (amd) { Object.defineProperty(define, \'amd\', { configurable: true, get: function () { ' +
+                    "var s = document.currentScript; return s && s.hasAttribute('data-requiremodule') ? amd : undefined; } }); })(define.amd); " +
+                    'if (requirejs) requirejs.onError',
+            ],
+            // Google Analytics: the loader is pointed at an empty script, so nothing is sent.
+            ["'//www.google-analytics.com/analytics.js','ga');", "'data:text/javascript,','ga');"],
+            // The header's Radio Show link went to the old site's radio page; this site has its own.
+            ['href="http://www.blackchamber.com/radioshow"', 'href="radio-show.static.html"'],
+            ['href="http://blackchamber.com"', 'href="index.static.html"'],
+            // Past events linked to side sites on the old domain that were never kept
+            // (docs/projects/black-chamber.md). Each goes to this site's page for the same event series.
+            ['href="http://blackchamber.com/BNBFundraiser/"', 'href="blacks-%E2%80%98n-business-blacks-%E2%80%98n-technology-awards-ceremony.static.html"'],
+            ['href="http://blackchamber.com/hackathon/"', 'href="bay-area-black-youth-tech-a-thon.static.html"'],
+            ['href="http://blackchamber.com/wearecodevrhackathon/"', 'href="bay-area-black-youth-tech-a-thon.static.html"'],
+            // The contact form posted to a PHP mail handler (not kept). It shows its "sent" state
+            // and sends nothing.
+            [
+                'function(elem) { return new WebPro.Widget.Form(elem, {',
+                'function(elem) { WebPro.Widget.Form.prototype._submitFormInternal = function () { var f = this.$element, o = this.options; ' +
+                    'f.addClass(o.formSubmittedClass); setTimeout(function () { f.removeClass(o.formSubmittedClass).addClass(o.formDeliveredClass); f[0].reset(); ' +
+                    "f.find('.' + o.notEmptyClass).removeClass(o.notEmptyClass); }, 400); }; return new WebPro.Widget.Form(elem, {",
+                'contact-us.html',
+            ],
+            // The video galleries' poster images were never in the export, so each slide shows its
+            // video's own YouTube thumbnail instead.
+            ...[
+                ['bib-flyer-front-2', ['FwJGxKuop28', 'e46fXl1KEHM', 'BqdLbUNMkqw']],
+                ['logos', ['uAAfqJyp_hc', 'S1NY1f3lmRg', 'H-rcHClUCkc']],
+            ].flatMap(([poster, videos]) =>
+                videos.map((video, i) => [`video_poster_${i + 1} = "assets/${poster}.jpg";`, `video_poster_${i + 1} = "https://i.ytimg.com/vi/${video}/hqdefault.jpg";`, 'video-collection.html']),
+            ),
+            // The media kit embedded the press release as a PDF that isn't in the export, and the
+            // script that embedded it replaced the whole page with it. The release is on the page as text.
+            ['var success = new PDFObject({ url: "assets/bytechpress.pdf" }).embed();', '', 'media-kit.html'],
+            ['<object data="assets/bytechpress.pdf" type="application/pdf" width="100%" height="100%">', '<div>', 'media-kit.html'],
+            ['</object>', '</div>', 'media-kit.html'],
+            [
+                "<p>It appears you don't have Adobe Reader or PDF support in this web browser.</p>",
+                '<p style="margin:12px auto;max-width:600px;padding:6px 10px;border-left:3px solid #c9a227;background:#faf6e8;color:#555;font:italic 12px/1.4 sans-serif">' +
+                    'Archived preview: the press release above was also embedded here as a PDF, and that file was not kept.</p>',
+                'media-kit.html',
+            ],
+            ['<a href="assets/bytechpress.pdf">Click here to download the PDF</a>', '', 'media-kit.html'],
+        ],
+    },
 ];
 
 // Never walked: the CMS admin is not part of the preview and is kept out of

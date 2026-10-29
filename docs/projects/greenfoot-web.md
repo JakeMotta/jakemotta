@@ -63,7 +63,7 @@ Each game's `index.html` is hand-written, like the CheerpJ ones: a poster and a 
 
 ## Fixing a game's own bugs
 
-Fix a bug that Greenfoot plays the same way only when Jake asks for it, as he did for NinjaDonut's on 2026-10-28 ([ninjadonut-game.md](ninjadonut-game.md#fixes)). The original files and jar stay as they are. Instead:
+Fix a bug that Greenfoot plays the same way only when Jake asks for it, as he did for NinjaDonut's on 2026-10-28 ([ninjadonut-game.md](ninjadonut-game.md#fixes)) and RandomChance's on 2026-10-29 ([randomchance.md](randomchance.md#fixes)). The original files and jar stay as they are. Instead:
 
 1. **Copy** each class's `.java` into `demos/greenfoot/fixes/<id>/`, unchanged.
 2. **Edit the copy.** Start the file with a line saying it's a fixed copy, and mark every change with a `FIXED:` comment that says what was wrong.

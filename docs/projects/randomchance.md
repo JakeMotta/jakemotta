@@ -24,21 +24,18 @@ From the classes, as they are:
 
 The game's debug prints (the hero's state, every act) go nowhere, as for every compiled game.
 
-### How it ends: the game's own crash
+### How it ends: game over
 
-When his life reaches 0, `Hero.damageHero` removes him from the world, but the rest of his `act` still runs, and `checkHealth` asks for touching objects while he's out of the world. Greenfoot throws `IllegalStateException: Actor not in world` there (checked in Greenfoot 2.1.2's `Actor` bytecode, which already had the check), stops the run and prints it in its terminal window. The compiled game does the same. The page shows its "The game stopped." box over the canvas with that message and the hint "Try reloading the page", and the browser console logs the error twice.
-
-That's the only end the game has, and it's the game's own bug, so it's left as Greenfoot played it. In headless Chrome the hero died after about two minutes, with over 50 kills. If Jake wants a proper ending, the fix would be a marked copy of `Hero.java` in `demos/greenfoot/fixes/randomchance/` that stops acting once he's removed ([greenfoot-web.md](greenfoot-web.md#fixing-a-games-own-bugs)), and perhaps a game-over message; nothing like that has been made.
-
-Smaller quirks, also left alone: `Villain.act` tests `if (outOfSpawn = false)` and `if (outOfSpawn = true)` (assignments), so villains skip their walk out of the portal and wander from the first act; the villains at the right portal are added at x = 800 and land on 799, the world's edge.
+When his life reaches 0, the hero is gone and the game stops with "Game over" in the middle of the arena. Start over begins a new game. That ending is the one fix made to the game (Fixes, below); until 2026-10-29 it ended in a crash.
 
 ## How it runs
 
-The way Coloris and NinjaDonut: The Game run ([greenfoot-web.md](greenfoot-web.md)): the game's own compiled classes, unchanged, compiled to JavaScript with TeaVM against the site's Greenfoot runtime. Nothing in the game or the runtime was changed for it.
+The way Coloris and NinjaDonut: The Game run ([greenfoot-web.md](greenfoot-web.md)): the game's own compiled classes, compiled to JavaScript with TeaVM against the site's Greenfoot runtime. Nothing in the runtime was changed for it; one class of the game was fixed, in `fixes.jar` (Fixes, below).
 
 - **`RandomChance/`** is the scenario folder, copied unchanged: `.java`, `.class` and `.ctxt` files, `project.greenfoot`, `README.TXT`, `images/` (Fireworks `.fw.png` files beside the GIFs), an empty `sounds/`, the Javadoc Greenfoot made for `Hero` in `doc/`, and `WorkingCopies/`. Nothing in it holds a password or key; `doc/logfile.txt` names the paths of Jake's old `E:` drive.
 - **`randomchance.jar`** (new, 2026-10-29) was packed by `yarn projects:greenfoot-pack public/projects/randomchance/RandomChance public/projects/randomchance/randomchance.jar RandomChance`: the 11 classes, `project.greenfoot`, the images, Coloris's Greenfoot 3.0.4 runtime, and `standalone.properties` starting `SurvivalWorld`. The build only reads the game's part.
-- **`web/`** is `yarn projects:greenfoot randomchance`'s output (`SurvivalWorld at speed 54, 31 images, 0 sounds`): a 190 KB game script, the shared host and the 30 images the game names, plus the Greenfoot logo. It's committed; don't edit it by hand.
+- **`fixes.jar`** (3 KB, 2026-10-29) holds the fixed `Hero` class; see Fixes. The build reads it ahead of `randomchance.jar`, so its class wins.
+- **`web/`** is `yarn projects:greenfoot randomchance`'s output, its `GAMES` entry reading `fixes.jar` and then `randomchance.jar` (`SurvivalWorld at speed 54, 31 images, 0 sounds`): a 190 KB game script, the shared host and the 30 images the game names, plus the Greenfoot logo. It's committed; don't edit it by hand.
 - **`index.html`** is NinjaDonut: The Game's page with this game's name, size (800×600, scaled down to fit), note and hint swapped in. Its Controls list says there are none.
 - **`poster.webp`** is the starting view (the hero, the portals, Life 100 and Kills 0), cut from a screenshot of the running game.
 
@@ -46,10 +43,19 @@ The way Coloris and NinjaDonut: The Game run ([greenfoot-web.md](greenfoot-web.m
 
 On 2026-10-29, in headless Chrome, first with the worktree's `public/` served as plain files, then again under the worktree's muted `yarn dev`:
 - **`yarn projects:greenfoot-check randomchance`:** ready 0.2–0.5 s after Play, 103 acts and 60 frames a second, the main thread 7–8% busy, no sounds, no errors.
-- **Watched for two minutes:** villains arrive about once a second, fights end in blood splats and kills, and Life and Kills count on the board (Life 6, Kills 51 just before the end). The hero then died and the game stopped with the error above.
+- **Watched for two minutes:** villains arrive about once a second, fights end in blood splats and kills, and Life and Kills count on the board (Life 6, Kills 51 just before the end). The hero then died and the game stopped with the error that the fix below took away.
 - **The buttons:** Pause stops it (the hero stays put), Start over builds a fresh world (the hero back at (200, 400), no villains) and stays paused, and Play carries on. The canvas keeps the focus.
 
 Not checked: the site's own viewer (`/project/randomchance`), a real phone, and invincibility on screen (it's random, 1 kill in 20).
+
+## Fixes
+
+On 2026-10-29 Jake asked for the game's crash at the hero's death to be fixed. It's a bug in the 2012 code, and Greenfoot plays it the same way, so this is the one place the game itself was changed. `RandomChance/` and `randomchance.jar` are untouched.
+
+- **What was wrong:** when his life reached 0, `Hero.damageHero` took him out of the world, but the rest of his `act` still ran, and `checkHealth` asked which objects were touching him. Greenfoot throws `IllegalStateException: Actor not in world` there (checked in Greenfoot 2.1.2's `Actor` bytecode, which already had the check) and stops. The page showed its "The game stopped." box over the canvas with that message and "Try reloading the page", and the console logged the error twice. His Life could also read below 0 for the act before.
+- **The fix:** `act` returns once he's out of the world. When he dies, his Life reads 0, a "Game over" text (the game's own `GameText`) goes in the middle of the arena, painted above everything else, and `Greenfoot.stop()` stops the game, as Greenfoot's Pause would, so the page's button turns to Play. Start over begins a new game; Play carries on without him, the villains still pouring in.
+- **Where:** the fixed copy is `demos/greenfoot/fixes/randomchance/Hero.java`, each change marked `FIXED:`, compiled into `fixes.jar` as [greenfoot-web.md](greenfoot-web.md#fixing-a-games-own-bugs) describes.
+- **Checked:** with `yarn projects:greenfoot-check randomchance --wait 300000` against a plain-file server of the worktree's `public/`, twice: the hero died after about one and two minutes (31 and 76 kills), "Game over" showed above the villains with Life 0, the game stopped, and there were no errors.
 
 ## Card image
 

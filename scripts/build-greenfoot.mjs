@@ -49,10 +49,11 @@ const GAMES = [
         id: 'ninjadonut-game',
         jars: ['fixes.jar', 'ninjadonut.jar'],
     },
-    // Assembled from the scenario in RandomChance/ (docs/projects/randomchance.md)
+    // Assembled from the scenario in RandomChance/; fixes.jar ends the game cleanly when the hero dies, from the
+    // source in demos/greenfoot/fixes/randomchance/ (docs/projects/randomchance.md)
     {
         id: 'randomchance',
-        jars: ['randomchance.jar'],
+        jars: ['fixes.jar', 'randomchance.jar'],
     },
     {
         // start-at-title.jar opens on the title instead of the town; closed-sign.jar skips text the town drew and

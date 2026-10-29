@@ -362,7 +362,7 @@ export const homeProjectList: HomeProject[] = [
     {
         id: 'black-chamber-2017',
         image: '/images/projects/black-chamber-2017.webp',
-        title: 'Black Chamber (2017)',
+        title: 'Black Chamber Redesign',
         date: '2017',
         category: 'website',
         tags: ['Website'],

@@ -1,4 +1,4 @@
-# Black Chamber (2017)
+# Black Chamber Redesign (2017)
 
 Jake's 2017 redesign of the Silicon Valley Black Chamber of Commerce site, built in Adobe Muse: about 36 pages of programs, services, events, sponsors, a media kit, a video gallery, a calendar and the chamber's radio show. It replaced the 2015 site ([black-chamber.md](black-chamber.md)), which has its own card. Jake approved showing it on 2026-10-29.
 

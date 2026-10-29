@@ -1,5 +1,5 @@
 import { Listen } from '../api/listenbrainz';
-import { musicList, MusicItemProps, welcomeTrack, youtubeSongs } from './constants';
+import { musicList, MusicItemProps, youtubeSongs } from './constants';
 import { youtubeThumbnail } from './youtube';
 
 /**
@@ -52,7 +52,7 @@ const withThumbnail = (track: MusicItemProps) => {
 };
 
 // Jake's own list wins when a track is in both, since its entries carry the full titles and notes
-const allTracks: MusicItemProps[] = [...musicList, welcomeTrack, ...youtubeSongs.map(withThumbnail)];
+const allTracks: MusicItemProps[] = [...musicList, ...youtubeSongs.map(withThumbnail)];
 
 // Every track the shuffle draws from, once each. The Spotify playlist's songs join it once the Worker sends them.
 const library = new Set(allTracks.map((track) => track.url));
@@ -88,4 +88,4 @@ export const addTracks = (tracks: MusicItemProps[], inLibrary: boolean) => {
 };
 
 /** The line under a track's title */
-export const trackByline = (track: MusicItemProps) => (track.artist ? track.artist : track.url === welcomeTrack.url ? 'The welcome track' : `Jake Motta · ${track.date}`);
+export const trackByline = (track: MusicItemProps) => track.artist || `Jake Motta · ${track.date}`;

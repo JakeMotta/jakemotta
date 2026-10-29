@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { addTracks, isStreamed, libraryUrls } from '../common/music';
-import { MusicItemProps, welcomeTrack } from '../common/constants';
+import { MusicItemProps } from '../common/constants';
 
 /** Whether the visitor has chosen yet: the board waits until they pick sound or silence */
 export type Entry = 'waiting' | 'sound' | 'silent';
@@ -36,7 +36,7 @@ interface AudioStore {
     playNext: () => void;
     // Restarts the track if it's a few seconds in, else goes back to the one before it
     playPrevious: () => void;
-    // Starts the welcome track when nothing has played yet
+    // Play or pause. With nothing loaded yet it plays the front of the shuffle; the board's buttons pick the first song themselves (store/first-song.ts).
     togglePlayback: () => void;
     setVolume: (volume: number) => void;
 }
@@ -143,7 +143,8 @@ export const useAudioStore = create<AudioStore>((set, get) => ({
     togglePlayback: () => {
         const { audioUrl, media, audioContext, setAudioUrl } = get();
         if (!audioUrl) {
-            setAudioUrl(welcomeTrack.url);
+            const first = get().shuffled[0];
+            if (first) setAudioUrl(first);
             return;
         }
         const current = media();

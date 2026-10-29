@@ -17,7 +17,7 @@ const monogram = (title: string) =>
               .join('')
               .slice(0, 3);
 
-/** A track's cover, or a monogram tile in the hue when it has none (the welcome track) */
+/** A track's cover, or a monogram tile in the hue when it has none (Dancin) */
 export const CoverArt = ({ track, className = '' }: CoverArtProps) =>
     track?.image ? (
         <img className={`cover-art ${className}`} src={track.image} alt="" decoding="async" />

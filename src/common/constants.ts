@@ -78,6 +78,13 @@ export const musicList: MusicItemProps[] = [
         date: '2016'
     },
     {
+        image: '',
+        title: 'Dancin',
+        description: '',
+        url: '/music/dancin.mp3',
+        date: '2016'
+    },
+    {
         image: '/images/music/hide_and_seek.jpg',
         title: 'Hide & Seek - Les Edit',
         description: '',
@@ -123,15 +130,6 @@ export const musicList: MusicItemProps[] = [
  *     { image: '', title: 'Song', artist: 'Artist', description: '', url: 'youtube:dQw4w9WgXcQ', date: '' },
  */
 export const youtubeSongs: MusicItemProps[] = [];
-
-/** What "Play with sound" starts on the board. It has no cover art, so it shows a monogram. */
-export const welcomeTrack: MusicItemProps = {
-    image: '',
-    title: 'Dancin',
-    description: '',
-    url: '/music/dancin.mp3',
-    date: '2016'
-}
 
 /** The board's Say hi tile, in this order. public/index.html lists the same profiles as the Person's sameAs. */
 export const socialLinks = [

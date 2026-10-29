@@ -4,7 +4,7 @@ Music plays across the whole site. The player sits outside the routes in `App.ts
 
 ## The library
 
-The tracks are the static array `musicList` in `src/common/constants.ts`, plus `welcomeTrack` (Dancin, what the board's "Play with sound" starts). The audio is in `public/music/` and the cover art in `public/images/music/`; a track with no `image` (the welcome track) shows a monogram in the hue. A track's `description` shows in the library's player and under the song in its list, so leave it empty rather than writing filler.
+The tracks are the static array `musicList` in `src/common/constants.ts`. Dancin was kept apart as `welcomeTrack`, what the board's "Play with sound" started, until 2026-10-29, when the first song became a random pick ([board.md](board.md#sound-or-silence)); it's in `musicList` with the rest now. The audio is in `public/music/` and the cover art in `public/images/music/`; a track with no `image` (Dancin) shows a monogram in the hue. A track's `description` shows in the library's player and under the song in its list, so leave it empty rather than writing filler.
 
 Songs from YouTube join them in the same shuffle ([Songs from YouTube](#songs-from-youtube)): `youtubeSongs` in `constants.ts`, and the songs on Jake's Spotify playlist once the listening Worker sends them.
 
@@ -33,7 +33,7 @@ State lives in `src/store/audio.ts` (zustand):
 | `setAudioUrl(url)` | Play this track now, and take it out of the shuffle so it doesn't come round again straight after; the shuffle carries on when it ends. If it's the track already loaded, it just resumes. |
 | `playNext()` | Next: the next shuffled track. Also called when a track ends. |
 | `playPrevious()` | More than 3 seconds in, restart the track; otherwise go back to the one before it, which puts the current track back at the front of the shuffle so Next returns to it. |
-| `togglePlayback()` | Play or pause. With nothing loaded yet, it starts the welcome track. |
+| `togglePlayback()` | Play or pause. With nothing loaded yet, it plays the front of the shuffle. The board's buttons don't rely on that: they call `playFirstSong()` (`store/first-song.ts`), which picks from Jake's songs, his recent listens and his playlist. |
 | `setVolume(volume)` | 0 to 1. |
 
 When the shuffle runs out, the whole library is shuffled again, leaving out the track that's playing so it can't play twice in a row. So music never stops on its own. There's no manual queue: Jake had the add-to-queue buttons and the Queued list taken out on 2026-10-27, so songs shuffle on their own and pressing play on one plays it now.

@@ -4,7 +4,8 @@ import { FiArrowUpRight, FiDownload } from 'react-icons/fi';
 import { MdPlayArrow } from 'react-icons/md';
 import { useAudioStore } from '../../../store/audio';
 import { useListeningStore } from '../../../store/listening';
-import { homeProjectList, socialLinks, welcomeTrack } from '../../../common/constants';
+import { playFirstSong } from '../../../store/first-song';
+import { homeProjectList, socialLinks } from '../../../common/constants';
 import { listenedAgo } from '../../../common/listening';
 import { findTrack, upNextTracks } from '../../../common/music';
 import { useReleases } from '../../../common/modpack';
@@ -68,9 +69,7 @@ export const HeroTile = () => {
 export const NowPlayingTile = forwardRef<HTMLElement>((_, ref) => {
     const entry = useAudioStore((store) => store.entry);
     const audioUrl = useAudioStore((store) => store.audioUrl);
-    const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
     const enterSilently = useAudioStore((store) => store.enterSilently);
-    const togglePlayback = useAudioStore((store) => store.togglePlayback);
     const track = findTrack(audioUrl);
 
     const libraryLink = <ExpandLink to='/library'>Library</ExpandLink>;
@@ -83,10 +82,10 @@ export const NowPlayingTile = forwardRef<HTMLElement>((_, ref) => {
                     <h2 className='tile-now__ask'>Let's kick it</h2>
                     <div className='tile-now__stage'>
                         <span className='disc disc--spin' aria-hidden>
-                            <span className='disc__label'>{welcomeTrack.title}</span>
+                            <span className='disc__label'>surprise</span>
                         </span>
                     </div>
-                    <button type='button' className='tile-now__go' onClick={() => setAudioUrl(welcomeTrack.url)}>
+                    <button type='button' className='tile-now__go' onClick={playFirstSong}>
                         <MdPlayArrow /> Play with sound
                     </button>
                     <button type='button' className='tile-now__lame' onClick={enterSilently}>
@@ -109,8 +108,8 @@ export const NowPlayingTile = forwardRef<HTMLElement>((_, ref) => {
                             <span className='disc__label'>shh</span>
                         </span>
                     </div>
-                    <p className='tile-now__why'>Change your mind any time. It starts with {welcomeTrack.title}.</p>
-                    <button type='button' className='tile-now__go' onClick={togglePlayback}>
+                    <p className='tile-now__why'>Change your mind any time. I'll pick the first song.</p>
+                    <button type='button' className='tile-now__go' onClick={playFirstSong}>
                         <MdPlayArrow /> Play some music
                     </button>
                 </>

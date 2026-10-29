@@ -70,7 +70,7 @@ Create React App (react-scripts 5) + TypeScript, React 19, react-router v7, Ant 
   - **Controls go through `media()`** in the store, never straight to `audioElement`, so they drive whichever player has the song.
   - **Ready ahead:** the player is made once the visitor is in and the browser is idle, kept invisible until a song's video starts, and always given the site's volume, since YouTube brings back a volume of its own when a video loads (2026-10-28).
   - **The video:** it shows where the cover would, over a `VideoSlot` (the player card's, or the floating player's when no card is in sight). A card's cover under 200×200 doesn't take it, so the board puts the floating player up for it beside the one-cell Now Playing tile (2026-10-29). It's never moved in the page, since moving an iframe reloads it; it's laid over the slot every frame instead.
-  - **YouTube's rules apply,** as for listen-along: always visible, never under 200×200. The exception is the hidden tab: since 2026-10-28 these songs play on there, as Jake chose, knowing YouTube's policies forbid it ([`docs/music.md`](docs/music.md#songs-from-youtube)). The vignette rests through these songs.
+  - **YouTube's rules apply,** as for listen-along: always visible, never under 200×200. The exception is the hidden tab: since 2026-10-28 these songs play on there, as Jake chose, knowing YouTube's policies forbid it ([`docs/music.md`](docs/music.md#songs-from-youtube)). The vignette rests through these songs; the eq bars dance to a made-up beat instead (2026-10-29).
 - `realtime-bpm-analyzer` and `react-use-audio-player` are installed but not used yet.
 
 **What Jake's listening to** (full spec in [`docs/listening.md`](docs/listening.md)). On the board as the "Recent listens" tile (`EarsTile`, in the cell that was "Surprise me"), whose Lately link opens the library on its Recent listens tab (`/library?tab=recent`). The separate `/listening` overlay was removed on 2026-10-27; that path now redirects to the tab.
@@ -136,7 +136,7 @@ Decisions Jake has made about the look. Follow them unless he says otherwise.
 **Direction: the Bento board**, built from the "2 · Bento" pages of the [jakemotta.com Layout Concepts canvas](https://claude.ai/artifact/Ppw6uZbYxKSoktKAXB6b4U). Jake picked it over five other layouts. Tile by tile it's described in [`docs/board.md`](docs/board.md); the rules that hold across it:
 
 - Desktop (1100px and up) is four columns by three rows, exactly one screen tall, with no page scroll. Tablets get two columns and phones one, and there the board scrolls.
-- Projects is the biggest tile, two cells across and two down; Now Playing and Recent listens are one cell each, stacked in one column (Jake, 2026-10-29). The tiles are in the page in the order a desktop reads them, row by row.
+- Projects is the biggest tile, two cells across and two down; Now Playing and Recent listens are one cell each, stacked in one column, and Say hi is written on the name tag rather than a tile of its own (Jake, 2026-10-29). The tiles are in the page in the order a desktop reads them, row by row.
 - A tile that does one thing is one link or button; a tile that holds several things is a `<section>` with a heading.
 - Opening a tile never leaves the board: it's an overlay route over it (see Architecture).
 - Before the visitor chooses sound or silence, only the Now Playing tile is live; the rest are dimmed and inert. The choice isn't remembered across reloads, since sound can't start without a click anyway.

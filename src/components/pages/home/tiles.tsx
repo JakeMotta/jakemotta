@@ -29,7 +29,10 @@ const TitleLink = ({ to, children }: { to: string; children: React.ReactNode }) 
     </Link>
 );
 
-/** A "HELLO my name is" sticker, tilted, whose corner peels up on hover */
+/**
+ * A "HELLO my name is" sticker, tilted, whose corner peels up on hover. Say hi, the links to Jake's
+ * profiles, is written on its right side (it was a tile of its own until 2026-10-29).
+ */
 export const HeroTile = () => {
     return (
         <section className='tile tile-hero' aria-labelledby='hero-name'>
@@ -38,14 +41,33 @@ export const HeroTile = () => {
                 <span className='tile-hero__my-name'>my name is</span>
             </div>
             <div className='tile-hero__body'>
-                <h1 id='hero-name' className='tile-hero__name'>
-                    Jake Motta
-                </h1>
-                <p className='tile-hero__tagline'>Some of my work throughout the years</p>
+                <div className='tile-hero__who'>
+                    <h1 id='hero-name' className='tile-hero__name'>
+                        Jake Motta
+                    </h1>
+                    <p className='tile-hero__tagline'>Some of my work throughout the years</p>
+                </div>
+                <SayHi />
             </div>
         </section>
     );
 };
+
+/** Jake's profiles (socialLinks), on the right of the name tag */
+const SayHi = () => (
+    <div className='tile-hi'>
+        <h2 className='tile-hi__title'>Say hi</h2>
+        <ul className='tile-hi__links'>
+            {socialLinks.map(({ label, url }) => (
+                <li key={label}>
+                    <a className='tile-hi__link' href={url} target='_blank' rel='noreferrer'>
+                        {label} <FiArrowUpRight />
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </div>
+);
 
 /**
  * The player, and before the visitor has chosen, the way in: browsers only allow sound after a
@@ -255,20 +277,3 @@ export const EarsTile = () => {
         </section>
     );
 };
-
-export const SayHiTile = () => (
-    <section className='tile tile-hi tile--shade' aria-labelledby='say-hi-title'>
-        <h2 id='say-hi-title' className='tile-hi__title'>
-            Say hi
-        </h2>
-        <ul className='tile-hi__links'>
-            {socialLinks.map(({ label, url }) => (
-                <li key={label}>
-                    <a className='tile-hi__link' href={url} target='_blank' rel='noreferrer'>
-                        {label} <FiArrowUpRight />
-                    </a>
-                </li>
-            ))}
-        </ul>
-    </section>
-);

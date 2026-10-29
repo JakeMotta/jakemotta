@@ -5,7 +5,7 @@ import { FloatingPlayer, useVideoStore } from '../../atoms';
 import { useAudioStore } from '../../../store/audio';
 import { useCommonStore } from '../../../store/common';
 import { usePageMeta } from '../../../common/seo';
-import { DevlogTile, EarsTile, FeaturedTile, HeroTile, ModpackTile, NowPlayingTile, ProjectsTile, SayHiTile } from './tiles';
+import { DevlogTile, EarsTile, FeaturedTile, HeroTile, ModpackTile, NowPlayingTile, ProjectsTile } from './tiles';
 import './index.scss';
 
 // The board on its own; any other path under it is an opened tile drawn over it
@@ -65,7 +65,6 @@ export const Home = () => {
                 <EarsTile />
                 <DevlogTile />
                 <ModpackTile />
-                <SayHiTile />
             </main>
 
             {/* The music, wherever the Now Playing tile is out of sight: behind an overlay, or scrolled away on a phone. It hides itself while nothing plays.

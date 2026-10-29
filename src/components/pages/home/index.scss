@@ -249,18 +249,14 @@ $phone: 639px;
         grid-row: 2;
     }
 
+    // Two cells down: the one Say hi had until it moved onto the name tag (2026-10-29)
     .tile-log {
         grid-column: 4;
-        grid-row: 2;
+        grid-row: 2 / span 2;
     }
 
     .tile-mc {
         grid-column: 3;
-        grid-row: 3;
-    }
-
-    .tile-hi {
-        grid-column: 4;
         grid-row: 3;
     }
 }
@@ -270,6 +266,11 @@ $phone: 639px;
     .tile-proj {
         grid-column: 1 / span 2;
     }
+
+    // Beside Recent listens and the modpack, so the last row has no gap
+    .tile-log {
+        grid-row: span 2;
+    }
 }
 
 // A "HELLO my name is" name tag: the only tile that rests tilted, with a corner that peels up on hover.
@@ -277,6 +278,7 @@ $phone: 639px;
 // into Projects under it, which lifts into the same gap on hover.
 .tile-hero {
     --tilt: 1deg;
+    container-type: inline-size;
     padding: 0;
     background: var(--color-primary-light);
     box-shadow: 0 6px 0 rgba(0, 0, 0, 0.18);
@@ -343,25 +345,38 @@ $phone: 639px;
         }
     }
 
-    // The name and tagline, written on the tag (the section links that sat beside them went on 2026-10-29)
+    // The name and tagline written on the tag, and Say hi on its right (on a phone, under them)
     &__body {
         display: flex;
         min-height: 0;
         flex: 1;
-        flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        gap: 24px;
         padding: 18px 22px 24px;
 
         @media (min-width: $desktop) {
-            padding: 10px 70px 18px 28px;
+            padding: 10px 44px 18px 28px;
+        }
+
+        @media (max-width: $phone) {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 16px;
         }
     }
 
-    // Written on the tag, a little crooked
+    &__who {
+        min-width: 0;
+        flex: 1;
+    }
+
+    // Written on the tag, a little crooked. As big as the room Say hi leaves it: the tag's width, less
+    // the links' column and the padding, over the name's width in ems.
     &__name {
         margin: 0;
         color: var(--color-primary-dark);
-        font-size: clamp(48px, 5.4vw, 78px);
+        font-size: clamp(40px, calc((100cqw - 250px) / 5.6), 74px);
+        white-space: nowrap;
         font-weight: 900;
         letter-spacing: -0.04em;
         line-height: 0.95;
@@ -466,10 +481,11 @@ $phone: 639px;
         }
     }
 
-    // One cell on a desktop and a tablet (2026-10-29); a phone keeps the full card. The cover goes small,
-    // beside the title and the seek slider, and the record peeks in from the edge. The cover is sized
-    // from the tile's own height (container units): whatever the head and the controls leave. On a
-    // desktop the rows share out the screen; on a tablet, where rows grow with their tiles, it's fixed.
+    // One cell on a desktop and a tablet (2026-10-29); a phone keeps the full card. Four rows, each
+    // whole: the header, the cover with the title and artist beside it, the seek slider across the
+    // tile, and the controls. The cover is sized from the tile's own height (container units): what
+    // the other three rows leave (122px with their gaps). On a desktop the rows share out the screen;
+    // on a tablet, where rows grow with their tiles, the tile is fixed at 300px.
     @media (min-width: $phone + 1) {
         container-type: size;
         gap: 8px;
@@ -480,14 +496,16 @@ $phone: 639px;
         }
 
         .player-card {
-            --cover: clamp(56px, calc(100cqh - 104px), 45cqw);
+            --cover: clamp(48px, calc(100cqh - 122px), 42cqw);
             display: grid;
+            align-content: space-between;
             gap: 8px 14px;
             grid-template-columns: var(--cover) minmax(0, 1fr);
-            grid-template-rows: auto minmax(0, 1fr) auto auto;
+            grid-template-rows: 30px var(--cover) 20px 48px;
         }
 
         .player-card__head,
+        .player-card .range-slider,
         .player-card__controls {
             grid-column: 1 / -1;
         }
@@ -497,26 +515,40 @@ $phone: 639px;
             white-space: nowrap;
         }
 
+        .player-card__head .tile-expand {
+            min-height: 30px;
+            margin-right: -10px;
+            padding: 0 10px;
+        }
+
+        .player-card .range-slider {
+            height: 20px;
+        }
+
         // The transport stays centred until a narrow tile pushes it left, so it never runs into the volume
         .player-card__controls {
             grid-template-columns: minmax(0, 1fr) auto minmax(44px, 1fr);
         }
 
+        // A song from YouTube's cover is a slot for its video, which is never under 200×200; this one
+        // is smaller, so the video goes to the floating player and the slot is just the cover
         .player-card__cover,
         .player-card__cover.video-slot {
             width: var(--cover);
             height: var(--cover);
+            min-width: 0;
             min-height: 0;
+            max-height: none;
             flex: none;
-            align-self: center;
             grid-column: 1;
-            grid-row: 2 / span 2;
+            grid-row: 2;
             border-radius: 12px;
         }
 
         .player-card__about {
-            min-height: 0;
-            align-self: end;
+            min-width: 0;
+            max-height: 100%;
+            align-self: center;
             overflow: hidden;
         }
 
@@ -525,13 +557,11 @@ $phone: 639px;
         }
 
         .player-card__byline {
+            overflow: hidden;
             margin-top: 2px;
             font-size: 13px;
-        }
-
-        .player-card .range-slider {
-            grid-column: 2;
-            grid-row: 3;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .player-card__transport.transport {
@@ -1016,31 +1046,47 @@ $phone: 639px;
     }
 }
 
+// Say hi, on the name tag: a small heading over the profile links, each on its own ruled line
 .tile-hi {
-    --tilt: 1.6deg;
-    justify-content: space-between;
-    gap: 12px;
+    width: 150px;
+    flex: none;
+
+    @media (max-width: $phone) {
+        width: auto;
+    }
 
     &__title {
-        font-size: 34px;
+        margin: 0 0 4px !important;
+        font-size: 12px;
         font-weight: 900;
-        letter-spacing: -0.03em;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
     }
 
     &__links {
         margin: 0;
         padding: 0;
         list-style: none;
+
+        // Side by side on a phone, under the name, clear of the tag's peeling corner
+        @media (max-width: $phone) {
+            display: grid;
+            justify-content: space-between;
+            margin-right: 34px;
+            gap: 10px;
+            grid-template-columns: repeat(3, auto);
+        }
     }
 
     &__link {
         display: flex;
-        min-height: 44px;
+        min-height: 32px;
         align-items: center;
         justify-content: space-between;
+        gap: 6px;
         border-bottom: 2px solid var(--color-primary-ink);
         color: var(--color-primary-ink);
-        font-size: 17px;
+        font-size: 15px;
         font-weight: 900;
         text-decoration: none;
         transition: padding 0.3s $spring;
@@ -1048,6 +1094,11 @@ $phone: 639px;
         &:hover {
             padding-left: 6px;
             color: var(--color-primary-ink);
+        }
+
+        @media (max-width: $phone) {
+            min-height: 40px;
+            font-size: 14px;
         }
     }
 }

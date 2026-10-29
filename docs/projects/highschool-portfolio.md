@@ -9,7 +9,9 @@ Jake's 2012 portfolio from the end of Coalinga High School, "Hello World!", with
 
 ## Preview
 
-`oldSite/index.html` runs as-is, and the card frames it.
+The card frames `oldSite/index.static.html`, which `yarn projects:convert` writes from `oldSite/index.html` with one fix, since 2026-10-28: the skyline scrolls again.
+- **Why it stopped:** jQuery Spritely (`jquery.spritely-0.6.1.js`) took `window.Touch` to mean an iPhone, which only iPhones had in 2012. Every browser has it now, so its iPhone path ran for the bird sprite the page doesn't have, threw, and the clouds and the two city layers never started panning.
+- **The fix:** the copy loads `jquery.spritely-0.6.1.static.js`, whose touch check also wants a touch screen and an element. It's the highschool entry's last literal fix in `scripts/convert-php-sites.mjs`, limited to `oldSite/` (a fix's third entry names the folder it applies to).
 - Its "Previous site layout" link goes to `oldSite/OldSite/OldSite.html`.
 - The Greenfoot Pokémon page it links is an export without its jar, so it doesn't run. The working game is its own card ([greenfoot-pokemon.md](greenfoot-pokemon.md)).
 - Its three JotForm embeds are `http://` scripts: they load in dev, but the https site blocks them.
@@ -21,4 +23,4 @@ The page and the layout before it show Jake's old phone number and email, and li
 
 ## Card image
 
-`public/images/projects/highschool-portfolio.webp`, the top of the page with the skyline. The card shows on the board itself, so its shot hides the contact line (its `run` in the `SHOTS` list) and the phone number and email don't end up in the image. The page keeps them.
+`public/images/projects/highschool-portfolio.webp`, the top of the fixed copy with the skyline. The card shows on the board itself, so its shot hides the contact line (its `run` in the `SHOTS` list) and the phone number and email don't end up in the image. The page keeps them.

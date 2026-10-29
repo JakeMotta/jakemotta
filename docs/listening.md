@@ -50,7 +50,7 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
   - **YouTube Music plays** play as their own video, with no Worker.
   - **Spotify plays and top songs** play through the Worker's match, so their buttons show only once it answers.
   - **Albums and artists** never get a button.
-- **The library's Favorite artists** (`pages/music/favorites.ts`, since 2026-10-28) are the all-time top artists from here, or a count of the latest plays while ListenBrainz hasn't counted them. Each plays the artist's most-played recent song by the same rules ([music.md](music.md#playback-and-the-shuffle)).
+- **The library's Favorite artists** (`pages/music/favorites.ts`, since 2026-10-28) come from Spotify's long-term top artists through the Worker ([Top artists](#top-artists)). Only when the Worker can't say are they the all-time top artists from here, or a count of the latest plays while ListenBrainz hasn't counted them. Each plays the artist's top song by the same rules ([music.md](music.md#playback-and-the-shuffle)).
 - **Times are relative** ("3h ago"), never clock times, which would say when Jake sleeps.
 
 ## Listen along
@@ -62,14 +62,15 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
 - **`GET /api/listening/playlist`:** the songs on Jake's Spotify playlist (`SPOTIFY_PLAYLIST` in `wrangler.toml`), which the site's player deals into its shuffle.
   - **Reading it:** it uses Spotify's `GET /playlists/{id}/items`, which since February 2026 returns a playlist's songs only to its owner or a collaborator. A private playlist needs the `playlist-read-private` scope, which `scripts/spotify-auth.mjs` asks for.
   - **Caching:** the list is kept in KV, and cached, for 10 minutes. Local files and podcasts are left out, and so is anything in `HIDDEN`.
+- **`GET /api/listening/top-artists`:** Jake's top artists on Spotify, for the library's Favorite artists ([Top artists](#top-artists)).
 - **`GET /api/listening/match?spotify=<track id>`** or **`?artist=<artist>&title=<title>`:** the YouTube copy of one of Jake's songs, `{ youtube: { videoId, synced } | null }`, for the site's player.
-  - **Only Jake's songs (`src/songs.js`):** the playlist, his last 100 ListenBrainz plays and his top 100 songs for each range (`LISTENBRAINZ_USER`). Anything else is refused with a 404 before YouTube is searched, so nobody can spend the day's search quota on other songs.
+  - **Only Jake's songs (`src/songs.js`):** the playlist, his 50 top songs on Spotify (the Favorite artists' songs), his last 100 ListenBrainz plays and his top 100 songs for each range (`LISTENBRAINZ_USER`). Anything else is refused with a 404 before YouTube is searched, so nobody can spend the day's search quota on other songs.
   - **Keeping the list:** it's kept in KV for 10 minutes. A song that isn't in it rebuilds it, at most once a minute, in case it was only just played.
   - **Matching and caching:** the same as listen-along's (below), with the same KV entries for Spotify songs. A song known only by name has no length to check, so it gets the best embeddable video. Answers are cached for an hour.
 - **`GET /api/listening/now`:** what Jake's Spotify is playing, with `progressMs`, `isPlaying` and `fetchedAt` (the Worker's clock when Spotify answered). A visitor's position in the song is `progressMs` plus the time since `fetchedAt`.
 - **`?youtube=1`** adds `youtube: { videoId, synced }`, the YouTube copy. It's `null` when none was found.
 - **Caching:** answers are cached for 5 seconds, so Spotify is asked at most once per 5 seconds per Cloudflare location, however many visitors are listening.
-- **Spotify:** only the `user-read-currently-playing` and `playlist-read-private` scopes. The access token is kept in KV for its hour, and if Spotify ever rotates the refresh token, the new one is stored in KV and replaces the secret.
+- **Spotify:** only the `user-read-currently-playing`, `playlist-read-private` and `user-top-read` scopes (the last since 2026-10-28, for the top artists). The access token is kept in KV for its hour, and if Spotify ever rotates the refresh token, the new one is stored in KV and replaces the secret.
 - **The sign-in lasts 180 days.** Spotify's dashboard gives the app ("Personal Site") a refresh-token lifetime of 180 days. When it runs out, `/now` and `/playlist` fail until the `spotify-auth.mjs` step in [Setup](#setup) is run again.
 - **Matching (`src/youtube.js`):**
   - It searches the YouTube Data API for "first artist + title" among embeddable music videos, then checks each result's length and whether it may be embedded.
@@ -79,6 +80,17 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
 - **`HIDDEN`** in `wrangler.toml` lists artists, or "artist - title", never to play on the site: not for listen-along, not from the playlist, not through a match. They still show on ListenBrainz and in the card, since that data is public anyway.
 - **Tests:** `yarn test` in `workers/listening` runs the Worker in Node with Spotify, YouTube, ListenBrainz and KV faked.
 - **Locally:** `yarn dev` in `workers/listening` runs it on port 8787, with the secrets in a gitignored `.dev.vars`. `src/setupProxy.js` makes the site's own `yarn dev` pass `/api/listening` through to it. Without the Worker running, listen-along simply stays hidden.
+
+### Top artists
+
+`GET /api/listening/top-artists` answers `{ artists: [{ name, image, url, song? }] }`: Jake's 50 most-played artists on Spotify, most played first, for the library's Favorite artists (since 2026-10-28). Jake asked for them to come from as much of his history as there is, and ListenBrainz only had two days of plays.
+
+- **Where from:** Spotify's `GET /me/top/artists` and `/me/top/tracks` with `time_range=long_term`, Spotify's longest range (about a year of plays and more). Each artist's `song` is their highest-ranked song among his 50 top songs, in the playlist's shape, and those songs join the list `/match` accepts.
+- **Caching:** both lists are kept in KV for a day (`top-artists`, `top-tracks`), and answers are cached for 6 hours. `HIDDEN` artists and songs are left out.
+- **The scope:** it needs `user-top-read`, which `scripts/spotify-auth.mjs` asks for since 2026-10-28. A refresh token from before that gets a 403, the route answers 502, and the site falls back to ListenBrainz.
+- **Turning it on (not done yet):** deploy the Worker, then sign in again with the new scope:
+  - run the `spotify-auth.mjs` step in [Setup](#setup) again;
+  - then delete the old token from KV, which otherwise wins over the secret: `npx wrangler kv key delete --binding LISTENING --remote spotify:refresh_token`, and the same for `spotify:access_token`.
 
 ### The player
 

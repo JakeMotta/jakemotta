@@ -60,9 +60,9 @@ A preview has to run in the browser with no server code: the host is static, and
   - links between the listed pages pointed at each other's copies;
   - libraries loaded over `http://` switched to https;
   - Ruffle added wherever there's Flash;
-  - the site's literal `replace` fixes.
+  - the site's literal `replace` fixes. A fix with a third entry applies only under that folder of the site, for a site folder that holds more than one project (`highschool/`).
 
-  Personal Site, Dan James and JAKE's Index work this way; the card's `preview` names the `.static.html` page.
+  Personal Site, Dan James, JAKE's Index and the High School Portfolio work this way; the card's `preview` names the `.static.html` page.
 - **One project, one card:** a folder that holds several sites or games (`motorsport/`, `highschool/`, `cs134/`) gives each its own card, framing that project's own page. Don't put a hub page in front of them; Jake asked on 2026-10-27 for every project to be its own card. Hubs that front one project's parts, like Ambii Business's three apps, are fine. Each part gets its own address one step in (Hub pages, below). Collections of small works in one category (Flash, Pivot, Sketchbook) stay one card each, as Jake decided the same day.
 - **Galleries and videos:** work that was never a website (animations, drawings, a film, loose Flash movies) gets a hand-written page in its own folder: Pivot, Sketchbook, Escaping Confinement, Flash.
   - **Files:** keep the original files where browsers can show them (GIFs), and convert where they can't (TIFF to JPEG, MPEG to H.264 MP4). Each project's page says which originals were used and what was left out.
@@ -112,6 +112,8 @@ Card images are screenshots of each running preview, taken by `yarn projects:scr
 yarn projects:screenshot              # every project
 yarn projects:screenshot cs160 ambii  # just these
 ```
+
+**After a deploy, Cloudflare can keep the old image for a week** (see Deployment in `CLAUDE.md`). So a card image retaken after it was deployed gets its `image` in `constants.ts` bumped to `?v=<n>` (`/images/projects/coloris.webp?v=2`), and the cards ask for the new copy. On 2026-10-28 five cards were still showing their old shots that way, Coloris, isGuy and Pokémon with their Play buttons, though the server had the new ones.
 
 Look at each image after taking it. A shot can catch a page mid-load, and a fixed-width site can leave wide empty margins or get cut off; adjust its `settle` or `width` and take it again.
 

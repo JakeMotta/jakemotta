@@ -840,7 +840,7 @@ $phone: 639px;
     }
 }
 
-// Recent listens: the song he has on (atoms/now-playing, compact) and the few before it
+// Recent listens: the song he has on (atoms/now-playing, compact) and the plays before it
 .tile-ears {
     --tilt: -1deg;
     gap: 10px;
@@ -860,25 +860,26 @@ $phone: 639px;
         box-shadow: none;
     }
 
-    // On a desktop the eight rows fill the rest of the tile as two even columns of four, across its
-    // two cells. The padding leaves room for the focus rings.
+    // The last 100 plays; the tile keeps its size and the list scrolls, like Up next. On a desktop they
+    // run in two columns across its two cells. The padding leaves room for the focus rings.
     &__before {
         display: flex;
         min-height: 0;
+        max-height: 320px;
         flex-direction: column;
         margin: -4px -8px 0;
-        overflow: hidden;
+        overflow-y: auto;
         padding: 4px 8px 6px;
         list-style: none;
 
         @media (min-width: $desktop) {
             display: grid;
+            max-height: none;
             flex: 1 1 0;
+            align-content: start;
             column-gap: 24px;
-            grid-auto-flow: column;
+            grid-auto-rows: 28px;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            // Down to 22px, so all four still fit on a screen about 840px tall
-            grid-template-rows: repeat(4, minmax(22px, 1fr));
         }
 
         li {
@@ -891,9 +892,9 @@ $phone: 639px;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        // The first of the second column starts a column, so it has no line over it
+        // The second starts the second column, so it has no line over it
         @media (min-width: $desktop) {
-            li:nth-child(5) {
+            li:nth-child(2) {
                 border-top: 0;
             }
         }

@@ -6,7 +6,7 @@ import { useAudioStore } from '../../../store/audio';
 import { useListeningStore } from '../../../store/listening';
 import { homeProjectList, socialLinks, welcomeTrack } from '../../../common/constants';
 import { listenedAgo } from '../../../common/listening';
-import { findTrack } from '../../../common/music';
+import { findTrack, upNextTracks } from '../../../common/music';
 import { useReleases } from '../../../common/modpack';
 import { CoverArt, NowPlaying, PixelCube, PlayerCard, ProjectImage, sourceName, useNowListening } from '../../atoms';
 
@@ -140,9 +140,9 @@ export const FeaturedTile = () => {
     );
 };
 
-/** What plays next: every song left in the shuffle, scrolling inside the tile */
+/** What plays next: the next ten songs in the shuffle, scrolling inside the tile */
 export const UpNextTile = () => {
-    const upNext = useAudioStore((store) => store.shuffled);
+    const upNext = upNextTracks(useAudioStore((store) => store.shuffled));
     const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
 
     return (
@@ -154,19 +154,15 @@ export const UpNextTile = () => {
                 <ExpandLink to='/library'>All songs</ExpandLink>
             </div>
             <ol className='tile-next__list'>
-                {upNext.map((url) => {
-                    const track = findTrack(url);
-                    if (!track) return null;
-                    return (
-                        <li key={url}>
-                            <button type='button' className='tile-next__row' onClick={() => setAudioUrl(url)}>
-                                <CoverArt track={track} className='tile-next__cover' />
-                                <span className='tile-next__name'>{track.title}</span>
-                                <span className='tile-next__year'>{track.date}</span>
-                            </button>
-                        </li>
-                    );
-                })}
+                {upNext.map((track) => (
+                    <li key={track.url}>
+                        <button type='button' className='tile-next__row' onClick={() => setAudioUrl(track.url)}>
+                            <CoverArt track={track} className='tile-next__cover' />
+                            <span className='tile-next__name'>{track.title}</span>
+                            <span className='tile-next__year'>{track.date}</span>
+                        </button>
+                    </li>
+                ))}
             </ol>
         </section>
     );
@@ -218,8 +214,9 @@ export const ModpackTile = () => {
 
 /**
  * What Jake has on, from ListenBrainz (docs/listening.md): the song playing now, or else the last
- * one, then the few before it. Lately opens the rest. On a desktop it takes two cells, the one that
- * held Favorite artists until 2026-10-27 included (those live on in the library's tab).
+ * one, then the plays before it (the last 100), scrolling inside the tile. Lately opens the top lists.
+ * On a desktop it takes two cells, the one that held Favorite artists until 2026-10-27 included
+ * (those live on in the library's tab).
  */
 export const EarsTile = () => {
     const { listen } = useNowListening();
@@ -228,8 +225,8 @@ export const EarsTile = () => {
     const loaded = useListeningStore((store) => store.loaded);
     // The card shows the last play when nothing's playing, so the list starts after it
     const from = playingNow ? 0 : 1;
-    // Eight: on a desktop the tile spans two cells and lists them in two even columns of four
-    const before = recent.slice(from, from + 8);
+    // Every play the store has, which is the last 100 (getRecentListens)
+    const before = recent.slice(from);
 
     return (
         <section className='tile tile-ears tile--light' aria-labelledby='ears-title'>

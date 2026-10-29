@@ -20,10 +20,13 @@
         visibility: visible;
     }
 
+    // A pixel past the frame on every side, so the frame's rounded clip, over black, is the edge that
+    // shows as it turns with a tile, never the frame's own edge
     iframe {
         display: block;
-        width: 100%;
-        height: 100%;
+        width: calc(100% + 2px);
+        height: calc(100% + 2px);
+        margin: -1px;
         border: 0;
     }
 }

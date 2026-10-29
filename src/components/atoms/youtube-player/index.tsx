@@ -63,6 +63,27 @@ const pickSlot = () => {
     return cards.find(({ share }) => share >= 0.5)?.slot ?? slots.find(({ kind }) => kind === 'floating') ?? cards.find(({ share }) => share > 0)?.slot;
 };
 
+// How far the slot is turned on screen. The board's tiles lean on hover (--tilt), and the video leans
+// with its tile rather than sitting square over a cover that's turned under it.
+const angleOf = (element: HTMLElement) => {
+    let angle = 0;
+    for (let node: HTMLElement | null = element; node && node !== document.body; node = node.parentElement) {
+        const transform = getComputedStyle(node).transform;
+        if (transform === 'none') continue;
+        const matrix = new DOMMatrix(transform);
+        angle += Math.atan2(matrix.b, matrix.a);
+    }
+    return angle;
+};
+
+// The size of a box turned by `angle` whose bounding box is `rect`, as it shows (any scale included)
+const turnedSize = (rect: DOMRect, angle: number) => {
+    const cos = Math.abs(Math.cos(angle));
+    const sin = Math.abs(Math.sin(angle));
+    const det = cos * cos - sin * sin;
+    return { width: (rect.width * cos - rect.height * sin) / det, height: (rect.height * cos - rect.width * sin) / det };
+};
+
 // The volume cards open over the cover. Wherever one overlaps the video, the video leaves a hole
 // for it, as if the card were on top.
 const OPEN_VOLUME = '.volume-control--open .volume-control__card, .volume-control:hover .volume-control__card, .volume-control:focus-within .volume-control__card';
@@ -296,18 +317,23 @@ export const YouTubePlayer = () => {
             let y = window.innerHeight - EDGE - MIN_SIZE;
             let width = MIN_SIZE;
             let height = MIN_SIZE;
+            let angle = 0;
             if (slot) {
+                // The slot's own size, turned to match it. Its bounding box is bigger than it while its tile
+                // leans, so the square video stuck out past the cover, and shimmered at the edges as it grew.
                 const rect = slot.element.getBoundingClientRect();
-                width = Math.max(rect.width, MIN_SIZE);
-                height = Math.max(rect.height, MIN_SIZE);
-                x = rect.left - (width - rect.width) / 2;
-                y = rect.top - (height - rect.height) / 2;
+                angle = angleOf(slot.element);
+                const size = turnedSize(rect, angle);
+                width = Math.max(size.width, MIN_SIZE);
+                height = Math.max(size.height, MIN_SIZE);
+                x = rect.left + rect.width / 2 - width / 2;
+                y = rect.top + rect.height / 2 - height / 2;
             }
             const clip = clipAround(x, y, width, height);
-            const next = `${x}|${y}|${width}|${height}|${radius}|${clip}`;
+            const next = `${x}|${y}|${width}|${height}|${angle}|${radius}|${clip}`;
             if (next === last) return;
             last = next;
-            element.style.transform = `translate(${x}px, ${y}px)`;
+            element.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad)`;
             element.style.width = `${width}px`;
             element.style.height = `${height}px`;
             element.style.borderRadius = radius;

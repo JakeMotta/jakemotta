@@ -61,6 +61,16 @@ export const libraryUrls = () => Array.from(library);
 
 export const findTrack = (url: string | undefined): MusicItemProps | undefined => allTracks.find((track) => track.url === url);
 
+// How many songs "Up next" lists, on the board and in the library: the shuffle holds the whole library
+const UP_NEXT_SHOWN = 10;
+
+/** The next few songs in the shuffle, as tracks */
+export const upNextTracks = (shuffled: string[]) =>
+    shuffled
+        .map(findTrack)
+        .filter((track): track is MusicItemProps => !!track)
+        .slice(0, UP_NEXT_SHOWN);
+
 /**
  * Makes tracks from elsewhere known to the player: the Spotify playlist's songs, or a play picked
  * from Recent listens. With `inLibrary` they join the shuffle too. Returns the ones that were new to it.

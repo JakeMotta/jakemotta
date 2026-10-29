@@ -5,7 +5,7 @@ import { CoverArt, Lately, ListenCover, MusicRow, NowPlaying, PlayerCard } from 
 import { useAudioStore } from '../../../store/audio';
 import { useListenAlongStore } from '../../../store/listen-along';
 import { musicList, MusicItemProps, youtubeSongs } from '../../../common/constants';
-import { findTrack, listenUrl, songUrl, streamedTrack } from '../../../common/music';
+import { findTrack, listenUrl, songUrl, streamedTrack, upNextTracks } from '../../../common/music';
 import { useFavoriteArtists } from './favorites';
 import './index.scss';
 
@@ -24,7 +24,7 @@ export const MusicLibrary = () => {
     const isPlaying = useAudioStore((store) => store.isPlaying);
     const track = findTrack(audioUrl);
     const { setAudioUrl, playTrack, togglePlayback } = useAudioStore.getState();
-    const upNext = useAudioStore((store) => store.shuffled);
+    const upNext = upNextTracks(useAudioStore((store) => store.shuffled));
     // The songs that play from YouTube: Jake's picks, then his Spotify playlist's once the Worker sends them
     const spotifyPlaylist = useAudioStore((store) => store.playlist);
     const playlist = [...youtubeSongs.map((song) => findTrack(song.url) ?? song), ...spotifyPlaylist];
@@ -91,19 +91,15 @@ export const MusicLibrary = () => {
 
                 <h3 className='library__next-title'>Up next</h3>
                 <ol className='library__next'>
-                    {upNext.map((url) => {
-                        const next = findTrack(url);
-                        if (!next) return null;
-                        return (
-                            <li key={url}>
-                                <button type='button' className='library__next-row' onClick={() => setAudioUrl(url)}>
-                                    <CoverArt track={next} className='library__next-cover' />
-                                    <span className='library__next-name'>{next.title}</span>
-                                    <span className='library__next-year'>{next.date}</span>
-                                </button>
-                            </li>
-                        );
-                    })}
+                    {upNext.map((next) => (
+                        <li key={next.url}>
+                            <button type='button' className='library__next-row' onClick={() => setAudioUrl(next.url)}>
+                                <CoverArt track={next} className='library__next-cover' />
+                                <span className='library__next-name'>{next.title}</span>
+                                <span className='library__next-year'>{next.date}</span>
+                            </button>
+                        </li>
+                    ))}
                 </ol>
             </div>
 

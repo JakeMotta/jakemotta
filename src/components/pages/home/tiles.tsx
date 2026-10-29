@@ -153,7 +153,7 @@ export const DevlogTile = () => {
     );
 };
 
-/** Every project but the featured one, as small screenshots that scroll inside the tile */
+/** Every project but the featured one, as screenshots that scroll inside the tile; four cells on a desktop */
 export const ProjectsTile = () => (
     <section id='projects' className='tile tile-proj tile--shade' aria-labelledby='projects-title'>
         <div className='tile-proj__head tile-head'>
@@ -200,8 +200,7 @@ export const ModpackTile = () => {
 /**
  * What Jake has on, from ListenBrainz (docs/listening.md): the song playing now, or else the last
  * one, then the plays before it (the last 100), scrolling inside the tile. Lately opens the top lists.
- * On a desktop it takes two cells, the one that held Favorite artists until 2026-10-27 included
- * (those live on in the library's tab).
+ * One cell, under Now Playing, since 2026-10-29 (it was two across until the projects grew).
  */
 export const EarsTile = () => {
     const { listen } = useNowListening();

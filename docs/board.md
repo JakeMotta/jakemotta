@@ -7,7 +7,7 @@ The whole site is one bento board: `src/components/pages/home`, at `/` and `/hom
 | Width | Grid | Scrolls? |
 | --- | --- | --- |
 | 1100px and up | 4 columns × 3 rows, exactly one screen tall. Rows stop shrinking at 220px, so a very short window scrolls. | No |
-| 640–1099px | 2 columns, rows at least 250px | Yes |
+| 640–1099px | 2 columns, rows at least 250px. Hero and Projects take both columns; Now Playing is 300px tall, and Projects stops at 560px and scrolls inside. | Yes |
 | Under 640px | 1 column | Yes |
 
 On a desktop the tiles sit like this:
@@ -15,18 +15,24 @@ On a desktop the tiles sit like this:
 | | Column 1 | Column 2 | Column 3 | Column 4 |
 | --- | --- | --- | --- | --- |
 | Row 1 | Hero | Hero | Now Playing | Featured project |
-| Row 2 | Projects | Projects | Now Playing | Dev log |
-| Row 3 | Modpack | Recent listens | Recent listens | Say hi |
+| Row 2 | Projects | Projects | Recent listens | Dev log |
+| Row 3 | Projects | Projects | Modpack | Say hi |
+
+Jake had the music made smaller and the projects bigger on 2026-10-29: Projects grew from two cells to four (two across, two down), and Now Playing and Recent listens went down to one cell each, one above the other, so the music keeps to one column. Until then Now Playing took two cells down and Recent listens two across.
+
+The tiles come in that order in the page (`pages/home/index.tsx`), row by row as a desktop reads them, so keyboard focus follows the board and a tablet or phone stacks them the same way.
 
 ## The tiles
 
 - **Hero** (`HeroTile`): a "HELLO my name is" name tag. A band in ink says HELLO, then the name is written on the pale tag, a little crooked, over the one-line tagline. It held links to Music, Projects, Minecraft and Dev log too, until Jake had them taken out on 2026-10-29: each has its own tile. It's the only tile that rests tilted, and its bottom-right corner peels up on hover. It's drawn at 96% (97% on hover) with a 6px shadow, so the tilt stays inside its cell instead of reaching into Projects below (2026-10-28). Jake picked it on 2026-10-28 from three ideas in the [current-site canvas](https://claude.ai/artifact/Bq5BT6oGzdfkUWyEYK8HWf) (the other two, a marquee poster and letters hopping to the beat, are still there), to make the hero unlike the rest of the site. It holds the page's only `<h1>`.
 - **Now Playing** (`NowPlayingTile`): the player. Cover, title, byline, a seek slider, previous/play/next, and at the bottom right a speaker button whose vertical volume slider shows on hover, plus **Library ↗** in the header. It also holds the sound-or-silence choice (below), and when the visitor chose silence it offers to start some music, with a random first song like **Play with sound**.
+  - **One cell, on a desktop and a tablet** (since 2026-10-29). The `PlayerCard` is laid out compact there: the cover small on the left, the title, byline and seek slider beside it, the controls across the bottom. The tile is a size container, so the cover takes whatever height the header and the controls leave (`100cqh` less theirs), between 56px and 45% of the tile's width. That's about 90px on a 1440×780 window and 150px on 1920×950. Before the choice, and after silence, the record sits half out of the tile behind the words, top right while it waits and on the right edge after silence. A phone keeps the full card, with its big square cover.
+  - **A song from YouTube** can't show its video in a cover that small, since YouTube's player is never under 200×200 and grown past the cover it would hide the controls. So the floating player comes up beside the tile and holds the video, while the tile keeps the cover and the controls ([music.md](music.md#songs-from-youtube)).
 - **Featured project** (`FeaturedTile`): the first entry in `homeProjectList`, which is the newest, marked "Newest". The whole tile links to its viewer.
 - **Dev log** (`DevlogTile`): the dev log's newest post (its date and title), a small code frequency chart of Jake's weeks of code (the same `CodeFrequency` as the dev log's, without dates or hover numbers), and his commit and GitHub contribution counts. The whole tile links to `/devlog`. It took the cell of **Up next** (the next ten songs in the shuffle) on 2026-10-29, as Jake asked; the next songs are still in the library, beside its player.
-- **Projects** (`ProjectsTile`): every other project as a small 4:3 screenshot with its name and year, each linking to its viewer. The screenshots scroll inside the tile once there are more than fit; **All *n* ↗** opens all of them. On a phone the board grows with its tiles, so this one stops at 300px and scrolls inside (since 2026-10-28; it used to make the page thousands of pixels long).
-- **Modpack** (`ModpackTile`): "Minecraft Modpack". Links to `/minecraft`, and shows the latest version from `releases.json`. Its pixel cube is 44px, the size of the featured tile's arrow button, in the same corner.
-- **Recent listens** (`EarsTile`, two cells wide on a desktop): what Jake is listening to on Spotify, from ListenBrainz. It shows the song playing now (or the last one, "Played 40m ago") as a card that links to it, then the plays before it: the last 100, in two columns on a desktop, scrolling inside the tile (Jake, 2026-10-28; until then it was eight, in two columns of four). **Lately ↗** opens the library on its Recent listens tab (`/library?tab=recent`). It took the cell of **Surprise me** (a random-track button), which Jake removed on 2026-10-26; the placement came from the [Listening Tile Placement canvas](https://claude.ai/artifact/JvNbfMdMFpPAmT4A1rWdgW). How it works: [listening.md](listening.md).
+- **Projects** (`ProjectsTile`, four cells on a desktop, two across and two down): every other project as a 4:3 screenshot with its name and year, each linking to its viewer. The screenshots are at least 190px wide, as many columns as fit (three on a laptop, four on a wide screen; five small ones until 2026-10-29, when the tile grew). They scroll inside the tile once there are more than fit; **All *n* ↗** opens all of them. On a phone the board grows with its tiles, so this one stops at 300px and scrolls inside (since 2026-10-28; it used to make the page thousands of pixels long), and on a tablet at 560px.
+- **Modpack** (`ModpackTile`): "Minecraft Modpack". Links to `/minecraft`, and shows the latest version from `releases.json`. Its pixel cube is 44px, the size of the featured tile's arrow button, in the same corner. It sits under Recent listens since 2026-10-29 (bottom left until then).
+- **Recent listens** (`EarsTile`, one cell, under Now Playing): what Jake is listening to on Spotify, from ListenBrainz. It shows the song playing now (or the last one, "Played 40m ago") as a card that links to it, then the plays before it: the last 100, in one column, scrolling inside the tile (Jake, 2026-10-28; until then it was eight, in two columns of four). It was two cells wide, with the plays in two columns, until 2026-10-29. **Lately ↗** opens the library on its Recent listens tab (`/library?tab=recent`). It took the cell of **Surprise me** (a random-track button), which Jake removed on 2026-10-26; the placement came from the [Listening Tile Placement canvas](https://claude.ai/artifact/JvNbfMdMFpPAmT4A1rWdgW). How it works: [listening.md](listening.md).
 - **Say hi** (`SayHiTile`): links to Jake's profiles (`socialLinks` in `common/constants.ts`): GitHub, LinkedIn and Instagram.
 
 ### Opening a tile

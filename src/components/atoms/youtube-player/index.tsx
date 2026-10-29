@@ -18,8 +18,11 @@ type SlotKind = 'card' | 'floating';
 // The places the video can show, newest last: the player cards' covers, and the floating player's
 const slots: { element: HTMLElement; kind: SlotKind }[] = [];
 
-/** Whether the video is showing in the floating player, which only shows its slot then */
-export const useVideoStore = create<{ inFloating: boolean }>(() => ({ inFloating: false }));
+/**
+ * Whether the video is showing in the floating player, which only shows its slot then, and whether
+ * no card in sight can hold it, so the board puts the floating player up for it
+ */
+export const useVideoStore = create<{ inFloating: boolean; needsFloating: boolean }>(() => ({ inFloating: false, needsFloating: false }));
 
 /**
  * Where the video shows while a song plays from YouTube: in place of the cover. The video itself
@@ -55,12 +58,15 @@ const shareInView = (rect: DOMRect) => {
 
 // The card the visitor can see (the newest, so the library's beats the board's under it), else the
 // floating player, else whatever card is partly in view. The board's card behind an overlay is inert.
+// A card's cover smaller than 200×200 doesn't count: the video would grow past it, over the card's
+// own controls. The board's one-cell Now Playing tile is, on a desktop or a tablet (docs/board.md).
 const pickSlot = () => {
     const cards = slots
-        .filter(({ kind, element }) => kind === 'card' && !element.closest('[inert]'))
+        .filter(({ kind, element }) => kind === 'card' && !element.closest('[inert]') && element.offsetWidth >= MIN_SIZE && element.offsetHeight >= MIN_SIZE)
         .reverse()
         .map((slot) => ({ slot, share: shareInView(slot.element.getBoundingClientRect()) }));
-    return cards.find(({ share }) => share >= 0.5)?.slot ?? slots.find(({ kind }) => kind === 'floating') ?? cards.find(({ share }) => share > 0)?.slot;
+    const card = cards.find(({ share }) => share >= 0.5)?.slot;
+    return { slot: card ?? slots.find(({ kind }) => kind === 'floating') ?? cards.find(({ share }) => share > 0)?.slot, needsFloating: !card };
 };
 
 // How far the slot is turned on screen. The board's tiles lean on hover (--tilt), and the video leans
@@ -294,7 +300,7 @@ export const YouTubePlayer = () => {
     // visualizer. Under 200×200 it grows past the slot, centred on it.
     useEffect(() => {
         if (!streamed) {
-            useVideoStore.setState({ inFloating: false });
+            useVideoStore.setState({ inFloating: false, needsFloating: false });
             return;
         }
         let frame = 0;
@@ -305,9 +311,10 @@ export const YouTubePlayer = () => {
             frame = requestAnimationFrame(place);
             const element = frameRef.current;
             if (!element) return;
-            const slot = pickSlot();
+            const { slot, needsFloating } = pickSlot();
             const inFloating = slot?.kind === 'floating';
-            if (inFloating !== useVideoStore.getState().inFloating) useVideoStore.setState({ inFloating });
+            const video = useVideoStore.getState();
+            if (inFloating !== video.inFloating || needsFloating !== video.needsFloating) useVideoStore.setState({ inFloating, needsFloating });
             if (slot?.element !== lastSlot) {
                 lastSlot = slot?.element;
                 radius = slot ? getComputedStyle(slot.element).borderRadius : '16px';

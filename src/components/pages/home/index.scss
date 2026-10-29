@@ -226,9 +226,10 @@ $phone: 639px;
         grid-row: 1;
     }
 
+    // One cell since 2026-10-29, when Jake had the music made smaller and the projects bigger
     .tile-now {
         grid-column: 3;
-        grid-row: 1 / span 2;
+        grid-row: 1;
     }
 
     .tile-feat {
@@ -236,24 +237,25 @@ $phone: 639px;
         grid-row: 1;
     }
 
+    // Four cells: two across, two down
+    .tile-proj {
+        grid-column: 1 / span 2;
+        grid-row: 2 / span 2;
+    }
+
+    // Under Now Playing, so the music stays in one column
+    .tile-ears {
+        grid-column: 3;
+        grid-row: 2;
+    }
+
     .tile-log {
         grid-column: 4;
         grid-row: 2;
     }
 
-    .tile-proj {
-        grid-column: 1 / span 2;
-        grid-row: 2;
-    }
-
     .tile-mc {
-        grid-column: 1;
-        grid-row: 3;
-    }
-
-    // Two cells: its own and the one Favorite artists had
-    .tile-ears {
-        grid-column: 2 / span 2;
+        grid-column: 3;
         grid-row: 3;
     }
 
@@ -267,10 +269,6 @@ $phone: 639px;
     .tile-hero,
     .tile-proj {
         grid-column: 1 / span 2;
-    }
-
-    .tile-now {
-        grid-row: span 2;
     }
 }
 
@@ -465,6 +463,139 @@ $phone: 639px;
             .tile-now__lame-hover {
                 display: inline;
             }
+        }
+    }
+
+    // One cell on a desktop and a tablet (2026-10-29); a phone keeps the full card. The cover goes small,
+    // beside the title and the seek slider, and the record peeks in from the edge. The cover is sized
+    // from the tile's own height (container units): whatever the head and the controls leave. On a
+    // desktop the rows share out the screen; on a tablet, where rows grow with their tiles, it's fixed.
+    @media (min-width: $phone + 1) {
+        container-type: size;
+        gap: 8px;
+        padding: 18px;
+
+        @media (max-width: $desktop - 1) {
+            height: 300px;
+        }
+
+        .player-card {
+            --cover: clamp(56px, calc(100cqh - 104px), 45cqw);
+            display: grid;
+            gap: 8px 14px;
+            grid-template-columns: var(--cover) minmax(0, 1fr);
+            grid-template-rows: auto minmax(0, 1fr) auto auto;
+        }
+
+        .player-card__head,
+        .player-card__controls {
+            grid-column: 1 / -1;
+        }
+
+        .player-card__eyebrow {
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+        }
+
+        // The transport stays centred until a narrow tile pushes it left, so it never runs into the volume
+        .player-card__controls {
+            grid-template-columns: minmax(0, 1fr) auto minmax(44px, 1fr);
+        }
+
+        .player-card__cover,
+        .player-card__cover.video-slot {
+            width: var(--cover);
+            height: var(--cover);
+            min-height: 0;
+            flex: none;
+            align-self: center;
+            grid-column: 1;
+            grid-row: 2 / span 2;
+            border-radius: 12px;
+        }
+
+        .player-card__about {
+            min-height: 0;
+            align-self: end;
+            overflow: hidden;
+        }
+
+        .player-card__title {
+            font-size: 18px;
+        }
+
+        .player-card__byline {
+            margin-top: 2px;
+            font-size: 13px;
+        }
+
+        .player-card .range-slider {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        .player-card__transport.transport {
+            gap: 12px;
+
+            .transport__play {
+                width: 48px;
+                height: 48px;
+                font-size: 28px;
+            }
+        }
+
+        // The record sits half out of the tile, behind the words and buttons: top right while it
+        // waits for the choice, on the right edge after silence (the Library link has the corner)
+        .tile-now__stage {
+            position: absolute;
+            top: -46px;
+            right: -46px;
+            min-height: 0;
+            pointer-events: none;
+        }
+
+        .tile-now__head + .tile-now__stage {
+            top: 50%;
+            right: -44px;
+            transform: translateY(-58%);
+        }
+
+        .disc {
+            width: 150px;
+            height: 150px;
+        }
+
+        .disc__label {
+            width: 60px;
+            height: 60px;
+            font-size: 13px;
+        }
+
+        .tile-now__ask {
+            position: relative;
+            max-width: calc(100% - 90px);
+            font-size: 30px;
+        }
+
+        .tile-now__why {
+            position: relative;
+            max-width: calc(100% - 96px);
+            font-size: 14px;
+        }
+
+        .tile-now__go,
+        .tile-now__lame {
+            position: relative;
+        }
+
+        .tile-now__go {
+            height: 52px;
+            margin-top: auto;
+            font-size: 17px;
+        }
+
+        .tile-now__lame {
+            height: 42px;
         }
     }
 }
@@ -677,13 +808,20 @@ $phone: 639px;
         overflow-y: auto;
         overscroll-behavior: contain;
         padding: 6px 6px 8px;
-        gap: 14px;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 18px 16px;
+        // As many columns of big screenshots as fit: three on a laptop, four on a wide screen
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
         list-style: none;
 
         @media (max-width: $phone) {
+            gap: 14px;
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+    }
+
+    // On a tablet the board grows with its tiles, so the projects stop at two rows' worth and scroll inside
+    @media (min-width: $phone + 1) and (max-width: $desktop - 1) {
+        max-height: 560px;
     }
 
     // On a phone the board grows with its tiles, so the projects stop at 300px and scroll inside
@@ -699,7 +837,7 @@ $phone: 639px;
     flex-direction: column;
     gap: 6px;
     color: var(--color-primary-ink);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 800;
     text-decoration: none;
     transition: transform 0.35s $spring;
@@ -802,8 +940,7 @@ $phone: 639px;
         box-shadow: none;
     }
 
-    // The last 100 plays; the tile keeps its size and the list scrolls. On a desktop they
-    // run in two columns across its two cells. The padding leaves room for the focus rings.
+    // The last 100 plays; the tile keeps its size and the list scrolls. The padding leaves room for the focus rings.
     &__before {
         display: flex;
         min-height: 0;
@@ -815,30 +952,19 @@ $phone: 639px;
         list-style: none;
 
         @media (min-width: $desktop) {
-            display: grid;
             max-height: none;
             flex: 1 1 0;
-            align-content: start;
-            column-gap: 24px;
-            grid-auto-rows: 28px;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
         li {
             display: flex;
             min-width: 0;
+            flex: none;
             align-items: center;
         }
 
         li + li {
             border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        // The second starts the second column, so it has no line over it
-        @media (min-width: $desktop) {
-            li:nth-child(2) {
-                border-top: 0;
-            }
         }
 
         a,
@@ -853,10 +979,6 @@ $phone: 639px;
             font-size: 13px;
             font-weight: 600;
             text-decoration: none;
-
-            @media (min-width: $desktop) {
-                min-height: 22px;
-            }
         }
 
         a {

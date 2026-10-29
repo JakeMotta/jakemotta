@@ -47,7 +47,7 @@ export const PlayerCard = ({ action, titleTo, className = '' }: PlayerCardProps)
             </div>
             {/* A song from YouTube shows its video where the cover goes */}
             {isStreamed(audioUrl) ? <VideoSlot track={track} className='player-card__cover' /> : <CoverArt track={track} className='player-card__cover' />}
-            <div>
+            <div className='player-card__about'>
                 <h2 className='player-card__title'>{track ? track.title : 'Pick a song'}</h2>
                 {track && <p className='player-card__byline'>{trackByline(track)}</p>}
             </div>

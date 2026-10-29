@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiArrowUpRight, FiDownload } from 'react-icons/fi';
+import { FiAlertTriangle, FiArrowUpRight, FiDownload } from 'react-icons/fi';
 import { BentoOverlay, OverlayHeader } from '../../templates';
 import { PixelCube } from '../../atoms';
 import { formatDate, formatSize, PACK_DIR, useReleases } from '../../../common/modpack';
 import './index.scss';
+
+/** The install and update steps as a file to keep, matching the two tiles below */
+const GUIDE = `${PACK_DIR}/Install-and-Update.md`;
 
 /**
  * The modpack tile opened: the Progression Survival download page, laid out as a board of its own.
@@ -23,6 +26,14 @@ export const Minecraft = () => {
             () => setCopyState('copied'),
             () => setCopyState('failed'),
         );
+    };
+
+    // Scrolls to the update steps without putting a hash in the address, which would add a history entry for Back to undo
+    const jumpToUpdate = (event: React.MouseEvent) => {
+        event.preventDefault();
+        const heading = document.getElementById('modpack-update');
+        heading?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+        heading?.focus({ preventScroll: true });
     };
 
     return (
@@ -72,8 +83,15 @@ export const Minecraft = () => {
 
                 <section className='modpack__tile modpack__tile--install' aria-labelledby='modpack-install'>
                     <h3 id='modpack-install' className='modpack__eyebrow'>
-                        Install
+                        First-time install
                     </h3>
+                    <p className='modpack__aside'>
+                        Already playing?{' '}
+                        <a href='#modpack-update' onClick={jumpToUpdate}>
+                            Update an existing pack
+                        </a>{' '}
+                        instead.
+                    </p>
                     <ol className='modpack__steps'>
                         <li>
                             Install{' '}
@@ -96,10 +114,61 @@ export const Minecraft = () => {
                         </li>
                     </ol>
                     <p className='modpack__callout'>Launch the imported instance itself. Copying the mods into another Minecraft profile won't work.</p>
+                    <a className='modpack__file' href={GUIDE} download>
+                        <FiDownload /> Save these steps
+                    </a>
                     <p className='modpack__hosting'>
                         <b>Hosting your own server?</b> The same <code>.mrpack</code> works with server tools that can install from one. Set <code>difficulty=hard</code> in{' '}
                         <code>server.properties</code> to play it as intended.
                     </p>
+                </section>
+
+                {/* Its warning comes before any step, since deleting the old instance is what loses a player's settings */}
+                <section className='modpack__tile modpack__tile--updating' aria-labelledby='modpack-update'>
+                    <h3 id='modpack-update' className='modpack__eyebrow' tabIndex={-1}>
+                        Update an existing pack
+                    </h3>
+                    <div className='modpack__warning' role='note'>
+                        <FiAlertTriangle aria-hidden />
+                        <p>
+                            <b>Keep your old Prism instance.</b> Don't uninstall or delete it until the new version works and your settings have been transferred.
+                        </p>
+                    </div>
+                    <p>
+                        The pack doesn't update itself. A new version is a separate instance that starts on Minecraft's default settings until you bring yours across. Your progress
+                        on the server stays there.
+                    </p>
+                    <ol className='modpack__steps'>
+                        <li>Close Minecraft completely.</li>
+                        <li>
+                            Back up the old instance: select it in Prism, choose <b>Copy…</b>, tick <b>Select all</b> and confirm.
+                        </li>
+                        <li>
+                            Download the new version and import it with <b>Add Instance → Import</b>, as its own instance. Leave the old one as it is.
+                        </li>
+                        <li>
+                            For each instance, select it and click <b>Folder</b>, then open its game folder, called <code>minecraft</code> or <code>.minecraft</code>.
+                        </li>
+                        <li>
+                            Copy <code>options.txt</code> from the old game folder into the new one. If the new one already has one, rename that to <code>options.txt.bak</code> first.
+                            This brings your FOV, GUI scale, sound, mouse sensitivity and key binds.
+                        </li>
+                        <li>Launch the new instance, check your settings, join the server and make sure your progress is there. New or changed mods can still need a tweak.</li>
+                        <li>Once it all works, you can remove the old instance, or keep it as a backup.</li>
+                    </ol>
+                    <p className='modpack__aside'>
+                        <b>Worth bringing too:</b> <code>servers.dat</code> keeps your saved servers. If you have single-player worlds, resource packs, shaders or screenshots, copy{' '}
+                        <code>saves</code>, <code>resourcepacks</code>, <code>shaderpacks</code> or <code>screenshots</code> across as well. Don't copy the old <code>config</code> or{' '}
+                        <code>mods</code> folders: they can undo the new version's settings or bring back mods it replaced. And leave the instance's Minecraft and NeoForge versions
+                        alone; the pack sets them.
+                    </p>
+                    <p className='modpack__callout'>
+                        <b>Settings reset already?</b> If the old instance is still there, close Minecraft and copy its <code>options.txt</code> across as above. If it's been deleted,
+                        look in your Recycle Bin and any backups for it. Reinstalling the pack won't bring your settings back.
+                    </p>
+                    <a className='modpack__file' href={GUIDE} download>
+                        <FiDownload /> Save these steps
+                    </a>
                 </section>
 
                 <section className='modpack__tile modpack__tile--playing' aria-labelledby='modpack-playing'>
@@ -125,18 +194,6 @@ export const Minecraft = () => {
                         You can craft higher-tier gear early; you can't wear or use it until you unlock it. Sharing materials is fine, but task credit is personal. Players within 32 blocks
                         share credit for clearing a dungeon.
                     </p>
-                </section>
-
-                <section className='modpack__tile modpack__tile--updating' aria-labelledby='modpack-updating'>
-                    <h3 id='modpack-updating' className='modpack__eyebrow'>
-                        Updating
-                    </h3>
-                    <p>The pack doesn't update itself. When a new version shows up here:</p>
-                    <ol className='modpack__steps'>
-                        <li>Download it and import it into Prism as a new instance.</li>
-                        <li>Play on the new instance. Keep the old one until you've checked the new one works, then delete it.</li>
-                    </ol>
-                    <p>Your progress lives on the server, so a new instance picks up right where you left off.</p>
                 </section>
 
                 <section className='modpack__tile modpack__tile--older' aria-labelledby='modpack-older'>

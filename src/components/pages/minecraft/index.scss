@@ -40,8 +40,9 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         min-height: 0;
         flex: 1;
         gap: 14px;
-        grid-template-columns: 1.25fr 1.1fr 1fr 1fr;
-        grid-template-rows: repeat(2, minmax(0, 1fr));
+        // Download, install and update take a column each; Playing sits over the older releases in the last
+        grid-template-columns: 1.1fr 1.05fr 1.45fr 0.9fr;
+        grid-template-rows: minmax(0, 1fr) auto;
 
         @media (max-width: 1099px) {
             flex: none;
@@ -113,15 +114,20 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         &--playing {
             --tilt: -1deg;
             border: 3px solid var(--color-primary-ink);
-
-            @media (min-width: 1100px) {
-                grid-row: 1 / span 2;
-            }
         }
 
         &--updating {
             --tilt: 1deg;
             background: rgba(0, 0, 0, 0.12);
+
+            // The jump from the install tile stops with the tile's padding still showing
+            h3 {
+                scroll-margin-top: 20px;
+            }
+
+            @media (min-width: 1100px) {
+                grid-row: 1 / span 2;
+            }
         }
 
         // The releases before the latest, each with its pack and notes
@@ -191,6 +197,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             background: var(--color-primary-light);
             color: var(--color-primary-ink);
             font-size: 16px;
+            white-space: nowrap;
 
             &:hover {
                 color: var(--color-primary-ink);
@@ -281,6 +288,44 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         padding: 10px 12px;
         border-radius: 12px;
         background: var(--color-primary);
+    }
+
+    // The update tile's first word, before any step: keep the old instance
+    &__warning {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: var(--color-primary-ink);
+        color: var(--color-primary-light);
+        font-size: 15px;
+        font-weight: 800;
+
+        // .modpack p would hand the text the tile's ink, the same as this box
+        p {
+            color: var(--color-primary-light);
+        }
+
+        svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+    }
+
+    // A side note in smaller type: the jump to the update steps, and what else to bring across
+    &__aside {
+        font-size: 13px;
+    }
+
+    // The steps as a file to keep, quieter than the download buttons
+    &__file {
+        display: inline-flex;
+        align-items: center;
+        align-self: flex-start;
+        gap: 6px;
+        font-size: 13px;
     }
 
     // For the odd visitor running a server rather than joining one, kept to the foot of the Install tile

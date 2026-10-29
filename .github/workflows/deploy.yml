@@ -245,9 +245,10 @@ jobs:
             # The same goes for the modpack's release pointers: going from
             # 1.0.0-rc.1 to 1.0.0-rc.2 changes them without changing their
             # length. The versioned archives they point at are new paths and
-            # need no help.
+            # need no help. The install and update guide is rewritten in place
+            # too.
             packs="${target%/}/downloads/progression-survival/"
-            for file in releases.json latest.json .htaccess; do
+            for file in releases.json latest.json .htaccess Install-and-Update.md; do
               printf "put -O %s ./build/downloads/progression-survival/%s\n" "$packs" "$file"
             done
 

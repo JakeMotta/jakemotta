@@ -28,8 +28,13 @@ const SITE_DIR = `/downloads/${SLUG}`;
 const OUT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'downloads', SLUG);
 
 // Anything matching these inside an archive is a world, player state, an admin
-// list or a secret, none of which may reach a public download.
-const PRIVATE_ENTRY = /(^|\/)(level\.dat|playerdata|advancements|stats|region|jake-progress\.json|locked-armor-returns\.json|empty-server-clock\.json|ops\.json|banned-[a-z]+\.json|whitelist\.json|usercache\.json|server\.properties|launcher_[a-z_]+\.json|logs|crash-reports|backups?)(\/|$)|preview-unlock|\.log$/i;
+// list or a secret, none of which may reach a public download. That includes a
+// player's own client files: options.txt (and OptiFine's and Iris's copies),
+// the saved server list, single-player saves, screenshots and launcher
+// accounts. A pack that shipped options.txt would overwrite every player's
+// settings with the builder's.
+const PRIVATE_ENTRY =
+    /(^|\/)(level\.dat|playerdata|advancements|stats|region|jake-progress\.json|locked-armor-returns\.json|empty-server-clock\.json|ops\.json|banned-[a-z]+\.json|whitelist\.json|usercache\.json|server\.properties|launcher_[a-z_]+\.json|logs|crash-reports|backups?|options(of|shaders)?\.txt|servers\.dat(_old)?|saves|screenshots|accounts\.json|\.env)(\/|$)|preview-unlock|\.log$/i;
 
 const fail = (message) => {
     console.error(`release-modpack: ${message}`);

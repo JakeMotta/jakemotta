@@ -14,12 +14,12 @@ The card frames `oldSite/index.static.html`, which `yarn projects:convert` write
 - **The fix:** the copy loads `jquery.spritely-0.6.1.static.js`, whose touch check also wants a touch screen and an element. It's the highschool entry's last literal fix in `scripts/convert-php-sites.mjs`, limited to `oldSite/` (a fix's third entry names the folder it applies to).
 - Its "Previous site layout" link goes to `oldSite/OldSite/OldSite.html`.
 - The Greenfoot Pokémon page it links is an export without its jar, so it doesn't run. The working game is its own card ([greenfoot-pokemon.md](greenfoot-pokemon.md)).
-- Its three JotForm embeds are `http://` scripts: they load in dev, but the https site blocks them.
+- Its three JotForm embeds were deleted at JotForm, so they showed its "missing form" page (and the https site blocked their `http://` scripts anyway). Since 2026-10-29 the copy has none: the language poll beside the résumé link is gone, and the comment box and five-star rating are look-alikes that submit nowhere ([README.md](README.md#how-previews-run)).
 - `highschool/inventory/` is a Java class exercise, source only, and isn't linked from either card.
 
 ## Things to know
 
-The page and the layout before it show Jake's old phone number and email, and link `Resume.pdf`. The same page is also in NinjaDonut's copy, at `ninja-donut/Pages/Students/JakeMotta/`. Both were in the repo, and deployed, before this card was added. On 2026-10-26 Jake chose to leave the contact details, the résumé link and the JotForm embeds as they are, so don't strip them from the preview.
+The page and the layout before it show Jake's old phone number and email, and link `Resume.pdf`. The same page is also in NinjaDonut's copy, at `ninja-donut/Pages/Students/JakeMotta/`, which the converter writes as `index.static.html` with the same forms (NinjaDonut's student page links that). Both were in the repo, and deployed, before this card was added. On 2026-10-26 Jake chose to leave the contact details and the résumé link as they are, so don't strip them from the preview.
 
 ## Card image
 

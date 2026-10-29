@@ -171,7 +171,7 @@ contact me if you have any questions, comments, or would just like to give a fri
 </div>
 
 <div id="languageVote">
-<script type="text/javascript" src="http://form.jotform.us/jsform/21562389538160"></script>
+
 </div>
 
 
@@ -258,7 +258,16 @@ Below are my stunning ... Facebook pictures. Enjoy.
 
 <h3>Leave a comment! Tell me what you think, start a conversation, ask me to lunch.</h3>
 <div align="center">
-<script type="text/javascript" src="http://form.jotform.us/jsform/21510138934145"></script>
+<style>
+#jf-21510138934145 { box-sizing: border-box; width: 460px; max-width: 100%; margin: 12px auto; padding: 0; text-align: center; font: 13px Verdana, Geneva, sans-serif; }
+#jf-21510138934145 textarea { box-sizing: border-box; display: block; width: 100%; height: 220px; margin: 0 0 14px; padding: 6px; border: 1px solid #ccc; border-radius: 0; background: #fff; box-shadow: inset 0 1px 2px #ddd; color: #000; font: 13px Verdana, Geneva, sans-serif; resize: vertical; }
+#jf-21510138934145 .jf-submit { margin: 0; padding: 6px 16px; border: 1px solid #aaa; border-radius: 3px; background: linear-gradient(#fdfdfd, #e3e3e3); color: #333; font: 13px Verdana, Geneva, sans-serif; cursor: pointer; }
+#jf-21510138934145 .jf-submit:hover { background: linear-gradient(#fff, #d6d6d6); }
+</style>
+<form id="jf-21510138934145" onsubmit="return false" novalidate>
+    <textarea aria-label="Comment"></textarea>
+    <button type="button" class="jf-submit">Submit</button>
+</form>
 </div>
 <br />
 <br />
@@ -278,7 +287,41 @@ Rate my site! Let me know how I'm doing so far. Give me your feedback and commen
 </p>
 <div id="rate">
 <div align="center">
-<script type="text/javascript" src="http://form.jotform.us/jsform/21578602597160"></script>
+<style>
+#jf-21578602597160 { margin: 12px auto; padding: 0; text-align: center; font: 13px Verdana, Geneva, sans-serif; }
+#jf-21578602597160 .jf-stars { display: inline-flex; gap: 4px; margin: 0 0 14px; padding: 0; border: 0; }
+#jf-21578602597160 .jf-star { width: 34px; height: 34px; margin: 0; padding: 0; border: 0; background: none; color: #c8c8c8; cursor: pointer; }
+#jf-21578602597160 .jf-star svg { display: block; width: 100%; height: 100%; fill: currentColor; stroke: #8a6d00; stroke-width: 0.6; }
+#jf-21578602597160 .jf-star.jf-on { color: #ffc800; }
+#jf-21578602597160 .jf-submit { display: block; margin: 0 auto; padding: 6px 16px; border: 1px solid #aaa; border-radius: 3px; background: linear-gradient(#fdfdfd, #e3e3e3); color: #333; font: 13px Verdana, Geneva, sans-serif; cursor: pointer; }
+#jf-21578602597160 .jf-submit:hover { background: linear-gradient(#fff, #d6d6d6); }
+</style>
+<form id="jf-21578602597160" onsubmit="return false" novalidate>
+    <div class="jf-stars" role="radiogroup" aria-label="Rating">
+        <button type="button" class="jf-star" aria-label="1 star"><svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5L7 14.3l-5.3-5 7.2-.9z"/></svg></button>
+        <button type="button" class="jf-star" aria-label="2 stars"><svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5L7 14.3l-5.3-5 7.2-.9z"/></svg></button>
+        <button type="button" class="jf-star" aria-label="3 stars"><svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5L7 14.3l-5.3-5 7.2-.9z"/></svg></button>
+        <button type="button" class="jf-star" aria-label="4 stars"><svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5L7 14.3l-5.3-5 7.2-.9z"/></svg></button>
+        <button type="button" class="jf-star" aria-label="5 stars"><svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5L7 14.3l-5.3-5 7.2-.9z"/></svg></button>
+    </div>
+    <button type="button" class="jf-submit">Submit</button>
+</form>
+<script>
+(function () {
+    var stars = document.querySelectorAll('#jf-21578602597160 .jf-star');
+    var picked = 0;
+    var show = function (n) {
+        for (var i = 0; i < stars.length; i++) stars[i].className = 'jf-star' + (i < n ? ' jf-on' : '');
+    };
+    for (var i = 0; i < stars.length; i++) {
+        (function (n) {
+            stars[n - 1].onmouseover = function () { show(n); };
+            stars[n - 1].onmouseout = function () { show(picked); };
+            stars[n - 1].onclick = function () { picked = n; show(n); };
+        })(i + 1);
+    }
+})();
+</script>
 </div>
 </div>
 

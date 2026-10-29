@@ -93,7 +93,12 @@ Every game with a desktop build has a Download button in the viewer, from the en
 Four games have none. TapSlayDie isn't out on the App Store or Google Play yet (its site says "Coming soon"); link the store pages once it is. Psycho is a web page and runs here. Rebound and NinjaDonut: The Game were never exported from Greenfoot. The jars assembled for their builds (`rebound/java/rebound.jar`, `ninjadonut-game/ninjadonut.jar`) haven't been tried on a desktop ([rebound.md](rebound.md), [ninjadonut-game.md](ninjadonut-game.md)). The deploy compares files by size only, so a rebuilt download needs a new name, or an explicit `put` in the workflow, to reach the server.
 - **Live sites** on their own domain (TapSlayDie) are framed at their address. Their document is cross-origin, so the viewer's link handling can't reach inside them.
 
-**Embedded third-party forms stay live.** JotForm embeds (Dan James's contact page, Pistol Art's register page, the 2012 high school page and its NinjaDonut copy) still submit for real. Jake decided on 2026-10-26 to leave them, along with his old contact details on the 2012 pages. Only the sites' own mail handlers are rerouted, because they'd need the PHP that isn't published.
+**JotForm embeds are copies that submit nowhere.** Dan James's contact page, Pistol Art's register page, the 2012 high school page and its NinjaDonut copy embedded JotForm forms. JotForm had deleted the high school page's three, which showed its "missing form" page instead, and the two still live would have sent real submissions. On 2026-10-29 Jake asked for each to be replaced with a form that looks as it did and does nothing. `yarn projects:convert` swaps every JotForm script for its copy in `scripts/jotform/<form id>.html` (the `JOTFORMS` list in `scripts/convert-php-sites.mjs`), and stops on a form it has no copy for.
+- **Pistol Art and Dan James:** copied from the live forms on 2026-10-29: the same fields, labels, sizes and colours. Dan James's reCAPTCHA is left out, and its form starts below the site's fixed menu, level with the other pages' headings.
+- **The 2012 high school page:** the language poll at the top is gone, as Jake asked; the comment box is one large text box with a Submit button; the site rating is five stars that light up on hover and click.
+- **Nothing is sent:** every Submit button is a plain button, and the forms have no action.
+
+Jake's old contact details on the 2012 pages stay, as he decided on 2026-10-26. Only the sites' own mail handlers are rerouted, because they'd need the PHP that isn't published.
 
 Treat the originals under `public/projects/` as an archive: don't reformat or modify them. Only generated output (`X.html`, `X.static.*`) and the hand-written pages are edited.
 

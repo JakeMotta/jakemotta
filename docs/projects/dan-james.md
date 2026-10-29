@@ -8,7 +8,7 @@ It was copied on 2026-10-26 from the `DanJames` folder of Jake's old-projects ar
 
 All four pages are written as `X.static.html` by `scripts/convert-php-sites.mjs` (its `dan-james` entry), and they link to each other's copies.
 - **Beat store:** it was a MyFlashStore widget in an iframe. That service's domain no longer resolves, and the frame would show the browser's error page in the middle of the home page. The copy replaces it with a short note.
-- **Contact form:** the contact page embeds a JotForm form ("DanJames Contact Form") that was still live on 2026-10-26, so a message sent from the preview would really be delivered. Jake chose to leave it that way (see "How previews run" in [README.md](README.md)).
+- **Contact form:** the contact page embedded a JotForm form ("DanJames Contact Form") that was still live, so a message sent from the preview would really have been delivered. Since 2026-10-29 `contact.static.html` has a copy of it that submits nowhere, without its reCAPTCHA (see "How previews run" in [README.md](README.md)).
 
 ## Card image
 

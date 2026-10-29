@@ -205,7 +205,58 @@ describe('GET /api/listening/playlist', () => {
     });
 });
 
+const topArtists = {
+    items: [
+        { name: 'Daft Punk', images: [{ url: 'daft.jpg' }], external_urls: { spotify: 'https://open.spotify.com/artist/dp' } },
+        { name: 'Justice', images: [], external_urls: {} },
+    ],
+};
+const topTracks = { items: [{ id: 'sp1', name: 'Digital Love', duration_ms: 301_000, artists: [{ name: 'Daft Punk' }], album: { name: 'Discovery', images: [{ url: 'cover.jpg' }] } }] };
+const spotifyTop = {
+    'https://api.spotify.com/v1/me/top/artists': () => answer(topArtists),
+    'https://api.spotify.com/v1/me/top/tracks': () => answer(topTracks),
+};
+
+describe('GET /api/listening/top-artists', () => {
+    it('returns the long-term top artists, each with their top song when there is one, and keeps them', async () => {
+        fakeFetch({ ...token, ...spotifyTop });
+        const e = env();
+        const body = await (await get('/api/listening/top-artists', e)).json();
+        assert.deepEqual(
+            body.artists.map((artist) => [artist.name, artist.song?.id]),
+            [
+                ['Daft Punk', 'sp1'],
+                ['Justice', undefined],
+            ],
+        );
+        assert.equal(body.artists[0].image, 'daft.jpg');
+        assert.ok(calls.some((call) => call.includes('time_range=long_term')));
+
+        await get('/api/listening/top-artists', e);
+        assert.equal(calls.filter((call) => call.includes('/me/top/artists')).length, 1, 'asks Spotify once');
+    });
+
+    it('keeps hidden artists off', async () => {
+        fakeFetch({ ...token, ...spotifyTop });
+        const body = await (await get('/api/listening/top-artists', env({ HIDDEN: 'Daft Punk' }))).json();
+        assert.deepEqual(
+            body.artists.map((artist) => artist.name),
+            ['Justice'],
+        );
+    });
+
+    it('fails without the user-top-read scope', async () => {
+        fakeFetch({ ...token, 'https://api.spotify.com/v1/me/top/': () => answer({ error: { status: 403 } }, 403) });
+        assert.equal((await get('/api/listening/top-artists', env())).status, 502);
+    });
+});
+
 describe('GET /api/listening/match', () => {
+    it("finds a top song's YouTube copy by its Spotify ID", async () => {
+        fakeFetch({ ...token, ...spotifyTop, ...listenbrainz(), ...youtubeFound });
+        assert.equal((await get('/api/listening/match?spotify=sp1', env())).status, 200);
+    });
+
     it("finds a playlist song's YouTube copy by its Spotify ID", async () => {
         fakeFetch({ ...token, 'https://api.spotify.com/v1/playlists/pl1/items': () => answer(playlistPage), ...listenbrainz(), ...youtubeFound });
         const body = await (await get('/api/listening/match?spotify=sp1', env({ SPOTIFY_PLAYLIST: 'pl1' }))).json();

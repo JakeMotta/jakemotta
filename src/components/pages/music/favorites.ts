@@ -1,4 +1,5 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { getTopArtists, PlaylistTrack, TopArtist } from '../../../api/listen-along';
 import { Listen } from '../../../api/listenbrainz';
 import { topKey, useListeningStore, useLiveListening } from '../../../store/listening';
 
@@ -7,10 +8,27 @@ const FAVORITES = 8;
 
 export interface FavoriteArtist {
     name: string;
-    plays: number;
-    // Their most-played song among Jake's latest plays, when there is one: what the row plays and shows
+    // Known when the ranking is ListenBrainz's; Spotify's ranks without counts
+    plays?: number;
+    // Their photo, from Spotify
+    image?: string;
+    // Their most-played song, when there is one: what the row plays and shows
     song?: Listen;
 }
+
+// A song from Spotify's top songs, as the rows take it
+const fromSpotify = (track: PlaylistTrack): Listen => ({
+    title: track.title,
+    artist: track.artists.join(', '),
+    album: track.album,
+    source: 'spotify',
+    link: track.url,
+    spotifyUrl: track.url,
+    cover: track.cover,
+});
+
+// Asked of the Worker once per visit
+let spotifyTop: Promise<TopArtist[] | undefined> | undefined;
 
 // "City Girl, tiffi" is a song by both
 const credits = (artist: string) => artist.split(/,\s+/).filter(Boolean);
@@ -54,24 +72,37 @@ const topSong = (recent: Listen[], name: string) => {
 };
 
 /**
- * Jake's most-listened artists, from ListenBrainz (docs/listening.md): its all-time top artists once
- * it has counted them, and until then a count of his latest plays. `ready` is false while neither has
- * answered.
+ * Jake's most-listened artists, from the deepest history there is (docs/listening.md): Spotify's own
+ * long-term top artists, through the listening Worker, which reach back a year and more. Failing that,
+ * ListenBrainz's all-time top artists once it has counted them, and failing that a count of his latest
+ * plays. `ready` is false while none has answered.
  */
 export const useFavoriteArtists = () => {
     useLiveListening();
+    // undefined while the Worker is asked, null when it couldn't say
+    const [spotify, setSpotify] = useState<TopArtist[] | null | undefined>(undefined);
     const top = useListeningStore((store) => store.top[topKey('artists', 'all_time')]);
     const loadTop = useListeningStore((store) => store.loadTop);
     const recent = useListeningStore((store) => store.recent);
     const loaded = useListeningStore((store) => store.loaded);
 
     useEffect(() => {
+        let live = true;
+        spotifyTop ??= getTopArtists();
+        spotifyTop.then((artists) => live && setSpotify(artists ?? null));
         loadTop('artists', 'all_time');
+        return () => {
+            live = false;
+        };
     }, [loadTop]);
 
     return useMemo(() => {
+        if (spotify?.length) {
+            const artists: FavoriteArtist[] = spotify.slice(0, FAVORITES).map(({ name, image, song }) => ({ name, image, song: song ? fromSpotify(song) : topSong(recent, name) }));
+            return { artists, ready: true };
+        }
         const ranked = top?.length ? top.map((item) => ({ name: item.title, plays: item.count })) : countRecent(recent);
         const artists: FavoriteArtist[] = ranked.slice(0, FAVORITES).map(({ name, plays }) => ({ name, plays, song: topSong(recent, name) }));
-        return { artists, ready: top !== undefined && (!!top?.length || loaded) };
-    }, [top, recent, loaded]);
+        return { artists, ready: spotify !== undefined && top !== undefined && (!!top?.length || loaded) };
+    }, [spotify, top, recent, loaded]);
 };

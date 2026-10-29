@@ -84,6 +84,17 @@ export const isHidden = (track, hidden = '') => {
     return artists.some((artist) => names.includes(artist) || names.includes(`${artist} - ${track.title.toLowerCase()}`));
 };
 
+// A song as the site wants it, from Spotify's track
+const toTrack = (item) => ({
+    id: item.id,
+    title: item.name,
+    artists: (item.artists ?? []).map((artist) => artist.name),
+    album: item.album?.name,
+    durationMs: item.duration_ms,
+    cover: item.album?.images?.[0]?.url,
+    url: item.external_urls?.spotify,
+});
+
 const PLAYLIST_TTL = 10 * 60;
 // Enough for any playlist worth shuffling, in pages of 50
 const PLAYLIST_LIMIT = 500;
@@ -110,19 +121,56 @@ export const getPlaylist = async (env) => {
             // Since February 2026 the song is `item`; `track` before that. Local files and podcasts have no ID to match.
             const item = entry.item ?? entry.track;
             if (!item?.id || (item.type && item.type !== 'track')) continue;
-            tracks.push({
-                id: item.id,
-                title: item.name,
-                artists: (item.artists ?? []).map((artist) => artist.name),
-                album: item.album?.name,
-                durationMs: item.duration_ms,
-                cover: item.album?.images?.[0]?.url,
-                url: item.external_urls?.spotify,
-            });
+            tracks.push(toTrack(item));
         }
         next = page.next;
     }
 
     await env.LISTENING.put('playlist', JSON.stringify(tracks), { expirationTtl: PLAYLIST_TTL });
     return tracks;
+};
+
+// Spotify's long-term ranking moves slowly, so it's kept in KV for a day
+const TOP_TTL = 24 * 60 * 60;
+
+/**
+ * Jake's top artists or tracks over Spotify's longest range ("long_term", about a year of plays and
+ * more), 50 of them. It needs the user-top-read scope, which scripts/spotify-auth.mjs asks for since
+ * 2026-10-28; a refresh token from before that gets a 403.
+ */
+const getTop = async (env, kind) => {
+    const response = await fetch(`https://api.spotify.com/v1/me/top/${kind}?time_range=long_term&limit=50`, { headers: { Authorization: `Bearer ${await accessToken(env)}` } });
+    if (response.status === 401) await env.LISTENING.delete('spotify:access_token');
+    if (response.status === 429) throw new SpotifyError('Spotify is rate limiting', 503, response.headers.get('Retry-After') ?? '30');
+    if (!response.ok) throw new SpotifyError(`Spotify answered ${response.status} for the top ${kind}`, 502);
+    return (await response.json()).items ?? [];
+};
+
+/** Jake's 50 most-played songs on Spotify, over its longest range, most played first */
+export const getTopTracks = async (env) => {
+    const cached = await env.LISTENING.get('top-tracks', 'json');
+    if (cached) return cached;
+    const tracks = (await getTop(env, 'tracks')).filter((item) => item?.id).map(toTrack);
+    await env.LISTENING.put('top-tracks', JSON.stringify(tracks), { expirationTtl: TOP_TTL });
+    return tracks;
+};
+
+/**
+ * Jake's 50 most-played artists on Spotify, over its longest range, most played first. Each comes with
+ * their highest-ranked song among his top songs, when there is one, for the site to play.
+ */
+export const getTopArtists = async (env) => {
+    const cached = await env.LISTENING.get('top-artists', 'json');
+    if (cached) return cached;
+    const [items, tracks] = await Promise.all([getTop(env, 'artists'), getTopTracks(env)]);
+    const artists = items
+        .filter((item) => item?.name)
+        .map((item) => ({
+            name: item.name,
+            image: item.images?.[0]?.url,
+            url: item.external_urls?.spotify,
+            song: tracks.find((track) => track.artists.includes(item.name)),
+        }));
+    await env.LISTENING.put('top-artists', JSON.stringify(artists), { expirationTtl: TOP_TTL });
+    return artists;
 };

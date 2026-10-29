@@ -1,4 +1,4 @@
-import { getNowPlaying, getPlaylist, isHidden, SpotifyError } from './spotify.js';
+import { getNowPlaying, getPlaylist, getTopArtists, isHidden, SpotifyError } from './spotify.js';
 import { findSong } from './songs.js';
 import { findVideo } from './youtube.js';
 
@@ -6,6 +6,7 @@ import { findVideo } from './youtube.js';
  * GET /api/listening/now              what Jake's Spotify is playing, to the second
  * GET /api/listening/now?youtube=1    the same, plus the YouTube copy to listen along with
  * GET /api/listening/playlist         the songs on Jake's Spotify playlist, which join the site's shuffle
+ * GET /api/listening/top-artists      Jake's most-played artists on Spotify, for the library's Favorite artists
  * GET /api/listening/match?spotify=<track id>
  * GET /api/listening/match?artist=<artist>&title=<title>
  *                                     the YouTube copy of one of Jake's songs, for the site's player
@@ -16,6 +17,7 @@ import { findVideo } from './youtube.js';
 const CACHE_SECONDS = 5;
 const PLAYLIST_CACHE_SECONDS = 10 * 60;
 const MATCH_CACHE_SECONDS = 60 * 60;
+const TOP_CACHE_SECONDS = 6 * 60 * 60;
 // Longer than any artist or title worth looking up
 const MAX_QUERY = 200;
 
@@ -52,6 +54,17 @@ const playlist = async (env) => {
     }
 };
 
+const topArtists = async (env) => {
+    try {
+        const artists = (await getTopArtists(env))
+            .filter((artist) => !isHidden({ artists: [artist.name], title: '' }, env.HIDDEN))
+            .map(({ song, ...artist }) => (song && !isHidden(song, env.HIDDEN) ? { ...artist, song } : artist));
+        return json({ artists }, 200, { 'Cache-Control': `public, max-age=${TOP_CACHE_SECONDS}` });
+    } catch (error) {
+        return failed(error);
+    }
+};
+
 const match = async (query, env) => {
     try {
         const song = await findSong(env, query);
@@ -68,6 +81,7 @@ export default {
         if (request.method !== 'GET') return json({ error: 'GET only' }, 405, { 'Cache-Control': 'no-store', Allow: 'GET' });
 
         if (url.pathname === '/api/listening/playlist') return fromCache(`${url.origin}${url.pathname}`, ctx, () => playlist(env));
+        if (url.pathname === '/api/listening/top-artists') return fromCache(`${url.origin}${url.pathname}`, ctx, () => topArtists(env));
 
         if (url.pathname === '/api/listening/match') {
             const spotify = url.searchParams.get('spotify') ?? '';

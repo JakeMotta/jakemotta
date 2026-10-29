@@ -1,8 +1,9 @@
-// Jake's songs: the ones visitors may ask this Worker to find on YouTube. That's his Spotify playlist
-// and what ListenBrainz has him playing lately and most. Anything else is refused, so nobody can spend
-// the day's YouTube searches (100 of 10,000 units each) on songs that aren't his.
+// Jake's songs: the ones visitors may ask this Worker to find on YouTube. That's his Spotify playlist,
+// his top songs on Spotify, and what ListenBrainz has him playing lately and most. Anything else is
+// refused, so nobody can spend the day's YouTube searches (100 of 10,000 units each) on songs that
+// aren't his.
 
-import { getPlaylist } from './spotify.js';
+import { getPlaylist, getTopTracks } from './spotify.js';
 
 const LISTENBRAINZ = 'https://api.listenbrainz.org/1';
 // How long the list is kept before it's built again, and how old it may be before a song missing from
@@ -54,8 +55,11 @@ const buildSongs = async (env) => {
         ...['this_month', 'this_year', 'all_time'].map((range) => listenbrainz(`/stats/user/${user}/recordings?range=${range}&count=100`)),
     ]);
     const playlist = env.SPOTIFY_PLAYLIST ? await getPlaylist(env) : [];
+    // The Favorite artists' songs. Without the user-top-read scope there are none, and the rest still count.
+    const topTracks = await getTopTracks(env).catch(() => []);
     return [
         ...playlist.map(fromPlaylist),
+        ...topTracks.map(fromPlaylist),
         ...(listens?.payload.listens ?? []).map(fromListen),
         ...tops.flatMap((top) => (top?.payload.recordings ?? []).map(fromTop)),
     ];

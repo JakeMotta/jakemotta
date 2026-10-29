@@ -65,16 +65,16 @@ export const MusicLibrary = () => {
     };
 
     // An artist as a row: it plays their most-played song, from YouTube, when that can play here
-    const artistRows = favorites.artists.map(({ name, plays, song }, i) => {
+    const artistRows = favorites.artists.map(({ name, plays, image, song }, i) => {
         const url = song && (listenUrl(song, worker) ?? (worker ? songUrl(song.artist, song.title) : undefined));
         const current = !!url && url === audioUrl;
         return (
             <li key={name}>
                 <MusicRow
                     rank={i + 1}
-                    art={<ListenCover title={name} cover={song?.cover} spotifyUrl={song?.spotifyUrl} />}
+                    art={<ListenCover title={name} cover={image ?? song?.cover} spotifyUrl={song?.spotifyUrl} />}
                     title={name}
-                    meta={`${plays} ${plays === 1 ? 'play' : 'plays'}${song ? ` · ${song.title}` : ''}`}
+                    meta={[plays !== undefined && `${plays} ${plays === 1 ? 'play' : 'plays'}`, song?.title].filter(Boolean).join(' · ') || undefined}
                     current={current}
                     playing={isPlaying}
                     onPlay={url && song ? () => (current ? togglePlayback() : playTrack(streamedTrack(url, song.title, song.artist, song.cover))) : undefined}

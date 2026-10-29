@@ -70,9 +70,20 @@ const getWorkerJson = async <T>(path: string): Promise<T | undefined> => {
 /** The songs on Jake's Spotify playlist, which join the shuffle, or undefined when the Worker isn't there */
 export const getPlaylist = async () => (await getWorkerJson<{ tracks: PlaylistTrack[] }>('/api/listening/playlist'))?.tracks;
 
+/** One of Jake's most-played artists on Spotify, as the Worker sends it, with their top song when he has one */
+export interface TopArtist {
+    name: string;
+    image?: string;
+    url?: string;
+    song?: PlaylistTrack;
+}
+
+/** Jake's 50 most-played artists on Spotify over its longest range, or undefined when the Worker can't say */
+export const getTopArtists = async () => (await getWorkerJson<{ artists: TopArtist[] }>('/api/listening/top-artists'))?.artists;
+
 /**
  * The YouTube copy of one of Jake's songs: a Spotify track by its ID, or a song by artist and title.
- * The Worker only looks up songs from his playlist and his ListenBrainz history. null when there's
+ * The Worker only looks up songs from his playlist, his Spotify top songs and his ListenBrainz history. null when there's
  * nothing to play: no copy was found, it isn't one of his, or the Worker isn't there.
  */
 export const matchSong = async (song: { spotify: string } | { artist: string; title: string }) => {

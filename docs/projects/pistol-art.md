@@ -6,7 +6,7 @@ Course schedules and class sign-ups for a pistol training school, originally at 
 
 `public/projects/pistol-art/` is the original PHP site, rendered to static pages by `scripts/convert-php-sites.mjs` (its `pistol-art` entry). The PHP only stitched in shared partials (`files/footer.php`, `files/lead-nav.php`, `files/rightcolumn.php`), so each `X.php` becomes an `X.html` beside it. Links to `pistolart.net` and to `.php` pages point at those `.html` pages.
 
-The two mail forms never send anything: the converter points `contact_send.php` at `message_recieved.html` and `form_send.php` at `thankyou.html`, the pages they redirected to once the mail went out.
+The two mail forms never send anything: the converter points `contact_send.php` at `message_recieved.html` and `form_send.php` at `thankyou.html`, the pages they redirected to once the mail went out. The register page's course sign-up was a JotForm form; since 2026-10-29 it's a copy of how it looked that submits nowhere (`scripts/jotform/82907418724160.html`, see [README.md](README.md#how-previews-run)).
 
 ## Kept, but never published
 

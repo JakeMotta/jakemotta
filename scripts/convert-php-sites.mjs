@@ -42,6 +42,8 @@ const SITES = [
         dir: 'ninja-donut',
         origins: ['http://jakemotta.com/NinjaDonut/', 'https://jakemotta.com/NinjaDonut/', '//jakemotta.com/NinjaDonut/'],
         forms: {},
+        // Jake's student page is a copy of the 2012 high school page, JotForm embeds and all.
+        pages: ['Pages/Students/JakeMotta/index.html'],
     },
     {
         dir: 'black-chamber',
@@ -443,6 +445,27 @@ const stripTrackers = (text) =>
 /** Scripts from services that no longer exist only fail to load (Adobe's Muse web fonts). */
 const stripDeadServices = (text) => text.replace(/<script\b[^>]*\bsrc=["'][^"']*webfonts\.creativecloud\.com[^"']*["'][^>]*>\s*<\/script>/gi, '');
 
+// The JotForm embeds, by form id. JotForm deleted the high school page's three, which then
+// showed its "missing form" page, and the two that still load would send real submissions.
+// Each is swapped for a copy of how it looked (scripts/jotform/<id>.html) that submits
+// nowhere, or for nothing. A form missing from this list stops the converter.
+const JOTFORMS = {
+    // PistolArt's course sign-up and Dan James's contact form, copied from the live forms.
+    82907418724160: 'scripts/jotform/82907418724160.html',
+    62201054934144: 'scripts/jotform/62201054934144.html',
+    // The 2012 high school page: a language poll (left out, as Jake asked), a comment box and a
+    // five-star rating of the site.
+    21562389538160: null,
+    21510138934145: 'scripts/jotform/21510138934145.html',
+    21578602597160: 'scripts/jotform/21578602597160.html',
+};
+
+const replaceJotForms = (text, where) =>
+    text.replace(/<script\b[^>]*\bsrc=["'][^"']*\/\/form\.jotform\.[a-z]+\/jsform\/(\d+)["'][^>]*>\s*<\/script>/gi, (_, id) => {
+        if (!(id in JOTFORMS)) fail(`${where}: no stand-in for JotForm form ${id} (see JOTFORMS)`);
+        return JOTFORMS[id] ? read(join(PROJECTS, '..', '..', JOTFORMS[id])).trim() : '';
+    });
+
 /** The site's literal fixes (see SITES); one with a third entry applies only to files under that folder of the site. */
 const applyReplace = (text, site, file) => {
     const path = relative(join(PROJECTS, site.dir), file).split(sep).join('/');
@@ -547,6 +570,7 @@ for (const site of SITES) {
         html = relink(html, file, site);
         html = stripTrackers(html);
         html = stripDeadServices(html);
+        html = replaceJotForms(html, relative(PROJECTS, file));
         html = upgradeHttp(html);
         html = applyReplace(html, site, file);
         html = useAssetCopies(html, file);

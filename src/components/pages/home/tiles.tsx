@@ -7,9 +7,10 @@ import { useListeningStore } from '../../../store/listening';
 import { playFirstSong } from '../../../store/first-song';
 import { homeProjectList, socialLinks } from '../../../common/constants';
 import { listenedAgo } from '../../../common/listening';
-import { findTrack, upNextTracks } from '../../../common/music';
+import { findTrack } from '../../../common/music';
 import { useReleases } from '../../../common/modpack';
-import { CoverArt, NowPlaying, PixelCube, PlayerCard, ProjectImage, sourceName, useNowListening } from '../../atoms';
+import { codeWeeks, devlogStats, formatCount, formatDay, useDevlogPosts } from '../../../common/devlog';
+import { CodeFrequency, NowPlaying, PixelCube, PlayerCard, ProjectImage, sourceName, useNowListening } from '../../atoms';
 
 /** A tile's way to open itself up: the link in its header to the overlay with the rest of it */
 const ExpandLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
@@ -37,26 +38,10 @@ export const HeroTile = () => {
                 <span className='tile-hero__my-name'>my name is</span>
             </div>
             <div className='tile-hero__body'>
-                <div className='tile-hero__who'>
-                    <h1 id='hero-name' className='tile-hero__name'>
-                        Jake Motta
-                    </h1>
-                    <p className='tile-hero__tagline'>Some of my work throughout the years</p>
-                </div>
-                <nav className='tile-hero__chips' aria-label='Sections'>
-                    <Link className='chip' to='/library'>
-                        Music
-                    </Link>
-                    <Link className='chip' to='/project'>
-                        Projects
-                    </Link>
-                    <Link className='chip' to='/minecraft'>
-                        Minecraft
-                    </Link>
-                    <Link className='chip' to='/devlog'>
-                        Dev log
-                    </Link>
-                </nav>
+                <h1 id='hero-name' className='tile-hero__name'>
+                    Jake Motta
+                </h1>
+                <p className='tile-hero__tagline'>Some of my work throughout the years</p>
             </div>
         </section>
     );
@@ -139,31 +124,32 @@ export const FeaturedTile = () => {
     );
 };
 
-/** What plays next: the next ten songs in the shuffle, scrolling inside the tile */
-export const UpNextTile = () => {
-    const upNext = upNextTracks(useAudioStore((store) => store.shuffled));
-    const setAudioUrl = useAudioStore((store) => store.setAudioUrl);
+/**
+ * The dev log (docs/devlog.md): the newest post, and the shape of the code that's gone in lately.
+ * It took Up next's cell on 2026-10-29 (the next songs live on in the library).
+ */
+export const DevlogTile = () => {
+    const { posts } = useDevlogPosts();
+    const latest = posts?.[0];
+    const { github } = devlogStats;
 
     return (
-        <section className='tile tile-next tile--dark' aria-labelledby='up-next-title'>
-            <div className='tile-next__head tile-head'>
-                <h2 id='up-next-title'>
-                    <TitleLink to='/library'>Up next</TitleLink>
-                </h2>
-                <ExpandLink to='/library'>All songs</ExpandLink>
-            </div>
-            <ol className='tile-next__list'>
-                {upNext.map((track) => (
-                    <li key={track.url}>
-                        <button type='button' className='tile-next__row' onClick={() => setAudioUrl(track.url)}>
-                            <CoverArt track={track} className='tile-next__cover' />
-                            <span className='tile-next__name'>{track.title}</span>
-                            <span className='tile-next__year'>{track.date}</span>
-                        </button>
-                    </li>
-                ))}
-            </ol>
-        </section>
+        <Link className='tile tile-log tile--dark' to='/devlog'>
+            <span className='tile-log__head'>
+                <span className='eyebrow'>Dev log</span>
+                <span className='tile-log__arrow' aria-hidden>
+                    <FiArrowUpRight />
+                </span>
+            </span>
+            <span className='tile-log__post'>
+                {latest && <span className='tile-log__date'>{formatDay(latest.date)}</span>}
+                <strong className='tile-log__title'>{latest?.title ?? "What I'm building right now"}</strong>
+            </span>
+            <CodeFrequency compact weeks={codeWeeks(github.weeks)} className='tile-log__code' />
+            <span className='tile-log__numbers'>
+                {github.commits.toLocaleString()} commits{github.contributions && <> · {formatCount(github.contributions.total)} contributions this year</>}
+            </span>
+        </Link>
     );
 };
 

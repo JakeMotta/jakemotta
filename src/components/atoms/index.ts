@@ -19,3 +19,4 @@ export * from './lately';
 export * from './listen-along';
 export * from './youtube-player';
 export * from './markdown';
+export * from './code-frequency';

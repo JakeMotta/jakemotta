@@ -25,6 +25,26 @@ export interface DevlogCommit {
     url?: string;
 }
 
+/** A week of code (Monday on), like a bar of GitHub's code frequency graph */
+export interface DevlogWeek {
+    week: string;
+    commits: number;
+    additions: number;
+    deletions: number;
+}
+
+export interface DevlogGithub {
+    user: string;
+    url: string;
+    // GitHub's own count for the last year, from Jake's profile, and the day it was read
+    contributions: { total: number; date: string } | null;
+    commits: number;
+    additions: number;
+    deletions: number;
+    projects: { name: string; commits: number; additions: number; deletions: number }[];
+    weeks: DevlogWeek[];
+}
+
 export interface DevlogStats {
     generatedAt: string;
     since: string | null;
@@ -32,6 +52,7 @@ export interface DevlogStats {
     models: { name: string; tokens: number }[];
     days: DevlogDay[];
     commits: DevlogCommit[];
+    github: DevlogGithub;
 }
 
 export interface DevlogPost {
@@ -58,7 +79,10 @@ export const localDay = (time: string | Date) => {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 };
 
-export const formatDay =(date: string) => new Date(`${date.slice(0, 10)}T00:00:00`).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+/** The weeks of code from the first one with a commit in it, so the chart doesn't open on empty months */
+export const codeWeeks = (weeks: DevlogWeek[]) => weeks.slice(Math.max(0, weeks.findIndex((week) => week.commits > 0)));
+
+export const formatDay = (date: string) => new Date(`${date.slice(0, 10)}T00:00:00`).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 
 // Each post is a Markdown file in src/devlog/posts/, named YYYY-MM-DD-slug.md. webpack copies them
 // into the build under hashed names, so a new post needs nothing but its file.

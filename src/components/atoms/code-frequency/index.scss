@@ -1,0 +1,124 @@
+// Lines added rise from the line in the text colour; lines removed hang under it, fainter
+.code-frequency {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    gap: 6px;
+
+    &__legend {
+        display: flex;
+        gap: 14px;
+        font-size: 12px;
+        font-weight: 800;
+
+        span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+
+    &__key {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        background: currentColor;
+
+        &--down {
+            background: color-mix(in srgb, currentColor 45%, transparent);
+        }
+    }
+
+    &__plot {
+        position: relative;
+        height: 110px;
+    }
+
+    &--compact &__plot {
+        height: 100%;
+        min-height: 40px;
+    }
+
+    &__weeks {
+        display: flex;
+        height: 100%;
+        gap: 2px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: flex;
+            min-width: 0;
+            flex: 1;
+            flex-direction: column;
+            border-radius: 3px;
+            outline-offset: 0 !important;
+
+            &.is-active {
+                background: color-mix(in srgb, currentColor 12%, transparent);
+            }
+        }
+    }
+
+    &__up,
+    &__down {
+        display: flex;
+        min-height: 0;
+        flex-basis: 0;
+
+        span {
+            width: 100%;
+            min-height: 2px;
+        }
+    }
+
+    &__up {
+        align-items: flex-end;
+        border-bottom: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+
+        span {
+            border-radius: 3px 3px 0 0;
+            background: currentColor;
+        }
+    }
+
+    &__down {
+        align-items: flex-start;
+
+        span {
+            border-radius: 0 0 3px 3px;
+            background: color-mix(in srgb, currentColor 45%, transparent);
+        }
+    }
+
+    &__tip {
+        position: absolute;
+        bottom: calc(100% + 6px);
+        z-index: 2;
+        display: flex;
+        min-width: 150px;
+        flex-direction: column;
+        padding: 8px 10px;
+        border-radius: 10px;
+        background: var(--color-primary-light);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+        color: var(--color-primary-ink);
+        font-size: 12px;
+        font-weight: 800;
+        pointer-events: none;
+        white-space: nowrap;
+
+        strong {
+            font-weight: 900;
+        }
+    }
+
+    &__axis {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        font-weight: 800;
+        opacity: 0.8;
+    }
+}

@@ -2,20 +2,20 @@ import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { BentoOverlay, OverlayHeader } from '../../templates';
-import { Markdown } from '../../atoms';
-import { devlogStats, formatCount, formatDay, formatHours, localDay, tokenTotal, useDevlogPosts } from '../../../common/devlog';
+import { CodeFrequency, Markdown } from '../../atoms';
+import { codeWeeks, devlogStats, formatCount, formatDay, formatHours, localDay, tokenTotal, useDevlogPosts } from '../../../common/devlog';
 import { UsageChart } from './chart';
 import './index.scss';
 
 /**
  * The dev log: Jake's posts about what he's working on, how much he's worked on it with Claude, and
- * the latest commits. The posts are Markdown files in src/devlog/posts/; the numbers come from
- * `yarn devlog:stats` (docs/devlog.md).
+ * his code on GitHub (commits, code frequency and the latest commits). The posts are Markdown files
+ * in src/devlog/posts/; the numbers come from `yarn devlog:stats` (docs/devlog.md).
  */
 export const Devlog = () => {
     const navigate = useNavigate();
     const { posts, failed } = useDevlogPosts();
-    const { totals, days, commits, models, since, generatedAt } = devlogStats;
+    const { totals, days, commits, models, since, generatedAt, github } = devlogStats;
 
     // Each project's colour goes by when it first shows up, so it keeps it as the numbers change; Other is always last
     const projects = useMemo(() => {
@@ -97,6 +97,45 @@ export const Devlog = () => {
                     <p className='devlog__updated'>
                         Since {since ? formatDay(since) : 'the start'} · updated {formatDay(localDay(generatedAt))}
                     </p>
+                </section>
+
+                <section className='devlog__tile devlog__tile--github' aria-labelledby='devlog-github'>
+                    <div className='devlog__head'>
+                        <h3 id='devlog-github' className='devlog__eyebrow'>
+                            On GitHub
+                        </h3>
+                        <a className='devlog__out' href={github.url} target='_blank' rel='noreferrer'>
+                            {github.user}
+                            <FiArrowUpRight aria-hidden />
+                        </a>
+                    </div>
+                    <dl className='devlog__numbers'>
+                        {github.contributions && (
+                            <div>
+                                <dt>Contributions this year</dt>
+                                <dd>{github.contributions.total.toLocaleString()}</dd>
+                            </div>
+                        )}
+                        <div>
+                            <dt>Commits</dt>
+                            <dd>{github.commits.toLocaleString()}</dd>
+                        </div>
+                        <div>
+                            <dt>Lines written</dt>
+                            <dd>{formatCount(github.additions)}</dd>
+                        </div>
+                    </dl>
+                    <CodeFrequency weeks={codeWeeks(github.weeks)} />
+                    <ul className='devlog__projects' aria-label='Commits by project'>
+                        {github.projects.map((project) => (
+                            <li key={project.name}>
+                                <strong>{project.name}</strong>
+                                <span>
+                                    {project.commits.toLocaleString()} commits · +{formatCount(project.additions)} / −{formatCount(project.deletions)}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
                 </section>
 
                 <section className='devlog__tile devlog__tile--commits' aria-labelledby='devlog-commits'>

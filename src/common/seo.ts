@@ -17,7 +17,7 @@ interface PageMeta {
 const OVERLAYS: Record<string, Omit<PageMeta, 'path'>> = {
     '/library': { title: 'Music', description: "Songs by Jake Motta, and a few favorite artists. Pick one and it plays while you look around the rest of the site." },
     '/project': { title: 'Projects', description: `${homeProjectList.length} projects by Jake Motta: websites, apps, games, art and animation.` },
-    '/devlog': { title: 'Dev log', description: "What Jake Motta is building right now, how many hours and tokens he's spent on it with Claude, and his latest commits." },
+    '/devlog': { title: 'Dev log', description: "What Jake Motta is building right now, how many hours and tokens he's spent on it with Claude, and his commits on GitHub." },
     '/minecraft': { title: 'Progression Survival', description: 'Progression Survival, the modpack for our modded Minecraft server: earn every armor and tool tier yourself, on Hard. Download the latest release.' },
 };
 

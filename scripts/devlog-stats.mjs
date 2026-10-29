@@ -27,17 +27,30 @@ const TRANSCRIPTS = join(homedir(), '.claude', 'projects');
 // The repositories' folders under ~/Documents/Github, as the dev log names them.
 // `commits` publishes the repository's commit subjects, so it's only on for
 // public repositories; TapSlayDie, asteroids and farming-game are private.
+// `notCode` lists the folders and files left out of the lines added and
+// removed (the code frequency): archives, art and generated files, which
+// would bury the code under them. Their commits still count.
 const PROJECTS = {
-    jakemotta: { name: 'jakemotta.com', commits: true, url: 'https://github.com/JakeMotta/jakemotta' },
-    TapSlayDie: { name: 'TapSlayDie', commits: false },
+    jakemotta: {
+        name: 'jakemotta.com',
+        commits: true,
+        url: 'https://github.com/JakeMotta/jakemotta',
+        notCode: ['public/projects/', 'public/vendor/', 'public/downloads/', 'src/devlog/stats.json'],
+    },
+    TapSlayDie: { name: 'TapSlayDie', commits: false, notCode: ['assets/', 'mobile-game/assets/'] },
     asteroids: { name: 'Asteroids', commits: false },
     farming: { name: 'Farming game', commits: false },
 };
 const OTHER = 'Other';
+const LOCKFILES = ['yarn.lock', 'package-lock.json', 'pnpm-lock.yaml'];
+// Whose public contribution count to read from GitHub
+const GITHUB_USER = 'JakeMotta';
 
 // A pause longer than this between two messages ends a stretch of work, and isn't counted
 const IDLE_MINUTES = 15;
 const COMMITS_PER_PROJECT = 20;
+// The code frequency's weeks, counting back from this one
+const CODE_WEEKS = 52;
 
 if (!existsSync(TRANSCRIPTS)) {
     console.error(`devlog-stats: no Claude Code transcripts at ${TRANSCRIPTS}`);
@@ -176,12 +189,19 @@ const firstSentence = (subject) => {
     const sentence = subject.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? subject;
     return sentence.length > 140 ? `${sentence.slice(0, 139).trimEnd()}…` : sentence;
 };
+// This repository may be a worktree under .claude\worktrees\, so its siblings are found from the main checkout
+const mainCheckout = resolve(execFileSync('git', ['-C', ROOT, 'rev-parse', '--path-format=absolute', '--git-common-dir'], { encoding: 'utf8' }).trim(), '..');
+const repoOf = (folder) => {
+    const repo = folder === basename(mainCheckout) ? ROOT : join(dirname(mainCheckout), folder);
+    return existsSync(join(repo, '.git')) ? repo : null;
+};
+
 const commits = [];
 for (const [folder, project] of Object.entries(PROJECTS)) {
     if (!project.commits) continue;
-    const repo = folder === basename(ROOT) ? ROOT : join(dirname(ROOT), folder);
-    if (!existsSync(join(repo, '.git'))) {
-        console.warn(`devlog-stats: no repository at ${repo}, so no commits for ${project.name}`);
+    const repo = repoOf(folder);
+    if (!repo) {
+        console.warn(`devlog-stats: no repository for ${project.name}, so no commits for it`);
         continue;
     }
     const log = execFileSync('git', ['-C', repo, 'log', '--no-merges', `-n${COMMITS_PER_PROJECT}`, '--format=%h%x1f%H%x1f%aI%x1f%s'], { encoding: 'utf8' });
@@ -191,6 +211,87 @@ for (const [folder, project] of Object.entries(PROJECTS)) {
     }
 }
 commits.sort((a, b) => b.date.localeCompare(a.date));
+
+// GitHub: every repository's commits and the lines they added and removed, a week (Monday on) at a time,
+// like GitHub's code frequency graph. Private repositories count too, but only as totals.
+const mondayOf = (time) => {
+    const date = new Date(time);
+    date.setDate(date.getDate() - ((date.getDay() + 6) % 7));
+    return dayOf(date);
+};
+const thisWeek = mondayOf(Date.now());
+const firstWeek = (() => {
+    const date = new Date(`${thisWeek}T00:00:00`);
+    date.setDate(date.getDate() - 7 * (CODE_WEEKS - 1));
+    return dayOf(date);
+})();
+const weeks = new Map();
+for (const date = new Date(`${firstWeek}T00:00:00`); dayOf(date) <= thisWeek; date.setDate(date.getDate() + 7)) {
+    weeks.set(dayOf(date), { week: dayOf(date), commits: 0, additions: 0, deletions: 0 });
+}
+const githubProjects = [];
+for (const [folder, project] of Object.entries(PROJECTS)) {
+    const repo = repoOf(folder);
+    if (!repo) {
+        console.warn(`devlog-stats: no repository for ${project.name}, so it's left out of the code frequency`);
+        continue;
+    }
+    const notCode = [...(project.notCode ?? []), ...LOCKFILES];
+    const isCode = (path) => !notCode.some((skip) => (skip.endsWith('/') ? path.startsWith(skip) : path === skip || path.endsWith(`/${skip}`)));
+    const totals = { name: project.name, commits: 0, additions: 0, deletions: 0 };
+    const log = execFileSync('git', ['-C', repo, 'log', '--no-merges', '--numstat', '--format=%x1e%aI%x1f%ae'], { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
+    for (const block of log.split('\x1e').filter(Boolean)) {
+        const [head, ...files] = block.split('\n');
+        const [date, email] = head.split('\x1f');
+        // Dependabot and the like aren't Jake
+        if (email.includes('[bot]')) continue;
+        let additions = 0;
+        let deletions = 0;
+        for (const line of files) {
+            const [added, removed, path] = line.split('\t');
+            // Binary files show as "-"
+            if (!path || added === '-' || !isCode(path)) continue;
+            additions += Number(added);
+            deletions += Number(removed);
+        }
+        totals.commits += 1;
+        totals.additions += additions;
+        totals.deletions += deletions;
+        const week = weeks.get(mondayOf(date));
+        if (!week) continue;
+        week.commits += 1;
+        week.additions += additions;
+        week.deletions += deletions;
+    }
+    githubProjects.push(totals);
+}
+
+// GitHub's own count from Jake's profile: commits, pull requests, issues and reviews in the last year, private
+// ones included when the profile shows them. It's read from the public page, and kept from the last run if that fails.
+const previousStats = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : {};
+let contributions = previousStats.github?.contributions ?? null;
+try {
+    const page = await fetch(`https://github.com/users/${GITHUB_USER}/contributions`, { headers: { 'User-Agent': 'jakemotta.com devlog-stats' } }).then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.text();
+    });
+    const total = /([\d,]+)\s+contributions?\s+in\s+the\s+last\s+year/.exec(page.replace(/\s+/g, ' '));
+    if (!total) throw new Error('no total on the page');
+    contributions = { total: Number(total[1].replace(/,/g, '')), date: dayOf(Date.now()) };
+} catch (error) {
+    console.warn(`devlog-stats: couldn't read GitHub's contribution count (${error.message}), so the last one stays`);
+}
+
+const github = {
+    user: GITHUB_USER,
+    url: `https://github.com/${GITHUB_USER}`,
+    contributions,
+    commits: githubProjects.reduce((sum, project) => sum + project.commits, 0),
+    additions: githubProjects.reduce((sum, project) => sum + project.additions, 0),
+    deletions: githubProjects.reduce((sum, project) => sum + project.deletions, 0),
+    projects: githubProjects.sort((a, b) => b.commits - a.commits),
+    weeks: [...weeks.values()],
+};
 
 const stats = {
     generatedAt: new Date().toISOString(),
@@ -206,10 +307,12 @@ const stats = {
         .map(([name, tokens]) => ({ name, tokens })),
     days,
     commits,
+    github,
 };
 writeFileSync(OUT, `${JSON.stringify(stats, null, 2)}\n`);
 
 const total = Object.values(totalTokens).reduce((a, b) => a + b, 0);
 console.log(
-    `devlog-stats: ${transcripts.length} transcripts, ${allSessions.size} sessions, ${(stats.totals.minutes / 60).toFixed(1)} hours, ${(total / 1e6).toFixed(1)}M tokens, ${commits.length} commits → ${OUT}`,
+    `devlog-stats: ${transcripts.length} transcripts, ${allSessions.size} sessions, ${(stats.totals.minutes / 60).toFixed(1)} hours, ${(total / 1e6).toFixed(1)}M tokens, ${commits.length} commits; ` +
+        `GitHub: ${github.commits} commits, +${github.additions} −${github.deletions} lines, ${contributions?.total ?? '?'} contributions → ${OUT}`,
 );

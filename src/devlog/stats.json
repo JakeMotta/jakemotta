@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-27T22:52:54.605Z",
+  "generatedAt": "2026-10-29T16:40:29.938Z",
   "since": "2026-08-06",
   "totals": {
-    "minutes": 1234,
-    "sessions": 21,
-    "replies": 8724,
+    "minutes": 1842,
+    "sessions": 31,
+    "replies": 13955,
     "tokens": {
-      "input": 18202,
-      "output": 8213069,
-      "cacheWrite": 34089976,
-      "cacheRead": 2243410742
+      "input": 28948,
+      "output": 12564262,
+      "cacheWrite": 48681489,
+      "cacheRead": 3640242178
     }
   },
   "models": [
     {
       "name": "Opus 5.5",
-      "tokens": 2056938663
+      "tokens": 3472723551
     },
     {
       "name": "Opus 5",
@@ -156,14 +156,14 @@
     {
       "date": "2026-10-27",
       "project": "jakemotta.com",
-      "minutes": 289,
-      "replies": 3044,
-      "sessions": 11,
+      "minutes": 641,
+      "replies": 7353,
+      "sessions": 17,
       "tokens": {
-        "input": 6228,
-        "output": 2380774,
-        "cacheWrite": 9736774,
-        "cacheRead": 737046026
+        "input": 15056,
+        "output": 6037483,
+        "cacheWrite": 21893866,
+        "cacheRead": 1866464285
       }
     },
     {
@@ -178,148 +178,538 @@
         "cacheWrite": 1154,
         "cacheRead": 112112
       }
+    },
+    {
+      "date": "2026-10-28",
+      "project": "jakemotta.com",
+      "minutes": 222,
+      "replies": 856,
+      "sessions": 6,
+      "tokens": {
+        "input": 1782,
+        "output": 655743,
+        "cacheWrite": 2186634,
+        "cacheRead": 257578452
+      }
+    },
+    {
+      "date": "2026-10-28",
+      "project": "Other",
+      "minutes": 1,
+      "replies": 2,
+      "sessions": 1,
+      "tokens": {
+        "input": 4,
+        "output": 1902,
+        "cacheWrite": 15453,
+        "cacheRead": 761301
+      }
+    },
+    {
+      "date": "2026-10-29",
+      "project": "jakemotta.com",
+      "minutes": 33,
+      "replies": 64,
+      "sessions": 2,
+      "tokens": {
+        "input": 132,
+        "output": 36839,
+        "cacheWrite": 232334,
+        "cacheRead": 9073424
+      }
     }
   ],
   "commits": [
     {
       "project": "jakemotta.com",
-      "hash": "4bf38a5",
-      "date": "2026-10-27T16:31:01-06:00",
-      "subject": "Give every grouped project its own card",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/4bf38a5268766d7c61cd91c087309b7b796663c8"
+      "hash": "fa770fc",
+      "date": "2026-10-29T10:23:25-06:00",
+      "subject": "Start each visit on a random song from Jake's music, recent listens or playlist",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/fa770fcd9d6cdbf1d9ec1bc044291f3ef0938155"
     },
     {
       "project": "jakemotta.com",
-      "hash": "e669222",
-      "date": "2026-10-27T16:05:26-06:00",
-      "subject": "Show 100 listens and the whole shuffle, and open the floating player on click",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/e6692220d45706f8c3e7a156eea15ac7149f802a"
+      "hash": "1dc935a",
+      "date": "2026-10-28T18:04:45-06:00",
+      "subject": "Document the ten-song Up next, the scrolling Recent listens tile, Spotify's top artists, the skyline fix and card image versions",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/1dc935ac010dc2b5b78bcb1976a6b64a4f8109b1"
     },
     {
       "project": "jakemotta.com",
-      "hash": "42c6ab9",
-      "date": "2026-10-27T15:55:36-06:00",
-      "subject": "Stop the Personal Site preview from scrolling sideways",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/42c6ab9c3391b0c1e857d5ac6b150876084be9fe"
+      "hash": "829c4f4",
+      "date": "2026-10-28T18:03:13-06:00",
+      "subject": "Rank Favorite artists by Spotify's long-term top artists, through the listening Worker",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/829c4f44c09ea89cd700891f0fa8c61aec536aae"
     },
     {
       "project": "jakemotta.com",
-      "hash": "2d030b1",
-      "date": "2026-10-27T15:18:12-06:00",
-      "subject": "Apply the site review: SEO, a shared player and header, and a floating music button",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/2d030b1889b2cddc490d4d83398c2d5b4fc0c2f3"
+      "hash": "fdcc45e",
+      "date": "2026-10-28T18:00:28-06:00",
+      "subject": "List ten songs in Up next, the last 100 plays in the Recent listens tile, and turn the YouTube video with its tile",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/fdcc45e6e84617a23243d347d0e18ebb75924102"
     },
     {
       "project": "jakemotta.com",
-      "hash": "bedc9c5",
-      "date": "2026-10-27T12:22:18-06:00",
-      "subject": "Publish Progression Survival 1.0.0-rc.6",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/bedc9c531b407dc1390aef1c3f89bdffc0fe3d7c"
+      "hash": "0284c37",
+      "date": "2026-10-28T17:54:32-06:00",
+      "subject": "Get the 2012 portfolio's skyline scrolling again, and ask for fresh copies of the card images Cloudflare still serves stale",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/0284c37ec1cbfea1938b80c9165158b11330db54"
     },
     {
       "project": "jakemotta.com",
-      "hash": "824e742",
-      "date": "2026-10-27T00:36:57-06:00",
-      "subject": "Keep the open project in view in the viewer's strip",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/824e742eb9fd05908d163a1f68787abb16e2ef0b"
+      "hash": "7ae4c9d",
+      "date": "2026-10-28T17:50:44-06:00",
+      "subject": "Carry the third round of canvas comments into the site",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/7ae4c9d2bc9b2ddd6b309c39753d43684ff2b800"
     },
     {
       "project": "jakemotta.com",
-      "hash": "69c4de1",
-      "date": "2026-10-27T00:22:47-06:00",
-      "subject": "Say where the Ambii apps' source is backed up: a jakemotta-demo branch in each private repo",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/69c4de15fba0bf9dc2d5ed5078e521d253a7b796"
+      "hash": "86944ca",
+      "date": "2026-10-28T17:34:45-06:00",
+      "subject": "Make the YouTube player ahead of time, hide it until its video starts, and keep its volume with ours",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/86944ca4536d156e5b1a67b5f412039acbfad47d"
     },
     {
       "project": "jakemotta.com",
-      "hash": "808ac68",
-      "date": "2026-10-26T23:56:10-06:00",
-      "subject": "Put what Jake's listening to on the board, in Surprise me's place",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/808ac68db5185172ed44f80a1cd484dc578d737a"
+      "hash": "3869a51",
+      "date": "2026-10-28T17:13:52-06:00",
+      "subject": "Run Psycho's leaderboard on its 2017 database again, with rules that only take leaderboard rows",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/3869a5172a883b0b6d8e95b44759be3048dd47a6"
     },
     {
       "project": "jakemotta.com",
-      "hash": "f67ac2a",
-      "date": "2026-10-26T22:19:30-06:00",
-      "subject": "Let the Ambii media script run without the apps' private source",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/f67ac2aee2bfd694bc496eb1fb17b9b7a4439fec"
+      "hash": "e6fa5e1",
+      "date": "2026-10-28T17:02:44-06:00",
+      "subject": "Carry the current-site canvas into the site: name-tag hero, library rows, top artists",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/e6fa5e13bde326d4325b81acd0244a8c8dc519ae"
     },
     {
       "project": "jakemotta.com",
-      "hash": "1f45bc0",
-      "date": "2026-10-26T22:13:35-06:00",
-      "subject": "Pause the music by message from every preview, and let Escape close their pictures",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/1f45bc00a69d1d913dffae5b6ed999e0aacedc65"
+      "hash": "9314b6a",
+      "date": "2026-10-28T16:53:36-06:00",
+      "subject": "Add Psycho with a leaderboard ready for a new database, take Worxxx, Noah Garza and Survivor off the list, and put Flash first in Art",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/9314b6ae07747eaf15b14158577698210da37f58"
     },
     {
       "project": "jakemotta.com",
-      "hash": "da6456f",
-      "date": "2026-10-26T21:52:25-06:00",
-      "subject": "Add 16 projects from the archive, the Ambii Business demos and listening",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/da6456f124d557cc9a1ebf84461fb8e7db612ba1"
+      "hash": "fe818b9",
+      "date": "2026-10-28T16:28:28-06:00",
+      "subject": "Show framed projects as soon as they're parsed, and hear Escape in them from then",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/fe818b9c982e2131c3fac2dec08a31ba38580166"
     },
     {
       "project": "jakemotta.com",
-      "hash": "21aea01",
-      "date": "2026-10-26T19:11:56-06:00",
-      "subject": "Add a privacy page for the YouTube Music sync's Google app",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/21aea0161e284f4159e6cb58c59d00f495568fd3"
+      "hash": "edf6605",
+      "date": "2026-10-28T16:18:05-06:00",
+      "subject": "Stop game music doubling on Start over, halve game volume, give hub pages their own routes, and fix NinjaDonut's floor, jump and stuck enem…",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/edf66055815cc1ad3bcbf20b2882d0970e639d26"
     },
     {
       "project": "jakemotta.com",
-      "hash": "db02179",
-      "date": "2026-10-26T18:37:16-06:00",
-      "subject": "Move the music library to /library, off the music folder's path",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/db021793e3c408d02d71f209b34e748d24d1dbc5"
+      "hash": "e7661bb",
+      "date": "2026-10-28T14:11:19-06:00",
+      "subject": "Note that Cloudflare can serve a rewritten file stale for a week",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/e7661bb402bcde30172f2eadde198fe9b30fc7ed"
     },
     {
       "project": "jakemotta.com",
-      "hash": "530d10a",
-      "date": "2026-10-26T18:24:28-06:00",
-      "subject": "Open every board tile that has more behind it, and list all projects",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/530d10a76dda87d94a6260814589dd21e4bdb486"
+      "hash": "fb86743",
+      "date": "2026-10-28T13:56:21-06:00",
+      "subject": "Turn off folder listings, and stop publishing the Ambii build in Pistol Art's files",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/fb867433be97622460531333336707c51c2f37cd"
     },
     {
       "project": "jakemotta.com",
-      "hash": "a7e04e2",
-      "date": "2026-10-26T17:57:31-06:00",
-      "subject": "Rebuild the site as one bento board",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/a7e04e27413ac87eb75c3bc7b2e39461ea1763bd"
+      "hash": "c4b1e1c",
+      "date": "2026-10-28T13:30:16-06:00",
+      "subject": "Record the expansion's push to the Ambii jakemotta-demo branches",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/c4b1e1c2525f880dd62b675ba87def4d61a9a94e"
     },
     {
       "project": "jakemotta.com",
-      "hash": "70ccb34",
-      "date": "2026-10-26T15:56:00-06:00",
-      "subject": "Split the docs: per-project pages, music and modpack",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/70ccb342b4f4e4bc8f6f86552536e69556addb84"
+      "hash": "d7905b0",
+      "date": "2026-10-28T13:19:32-06:00",
+      "subject": "Record keeping Cesar's photo in Pokémon's Pong battle",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/d7905b0aa067f68da1712d27ceb881b05c4abd41"
     },
     {
       "project": "jakemotta.com",
-      "hash": "4989c15",
-      "date": "2026-10-26T15:55:57-06:00",
-      "subject": "Add TapSlayDie to the projects, and point the cards at the new images",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/4989c1587b5df74fac0dec5a0de8ac1383081d67"
+      "hash": "8208cc1",
+      "date": "2026-10-27T23:01:55-06:00",
+      "subject": "Finish the Ambii demo's expansion: fixes from the browser checks, rebuilt apps, hub and docs",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/8208cc1a3a6dc1ec2168f5909f1dd0a370eaba0c"
     },
     {
       "project": "jakemotta.com",
-      "hash": "4698415",
-      "date": "2026-10-26T15:55:55-06:00",
-      "subject": "Screenshot each running preview for sharp project cards",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/4698415f084775402423888f50c6c4d32529020e"
+      "hash": "7e5c9d2",
+      "date": "2026-10-27T23:01:36-06:00",
+      "subject": "Add the Ambii demo's guest tracks, art, beds and welcome clip",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/7e5c9d2e9729b52b6f7a6850782b11e2035ecc28"
     },
     {
       "project": "jakemotta.com",
-      "hash": "00afbc8",
-      "date": "2026-10-26T15:37:39-06:00",
-      "subject": "Record what the Black Chamber and CS160 restores left out",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/00afbc861a4ee0d57c5de681cce654fe07339b3b"
+      "hash": "f618466",
+      "date": "2026-10-27T21:11:32-06:00",
+      "subject": "Settle the Ambii demo's guest music on the artists whose terms fit, and credit them by the player",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/f618466eb442c092508cbe76f94e8dbb5e819b9a"
     },
     {
       "project": "jakemotta.com",
-      "hash": "e2a7cb7",
-      "date": "2026-10-26T15:24:57-06:00",
-      "subject": "Link the Black Chamber and CS160 cards to their previews",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/e2a7cb71bf21e76edd014541a646cf19e42f1ea0"
+      "hash": "b7a7129",
+      "date": "2026-10-27T20:56:19-06:00",
+      "subject": "Grow the Ambii demo's catalogue, stations and seed (mock side, work in progress)",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/b7a71294f12987183e4ea44b372dd3a5d6e85f94"
     }
-  ]
+  ],
+  "github": {
+    "user": "JakeMotta",
+    "url": "https://github.com/JakeMotta",
+    "contributions": {
+      "total": 5522,
+      "date": "2026-10-29"
+    },
+    "commits": 681,
+    "additions": 238017,
+    "deletions": 58212,
+    "projects": [
+      {
+        "name": "TapSlayDie",
+        "commits": 615,
+        "additions": 195538,
+        "deletions": 55878
+      },
+      {
+        "name": "jakemotta.com",
+        "commits": 47,
+        "additions": 32378,
+        "deletions": 1868
+      },
+      {
+        "name": "Asteroids",
+        "commits": 10,
+        "additions": 3043,
+        "deletions": 241
+      },
+      {
+        "name": "Farming game",
+        "commits": 9,
+        "additions": 7058,
+        "deletions": 225
+      }
+    ],
+    "weeks": [
+      {
+        "week": "2025-11-03",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2025-11-10",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2025-11-17",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2025-11-24",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2025-12-01",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2025-12-08",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2025-12-15",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2025-12-22",
+        "commits": 9,
+        "additions": 7058,
+        "deletions": 225
+      },
+      {
+        "week": "2025-12-29",
+        "commits": 6,
+        "additions": 2796,
+        "deletions": 211
+      },
+      {
+        "week": "2026-01-05",
+        "commits": 4,
+        "additions": 247,
+        "deletions": 30
+      },
+      {
+        "week": "2026-01-12",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-01-19",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-01-26",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-02-02",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-02-09",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-02-16",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-02-23",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-03-02",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-03-09",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-03-16",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-03-23",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-03-30",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-04-06",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-04-13",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-04-20",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-04-27",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-05-04",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-05-11",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-05-18",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-05-25",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-06-01",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-06-08",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-06-15",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-06-22",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-06-29",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-07-06",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-07-13",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-07-20",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-07-27",
+        "commits": 21,
+        "additions": 24192,
+        "deletions": 2642
+      },
+      {
+        "week": "2026-08-03",
+        "commits": 196,
+        "additions": 60248,
+        "deletions": 22316
+      },
+      {
+        "week": "2026-08-10",
+        "commits": 117,
+        "additions": 30200,
+        "deletions": 13177
+      },
+      {
+        "week": "2026-08-17",
+        "commits": 3,
+        "additions": 260,
+        "deletions": 242
+      },
+      {
+        "week": "2026-08-24",
+        "commits": 49,
+        "additions": 7828,
+        "deletions": 2718
+      },
+      {
+        "week": "2026-08-31",
+        "commits": 68,
+        "additions": 14597,
+        "deletions": 4014
+      },
+      {
+        "week": "2026-09-07",
+        "commits": 24,
+        "additions": 14316,
+        "deletions": 2555
+      },
+      {
+        "week": "2026-09-14",
+        "commits": 129,
+        "additions": 39488,
+        "deletions": 7606
+      },
+      {
+        "week": "2026-09-21",
+        "commits": 8,
+        "additions": 4409,
+        "deletions": 608
+      },
+      {
+        "week": "2026-09-28",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-10-05",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-10-12",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-10-19",
+        "commits": 0,
+        "additions": 0,
+        "deletions": 0
+      },
+      {
+        "week": "2026-10-26",
+        "commits": 47,
+        "additions": 32378,
+        "deletions": 1868
+      }
+    ]
+  }
 }

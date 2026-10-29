@@ -40,12 +40,19 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         flex: 1;
         gap: 14px;
         grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-        grid-template-rows: auto minmax(0, 1fr);
+        // Me & Claude and On GitHub take what they need, as far as the screen allows, and scroll past
+        // that; Updates and Latest commits share out the rest
+        grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
+        grid-template-areas:
+            'posts claude'
+            'posts commits'
+            'github commits';
 
         @media (max-width: 1099px) {
             flex: none;
             grid-template-columns: minmax(0, 1fr);
             grid-template-rows: none;
+            grid-template-areas: none;
         }
     }
 
@@ -75,27 +82,59 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             overflow: visible;
         }
 
+        // A tile too short for everything in it scrolls, rather than squashing its charts flat
+        > * {
+            flex-shrink: 0;
+        }
+
         &--posts {
             --tilt: -0.4deg;
             gap: 22px;
             background: var(--color-primary-light);
 
             @media (min-width: 1100px) {
-                grid-row: 1 / span 2;
+                grid-area: posts;
             }
+        }
+
+        &--claude,
+        &--github {
+            background: var(--color-primary-dark);
+            color: var(--color-primary-light);
         }
 
         &--claude {
             --tilt: 0.5deg;
-            background: var(--color-primary-dark);
-            color: var(--color-primary-light);
+
+            @media (min-width: 1100px) {
+                grid-area: claude;
+            }
+        }
+
+        &--github {
+            --tilt: 0.4deg;
+
+            @media (min-width: 1100px) {
+                grid-area: github;
+            }
         }
 
         &--commits {
             --tilt: -0.6deg;
             gap: 8px;
             border: 3px solid var(--color-primary-ink);
+
+            @media (min-width: 1100px) {
+                grid-area: commits;
+            }
         }
+    }
+
+    &__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
     }
 
     &__eyebrow {
@@ -103,6 +142,22 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         font-weight: 900;
         letter-spacing: 0.14em;
         text-transform: uppercase;
+    }
+
+    &__out {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        color: inherit;
+        font-size: 13px;
+        font-weight: 900;
+        text-decoration: none;
+        transition: transform 0.3s $spring;
+
+        &:hover {
+            color: inherit;
+            transform: rotate(-3deg);
+        }
     }
 
     &__pill {
@@ -118,6 +173,13 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         display: grid;
         gap: 10px;
         grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        // A label that wraps on a phone keeps its number level with the others
+        > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
 
         dt {
             font-size: 12px;
@@ -152,8 +214,9 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
         li {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 8px;
+            gap: 0 8px;
         }
 
         strong {
@@ -163,6 +226,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         span:last-child {
             margin-left: auto;
             font-variant-numeric: tabular-nums;
+            white-space: nowrap;
         }
     }
 

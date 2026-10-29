@@ -5,7 +5,7 @@ import { FloatingPlayer } from '../../atoms';
 import { useAudioStore } from '../../../store/audio';
 import { useCommonStore } from '../../../store/common';
 import { usePageMeta } from '../../../common/seo';
-import { EarsTile, FeaturedTile, HeroTile, ModpackTile, NowPlayingTile, ProjectsTile, SayHiTile, UpNextTile } from './tiles';
+import { DevlogTile, EarsTile, FeaturedTile, HeroTile, ModpackTile, NowPlayingTile, ProjectsTile, SayHiTile } from './tiles';
 import './index.scss';
 
 // The board on its own; any other path under it is an opened tile drawn over it
@@ -58,7 +58,7 @@ export const Home = () => {
                 <HeroTile />
                 <NowPlayingTile ref={nowRef} />
                 <FeaturedTile />
-                <UpNextTile />
+                <DevlogTile />
                 <ProjectsTile />
                 <ModpackTile />
                 <EarsTile />

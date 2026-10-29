@@ -51,7 +51,19 @@
     kbd { display: inline-block; min-width: 1.4em; padding: 1px 6px; border: 1px solid #555; border-bottom-width: 2px; border-radius: 5px; background: #222; font: 600 14px/1.4 ui-monospace, Consolas, monospace; text-align: center; color: #fff; }
     .note { margin-top: 22px; color: #999; font-size: 14px; }
     .note p + p { margin-top: 8px; }
-    @media (prefers-reduced-motion: reduce) { .play, .bar button { transition: none; } .play:hover, .bar button:hover { transform: none; } }
+    .maps-lede { color: #ccc; }
+    .maps { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 12px; }
+    .maps figure { margin: 0; }
+    .maps a { display: block; background: #fff; padding: 6px; border-radius: 4px; transition: transform .2s cubic-bezier(.34, 1.56, .64, 1); }
+    .maps figure:nth-child(odd) a { transform: rotate(-.7deg); }
+    .maps figure:nth-child(even) a { transform: rotate(.6deg); }
+    .maps a:hover, .maps a:focus-visible { transform: rotate(0) translateY(-3px) scale(1.02); outline: none; box-shadow: 0 8px 20px rgba(0, 0, 0, .5); }
+    .maps img { display: block; width: 100%; aspect-ratio: 2338 / 1700; }
+    .maps figcaption { font-weight: 700; font-size: 15px; margin-top: 6px; }
+    dialog { border: 0; border-radius: 6px; padding: 6px; max-width: 96vw; max-height: 96vh; background: #fff; }
+    dialog::backdrop { background: rgba(0, 0, 0, .8); }
+    dialog img { display: block; max-width: 94vw; max-height: 90vh; }
+    @media (prefers-reduced-motion: reduce) { .play, .bar button, .maps a { transition: none; } .play:hover, .bar button:hover { transform: none; } }
 </style>
 </head>
 <body>
@@ -79,7 +91,18 @@
         <p>Coloris never got past its first map: Huey walks west through the forest, past a cliff and its stairs, changing color as he goes. There are no enemies, goals or sounds yet. The scrolling comes from danpost's SWorld class, shared on greenfoot.org.</p>
         <p>This is my original 2014 Greenfoot code, playing just as I left it. On a phone it will load, but you'll need a keyboard to play.</p>
     </div>
+
+    <h2>The world maps</h2>
+    <p class="maps-lede">Before writing any code I drew the whole world in pencil, screen by screen: the town and the four color worlds Huey was meant to reach. Click one to see it full size.</p>
+    <div class="maps" id="maps">
+        <figure><a href="maps/town.jpg"><img src="maps/town.jpg" alt="Pencil map of the town" loading="lazy"></a><figcaption>The town</figcaption></figure>
+        <figure><a href="maps/red-world.jpg"><img src="maps/red-world.jpg" alt="Pencil map of the red world" loading="lazy"></a><figcaption>Red world</figcaption></figure>
+        <figure><a href="maps/green-world.jpg"><img src="maps/green-world.jpg" alt="Pencil map of the green world" loading="lazy"></a><figcaption>Green world</figcaption></figure>
+        <figure><a href="maps/blue-world.jpg"><img src="maps/blue-world.jpg" alt="Pencil map of the blue world" loading="lazy"></a><figcaption>Blue world</figcaption></figure>
+        <figure><a href="maps/yellow-world.jpg"><img src="maps/yellow-world.jpg" alt="Pencil map of the yellow world" loading="lazy"></a><figcaption>Yellow world</figcaption></figure>
+    </div>
 </main>
+<dialog id="zoom"><img alt=""></dialog>
 <script>
 (function () {
     // The site's player pauses when the game first plays a sound. Coloris has none, so the music keeps going.
@@ -165,6 +188,18 @@
     document.getElementById('play').addEventListener('click', start);
     pause.addEventListener('click', function () { GF.toggleRun(); GF.focus(); });
     document.getElementById('restart').addEventListener('click', function () { GF.reset(); GF.focus(); });
+
+    // Each map is a plain link to its file; with JS it opens in place instead, and a click anywhere closes it.
+    var zoom = document.getElementById('zoom');
+    document.getElementById('maps').addEventListener('click', function (event) {
+        var link = event.target.closest('a');
+        if (!link) return;
+        event.preventDefault();
+        zoom.querySelector('img').src = link.getAttribute('href');
+        zoom.querySelector('img').alt = link.querySelector('img').alt;
+        zoom.showModal();
+    });
+    zoom.addEventListener('click', function () { zoom.close(); });
 
     // #play starts it without a click, for the card screenshot (yarn projects:screenshot)
     if (location.hash === '#play') start();

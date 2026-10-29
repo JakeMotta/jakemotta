@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <!-- Hand-written for the preview: Ambii's story in pieces. The sites under sites/ are unchanged copies
-     of the 2019 folders; the videos and designs are copies from Jake's Ambii drive.
+     of the 2019 folders, and wireframes/ and prototype/ unchanged copies of the 2018 prototype exports;
+     the videos and designs are copies from Jake's Ambii drive, the photos web-sized copies, and beta/
+     screenshots of the 2018 beta build (whose bundle isn't published).
      See docs/projects/ambii.md for where each piece came from and what was left out. -->
 <html lang="en">
 <head>
@@ -48,6 +50,9 @@
     .gallery a:hover, .gallery a:focus-visible { transform: rotate(0) translateY(-4px) scale(1.03); border-color: #c178ff; outline: none; }
     .gallery img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: contain; }
     .gallery a.tall img { object-fit: cover; object-position: top; }
+    .gallery.photos img { object-fit: cover; object-position: center 30%; }
+    .gallery.shots { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+    .gallery + .sites, .sites + .gallery { margin-top: 26px; }
     .gallery figcaption { font-size: 15px; }
     .gallery figcaption span { font-size: 13px; }
 
@@ -61,7 +66,66 @@
 <body>
 <main>
     <h1>Ambii</h1>
-    <p class="lede">The startup I worked on from 2017 to 2021: a music app for listening together, where everyone in the room gets a say in what plays next. Here it is in pieces: its websites, two videos, and the designs along the way.</p>
+    <p class="lede">The startup I worked on from 2017 to 2021: a music app for listening together, where everyone in the room gets a say in what plays next. Here it is in pieces: pitch day, the first wireframes, the beta, its websites, two videos, and the designs along the way.</p>
+
+    <section>
+        <span class="when">2018</span>
+        <h2>Pitch day</h2>
+        <p class="intro">Zinnstarter is San José State's startup pitch competition, and this is Ambii's turn at it. In matching pink, obviously. Click one for the full size.</p>
+        <div class="gallery photos">
+            <figure><a href="zinnstarter/pitch.jpg"><img src="zinnstarter/pitch.jpg" alt="Pitching Ambii, with &quot;Music is better together&quot; on the screen behind" loading="lazy"></a><figcaption>The pitch<span>Zinnstarter</span></figcaption></figure>
+            <figure><a href="zinnstarter/team.jpg"><img src="zinnstarter/team.jpg" alt="Four in suits, three of them in pink bow ties" loading="lazy"></a><figcaption>Suited up</figcaption></figure>
+            <figure><a href="zinnstarter/team-pointing.jpg"><img src="zinnstarter/team-pointing.jpg" alt="The same four, one pointing out of frame" loading="lazy"></a><figcaption>Over there</figcaption></figure>
+            <figure><a href="zinnstarter/finger-guns.jpg"><img src="zinnstarter/finger-guns.jpg" alt="The four again, with finger guns" loading="lazy"></a><figcaption>Finger guns</figcaption></figure>
+            <figure><a href="zinnstarter/the-lean.jpg"><img src="zinnstarter/the-lean.jpg" alt="The four leaning and pointing, at an angle" loading="lazy"></a><figcaption>The lean</figcaption></figure>
+            <figure><a href="zinnstarter/two-bow-ties.jpg"><img src="zinnstarter/two-bow-ties.jpg" alt="Two in pink bow ties by the door" loading="lazy"></a><figcaption>Two bow ties</figcaption></figure>
+            <figure><a href="zinnstarter/waiting.jpg"><img src="zinnstarter/waiting.jpg" alt="Sitting by the door in a pink bow tie" loading="lazy"></a><figcaption>Taking a seat</figcaption></figure>
+        </div>
+    </section>
+
+    <section>
+        <span class="when">July 2018</span>
+        <h2>Wireframes</h2>
+        <p class="intro">Before the apps, the web app got drawn out screen by screen: finding a party, starting one, the party itself, adding songs. The second round is clickable, so go ahead and poke at it.</p>
+        <div class="sites">
+            <a class="site" href="wireframes/pages/page229050244-sketched.xhtml">
+                <img src="thumbs/wireframes.jpg" alt="Wireframe of a party page: the song, the queue and the library" loading="lazy">
+                <div class="text">
+                    <span class="name">First wireframes</span><span class="year">July 2018</span>
+                    <div class="what">The first pass: six screens, with the queue under the song and the library down the side.</div>
+                </div>
+            </a>
+            <a class="site" href="prototype/pages/page229050244-sketched.xhtml">
+                <img src="thumbs/prototype.jpg" alt="Clickable prototype of a party page, with likes and a party code" loading="lazy">
+                <div class="text">
+                    <span class="name">Clickable prototype</span><span class="year">July 2018</span>
+                    <div class="what">Four days later: nine screens to click through. Join a party or start one, rate the song, add your own.</div>
+                </div>
+            </a>
+        </div>
+        <div class="gallery shots">
+            <figure><a href="prototype-screens/home-join.png"><img src="prototype-screens/home-join.png" alt="Prototype: join a party" loading="lazy"></a><figcaption>Join a party</figcaption></figure>
+            <figure><a href="prototype-screens/home-create.png"><img src="prototype-screens/home-create.png" alt="Prototype: create a party" loading="lazy"></a><figcaption>Create a party</figcaption></figure>
+            <figure><a href="prototype-screens/now-joining.png"><img src="prototype-screens/now-joining.png" alt="Prototype: now joining" loading="lazy"></a><figcaption>Now joining</figcaption></figure>
+            <figure><a href="prototype-screens/joined-party.png"><img src="prototype-screens/joined-party.png" alt="Prototype: in a party" loading="lazy"></a><figcaption>In a party</figcaption></figure>
+            <figure><a href="prototype-screens/joined-party-host.png"><img src="prototype-screens/joined-party-host.png" alt="Prototype: hosting a party" loading="lazy"></a><figcaption>Hosting</figcaption></figure>
+            <figure><a href="prototype-screens/joined-party-cloned.png"><img src="prototype-screens/joined-party-cloned.png" alt="Prototype: a cloned party" loading="lazy"></a><figcaption>A cloned party</figcaption></figure>
+            <figure><a href="prototype-screens/add-song-recents.png"><img src="prototype-screens/add-song-recents.png" alt="Prototype: add a song from recents" loading="lazy"></a><figcaption>Add a song, recents</figcaption></figure>
+            <figure><a href="prototype-screens/add-song-favorites.png"><img src="prototype-screens/add-song-favorites.png" alt="Prototype: add a song from favorites" loading="lazy"></a><figcaption>Add a song, favorites</figcaption></figure>
+            <figure><a href="prototype-screens/my-music.png"><img src="prototype-screens/my-music.png" alt="Prototype: my music" loading="lazy"></a><figcaption>My music</figcaption></figure>
+        </div>
+    </section>
+
+    <section>
+        <span class="when">November 2018</span>
+        <h2>The beta</h2>
+        <p class="intro">beta.ambii.io, the first version with real accounts. Everything past the front door lived on servers that are long gone, so the front door is what's left.</p>
+        <div class="gallery shots">
+            <figure><a href="beta/welcome.jpg"><img src="beta/welcome.jpg" alt="Beta: Ambii is the modern day jukebox, Get started" loading="lazy"></a><figcaption>Welcome</figcaption></figure>
+            <figure><a href="beta/login.jpg"><img src="beta/login.jpg" alt="Beta: log in with Facebook, Google or email" loading="lazy"></a><figcaption>Log in</figcaption></figure>
+            <figure><a href="beta/register.jpg"><img src="beta/register.jpg" alt="Beta: sign up" loading="lazy"></a><figcaption>Sign up</figcaption></figure>
+        </div>
+    </section>
 
     <section>
         <span class="when">2018 – 2019</span>
@@ -153,9 +217,9 @@
 
 <dialog id="zoom"><img alt=""><p></p></dialog>
 <script>
-    // Each design is a plain link to its file; with JS it opens in place instead, and a click anywhere closes it.
+    // Each picture is a plain link to its file; with JS it opens in place instead, and a click anywhere closes it.
     var zoom = document.getElementById('zoom');
-    document.querySelector('.gallery').addEventListener('click', function (event) {
+    document.querySelectorAll('.gallery').forEach(function (gallery) { gallery.addEventListener('click', function (event) {
         var link = event.target.closest('a');
         if (!link) return;
         event.preventDefault();
@@ -166,7 +230,7 @@
         zoom.querySelector('p').textContent = img.alt;
         zoom.showModal();
         zoom.scrollTop = 0;
-    });
+    }); });
     zoom.addEventListener('click', function () { zoom.close(); });
 
     // One video at a time. The site's music keeps playing in the page around this frame, so a video

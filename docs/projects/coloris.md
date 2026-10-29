@@ -56,6 +56,8 @@ Two small jars sit in front of it in the applet's `archive`, both made on 2026-1
 
 Also in the site's project viewer under `yarn dev`: Play, walking and the color keys, at 61 acts a second. Not verified for the JavaScript build: the blood and injury effects (switched off in the code).
 
+**The world maps.** Since 2026-10-29, under the controls, the page shows Jake's pencil maps of Coloris's world, drawn screen by screen before the code: the town and the red, green, blue and yellow worlds. Jake approved them from the second sweep of his archive. They're scans from `Old Computer/Documents/Random/Stuff2/Old/Coloris/`, dated 2013-09-22, copied unchanged (2338×1700 JPEGs, about 0.5 MB each) into `maps/` under plain names: `town.jpg` (`TownMap.jpg`), `red-world.jpg`, `green-world.jpg`, `blue-world.jpg` (`<Color>World Map.jpg`) and `yellow-world.jpg` (`YellowWorld Map_002.jpg`, the later scan, with "Yellow" written in at the top; `_001` is the same page before that). Each is a link to its file and opens in a `<dialog>`, as in the Sketchbook. The `Human_*` PNGs beside them are character-generator exports, not Jake's drawings, and are left out.
+
 ## Download
 
 `public/projects/coloris/download/coloris.zip` (5.6 MB), made on 2026-10-27, unzips to a `coloris/` folder:

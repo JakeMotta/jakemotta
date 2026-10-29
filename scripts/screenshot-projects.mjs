@@ -65,6 +65,10 @@ const SHOTS = [
     { id: 'flash', url: '/projects/flash/index.html', settle: 1500, run: "document.querySelectorAll('img[loading]').forEach((img) => (img.loading = 'eager'))" },
     // The poster frame, with the film's title on the wall
     { id: 'escaping-confinement', url: '/projects/escaping-confinement/index.html', settle: 1500 },
+    // The top of the gallery, with its turntables on their first frame so the card doesn't depend on timing
+    { id: 'maya-models', url: '/projects/maya-models/index.html', settle: 2500, run: "document.querySelectorAll('video').forEach((v) => { v.pause(); v.currentTime = 0; })" },
+    // The turntable itself on its first frame (the desk from the front), without its controls
+    { id: 'maya-desk', url: '/projects/maya-desk/index.html', settle: 2000, run: "const v = document.querySelector('video'); v.removeAttribute('controls'); v.pause(); v.currentTime = 0;", clip: { selector: 'video' } },
     // Down past the three wide ones, onto the grid of smaller GIFs mid-animation
     { id: 'pivot', url: '/projects/pivot/index.html', settle: 3000, scroll: 2010 },
     // The game is portrait, so the card is its bottom: the miner on the bricks over the lava
@@ -88,6 +92,8 @@ const SHOTS = [
     { id: 'isguy', url: '/projects/isguy/index.html#play', settle: 5000, clip: { selector: '#frame canvas' } },
     // Ten seconds in, once enemy donuts have had time to run in at the ninja in the middle (they come at random)
     { id: 'ninjadonut-game', url: '/projects/ninjadonut-game/index.html#play', settle: 10000, clip: { selector: '#frame canvas' } },
+    // Plays itself; at 12 seconds about a dozen villains are out
+    { id: 'randomchance', url: '/projects/randomchance/index.html#play', settle: 12000, clip: { selector: '#frame canvas' } },
     // TrainingVille, the 800×600 town: Space past the title, Enter for the starter the pointer is on, then the town
     {
         id: 'greenfoot-pokemon',

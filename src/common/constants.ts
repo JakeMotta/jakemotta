@@ -50,6 +50,13 @@ export const musicList: MusicItemProps[] = [
         date: '2019'
     },
     {
+        image: '',
+        title: 'BEAT_2',
+        description: '',
+        url: '/music/beat_2.mp3',
+        date: '2019'
+    },
+    {
         image: '/images/music/memories.jpg',
         title: 'Memories',
         description: 'My first attempt at a remix',
@@ -92,6 +99,27 @@ export const musicList: MusicItemProps[] = [
         date: '2016'
     },
     {
+        image: '',
+        title: 'Discovery',
+        description: '',
+        url: '/music/discovery.mp3',
+        date: '2016'
+    },
+    {
+        image: '',
+        title: 'dandy',
+        description: '',
+        url: '/music/dandy.mp3',
+        date: '2016'
+    },
+    {
+        image: '',
+        title: 'new song',
+        description: '',
+        url: '/music/new_song.mp3',
+        date: '2016'
+    },
+    {
         image: '/images/music/transition.jpg',
         title: 'Transition',
         description: '',
@@ -113,10 +141,45 @@ export const musicList: MusicItemProps[] = [
         date: '2015'
     },
     {
+        image: '',
+        title: 'helpme',
+        description: '',
+        url: '/music/helpme.mp3',
+        date: '2015'
+    },
+    {
+        image: '',
+        title: 'sickbeat',
+        description: '',
+        url: '/music/sickbeat.mp3',
+        date: '2014'
+    },
+    {
+        image: '',
+        title: 'Nices',
+        description: '',
+        url: '/music/nices.mp3',
+        date: '2013'
+    },
+    {
+        image: '',
+        title: 'excelsior',
+        description: '',
+        url: '/music/excelsior.mp3',
+        date: '2013'
+    },
+    {
         image: '/images/music/ctrl_alt_del.jpeg',
         title: 'Innocence',
         description: '',
         url: '/music/innocence.mp3',
+        date: '2012'
+    },
+    {
+        image: '',
+        title: 'SlapsTheMoon',
+        description: '',
+        url: '/music/slaps_the_moon.mp3',
         date: '2012'
     },
 ]
@@ -249,6 +312,8 @@ export const homeProjectList: HomeProject[] = [
         pages: [
             { slug: 'landing-2018', title: 'Play Music Together', preview: '/projects/ambii/index.html' },
             { slug: 'template-site', title: 'Join the Party!', preview: '/projects/ambii/story/sites/2019-02/index.static.html' },
+            { slug: 'wireframes', title: 'Wireframes', preview: '/projects/ambii/story/wireframes/pages/page229050244-sketched.xhtml' },
+            { slug: 'prototype', title: 'Clickable prototype', preview: '/projects/ambii/story/prototype/pages/page229050244-sketched.xhtml' },
             { slug: 'site-2019', title: 'Your Music. Everywhere.', preview: '/projects/ambii/story/sites/2019-09/alora/index.html' },
         ],
     },
@@ -366,6 +431,16 @@ export const homeProjectList: HomeProject[] = [
         download: { url: '/projects/coloris/download/coloris.zip', label: 'Download the game', note: '6 MB. Unzip and open play-coloris.jar. Needs Java (java.com). Windows, Mac or Linux.' },
     },
     {
+        id: 'maya-desk',
+        image: '/images/projects/maya-desk.webp',
+        title: 'Computer Desk',
+        date: '2014',
+        category: 'animation',
+        tags: ['3D Animation', 'Maya'],
+        description: 'A computer desk I modeled in Maya, spinning all the way round.',
+        preview: '/projects/maya-desk/index.html',
+    },
+    {
         id: 'rebound',
         image: '/images/projects/rebound.webp',
         title: 'Rebound',
@@ -427,6 +502,16 @@ export const homeProjectList: HomeProject[] = [
         preview: '/projects/highschool/oldSite/index.static.html',
     },
     {
+        id: 'randomchance',
+        image: '/images/projects/randomchance.webp',
+        title: 'RandomChance',
+        date: '2012',
+        category: 'game',
+        tags: ['Java Game'],
+        description: 'A survival game that plays itself: a lone hero against endless villains, every fight down to a roll of the dice.',
+        preview: '/projects/randomchance/index.html',
+    },
+    {
         id: 'greenfoot-pokemon',
         image: '/images/projects/greenfoot-pokemon.webp?v=2',
         title: 'Pokémon: Green Foot Edition',
@@ -466,6 +551,16 @@ export const homeProjectList: HomeProject[] = [
         tags: ['Website', 'Games', 'Comics'],
         description: 'Games, comics and odds and ends, starring a very serious donut.',
         preview: '/projects/ninja-donut/index.html',
+    },
+    {
+        id: 'maya-models',
+        image: '/images/projects/maya-models.webp',
+        title: 'Maya Models',
+        date: '2010',
+        category: 'art',
+        tags: ['3D Models', 'Maya'],
+        description: 'The first things I built in 3D: guns, a raven, a car, robots, a dragon wasp and a spinning gold emblem.',
+        preview: '/projects/maya-models/index.html',
     },
     {
         id: 'pivot',

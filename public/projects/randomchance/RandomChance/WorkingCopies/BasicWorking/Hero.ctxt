@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.params=lifeText\ killText
+comment0.target=Hero(GameText,\ GameText)
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ Hero\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment2.params=
+comment2.target=void\ heroMovement()
+comment3.params=
+comment3.target=void\ heroCheckEdges()
+comment4.params=
+comment4.target=void\ heroCheckXEdge()
+comment5.params=
+comment5.target=void\ heroCheckYEdge()
+comment6.params=
+comment6.target=void\ damageHero()
+comment7.params=
+comment7.target=void\ checkVillain()
+numComments=8

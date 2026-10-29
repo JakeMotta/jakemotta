@@ -1,0 +1,2 @@
+# The 2018 Pidoco exports (wireframes/, prototype/) are .xhtml pages; make sure they are served as XHTML.
+AddType application/xhtml+xml .xhtml

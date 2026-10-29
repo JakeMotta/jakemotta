@@ -49,6 +49,11 @@ const GAMES = [
         id: 'ninjadonut-game',
         jars: ['fixes.jar', 'ninjadonut.jar'],
     },
+    // Assembled from the scenario in RandomChance/ (docs/projects/randomchance.md)
+    {
+        id: 'randomchance',
+        jars: ['randomchance.jar'],
+    },
     {
         // start-at-title.jar opens on the title instead of the town; closed-sign.jar skips text the town drew and
         // threw away every act (docs/projects/greenfoot-pokemon.md)

@@ -1,11 +1,12 @@
 # Greenfoot games without Java
 
-How the Greenfoot games can run as JavaScript instead of as their jars in CheerpJ. Since 2026-10-27 five games run this way:
+How the Greenfoot games can run as JavaScript instead of as their jars in CheerpJ. Since 2026-10-27 five games run this way, and a sixth since 2026-10-29:
 - Coloris ([coloris.md](coloris.md));
 - isGuy ([isguy.md](isguy.md));
 - Pokémon: Green Foot Edition ([greenfoot-pokemon.md](greenfoot-pokemon.md));
 - Rebound ([rebound.md](rebound.md));
-- NinjaDonut: The Game ([ninjadonut-game.md](ninjadonut-game.md)).
+- NinjaDonut: The Game ([ninjadonut-game.md](ninjadonut-game.md));
+- RandomChance ([randomchance.md](randomchance.md)), 2026-10-29.
 
 Jake chose this route after comparing it with a hand port and with CheerpJ on Rebound. That leaves no game on CheerpJ: the earlier pages stay, unlinked, as `cheerpj.html` beside Coloris, isGuy and Pokémon.
 
@@ -129,7 +130,7 @@ A healthy game is ready within about a second, at about 60 acts and 60 frames a 
 
 **Things learned the hard way:**
 - **Measure in a foreground tab.** The built-in browser pane runs its page as a background tab when the pane is hidden, which throttles timers: CheerpJ all but stops there, and any timing taken there is wrong.
-- **Don't measure by reading the canvas.** Reading pixels back every frame (`getImageData`, or `drawImage` from the game's canvas) stalls the page being measured. Counting `isKeyDown` checks, as the check script does, costs nothing. A game whose current screen checks no keys (isGuy's title) shows no act rate there; press a key into a level first.
+- **Don't measure by reading the canvas.** Reading pixels back every frame (`getImageData`, or `drawImage` from the game's canvas) stalls the page being measured. Counting acts costs nothing: the check script counts calls to `GF.clearLatchedKeys`, which the runtime makes once after every act. Until 2026-10-29 it counted `isKeyDown` checks instead, which read nothing for a screen that checks no keys (isGuy's title) or a game with no controls (RandomChance).
 - **Sound needs a real click.** Browsers only let sound start after the visitor's own gesture, so `#play` (no click) can't show whether a game's sounds work. The check script clicks Play for that reason.
 - **The preview tool's dev server may serve the main checkout.** Under `yarn dev` from another folder, a page that only exists in the worktree answers with the site's own app. Start `yarn dev` in the worktree yourself, on a free `PORT` (with `REACT_APP_MUTE_AUDIO=1`, as Claude's previews are muted), and point `BASE_URL` at it.
 - **The deploy compares files by size only.** The build's hashed names and `manifest.json`'s unconditional upload handle `web/`. A rebuilt jar or download of the same name and length would never reach the server: give it a new name.

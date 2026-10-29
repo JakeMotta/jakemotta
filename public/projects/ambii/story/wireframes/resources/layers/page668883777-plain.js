@@ -1,0 +1,891 @@
+rabbit.data.layerStore.addLayerFromHtml('<div xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sketchedHelper="java:it.rapidrabb.editor.stencils.helpers.SketchedHelper" xmlns:fn="http://www.w3.org/2005/xpath-functions">\
+   <div id="result">\
+      <div xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/1999/xhtml" id="__containerId__page668883777-layer" class="layer" name="__containerId__pageLayer" data-layer-id="page668883777" data-layer-type="pageLayer" style="position:absolute;left:0px;top:0px;">\
+         <div id="__containerId__-page668883777-layer-1367949474" style="position: absolute; left: 195px; top: 55px; width: 965px; height: 635px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="1367949474" data-review-reference-id="1367949474">\
+            <div class="stencil-wrapper" style="width: 965px; height: 635px">\
+               <div title="">\
+                  <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 635px; width:965px;" width="965" height="635" viewBox="0 0 965 635">\
+                     <svg:g width="965" height="635">\
+                        <svg:rect x="0" y="0" width="965" height="635" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                     </svg:g>\
+                  </svg:svg>\
+               </div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-1807169247" style="position: absolute; left: 285px; top: 70px; width: 287px; height: 36px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1807169247" data-review-reference-id="1807169247">\
+            <div class="stencil-wrapper" style="width: 287px; height: 36px">\
+               <div title="" style="width:292px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline12"><p><span style="font-size: 32px;">Add Song to Queue</span></p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-663658224" style="position: absolute; left: 290px; top: 130px; width: 141px; height: 17px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="663658224" data-review-reference-id="663658224">\
+            <div class="stencil-wrapper" style="width: 141px; height: 17px">\
+               <div title="" style="width:146px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.text2"><p style="font-size: 14px;">Search from YouTube</p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-257130645" style="position: absolute; left: 285px; top: 107px; width: 180px; height: 4px" data-interactive-element-type="static.line" class="line stencil mobile-interaction-potential-trigger " data-stencil-id="257130645" data-review-reference-id="257130645">\
+            <div class="stencil-wrapper" style="width: 180px; height: 4px">\
+               <div title="">\
+                  <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" style="position: absolute; left: 0px; top: 0px; height: 10px;width:180px;" viewBox="0 0 180 10" width="180" height="10">\
+                     <svg:path d="M 0,5 L 180,5" marker-start="" marker-end="" style="fill:none; stroke-width:2px;stroke:black;"></svg:path>\
+                  </svg:svg>\
+               </div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-811220912" style="position: absolute; left: 215px; top: 75px; width: 32px; height: 32px" data-interactive-element-type="fonticon.icon" class="icon pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="811220912" data-review-reference-id="811220912">\
+            <div class="stencil-wrapper" style="width: 32px; height: 32px">\
+               <div xmlns:pidoco="http://www.pidoco.com/util" style="width:32px;height:32px;" title="">\
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="fill-black">\
+                     <svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e345" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e345</title>\
+<path class="path1" d="M114.842 613.549v-430.281h132.414q13.583 0 23.273 9.77t9.77 23.353v364.035q0 13.583-9.77 23.353t-23.273 9.77h-132.414zM313.421 514.259v-264.826q0-27.086 19.539-46.626t46.626-19.539h50.677l52.266-26.134q13.264-6.99 29.469-6.99h165.457q16.601 0 31.139 7.784t23.83 21.685l129.076 193.336 28.119 28.437q19.539 18.825 19.539 46.626v66.246q0 27.482-19.382 46.785t-46.785 19.382h-217.167l17.237 86.421q1.351 5.561 1.351 12.869v99.289q0 27.482-19.382 46.864t-46.864 19.301h-33.044q-18.904 0-34.792-9.929t-24.464-26.769l-63.546-126.773-95.636-127.726q-13.264-17.872-13.264-39.716zM379.586 514.259l99.289 132.332 66.246 132.414h33.044v-99.289l-33.044-165.457h297.867v-66.246l-33.123-33.044-132.414-198.579h-165.457l-66.167 33.044h-66.246v264.826z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e159" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e159</title>\
+<path class="path1" d="M114.842 729.359v-66.167q0-6.99 4.765-11.756t11.756-4.846h761.274q6.911 0 11.756 4.846t4.765 11.756v66.167q0 6.99-4.765 11.756t-11.756 4.765h-761.274q-6.911 0-11.756-4.765t-4.765-11.756zM114.842 530.781v-66.167q0-6.99 4.765-11.756t11.756-4.846h761.274q6.911 0 11.756 4.846t4.765 11.756v66.167q0 6.99-4.765 11.756t-11.756 4.765h-761.274q-6.911 0-11.756-4.765t-4.765-11.756zM114.842 332.202v-66.167q0-6.99 4.765-11.756t11.756-4.846h761.274q6.911 0 11.756 4.846t4.765 11.756v66.167q0 6.99-4.765 11.756t-11.756 4.765h-761.274q-6.911 0-11.756-4.765t-4.765-11.756z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e225" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e225</title>\
+<path class="path1" d="M240.979 481.138l347.117-347.196 121.531 121.451-225.426 225.746 225.746 225.746-121.849 121.451z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e028" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e028</title>\
+<path class="path1" d="M123.103 406.312q0-63.863 25.021-121.928t67.041-100.163 100.242-66.96 122.165-25.021 121.927 25.021 100.083 66.959 67.041 100.163 25.022 121.927q0 92.061-50.36 170.143l194.607 194.607q5.004 4.607 5.004 11.597t-5.004 11.915l-70.455 70.455q-4.607 4.687-11.756 4.687t-11.756-4.687l-194.607-194.607q-77.445 50.36-169.745 50.36-63.942 0-122.165-25.022t-100.242-67.041-67.041-100.242-25.021-122.165zM223.106 406.312q0 43.687 16.999 83.404t45.833 68.39 68.39 45.673 83.244 16.999 83.165-16.999 68.39-45.673 45.833-68.39 17.077-83.404q0-43.29-17.077-83.007t-45.833-68.39-68.39-45.672-83.165-16.999-83.244 16.999-68.39 45.672-45.833 68.39-17.077 83.007z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e018" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e018</title>\
+<path class="path1" d="M157.179 822.374q11.915 36.699 56.953 52.266t97.621-0.635q42.733-13.901 71.011-41.542t29.946-53.458v-421.623l364.035-96.986v324.319q-39.32-9.612-91.665 7.309-51.948 16.839-80.703 55.761t-16.918 75.301q11.915 36.699 56.953 52.266t97.621-0.635q42.656-13.583 71.011-41.384t29.946-53.617v-582.869q0-6.911-4.687-10.405t-11.201-1.826l-464.676 122.165q-6.674 1.987-11.28 8.103t-4.607 13.106v456.017q-38.763-9.93-91.665 7.309-52.028 16.839-80.782 55.761t-16.918 75.301z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e309" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e309</title>\
+<path class="path1" d="M118.496 481.138q0-66.882 47.499-114.381t114.303-47.499q38.446 0 71.648 17.077t56.158 46.546l206.84-122.165q-3.652-16.204-3.652-27.801 0-47.977 33.919-81.894t81.894-33.919 81.974 33.919 33.919 81.894-33.919 81.894-81.974 33.919q-45.276 0-78.399-31.057l-211.527 124.788q5.004 20.813 5.004 38.682 0 16.521-4.607 37.413l212.083 125.423q33.124-30.423 77.445-30.423 48.056 0 81.974 33.919t33.919 81.894-33.919 81.894-81.974 33.919-81.894-33.919-33.919-81.894q0-12.868 3.972-28.755l-206.522-121.849q-22.479 29.787-56.078 47.024t-72.362 17.237q-66.802 0-114.302-47.499t-47.499-114.382z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e191" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e191</title>\
+<path class="path1" d="M106.58 481.138q0-55.284 14.535-107.709t40.748-96.986 63.545-81.894 81.894-63.545 97.144-40.748 107.552-14.535q82.45 0 157.513 32.091t129.474 86.343 86.343 129.474 32.091 157.513-32.091 157.513-86.343 129.474-129.474 86.343-157.513 32.091q-54.969 0-107.552-14.535t-97.144-40.748-81.894-63.545-63.545-81.894-40.748-96.985-14.535-107.709zM277.357 531.417q0 6.99 4.926 11.756t11.915 4.846h150.92v152.907q0 6.911 4.846 11.915t11.756 4.926h100.559q6.99 0 11.915-4.926t5.004-11.915v-152.907h150.601q6.911 0 11.915-4.846t4.926-11.756v-100.559q0-6.99-4.926-11.756t-11.915-4.846h-150.601v-150.92q0-6.911-5.004-11.915t-11.915-4.926h-100.559q-6.99 0-11.756 4.926t-4.846 11.915v150.92h-150.92q-6.911 0-11.915 4.846t-4.926 11.756v100.559z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e160" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e160</title>\
+<path class="path1" d="M114.842 729.359v-66.167q0-6.99 4.765-11.756t11.756-4.846h335.281q-43.369 45.356-52.266 99.289h-283.014q-6.911 0-11.756-4.765t-4.765-11.756zM114.842 530.781v-66.167q0-6.99 4.765-11.756t11.756-4.846h513.049v99.289h-513.049q-6.911 0-11.756-4.765t-4.765-11.756zM114.842 332.202v-66.167q0-6.99 4.765-11.756t11.756-4.846h513.049v99.289h-513.049q-6.911 0-11.756-4.765t-4.765-11.756zM499.131 795.527q-9.612-28.755 2.939-60.050t43.369-56.953 72.443-39.16q12.312-3.652 29.469-6.275t35.425-3.496 27.801 3.496v-528.936q0-8.262 5.958-14.218t14.218-5.958h58.939q8.262 0 14.218 5.958t5.959 14.218v18.19q12.947 8.261 40.51 18.031t55.284 19.223 55.602 22.161 48.532 32.647 26.769 44.958q8.659 31.773 3.812 59.573t-15.251 50.042-25.815 39.16-28.277 27.008-22.478 13.901q-12.55 4.607-13.9 2.145t3.337-7.784l4.607-5.639q1.987-2.939 4.926-7.944t9.295-19.857 9.453-29.31 1.27-33.361-11.36-34.633q-8.975-14.853-29.152-24.307t-40.192-12.39-42.893-7.784-34.077-10.803v468.329q0 0.715-0.318 1.826t-0.318 1.826q-3.972 37.731-37.572 71.965t-84.913 50.836q-43.687 12.869-82.054 10.564t-67.357-20.334-38.207-46.864z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-android-e028" preserveAspectRatio="xMidYMid meet">\
+<title>android-e028</title>\
+<path class="path1" d="M982.616 408.661h-431.276v-431.276h-78.677v431.276h-431.276v78.677h431.276v431.276h78.677v-431.276h431.276v-78.677z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e188" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e188</title>\
+<path class="path1" d="M151.22 484.79q0-39.397 28.198-67.357t67.516-27.961 67.516 27.961 28.119 67.357q0 39.716-28.119 67.676t-67.516 27.961-67.516-27.961-28.198-67.676zM415.332 484.79q0-39.397 28.198-67.357t67.516-27.961 67.279 27.961 28.039 67.357q0 39.716-28.039 67.676t-67.279 27.961-67.516-27.961-28.198-67.676zM679.441 484.79q0-39.397 28.197-67.357t67.516-27.961 67.279 27.961 28.039 67.357q0 39.716-28.039 67.676t-67.279 27.961-67.516-27.961-28.198-67.676z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e178" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e178</title>\
+<path class="path1" d="M81.719 769.076v-576.515q0-6.674 6.275-8.659t11.915 2.304l345.925 269.749v-263.394q0-6.674 6.275-8.659t11.915 2.383l345.846 269.67v-256.168q0-6.911 4.765-11.756t11.756-4.765h66.246q6.911 0 11.756 5.004t4.765 11.517v562.696q0 6.911-4.765 11.756t-11.756 4.765h-66.246q-6.911 0-11.756-4.765t-4.765-11.756v-257.835l-345.846 271.021q-5.639 4.369-11.915 2.383t-6.275-8.975v-264.429l-345.925 271.021q-5.561 4.291-11.915 2.304t-6.275-8.897z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e145" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e145</title>\
+<path class="path1" d="M114.842 742.943v-493.509q0-13.502 9.77-23.273t23.353-9.77h44.005l11.597-34.792q4.607-12.868 17.315-22.161t26.372-9.295h165.457q13.583 0 26.292 9.295t17.396 22.161l11.597 34.792h308.751q13.583 0 23.353 9.77t9.77 23.273v99.289h-512.97q-22.241 0-32.487 22.875zM127.075 847.556l174.114-434.889q4.926-12.63 18.348-21.685t27.008-9.134h728.070q13.583 0 19.699 9.134t1.191 21.685l-174.114 434.889q-4.926 12.55-18.348 21.606t-27.008 9.135h-728.070q-13.583 0-19.699-9.135t-1.192-21.606z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e344" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e344</title>\
+<path class="path1" d="M114.842 779.006v-430.281h132.414q13.583 0 23.273 9.77t9.77 23.353v364.035q0 13.583-9.77 23.353t-23.273 9.77h-132.414zM313.421 679.716v-264.745q0-21.844 13.264-39.716l95.636-127.805 63.545-126.773q8.578-16.84 24.464-26.769t34.791-9.929h33.044q27.482 0 46.864 19.382t19.382 46.785v99.289l-18.587 99.289h217.167q27.482 0 46.785 19.382t19.382 46.864v66.167q0 27.801-19.539 46.705l-28.436 28.755-128.759 192.938q-9.295 13.9-23.83 21.685t-31.139 7.784h-165.456q-15.886 0-29.469-6.911l-52.266-26.212h-50.677q-27.403 0-46.785-19.301t-19.382-46.864zM379.586 679.716h66.246l66.167 33.124h165.457l132.414-198.579 33.124-33.123v-66.167h-297.867l33.044-165.536v-99.289h-33.044l-66.246 132.414-99.289 132.414v264.745z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e366" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e366</title>\
+<path class="path1" d="M114.842 481.138q0-74.428 26.451-142.341t74.506-121.451l69.821 70.137q-34.077 39.716-52.821 89.359t-18.666 103.977q0 60.527 23.512 115.651t63.228 95 95 63.385 116.13 23.512q47.977 0 84.594-11.28t75.301-36.062l-50.042-70.138q-3.972-5.639-1.987-9.453t8.975-3.496h226.062q6.911 0 10.406 4.607t1.509 11.28l-73.156 213.115q-1.987 6.674-6.275 7.309t-8.261-4.926l-49.009-67.516-1.987 1.27q-47.977 31.455-105.882 47.977t-110.251 16.918q-85.072 0-159.499-31.455t-126.297-84.913-81.577-126.375-29.786-154.097zM248.524 184.62q40.113-35.425 86.104-58.304l37.73 91.345q-28.834 15.251-53.934 37.095zM386.577 104.47q46.308-15.172 92.3-18.826v99.289q-26.451 2.621-54.57 11.201zM545.124 184.935v-99.289q43.369 3.652 83.085 15.886l-38.446 91.98q-26.769-6.592-44.642-8.578zM660.299 222.983l38.047-92.379q32.091 17.237 61.878 41.384l-70.455 70.535q-14.298-10.564-29.469-19.539zM750.613 303.448l70.535-70.535q19.539 23.83 36.062 53.299l-92.379 38.365q-7.229-11.597-14.218-21.127zM801.607 405.995l92.3-41.701q1.986 6.99 4.369 20.176t4.131 21.843 2.779 8.659h-100.242q-1.033 0-3.337-8.975z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e025" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e025</title>\
+<path class="path1" d="M-50.615 828.65v-77.764q0-26.451 6.751-39.875t26.292-24.307q159.261-92.061 231.704-123.515v-124.388q-33.124-24.544-33.124-74.191v-98.575q0-41.702 16.045-74.824t50.519-53.617 82.371-20.493 82.45 20.493 50.439 53.617 16.045 74.824v98.575q0 49.646-33.044 73.793v124.788q61.56 25.181 231.622 123.515 19.539 10.883 26.372 24.307t6.751 39.875v77.764q0 6.99-4.765 11.756t-11.756 4.765h-728.15q-6.592 0-11.597-4.765t-4.926-11.756zM515.337 536.263q-0.318-5.481 2.463-10.406t8.738-11.439 12.075-11.915 14.616-13.741 14.696-15.569q20.573-23.829 27.008-49.646t6.434-76.811q0-31.455 15.569-60.686t46.15-49.327 69.026-20.334q38.364 0.318 69.026 20.334t46.15 49.327 15.569 60.686q0 51.63 6.117 77.286t26.292 49.168q5.959 6.99 14.218 15.41t14.059 13.9 11.28 12.075 7.944 11.439 1.826 10.247-5.322 10.406q-18.507 20.176-51.789 37.73t-77.605 20.176v65.849q47.341 20.572 97.621 44.403t67.198 33.44q16.204 9.214 25.021 20.334t8.738 26.927v33.124q0 6.99-4.291 11.756t-10.961 4.765h-249.495v-108.503q0-34.077-11.439-55.443t-44.482-40.191q-24.544-13.9-43.369-24.861v-11.597q-27.166-1.27-53.617-10.883-22.56-12.63-46.389-25.181-12.55-9.612-24.148-21.844-4.607-4.926-4.926-10.406z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e096" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e096</title>\
+<path class="path1" d="M114.842 547.303v-132.333h39.397q10.247-54.648 36.539-103.817t64.259-86.978 86.977-64.259 103.818-36.539v-39.397h132.332v39.397q110.569 20.493 190.795 100.799t100.798 190.795h39.397v132.333h-39.397q-10.247 54.648-36.539 103.818t-64.259 86.978-86.978 64.259-103.818 36.539v39.397h-132.333v-39.397q-110.569-20.493-190.795-100.798t-100.798-190.795h-39.397zM147.965 514.259h66.167v-66.246h-66.167v66.246zM221.756 547.303q19.223 83.404 79.907 144.168t144.168 79.907v-25.498h132.333v25.498q83.404-19.143 144.168-79.907t79.907-144.168h-25.498v-132.333h25.498q-19.143-83.404-79.907-144.168t-144.168-79.907v25.497h-132.333v-25.497q-83.404 19.223-144.169 79.907t-79.907 144.168h25.498v132.333h-25.498zM478.876 845.172h66.246v-66.167h-66.246v66.167zM478.876 183.268h66.246v-66.167h-66.246v66.167zM809.867 514.259h66.167v-66.246h-66.167v66.246z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e184" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e184</title>\
+<path class="path1" d="M114.842 530.781v-131.697q0-6.674 4.765-11.597t11.756-5.004h112.555q6.592 0 15.251-3.257t13.583-7.625l160.849-150.92q4.926-4.687 8.578-3.018t3.652 8.261v478.655q0 6.592-3.496 8.262t-8.42-3.018l-159.261-151.239q-4.926-4.607-13.344-7.944t-15.41-3.337h-114.541q-6.911 0-11.756-4.765t-4.765-11.756zM498.736 285.179l52.662-40.349q40.349 49.009 62.512 109.537t22.241 126.773q0 64.578-21.048 123.437t-59.734 107.552l-51.312-42.020q65.849-83.404 65.849-188.969 0-54.969-18.507-105.088t-52.662-90.871z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e174" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e174</title>\
+<path class="path1" d="M280.296 751.84v-541.405q0-6.99 4.369-8.817t9.532 2.463l511.38 266.811q5.322 4.291 5.085 10.247t-5.4 10.247l-511.064 267.128q-5.242 3.972-9.533 2.145t-4.369-8.817z"/>\
+</symbol><symbol xmlns:a0="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="icon-glyph-e196" preserveAspectRatio="xMidYMid meet">\
+<title>glyph-e196</title>\
+<path class="path1" d="M106.58 481.138q0-55.284 14.535-107.709t40.748-96.986 63.545-81.894 81.894-63.545 97.144-40.748 107.552-14.535q82.45 0 157.513 32.091t129.474 86.343 86.343 129.474 32.091 157.513-32.091 157.513-86.343 129.474-129.474 86.343-157.513 32.091q-54.969 0-107.552-14.535t-97.144-40.748-81.894-63.545-63.545-81.894-40.748-96.985-14.535-107.709zM412.711 696.237q0 6.99 4.765 11.756t11.756 4.846h198.579q6.99 0 11.756-4.846t4.846-11.756v-66.167q0-6.592-4.846-11.597t-11.756-4.926h-49.647v-215.182q0-6.911-4.765-11.756t-11.756-4.765h-132.414q-6.911 0-11.756 4.765t-4.765 11.756v66.246q0 6.911 4.765 11.756t11.756 4.765h49.646v132.414h-49.646q-6.911 0-11.756 4.926t-4.765 11.597v66.167zM478.876 332.202q0 6.99 4.846 11.756t11.756 4.765h66.167q6.99 0 11.756-4.765t4.765-11.756v-66.167q0-6.99-4.765-11.756t-11.756-4.846h-66.167q-6.99 0-11.756 4.846t-4.846 11.756v66.167z"/>\
+</symbol></defs></svg>\
+                     <!--load fonticon glyph-e225-->\
+                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-glyph-e225"></use>\
+                  </svg>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 32px; height: 32px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-811220912\', \'2046846313\', {"button":"left","id":"587934077","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"1124476959","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-rect160633006" style="position: absolute; left: 285px; top: 150px; width: 790px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="rect160633006" data-review-reference-id="rect160633006">\
+            <div class="stencil-wrapper" style="width: 790px; height: 35px">\
+               <div title="">\
+                  <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:790px;" width="790" height="35" viewBox="0 0 790 35">\
+                     <svg:g width="790" height="35">\
+                        <svg:rect x="0" y="0" width="790" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                     </svg:g>\
+                  </svg:svg>\
+               </div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-icon241814545" style="position: absolute; left: 290px; top: 155px; width: 25px; height: 25px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="icon241814545" data-review-reference-id="icon241814545">\
+            <div class="stencil-wrapper" style="width: 25px; height: 25px">\
+               <div xmlns:pidoco="http://www.pidoco.com/util" style="width:25px;height:25px;" title="">\
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" class="fill-black">\
+                     <!--print symbols here-->\
+                     <!--load fonticon glyph-e028-->\
+                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-glyph-e028"></use>\
+                  </svg>\
+               </div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-text791132383" style="position: absolute; left: 325px; top: 160px; width: 192px; height: 17px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="text791132383" data-review-reference-id="text791132383">\
+            <div class="stencil-wrapper" style="width: 192px; height: 17px">\
+               <div title="" style="width:197px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.text2"><p style="font-size: 14px;">Search song by name or artist</p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-button230910827" style="position: absolute; left: 1015px; top: 150px; width: 60px; height: 35px" data-interactive-element-type="default.button" class="button stencil mobile-interaction-potential-trigger " data-stencil-id="button230910827" data-review-reference-id="button230910827">\
+            <div class="stencil-wrapper" style="width: 60px; height: 35px">\
+               <div xmlns:helper="java:it.rapidrabb.editor.stencils.helpers.StencilHelper" title=""><button type="button" style="width:60px;height:35px;font-size:1em;background-color:#d9d9d9;padding-left: 0px; padding-right: 0px;" xml:space="preserve" title="">Go<br /></button></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-319657290" style="position: absolute; left: 290px; top: 230px; width: 106px; height: 17px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="319657290" data-review-reference-id="319657290">\
+            <div class="stencil-wrapper" style="width: 106px; height: 17px">\
+               <div title="" style="width:111px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.text2"><p style="font-size: 14px;">Search Playlists</p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-rect535298494" style="position: absolute; left: 285px; top: 255px; width: 790px; height: 395px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="rect535298494" data-review-reference-id="rect535298494">\
+            <div class="stencil-wrapper" style="width: 790px; height: 395px">\
+               <div title="">\
+                  <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 395px; width:790px;" width="790" height="395" viewBox="0 0 790 395">\
+                     <svg:g width="790" height="395">\
+                        <svg:rect x="0" y="0" width="790" height="395" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                     </svg:g>\
+                  </svg:svg>\
+               </div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-rect535671582" style="position: absolute; left: 285px; top: 255px; width: 150px; height: 395px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="rect535671582" data-review-reference-id="rect535671582">\
+            <div class="stencil-wrapper" style="width: 150px; height: 395px">\
+               <div title="">\
+                  <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 395px; width:150px;" width="150" height="395" viewBox="0 0 150 395">\
+                     <svg:g width="150" height="395">\
+                        <svg:rect x="0" y="0" width="150" height="395" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                     </svg:g>\
+                  </svg:svg>\
+               </div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-94241389" style="position: absolute; left: 305px; top: 285px; width: 64px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="94241389" data-review-reference-id="94241389">\
+            <div class="stencil-wrapper" style="width: 64px; height: 27px">\
+               <div title="" style="width:69px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 16px;">Recents</span></p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-950009424" style="position: absolute; left: 305px; top: 315px; width: 70px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="950009424" data-review-reference-id="950009424">\
+            <div class="stencil-wrapper" style="width: 70px; height: 27px">\
+               <div title="" style="width:75px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 16px;">Playlist 1</span></p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-21827971" style="position: absolute; left: 305px; top: 345px; width: 70px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="21827971" data-review-reference-id="21827971">\
+            <div class="stencil-wrapper" style="width: 70px; height: 27px">\
+               <div title="" style="width:75px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 16px;">Playlist 2</span></p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-1743778899" style="position: absolute; left: 305px; top: 375px; width: 70px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1743778899" data-review-reference-id="1743778899">\
+            <div class="stencil-wrapper" style="width: 70px; height: 27px">\
+               <div title="" style="width:75px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 16px;">Playlist 3</span></p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-1571914502" style="position: absolute; left: 305px; top: 405px; width: 70px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1571914502" data-review-reference-id="1571914502">\
+            <div class="stencil-wrapper" style="width: 70px; height: 27px">\
+               <div title="" style="width:75px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 16px;">Playlist 4</span></p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-rect126976469" style="position: absolute; left: 285px; top: 255px; width: 150px; height: 30px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="rect126976469" data-review-reference-id="rect126976469">\
+            <div class="stencil-wrapper" style="width: 150px; height: 30px">\
+               <div title="">\
+                  <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 30px; width:150px;" width="150" height="30" viewBox="0 0 150 30">\
+                     <svg:g width="150" height="30">\
+                        <svg:rect x="0" y="0" width="150" height="30" style="stroke-width:1;stroke:black;fill:grey;opacity:0.5;"></svg:rect>\
+                     </svg:g>\
+                  </svg:svg>\
+               </div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-1412717261" style="position: absolute; left: 305px; top: 255px; width: 72px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1412717261" data-review-reference-id="1412717261">\
+            <div class="stencil-wrapper" style="width: 72px; height: 27px">\
+               <div title="" style="width:77px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 16px;">Favorites</span></p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-2024912373" style="position: absolute; left: 485px; top: 230px; width: 33px; height: 17px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="2024912373" data-review-reference-id="2024912373">\
+            <div class="stencil-wrapper" style="width: 33px; height: 17px">\
+               <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.text2"><p class="none" style="font-size: 14px;"><span style="font-size: 11px;">Title:</span></p>\
+                        <p class="none" style="font-size: 14px;"> </p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-454929740" style="position: absolute; left: 860px; top: 230px; width: 49px; height: 17px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="454929740" data-review-reference-id="454929740">\
+            <div class="stencil-wrapper" style="width: 49px; height: 17px">\
+               <div title="" style="width:54px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.text2"><p class="none" style="font-size: 14px;"><span style="font-size: 11px;">Albumn:</span></p>\
+                        <p class="none" style="font-size: 14px;"><span style="font-size: 11px;"> </span></p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-1642636977" style="position: absolute; left: 700px; top: 230px; width: 38px; height: 17px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1642636977" data-review-reference-id="1642636977">\
+            <div class="stencil-wrapper" style="width: 38px; height: 17px">\
+               <div title="" style="width:43px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.text2"><p class="none" style="font-size: 14px;"><span style="font-size: 11px;">Artist:</span></p>\
+                        <p class="none" style="font-size: 14px;"> </p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-2065489470" style="position: absolute; left: 1010px; top: 230px; width: 52px; height: 17px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="2065489470" data-review-reference-id="2065489470">\
+            <div class="stencil-wrapper" style="width: 52px; height: 17px">\
+               <div title="" style="width:57px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.text2"><p class="none" style="font-size: 14px;"><span style="font-size: 11px;">Duration</span></p>\
+                        <p class="none" style="font-size: 14px;"> </p></span></span></div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-group127621483" style="position: absolute; left: 435px; top: 255px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="group127621483" data-review-reference-id="group127621483">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="group127621483-rect487818168" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="rect487818168" data-review-reference-id="rect487818168">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="group127621483-18856188" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="18856188" data-review-reference-id="18856188">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="group127621483-556261057" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="556261057" data-review-reference-id="556261057">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="group127621483-649888416" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="649888416" data-review-reference-id="649888416">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="group127621483-483264133" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="483264133" data-review-reference-id="483264133">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="group127621483-icon232915666" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="icon232915666" data-review-reference-id="icon232915666">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-group127621483\', \'interaction720008369\', {"button":"left","id":"action937522430","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction565260077","options":"withoutReloadOnly","target":"page905288210","transition":"opacity","type":"showPage"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-rect773926515" style="position: absolute; left: 1065px; top: 255px; width: 10px; height: 395px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="rect773926515" data-review-reference-id="rect773926515">\
+            <div class="stencil-wrapper" style="width: 10px; height: 395px">\
+               <div title="">\
+                  <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 395px; width:10px;" width="10" height="395" viewBox="0 0 10 395">\
+                     <svg:g width="10" height="395">\
+                        <svg:rect x="0" y="0" width="10" height="395" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                     </svg:g>\
+                  </svg:svg>\
+               </div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-1554833353" style="position: absolute; left: 1065px; top: 255px; width: 10px; height: 105px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="1554833353" data-review-reference-id="1554833353">\
+            <div class="stencil-wrapper" style="width: 10px; height: 105px">\
+               <div title="">\
+                  <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 105px; width:10px;" width="10" height="105" viewBox="0 0 10 105">\
+                     <svg:g width="10" height="105">\
+                        <svg:rect x="0" y="0" width="10" height="105" style="stroke-width:1;stroke:black;fill:#d96666;"></svg:rect>\
+                     </svg:g>\
+                  </svg:svg>\
+               </div>\
+            </div>\
+         </div>\
+         <div id="__containerId__-page668883777-layer-235174090" style="position: absolute; left: 435px; top: 290px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="235174090" data-review-reference-id="235174090">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="235174090-673330203" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="673330203" data-review-reference-id="673330203">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="235174090-1983331116" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1983331116" data-review-reference-id="1983331116">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="235174090-915910773" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="915910773" data-review-reference-id="915910773">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="235174090-1924422425" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1924422425" data-review-reference-id="1924422425">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="235174090-122464297" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="122464297" data-review-reference-id="122464297">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="235174090-26003440" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="26003440" data-review-reference-id="26003440">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-235174090\', \'interaction835883487\', {"button":"left","id":"action474489855","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction617694807","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-1058529648" style="position: absolute; left: 435px; top: 360px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="1058529648" data-review-reference-id="1058529648">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="1058529648-819861668" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="819861668" data-review-reference-id="819861668">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="1058529648-229933124" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="229933124" data-review-reference-id="229933124">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1058529648-674491565" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="674491565" data-review-reference-id="674491565">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1058529648-883348260" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="883348260" data-review-reference-id="883348260">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1058529648-244162464" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="244162464" data-review-reference-id="244162464">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1058529648-1051240919" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="1051240919" data-review-reference-id="1051240919">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-1058529648\', \'interaction481409743\', {"button":"left","id":"action464841679","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction774578487","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-186161323" style="position: absolute; left: 435px; top: 325px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="186161323" data-review-reference-id="186161323">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="186161323-585685439" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="585685439" data-review-reference-id="585685439">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="186161323-1263875632" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1263875632" data-review-reference-id="1263875632">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="186161323-1506647012" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1506647012" data-review-reference-id="1506647012">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="186161323-919858434" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="919858434" data-review-reference-id="919858434">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="186161323-1268933794" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1268933794" data-review-reference-id="1268933794">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="186161323-841542259" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="841542259" data-review-reference-id="841542259">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-186161323\', \'interaction95674287\', {"button":"left","id":"action693169811","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction367323966","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-1354447443" style="position: absolute; left: 435px; top: 500px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="1354447443" data-review-reference-id="1354447443">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="1354447443-1979856885" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="1979856885" data-review-reference-id="1979856885">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="1354447443-17966943" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="17966943" data-review-reference-id="17966943">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1354447443-1171663299" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1171663299" data-review-reference-id="1171663299">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1354447443-1396140849" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1396140849" data-review-reference-id="1396140849">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1354447443-264712287" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="264712287" data-review-reference-id="264712287">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1354447443-609017506" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="609017506" data-review-reference-id="609017506">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-1354447443\', \'interaction343480176\', {"button":"left","id":"action886627038","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction387089255","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-1949728990" style="position: absolute; left: 435px; top: 465px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="1949728990" data-review-reference-id="1949728990">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="1949728990-1180303758" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="1180303758" data-review-reference-id="1180303758">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="1949728990-1640304653" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1640304653" data-review-reference-id="1640304653">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1949728990-1551413092" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1551413092" data-review-reference-id="1551413092">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1949728990-1573438165" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1573438165" data-review-reference-id="1573438165">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1949728990-689470583" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="689470583" data-review-reference-id="689470583">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1949728990-2064122140" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="2064122140" data-review-reference-id="2064122140">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-1949728990\', \'interaction184703536\', {"button":"left","id":"action762619246","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction502241854","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-689998924" style="position: absolute; left: 435px; top: 395px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="689998924" data-review-reference-id="689998924">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="689998924-2076801091" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="2076801091" data-review-reference-id="2076801091">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="689998924-1459274565" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1459274565" data-review-reference-id="1459274565">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="689998924-1958681781" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1958681781" data-review-reference-id="1958681781">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="689998924-15147500" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="15147500" data-review-reference-id="15147500">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="689998924-1236366196" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1236366196" data-review-reference-id="1236366196">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="689998924-1093186956" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="1093186956" data-review-reference-id="1093186956">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-689998924\', \'interaction300302228\', {"button":"left","id":"action160458607","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction628445104","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-1396841154" style="position: absolute; left: 435px; top: 430px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="1396841154" data-review-reference-id="1396841154">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="1396841154-1039041948" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="1039041948" data-review-reference-id="1039041948">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="1396841154-959693932" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="959693932" data-review-reference-id="959693932">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1396841154-888142632" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="888142632" data-review-reference-id="888142632">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1396841154-1306849132" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1306849132" data-review-reference-id="1306849132">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1396841154-1400130268" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1400130268" data-review-reference-id="1400130268">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1396841154-2144220055" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="2144220055" data-review-reference-id="2144220055">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-1396841154\', \'interaction613983191\', {"button":"left","id":"action818855579","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction624039704","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-434136982" style="position: absolute; left: 435px; top: 605px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="434136982" data-review-reference-id="434136982">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="434136982-24304711" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="24304711" data-review-reference-id="24304711">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="434136982-593045012" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="593045012" data-review-reference-id="593045012">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="434136982-1728148898" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1728148898" data-review-reference-id="1728148898">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="434136982-248267725" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="248267725" data-review-reference-id="248267725">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="434136982-1296345831" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1296345831" data-review-reference-id="1296345831">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="434136982-883614535" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="883614535" data-review-reference-id="883614535">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-434136982\', \'interaction515851049\', {"button":"left","id":"action886627038","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction387089255","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-1685755400" style="position: absolute; left: 435px; top: 535px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="1685755400" data-review-reference-id="1685755400">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="1685755400-787041856" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="787041856" data-review-reference-id="787041856">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="1685755400-2035486495" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="2035486495" data-review-reference-id="2035486495">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1685755400-1297954793" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1297954793" data-review-reference-id="1297954793">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1685755400-1838434587" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1838434587" data-review-reference-id="1838434587">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1685755400-1179131541" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1179131541" data-review-reference-id="1179131541">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="1685755400-1082408096" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="1082408096" data-review-reference-id="1082408096">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-1685755400\', \'interaction569353606\', {"button":"left","id":"action700574543","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction361438784","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+         <div id="__containerId__-page668883777-layer-268758295" style="position: absolute; left: 435px; top: 570px; width: 630px; height: 35px" data-interactive-element-type="group" class="group pidoco-clickable-element stencil mobile-interaction-potential-trigger " data-stencil-id="268758295" data-review-reference-id="268758295">\
+            <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+               <div id="268758295-1779867766" style="position: absolute; left: 0px; top: 0px; width: 630px; height: 35px" data-interactive-element-type="static.rect" class="rect stencil mobile-interaction-potential-trigger " data-stencil-id="1779867766" data-review-reference-id="1779867766">\
+                  <div class="stencil-wrapper" style="width: 630px; height: 35px">\
+                     <div title="">\
+                        <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" overflow="hidden" style="height: 35px; width:630px;" width="630" height="35" viewBox="0 0 630 35">\
+                           <svg:g width="630" height="35">\
+                              <svg:rect x="0" y="0" width="630" height="35" style="stroke-width:1;stroke:black;fill:white;"></svg:rect>\
+                           </svg:g>\
+                        </svg:svg>\
+                     </div>\
+                  </div>\
+               </div>\
+               <div id="268758295-1965368599" style="position: absolute; left: 50px; top: 0px; width: 68px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1965368599" data-review-reference-id="1965368599">\
+                  <div class="stencil-wrapper" style="width: 68px; height: 27px">\
+                     <div title="" style="width:73px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="268758295-651965644" style="position: absolute; left: 265px; top: 0px; width: 75px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="651965644" data-review-reference-id="651965644">\
+                  <div class="stencil-wrapper" style="width: 75px; height: 27px">\
+                     <div title="" style="width:80px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Song Artist</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="268758295-1344134304" style="position: absolute; left: 425px; top: 0px; width: 76px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="1344134304" data-review-reference-id="1344134304">\
+                  <div class="stencil-wrapper" style="width: 76px; height: 27px">\
+                     <div title="" style="width:81px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">Album Title</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="268758295-321560397" style="position: absolute; left: 590px; top: 0px; width: 33px; height: 27px" data-interactive-element-type="default.text2" class="text2 stencil mobile-interaction-potential-trigger " data-stencil-id="321560397" data-review-reference-id="321560397">\
+                  <div class="stencil-wrapper" style="width: 33px; height: 27px">\
+                     <div title="" style="width:38px"><span class="default-text2-container-wrapper" title=""><span class="default-text2-container" data-child-type="default.textHeadline22"><p class="none" style="font-size: 24px;"><span style="font-size: 14px;">0:00</span></p></span></span></div>\
+                  </div>\
+               </div>\
+               <div id="268758295-214778421" style="position: absolute; left: 20px; top: 10px; width: 15px; height: 15px" data-interactive-element-type="fonticon.icon" class="icon stencil mobile-interaction-potential-trigger " data-stencil-id="214778421" data-review-reference-id="214778421">\
+                  <div class="stencil-wrapper" style="width: 15px; height: 15px">\
+                     <div xmlns:pidoco="http://www.pidoco.com/util" style="width:15px;height:15px;" title="">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="fill-black">\
+                           <!--print symbols here-->\
+                           <!--load fonticon android-e028-->\
+                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-android-e028"></use>\
+                        </svg>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+            <div class="interactive-stencil-highlighter" style="width: 630px; height: 35px"></div><script xmlns:json="http://json.org/" type="text/javascript">\
+			$(document).ready(function(){\
+				rabbit.interaction.manager.registerInteraction(\'__containerId__-page668883777-layer-268758295\', \'interaction324731680\', {"button":"left","id":"action188728475","numberOfFinger":"1","type":"click"},  \
+					[\
+						{"delay":"0","id":"reaction935622129","type":"browserBack"}\
+					]\
+				);\
+			});\
+		</script></div>\
+      </div>\
+   </div>\
+   <div id="styles">\
+      <style type="text/css">\
+         	\
+         		body[data-current-page-id="page668883777"] .border-wrapper, body[data-current-page-id="page668883777"] .simulation-container{\
+         			width:1366px;\
+         		}\
+         		\
+         		body.has-frame[data-current-page-id="page668883777"] .border-wrapper, body.has-frame[data-current-page-id="page668883777"]\
+         .simulation-container{\
+         			height:768px;\
+         		}\
+         		\
+         		body[data-current-page-id="page668883777"] .svg-border-1366-768{\
+         			display: block !important;\
+         		}\
+         		\
+         		body[data-current-page-id="page668883777"] .border-wrapper .border-div{\
+         			width:1366px;\
+         			height:768px;\
+         		}\
+         	\
+      </style>\
+   </div>\
+   <div id="json">\
+      		{\
+      			"id": "page668883777",\
+      			"name": "Add Song",\
+      			"layers": {\
+      				\
+      			},\
+      			"image":"",\
+      			"width":1366,\
+      			"height":768,\
+      			"parentFolder": "",\
+      			"frame": "desktop",\
+      			"frameOrientation": "landscape"\
+      		}\
+      	\
+   </div>\
+</div>');

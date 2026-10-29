@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!-- Hand-written for the preview: a 2014 Maya turntable of a computer desk, encoded from its 499 rendered
+     TGA frames as a silent H.264 loop. See docs/projects/maya-desk.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computer Desk</title>
+<style>
+    html, body { margin: 0; background: #141414; color: #eee; }
+    body { font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; box-sizing: border-box; }
+    /* As wide as fits, but never so wide the video gets taller than 70% of the window */
+    main { width: min(100%, 1000px, calc(70vh * 1280 / 720)); }
+    video { display: block; width: 100%; aspect-ratio: 1280 / 720; background: #000; border-radius: 10px; }
+    h1 { font-size: 26px; font-weight: 800; margin: 18px 0 2px; }
+    .meta { color: #999; margin: 0; }
+    .credits { color: #bbb; margin: 10px 0 0; font-size: 15px; }
+</style>
+</head>
+<body>
+<main>
+    <video id="desk" controls muted loop playsinline autoplay preload="auto" poster="poster.jpg" src="computer-desk.mp4" aria-label="A computer desk turning all the way round"></video>
+    <h1>Computer Desk</h1>
+    <p class="meta">Maya, March 2014 · one full turn</p>
+    <p class="credits">A computer desk I modeled down to the keyboard tray, the wheels and the lock on the drawer, then sent round in a slow circle so you can see every side.</p>
+</main>
+<script>
+    // It's silent, so it can play on its own; with reduced motion it waits for a click instead.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var desk = document.getElementById('desk');
+        desk.removeAttribute('autoplay');
+        desk.pause();
+    }
+</script>
+</body>
+</html>

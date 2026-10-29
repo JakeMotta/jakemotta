@@ -4,12 +4,14 @@ A music app for listening together: everyone's favorite music, with any group, a
 
 ## Preview
 
-The card opens `public/projects/ambii/story/index.html`, a hand-written hub that tells Ambii's story in four short sections and links to or embeds each piece. The 2018 landing page that used to be the preview is the first of them.
+The card opens `public/projects/ambii/story/index.html`, a hand-written hub that tells Ambii's story in seven short sections, in date order (except the design history, which closes it), and links to or embeds each piece. The 2018 landing page that used to be the preview is the first of them.
 
 Its three sites have their own addresses in the viewer, one step in from the story (`pages` in its `homeProjectList` entry; [README.md](README.md#hub-pages)):
 - `/project/ambii/landing-2018`: the 2018 landing page;
 - `/project/ambii/template-site`: Join the Party!, the template site;
-- `/project/ambii/site-2019`: the 2019 site.
+- `/project/ambii/site-2019`: the 2019 site;
+- `/project/ambii/wireframes`: the first wireframes (July 2018);
+- `/project/ambii/prototype`: the clickable prototype (July 2018).
 
 The story's site cards open them there, and Escape returns to the story.
 
@@ -21,7 +23,7 @@ The story's site cards open them there, and Escape returns to the story.
 
 ### The story page (`story/`)
 
-Added on 2026-10-26 from Jake's Ambii drive (`Z:\Google Drive\Ambii\…`). Section by section:
+Added on 2026-10-26 from Jake's Ambii drive (`Z:\Google Drive\Ambii\…`); the first three sections came on 2026-10-29 (see [Early work and pitch day](#early-work-and-pitch-day-added-2026-10-29)). The sections from 2026-10-26, under their original numbers:
 
 **1. The websites.** Three cards, each with a 640×400 screenshot in `story/thumbs/` taken in headless Chrome.
 - **Play Music Together** (2018) links to the landing page above.
@@ -66,6 +68,42 @@ Each poster (`.jpg` beside it) is the recording's first frame.
 
 **Sound.** Only the Techstars intro has sound. When it plays, the page asks the site's player to pause with the `jakemotta:media-playing` message, the same way as [Escaping Confinement](escaping-confinement.md); the silent recordings leave the music alone. Starting any video pauses the others.
 
+### Early work and pitch day (added 2026-10-29)
+
+Jake approved these on 2026-10-29: the 2018 wireframes and clickable prototype, the `beta.ambii.io` build, and the Zinnstarter pitch-day photos, knowing the photos show other people. They're the story's first three sections, in date order before the websites. About 22.6 MB in all, 21 MB of it the two prototype exports.
+
+**Pitch day** (2018). Seven photos from Zinnstarter, SJSU's startup pitch competition, in `story/zinnstarter/`, shown as a gallery that opens full size like the designs.
+- **Source:** `Z:\Old Computer\Drive Photos\ZinnstarterPitches_c0SB-tlf0Q\` (Facebook downloads, dated 2022 on disk, with no EXIF dates).
+- **Conversion:** re-encoded in headless Chrome through a canvas to JPEG at quality 82, at most 1600 px on the long edge, which drops all metadata. 1.5 MB together.
+
+| File | Source |
+| --- | --- |
+| `pitch.jpg` (960×720, the size it came at) | `29314598_…_n_….jpg` |
+| `team.jpg` | `28828609_…` |
+| `team-pointing.jpg` | `28699091_…` |
+| `finger-guns.jpg` | `29064258_…` |
+| `the-lean.jpg` | `28698837_…` (tilted in the original) |
+| `two-bow-ties.jpg` | `28954049_…` |
+| `waiting.jpg` | `28954075_…` |
+
+- **Captions** say only what the photo shows. Nobody is named, and "2018" is inferred from the Facebook photo ids and from the pitch preceding the July 2018 wireframes; nothing in the files dates them.
+
+**Wireframes** (July 2018). The web app in Pidoco, a wireframing tool, from `Z:\Old Computer\Documents\Old Save\Ambii\`. Pidoco called the project "Ambii - Cajun".
+- **Two clickable exports, both unchanged copies.**
+  - `story/wireframes/` is `Ambii-Wireframes` (exported 18 July 2018, six screens, 7.2 MB).
+  - `story/prototype/` is `Ambii---Cajun-prototype (4)` (exported 22 July 2018, nine screens, 14 MB).
+- **How they run:** each screen is an `.xhtml` page in three renderings (sketched, sketched in Arial, plain); the export's own `index.html` lists them. The story's cards open Home - Join, sketched, and the prototype's hotspots swap screens in place.
+  - **MIME type:** Pidoco's README says the `.xhtml` files must be served as `application/xhtml+xml`. The dev server does, and so that the live server does too, `story/.htaccess` (added 2026-10-29) holds `AddType application/xhtml+xml .xhtml`.
+  - **One harmless 404:** on load, Pidoco's script POSTs the viewer's display preferences to `/rabbit/repository/userprefs/update`, the path of Pidoco's own server. On this site it goes to jakemotta.com (where nothing answers it) and carries no personal data. It's left as it is, since the copies aren't edited.
+- **The nine screens as pictures:** `story/prototype-screens/*.png` are byte-for-byte copies of `Ambii---Cajun-images\*.png`, Pidoco's own renders of the 22 July screens, renamed to kebab case (`JoinedPartyHost.png` → `joined-party-host.png`). They're a gallery under the cards, for phones, where the 1400 px prototype is awkward.
+- **Card thumbnails:** `thumbs/wireframes.jpg` (the party page) and `thumbs/prototype.jpg` (the host's party page), 640×400, screenshots of the sketched rendering in headless Chrome.
+- **Who drew them** isn't recorded; the mock user in the header is "Jake".
+
+**The beta** (November 2018). `Z:\Old Computer\Documents\Websites\beta.ambii.io` is the compiled Angular build (files dated 28 November 2018). Only three screenshots are published, in `story/beta/`: the welcome, log-in and sign-up screens, 1280×800 JPEGs.
+- **Why not the build:** its bundle embeds the Firebase config of the `devambii-107` project (API key, database URL, sender id) and calls the YouTube Data API, an EC2 back end and Google Analytics (`UA-116911093-1`). It can't do anything without those: every route past sign-in redirects to log-in. Publishing it would publish the keys and run the tracker, so none of it is copied.
+- **How the shots were taken:** the build was served from a temporary folder outside the repo, in headless Chrome with every host blocked except localhost and the CDNs for its stylesheets, fonts and the Firebase library. Nothing reached Firebase or Analytics.
+- **The rest of that folder:** `jackie/` is the 2018 landing page again (the same files as `public/projects/ambii/`), and `wireframes/` is empty.
+
 ### The 2019 sites as they run
 
 Both run on a static host, with no 404s from the story page itself. Fixes go through a converter entry in `scripts/convert-php-sites.mjs`, never by editing the copies. Only one fix was made; everything else that's broken or live is as it was in 2019.
@@ -100,8 +138,16 @@ No trackers were found in any of the copies, and every library loads over https.
 - **Credentials:** everything under `Server`, and the `.pem`, `.ppk`, `keys`, `env` and `ssl` files, none of which were opened.
 - **Formats browsers can't show:** design sources (PSD, AI, Sketch and Fireworks `.fw.png`), the prototype PDF and the `.docx` notes.
 - **Low value:** `source_logos`, which is mostly Spotify and YouTube marks.
+- **From `Old Save\Ambii` (2026-10-29):**
+  - the three earlier Cajun exports, `(1)` to `(3)` (20 and 22 July 2018), superseded by `(4)`;
+  - `Ambii---Cajun-svg`, the same nine screens as SVG;
+  - `ambii_website` (April 2018): four purple-tinted stock photos and six pricing-tier icons (freemium, premium, enterprise), backgrounds for a site rather than designs of one;
+  - `Ambii Video` (April–May 2018): raw camcorder footage (`.MTS`, several GB), its conversions and a cut, `outputs\Ambii Pitch.mp4` (362 MB). It wasn't among what Jake approved; it's the next candidate if he wants a pitch video;
+  - `Alone.mp3`, a song file sitting beside the video, and `Ambii 002.jpg`, an early logo mark.
+- **The `beta.ambii.io` build itself:** its bundles, `index.html` (Firebase SDK and Google Analytics), `.htaccess`, `3rdpartylicenses.txt` and the `jackie/` copy of the landing page; see [The beta](#early-work-and-pitch-day-added-2026-10-29).
+- **Key files near the sources:** none were found under `Old Save\Ambii`, and none were copied from anywhere.
 
-A grep of everything under `story/` for passwords, secrets, API keys and tokens finds only CSS selectors and library code.
+A grep of everything under `story/` for passwords, secrets, API keys and tokens finds only CSS selectors and library code (on 2026-10-29 also Pidoco's script, whose hits are its own login and preference code). Nothing under `story/` has a source map, an `AIza` key or a Firebase config.
 
 ## Card image
 

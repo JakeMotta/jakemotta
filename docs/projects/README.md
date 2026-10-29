@@ -26,9 +26,12 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `flash` | `/projects/flash/index.html` (a hand-written gallery) | [flash.md](flash.md) |
 | `sketchbook` | `/projects/sketchbook/index.html` (a hand-written gallery) | [sketchbook.md](sketchbook.md) |
 | `highschool-portfolio` | `/projects/highschool/oldSite/index.html` | [highschool-portfolio.md](highschool-portfolio.md) |
+| `randomchance` | `/projects/randomchance/index.html` (Greenfoot, compiled to JavaScript) | [randomchance.md](randomchance.md) |
 | `greenfoot-pokemon` | `/projects/greenfoot-pokemon/index.html` (Java compiled to JavaScript) | [greenfoot-pokemon.md](greenfoot-pokemon.md) |
 | `escaping-confinement` | `/projects/escaping-confinement/index.html` (a video page) | [escaping-confinement.md](escaping-confinement.md) |
 | `jakes-index` | `/projects/highschool/flashIndex/FlashIndex.static.html` | [jakes-index.md](jakes-index.md) |
+| `maya-models` | `/projects/maya-models/index.html` (a hand-written gallery, with turntable videos) | [maya-models.md](maya-models.md) |
+| `maya-desk` | `/projects/maya-desk/index.html` (a video page) | [maya-desk.md](maya-desk.md) |
 | `pivot` | `/projects/pivot/index.html` (a hand-written gallery) | [pivot.md](pivot.md) |
 
 **Taken off the list.** These have pages here but no card, and their files stay in `public/projects/` as archive. They were deployed, so their pages are still live at their addresses until removed in cPanel, though nothing links to them; their old `/project/<id>` addresses say the project doesn't exist. Their card images stay too (CLAUDE.md, Old card images).
@@ -43,7 +46,7 @@ A preview that's a hub for a project's parts lists them as `pages` in its `homeP
 
 - **The two hubs with pages:**
   - **Ambii Business:** `/project/ambii-business/dashboard`, `/player` and `/phone`.
-  - **Ambii:** `/project/ambii/landing-2018`, `/template-site` and `/site-2019`.
+  - **Ambii:** `/project/ambii/wireframes`, `/prototype`, `/landing-2018`, `/template-site` and `/site-2019`.
 - **Opening a page from the hub:** a click on a link to a page's file (matched by path) opens that page's address, carrying the link's own query and hash. For example, `dashboard/index.html#/locations` opens `/project/ambii-business/dashboard` on Locations. A link the hub's `pages` don't name (Ambii's "landing page as it stood then") still opens inside the frame.
 - **Closing a page:** Escape, the close button, and the page title's "← Ambii Business" crumb all go back to the hub. The hub, as before, closes to the board or the all-projects overlay. Back and Forward step between projects.
 - **"Loading…" and the links:** the viewer counts a framed page as shown, and takes over its links, as soon as its document is parsed, not at the frame's load event. Since 2026-10-28, because that event waits for every image: the label sat over Ambii Business's hub for 9 seconds on the live site, and a click on an app before then opened it inside the frame. The viewer checks the frame every 100 ms. A cross-origin frame (TapSlayDie) still counts at its load event.
@@ -64,7 +67,7 @@ A preview has to run in the browser with no server code: the host is static, and
 
   Personal Site, Dan James, JAKE's Index and the High School Portfolio work this way; the card's `preview` names the `.static.html` page.
 - **One project, one card:** a folder that holds several sites or games (`motorsport/`, `highschool/`, `cs134/`) gives each its own card, framing that project's own page. Don't put a hub page in front of them; Jake asked on 2026-10-27 for every project to be its own card. Hubs that front one project's parts, like Ambii Business's three apps, are fine. Each part gets its own address one step in (Hub pages, below). Collections of small works in one category (Flash, Pivot, Sketchbook) stay one card each, as Jake decided the same day.
-- **Galleries and videos:** work that was never a website (animations, drawings, a film, loose Flash movies) gets a hand-written page in its own folder: Pivot, Sketchbook, Escaping Confinement, Flash.
+- **Galleries and videos:** work that was never a website (animations, drawings, 3D models, a film, loose Flash movies) gets a hand-written page in its own folder: Pivot, Sketchbook, Escaping Confinement, Flash, Maya Models, Computer Desk.
   - **Files:** keep the original files where browsers can show them (GIFs), and convert where they can't (TIFF to JPEG, MPEG to H.264 MP4). Each project's page says which originals were used and what was left out.
   - **Sound:** a page that plays sound pauses the site's music when it starts (see [escaping-confinement.md](escaping-confinement.md)). Under the dev server Claude starts, every preview plays silently ([music.md](../music.md#silent-while-claude-previews)).
 - **Apps with a real back end** (CS160) get hand-written static pages that fake the back end in JS.
@@ -90,7 +93,7 @@ Every game with a desktop build has a Download button in the viewer, from the en
 | isGuy | `isguy/isGuyFinal.jar`, the preview's own jar | [isguy.md](isguy.md) |
 | Pokémon | `greenfoot-pokemon/download/pokemon-green-foot-edition.zip`, the jars plus a launcher | [greenfoot-pokemon.md](greenfoot-pokemon.md) |
 
-Four games have none. TapSlayDie isn't out on the App Store or Google Play yet (its site says "Coming soon"); link the store pages once it is. Psycho is a web page and runs here. Rebound and NinjaDonut: The Game were never exported from Greenfoot. The jars assembled for their builds (`rebound/java/rebound.jar`, `ninjadonut-game/ninjadonut.jar`) haven't been tried on a desktop ([rebound.md](rebound.md), [ninjadonut-game.md](ninjadonut-game.md)). The deploy compares files by size only, so a rebuilt download needs a new name, or an explicit `put` in the workflow, to reach the server.
+Five games have none. TapSlayDie isn't out on the App Store or Google Play yet (its site says "Coming soon"); link the store pages once it is. Psycho is a web page and runs here. Rebound, NinjaDonut: The Game and RandomChance were never exported from Greenfoot. The jars assembled for their builds (`rebound/java/rebound.jar`, `ninjadonut-game/ninjadonut.jar`, `randomchance/randomchance.jar`) haven't been tried on a desktop ([rebound.md](rebound.md), [ninjadonut-game.md](ninjadonut-game.md), [randomchance.md](randomchance.md)). The deploy compares files by size only, so a rebuilt download needs a new name, or an explicit `put` in the workflow, to reach the server.
 - **Live sites** on their own domain (TapSlayDie) are framed at their address. Their document is cross-origin, so the viewer's link handling can't reach inside them.
 
 **JotForm embeds are copies that submit nowhere.** Dan James's contact page, Pistol Art's register page, the 2012 high school page and its NinjaDonut copy embedded JotForm forms. JotForm had deleted the high school page's three, which showed its "missing form" page instead, and the two still live would have sent real submissions. On 2026-10-29 Jake asked for each to be replaced with a form that looks as it did and does nothing. `yarn projects:convert` swaps every JotForm script for its copy in `scripts/jotform/<form id>.html` (the `JOTFORMS` list in `scripts/convert-php-sites.mjs`), and stops on a form it has no copy for.

@@ -10,8 +10,8 @@
 //
 // What it reports:
 // - ready: seconds from the click on Play until the page marks itself game-ready;
-// - acts/s: how often each key is checked with Greenfoot.isKeyDown, which every game here does once an act for its
-//   controls, so the most-checked key is the act rate (a key checked by two actors reads double);
+// - acts/s: how often the runtime clears the keys pressed during an act, which it does once after every act, so it
+//   counts acts whether or not the game checks a key (RandomChance has no controls at all);
 // - frames/s: animation frames the page drew, and busy: the share of the time the main thread worked;
 // - sounds: each media file the game started, and whether the browser let it play;
 // - errors: console errors, uncaught exceptions and the page's own error box.
@@ -104,17 +104,17 @@ HTMLMediaElement.prototype.play = function () {
     return result;
 };`;
 
-// Counts isKeyDown checks per key and animation frames over a stretch of time
+// Counts acts (the runtime calls GF.clearLatchedKeys once after each) and animation frames over a stretch of time
 const MEASURE = (ms) => `new Promise((done) => {
-    const counts = {}, real = GF.isKeyDown; let frames = 0;
-    GF.isKeyDown = function (key) { counts[key] = (counts[key] || 0) + 1; return real.apply(this, arguments); };
+    const real = GF.clearLatchedKeys; let acts = 0, frames = 0;
+    GF.clearLatchedKeys = function () { acts++; return real.apply(this, arguments); };
     const start = performance.now();
     (function tick(now) {
         frames++;
         if (now - start < ${ms}) return requestAnimationFrame(tick);
-        GF.isKeyDown = real;
+        GF.clearLatchedKeys = real;
         const seconds = (now - start) / 1000;
-        done({ acts: Math.max(0, ...Object.values(counts)) / seconds, frames: frames / seconds });
+        done({ acts: acts / seconds, frames: frames / seconds });
     })(start);
 })`;
 
@@ -183,7 +183,7 @@ for (const id of ids) {
         const sounds = await js('window.__sounds');
 
         console.log(`${id}: ${ready ? `ready ${readyAfter.toFixed(1)} s after Play` : 'NOT READY after 15 s'}, world ${world}`);
-        const acts = measured.acts ? `${measured.acts.toFixed(1)} acts/s` : 'acts/s unknown (nothing checked a key on this screen)';
+        const acts = `${measured.acts.toFixed(1)} acts/s${measured.acts ? '' : ' (not running: paused, or stopped by an error)'}`;
         console.log(`  ${acts}, ${measured.frames.toFixed(1)} frames/s, main thread ${Math.round(busy)}% busy`);
         console.log(`  sounds: ${sounds.length ? sounds.join(', ') : 'none'}`);
         console.log(`  errors: ${errors.length ? '\n    ' + errors.map((e) => String(e).slice(0, 300)).join('\n    ') : 'none'}`);

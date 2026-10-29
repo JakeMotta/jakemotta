@@ -9,6 +9,8 @@ export interface MusicRowProps {
     art: ReactNode;
     title: string;
     meta?: string;
+    // What Jake says about the song, under the rest
+    description?: string;
     // It's the song on now, and whether it's playing
     current?: boolean;
     playing?: boolean;
@@ -21,7 +23,7 @@ export interface MusicRowProps {
  * it. The whole row is the play button; a play button shows on the cover and at the row's end on
  * hover, and stays at the end while it's the song on.
  */
-export const MusicRow = ({ rank, art, title, meta, current, playing, onPlay }: MusicRowProps) => {
+export const MusicRow = ({ rank, art, title, meta, description, current, playing, onPlay }: MusicRowProps) => {
     const pausable = current && playing;
     const body = (
         <>
@@ -37,6 +39,7 @@ export const MusicRow = ({ rank, art, title, meta, current, playing, onPlay }: M
             <span className='music-row__text'>
                 <span className='music-row__title'>{title}</span>
                 {meta && <span className='music-row__meta'>{meta}</span>}
+                {description && <span className='music-row__description'>{description}</span>}
             </span>
             {onPlay && (
                 <span className='music-row__go' aria-hidden>

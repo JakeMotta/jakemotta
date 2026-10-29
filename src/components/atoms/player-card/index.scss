@@ -74,15 +74,16 @@
         gap: 18px;
     }
 
+    // The size of the previous and next buttons beside it
     &__volume {
         grid-column: 3;
         justify-self: end;
         color: var(--color-primary-light);
 
         .volume-control__button {
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
+            width: 44px;
+            height: 44px;
+            font-size: 24px;
         }
     }
 }

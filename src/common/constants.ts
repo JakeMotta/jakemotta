@@ -2,7 +2,7 @@ export interface MusicItemProps {
     image: string;
     title: string;
     date: string;
-    /** Shown in the library's player. Leave it empty rather than writing filler. */
+    /** Shown in the library's player and under the song in its list. Leave it empty rather than writing filler. */
     description: string;
     /**
      * A file in public/music/, or a song that plays from YouTube (common/music.ts):
@@ -16,16 +16,16 @@ export interface MusicItemProps {
 export const musicList: MusicItemProps[] = [
     {
         image: '/images/music/ctrl_alt_del.jpeg',
-        title: 'She wants my package',
-        description: '',
-        url: '/music/she_wants_my_package.mp3',
+        title: 'Uprising',
+        description: 'Feeling like the first song I had created from scratch in a long while.',
+        url: '/music/uprising.mp3',
         date: '2021'
     },
     {
         image: '/images/music/ctrl_alt_del.jpeg',
-        title: 'Uprising',
-        description: 'Feeling like the first song I had created from scratch in a long while.',
-        url: '/music/uprising.mp3',
+        title: 'She wants my package',
+        description: '',
+        url: '/music/she_wants_my_package.mp3',
         date: '2021'
     },
     {

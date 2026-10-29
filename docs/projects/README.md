@@ -1,6 +1,6 @@
 # Projects
 
-Every project on the board has an entry in `homeProjectList` (`src/common/constants.ts`), a card image, a preview that the viewer at `/project/<id>` frames, and a page here. The first entry, the newest, is the board's featured tile; the rest are the small screenshots in its Projects tile ([board.md](../board.md)). The page is the place for anything that's only true of that project: where it came from, how its preview runs, what was left out and why.
+Every project on the board has an entry in `src/content.json` (its name, year and description, in order; [content.md](../content.md)) and its details in `projectDetails` (`src/common/constants.ts`), a card image, a preview that the viewer at `/project/<id>` frames, and a page here. The first entry, the newest, is the board's featured tile; the rest are the small screenshots in its Projects tile ([board.md](../board.md)). The page is the place for anything that's only true of that project: where it came from, how its preview runs, what was left out and why.
 
 | Card id | Preview | Notes |
 | --- | --- | --- |
@@ -32,14 +32,13 @@ Every project on the board has an entry in `homeProjectList` (`src/common/consta
 | `escaping-confinement` | `/projects/escaping-confinement/index.html` (a video page) | [escaping-confinement.md](escaping-confinement.md) |
 | `jakes-index` | `/projects/highschool/flashIndex/FlashIndex.static.html` | [jakes-index.md](jakes-index.md) |
 | `maya-models` | `/projects/maya-models/index.html` (a hand-written gallery, with turntable videos) | [maya-models.md](maya-models.md) |
-| `maya-desk` | `/projects/maya-desk/index.html` (a video page) | [maya-desk.md](maya-desk.md) |
 | `pivot` | `/projects/pivot/index.html` (a hand-written gallery) | [pivot.md](pivot.md) |
 
 **Taken off the list.** These have pages here but no card, and their files stay in `public/projects/` as archive. They were deployed, so their pages are still live at their addresses until removed in cPanel, though nothing links to them; their old `/project/<id>` addresses say the project doesn't exist. Their card images stay too (CLAUDE.md, Old card images).
 - [Worxxx PM](worxxx.md) and [Noah Garza Racing](noah-garza.md), on 2026-10-28, as Jake asked. Their pages are still converted by `yarn projects:convert`.
 - [Survivor](survivor.md), on 2026-10-28, as Jake asked. Psycho, the same class's game, took its place.
 
-**Flash is in Art**, ahead of Sketchbook, as Jake asked on 2026-10-28; it had been in Animation with Pivot and Escaping Confinement. Within a section the projects go newest first, and ties keep their order in `homeProjectList`, so Flash's entry sits just before Sketchbook's.
+**Flash is in Art**, ahead of Sketchbook, as Jake asked on 2026-10-28; it had been in Animation with Pivot and Escaping Confinement. Within a section the projects keep their order in `src/content.json`, which is newest first, so Flash's entry sits just before Sketchbook's. Since 2026-10-29 that order is the whole rule (the sections used to sort by year), so a project can be placed by hand: Black Chamber Redesign (2017) comes right after Dan James (2016), as Jake asked.
 
 ## Hub pages
 
@@ -68,7 +67,7 @@ A preview has to run in the browser with no server code: the host is static, and
 
   Personal Site, Dan James, JAKE's Index and the High School Portfolio work this way; the card's `preview` names the `.static.html` page.
 - **One project, one card:** a folder that holds several sites or games (`motorsport/`, `highschool/`, `cs134/`) gives each its own card, framing that project's own page. Don't put a hub page in front of them; Jake asked on 2026-10-27 for every project to be its own card. Hubs that front one project's parts, like Ambii Business's three apps, are fine. Each part gets its own address one step in (Hub pages, below). Collections of small works in one category (Flash, Pivot, Sketchbook) stay one card each, as Jake decided the same day.
-- **Galleries and videos:** work that was never a website (animations, drawings, 3D models, a film, loose Flash movies) gets a hand-written page in its own folder: Pivot, Sketchbook, Escaping Confinement, Flash, Maya Models, Computer Desk.
+- **Galleries and videos:** work that was never a website (animations, drawings, 3D models, a film, loose Flash movies) gets a hand-written page in its own folder: Pivot, Sketchbook, Escaping Confinement, Flash, Maya Models (Computer Desk, its own card for a day, went into Maya Models on 2026-10-29).
   - **Files:** keep the original files where browsers can show them (GIFs), and convert where they can't (TIFF to JPEG, MPEG to H.264 MP4). Each project's page says which originals were used and what was left out.
   - **Sound:** a page that plays sound pauses the site's music when it starts (see [escaping-confinement.md](escaping-confinement.md)). Under the dev server Claude starts, every preview plays silently ([music.md](../music.md#silent-while-claude-previews)).
 - **Apps with a real back end** (CS160) get hand-written static pages that fake the back end in JS.
@@ -133,7 +132,7 @@ The older images in `public/images/projects/` (`ambii.png`, `pistolArt.png` and 
 A Greenfoot game has its own steps, which cover all of these: [greenfoot-web.md](greenfoot-web.md#converting-a-game).
 
 1. Get it running as a preview: a static copy in `public/projects/<folder>/` (a new `SITES` entry if it's PHP, or if some of its plain pages need fixes), or the address of a live site that allows framing (check its response headers for `X-Frame-Options` and `frame-ancestors`). On Windows, copying a batch of files into `public/` while `yarn dev` runs can crash the dev server (chokidar's `EBUSY: resource busy or locked`). Copy first and start the server after, or just restart it.
-2. Add an entry to `homeProjectList`, one per project (see One project, one card above), newest first (so a new project becomes the featured tile): `id`, `title`, `date`, `category` (which section of the all-projects overlay it goes in: `website`, `app`, `game`, `art` or `animation`; a new one goes in `projectCategories`), `tags` (what kind of thing it is, shown as pills in the viewer: "Website", "Java Game", "School"…), `download` for a game with a desktop build (see Downloads above), a one-sentence `description` in Jake's voice that says what it is rather than how the preview runs, `preview`, and `image: '/images/projects/<id>.webp'`.
+2. Add the project to `src/content.json`'s `projects`, one per project (see One project, one card above), newest first (so a new project becomes the featured tile): `id`, `title`, `date` and a one-sentence `description` in Jake's voice that says what it is rather than how the preview runs. Then add its details under the same id to `projectDetails` in `src/common/constants.ts`: `category` (which section of the all-projects overlay it goes in: `website`, `app`, `game`, `art` or `animation`; a new one goes in `projectCategories`), `tags` (what kind of thing it is, shown as pills in the viewer: "Website", "Java Game", "School"…), `download` for a game with a desktop build (see Downloads above), `preview`, and `image: '/images/projects/<id>.webp'`.
 3. Add a `SHOTS` entry to `scripts/screenshot-projects.mjs`, run `yarn projects:screenshot <id>` and look at the result.
 4. Write `docs/projects/<id>.md` and add it to the table above.
 5. Open `/project/<id>` in the dev server, click around inside the frame, and check the console. A hub for a project's parts lists them as `pages` (Hub pages above).

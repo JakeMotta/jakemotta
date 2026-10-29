@@ -1,0 +1,306 @@
+{
+    "music": [
+        {
+            "title": "Uprising",
+            "date": "2021",
+            "description": "Feeling like the first song I had created from scratch in a long while.",
+            "image": "/images/music/ctrl_alt_del.jpeg",
+            "url": "/music/uprising.mp3"
+        },
+        {
+            "title": "She wants my package",
+            "date": "2021",
+            "description": "",
+            "image": "/images/music/ctrl_alt_del.jpeg",
+            "url": "/music/she_wants_my_package.mp3"
+        },
+        {
+            "title": "S3RL feat. Sara - Marceline the Vampire Queen (A Bad Remix)",
+            "date": "2021",
+            "description": "My second attempt at a remix. Was really happy with how this turned out.",
+            "image": "/images/music/marceline.jpg",
+            "url": "/music/marceline.mp3"
+        },
+        {
+            "title": "Super Bitch (ft. Anzu)",
+            "date": "2021",
+            "description": "Made in one night with no purpose.",
+            "image": "/images/music/super_bitch.jpg",
+            "url": "/music/super_bitch.wav"
+        },
+        {
+            "title": "Alone",
+            "date": "2019",
+            "description": "Attempt at working with vocals in a track, matching key and bpm. Couldn't really settle on how I wanted this song to sound though, so I gave up.",
+            "image": "/images/music/alone.jpg",
+            "url": "/music/alone.mp3"
+        },
+        {
+            "title": "Le Beat",
+            "date": "2019",
+            "description": "",
+            "image": "",
+            "url": "/music/beat_2.mp3"
+        },
+        {
+            "title": "Memories",
+            "date": "2018",
+            "description": "My first attempt at a remix",
+            "image": "/images/music/memories.jpg",
+            "url": "/music/memories.mp3"
+        },
+        {
+            "title": "Anguish",
+            "date": "2017",
+            "description": "",
+            "image": "/images/music/ctrl_alt_del.jpeg",
+            "url": "/music/anguish.mp3"
+        },
+        {
+            "title": "Breathe",
+            "date": "2017",
+            "description": "",
+            "image": "/images/music/ctrl_alt_del.jpeg",
+            "url": "/music/breathe.mp3"
+        },
+        {
+            "title": "Fearless",
+            "date": "2016",
+            "description": "",
+            "image": "/images/music/ctrl_alt_del.jpeg",
+            "url": "/music/fearless.mp3"
+        },
+        {
+            "title": "Hide & Seek - Les Edit",
+            "date": "2016",
+            "description": "",
+            "image": "/images/music/hide_and_seek.jpg",
+            "url": "/music/hide_and_seek.mp3"
+        },
+        {
+            "title": "Dandy",
+            "date": "2016",
+            "description": "",
+            "image": "",
+            "url": "/music/dandy.mp3"
+        },
+        {
+            "title": "Helpless",
+            "date": "2016",
+            "description": "",
+            "image": "",
+            "url": "/music/new_song.mp3"
+        },
+        {
+            "title": "Transition",
+            "date": "2015",
+            "description": "",
+            "image": "/images/music/transition.jpg",
+            "url": "/music/transition.mp3"
+        },
+        {
+            "title": "Identity",
+            "date": "2015",
+            "description": "",
+            "image": "/images/music/ctrl_alt_del.jpeg",
+            "url": "/music/identity.mp3"
+        },
+        {
+            "title": "Stepping Clouds",
+            "date": "2015",
+            "description": "",
+            "image": "/images/music/ctrl_alt_del.jpeg",
+            "url": "/music/stepping_clouds.mp3"
+        },
+        {
+            "title": "Innocence",
+            "date": "2012",
+            "description": "",
+            "image": "/images/music/ctrl_alt_del.jpeg",
+            "url": "/music/innocence.mp3"
+        },
+        {
+            "title": "SlapsTheMoon",
+            "date": "2012",
+            "description": "",
+            "image": "",
+            "url": "/music/slaps_the_moon.mp3"
+        }
+    ],
+    "projects": [
+        {
+            "id": "tapslaydie",
+            "title": "TapSlayDie",
+            "date": "2026",
+            "description": "A hardcore fantasy clicker RPG for iOS and Android: tap to slay, loot what you kill, and die."
+        },
+        {
+            "id": "asteroids",
+            "title": "Asteroids",
+            "date": "2026",
+            "description": "The arcade classic rebuilt in Godot, with UFOs, screen shake and my own music."
+        },
+        {
+            "id": "ambii-business",
+            "title": "Ambii Business",
+            "date": "2022",
+            "description": "Background music for cafés and shops: the dashboard, the web player and the phone app, all working again."
+        },
+        {
+            "id": "ambii",
+            "title": "Ambii",
+            "date": "2020",
+            "description": "My startup from 2017 to 2021: a music app for listening together, where everyone in the room gets a say in what plays next."
+        },
+        {
+            "id": "floor-is-lava",
+            "title": "The Floor is Lava",
+            "date": "2017",
+            "description": "A miner digs blocks loose and stacks them under his feet to stay above the rising lava."
+        },
+        {
+            "id": "scott-pilgrim",
+            "title": "Scott Pilgrim Side-Scroller",
+            "date": "2017",
+            "description": "My first OpenGL game: Scott punches fireballs across a scrolling level while Ramona tags along."
+        },
+        {
+            "id": "fooder",
+            "title": "Fooder",
+            "date": "2017",
+            "description": "A team Android app that deals out nearby restaurants one card at a time, swipe-style."
+        },
+        {
+            "id": "psycho",
+            "title": "Psycho",
+            "date": "2017",
+            "description": "A game of nerve: click the square as late as you dare, and fight your friends for the top of the leaderboard."
+        },
+        {
+            "id": "pistol-art",
+            "title": "Pistol Art",
+            "date": "2016",
+            "description": "Course schedules and class sign-ups for a pistol training school."
+        },
+        {
+            "id": "cs160",
+            "title": "CS160",
+            "date": "2016",
+            "description": "Face Me: upload a video and get it back with a face mesh drawn on every frame."
+        },
+        {
+            "id": "dan-james",
+            "title": "Dan James",
+            "date": "2016",
+            "description": "A site for a music producer and mixing engineer, with a beat store and his mixing services."
+        },
+        {
+            "id": "black-chamber-2017",
+            "title": "Black Chamber Redesign",
+            "date": "2017",
+            "description": "My 2017 redesign of the Silicon Valley Black Chamber of Commerce site, with its events, programs, media kit and radio show."
+        },
+        {
+            "id": "black-chamber",
+            "title": "Black Chamber",
+            "date": "2015",
+            "description": "Members, programs and events for the Silicon Valley Black Chamber of Commerce."
+        },
+        {
+            "id": "team-safe",
+            "title": "Team SAFE Racing",
+            "date": "2014",
+            "description": "A site for an inline speed-skating team, with a bio page for every skater."
+        },
+        {
+            "id": "ninjadonut-game",
+            "title": "NinjaDonut: The Game",
+            "date": "2014",
+            "description": "The NinjaDonut donut against an endless run of enemy donuts, with ninja stars and a sword."
+        },
+        {
+            "id": "coloris",
+            "title": "Coloris",
+            "date": "2014",
+            "description": "An unfinished top-down RPG: walk Huey through a scrolling forest and change his color with the number keys."
+        },
+        {
+            "id": "rebound",
+            "title": "Rebound",
+            "date": "2013",
+            "description": "Bank a ball off the walls into the target, with only a couple of shots to do it."
+        },
+        {
+            "id": "isguy",
+            "title": "The Adventures of isGuy",
+            "date": "2013",
+            "description": "A five-level platformer with lasers, ladders, keys and doors."
+        },
+        {
+            "id": "personal-site",
+            "title": "Personal Site",
+            "date": "2012",
+            "description": "My old portfolio, with drifting clouds and balloons tied to its hello."
+        },
+        {
+            "id": "flash",
+            "title": "Flash",
+            "date": "2012",
+            "description": "Cartoons and caricatures of my friends."
+        },
+        {
+            "id": "sketchbook",
+            "title": "Sketchbook",
+            "date": "2012",
+            "description": "Digital drawings of NinjaDonut, a few logos and some characters."
+        },
+        {
+            "id": "highschool-portfolio",
+            "title": "High School Portfolio",
+            "date": "2012",
+            "description": "My portfolio from the end of high school, with a parallax city skyline scrolling behind it."
+        },
+        {
+            "id": "randomchance",
+            "title": "RandomChance",
+            "date": "2012",
+            "description": "A survival game that plays itself: a lone hero against endless villains, every fight down to a roll of the dice."
+        },
+        {
+            "id": "greenfoot-pokemon",
+            "title": "Pokémon: Green Foot Edition",
+            "date": "2012",
+            "description": "A Pokémon fan game Logan Lovell and I made for a programming class: pick a starter and explore TrainingVille."
+        },
+        {
+            "id": "escaping-confinement",
+            "title": "Escaping Confinement",
+            "date": "2012",
+            "description": "A five-minute Maya short about a desk fan that comes to life and tries to escape."
+        },
+        {
+            "id": "jakes-index",
+            "title": "JAKE's Index",
+            "date": "2011",
+            "description": "A Flash homepage for my web design class assignments, with a Pac-Man hiding in it."
+        },
+        {
+            "id": "ninjadonut",
+            "title": "NinjaDonut",
+            "date": "2010",
+            "description": "Games, comics and odds and ends, starring a very serious donut."
+        },
+        {
+            "id": "maya-models",
+            "title": "Maya Models",
+            "date": "2010",
+            "description": "The first things I built in 3D: guns, a raven, a car, robots, a dragon wasp, a spinning gold emblem and a computer desk."
+        },
+        {
+            "id": "pivot",
+            "title": "Pivot Animations",
+            "date": "2008",
+            "description": "Stick-figure fights, sword moves, skate tricks and Goku versus Vegeta."
+        }
+    ]
+}

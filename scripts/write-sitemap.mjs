@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Writes build/sitemap.xml, the list of pages search engines are pointed at
 // (public/robots.txt names it). Runs as part of `yarn build`, after
-// react-scripts build, so the project pages always match homeProjectList.
+// react-scripts build, so the project pages always match src/content.json.
 //
 // It lists the app's own routes: the board, its overlays, one viewer page
 // per project and one per hub page (Ambii Business's apps). The standalone sites under /projects/ are left out; each is
@@ -20,18 +20,18 @@ if (!existsSync(BUILD)) {
     process.exit(1);
 }
 
-// The ids are read from the source rather than imported, since constants.ts is TypeScript
+// The ids come from src/content.json, which lists every project in order. A hub's pages (pages: [{ slug, … }])
+// have their own addresses under the project's; they're read from constants.ts's source, since it's TypeScript.
+const ids = JSON.parse(readFileSync(join(ROOT, 'src', 'content.json'), 'utf8')).projects.map((project) => project.id);
 const constants = readFileSync(join(ROOT, 'src', 'common', 'constants.ts'), 'utf8');
-const start = constants.indexOf('export const homeProjectList');
-const list = constants.slice(start, constants.indexOf('\n];', start));
-const ids = [...list.matchAll(/^\s*id: '([^']+)'/gm)].map((match) => match[1]);
-// A hub's pages (pages: [{ slug, … }]) have their own addresses under the project's
-const pages = list
-    .split(/^\s*id: '/m)
+const start = constants.indexOf('const projectDetails');
+const details = constants.slice(start, constants.indexOf('\n};', start));
+const pages = details
+    .split(/^ {4}'?([a-z0-9-]+)'?: \{\r?$/m)
     .slice(1)
-    .flatMap((block) => [...block.matchAll(/slug: '([^']+)'/g)].map((match) => `/project/${block.slice(0, block.indexOf("'"))}/${match[1]}`));
+    .flatMap((part, i, parts) => (i % 2 ? [] : [...parts[i + 1].matchAll(/slug: '([^']+)'/g)].map((match) => `/project/${part}/${match[1]}`)));
 if (!ids.length) {
-    console.error('write-sitemap: found no projects in homeProjectList');
+    console.error('write-sitemap: found no projects in src/content.json');
     process.exit(1);
 }
 

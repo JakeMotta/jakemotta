@@ -69,7 +69,6 @@ const SHOTS = [
     // The top of the gallery, with its turntables on their first frame so the card doesn't depend on timing
     { id: 'maya-models', url: '/projects/maya-models/index.html', settle: 2500, run: "document.querySelectorAll('video').forEach((v) => { v.pause(); v.currentTime = 0; })" },
     // The turntable itself on its first frame (the desk from the front), without its controls
-    { id: 'maya-desk', url: '/projects/maya-desk/index.html', settle: 2000, run: "const v = document.querySelector('video'); v.removeAttribute('controls'); v.pause(); v.currentTime = 0;", clip: { selector: 'video' } },
     // Down past the three wide ones, onto the grid of smaller GIFs mid-animation
     { id: 'pivot', url: '/projects/pivot/index.html', settle: 3000, scroll: 2010 },
     // The game is portrait, so the card is its bottom: the miner on the bricks over the lava

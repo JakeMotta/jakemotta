@@ -4,7 +4,9 @@ Music plays across the whole site. The player sits outside the routes in `App.ts
 
 ## The library
 
-The tracks are the static array `musicList` in `src/common/constants.ts`. Dancin was kept apart as `welcomeTrack`, what the board's "Play with sound" started, until 2026-10-29, when the first song became a random pick ([board.md](board.md#sound-or-silence)); it's in `musicList` with the rest now. The audio is in `public/music/` and the cover art in `public/images/music/`; a track with no `image` (Dancin) shows a monogram in the hue. A track's `description` shows in the library's player and under the song in its list, so leave it empty rather than writing filler.
+The tracks are `musicList` in `src/common/constants.ts`, read whole from `src/content.json` ([content.md](content.md)), where each song's name, year, description, cover and file are, in the library's order. Dancin was kept apart as `welcomeTrack`, what the board's "Play with sound" started, until 2026-10-29, when the first song became a random pick ([board.md](board.md#sound-or-silence)); it's in `musicList` with the rest now. The audio is in `public/music/` and the cover art in `public/images/music/`; a track with no `image` (Dandy) shows a monogram in the hue. A track's `description` shows in the library's player and under the song in its list, so leave it empty rather than writing filler.
+
+On 2026-10-29 Jake had six songs taken out of the library (Discovery, Dancin, helpme, sickbeat, Nices and excelsior), renamed BEAT_2 to Le Beat and new song to Helpless, and asked for every song's name to start with a capital (dandy became Dandy). The six songs' files are still in `public/music/`, and on the server, which never deletes; nothing links to them.
 
 Songs from YouTube join them in the same shuffle ([Songs from YouTube](#songs-from-youtube)): `youtubeSongs` in `constants.ts`, and the songs on Jake's Spotify playlist once the listening Worker sends them.
 

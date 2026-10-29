@@ -8,6 +8,7 @@
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "rootDir": "src",
     "noImplicitReturns": true,
     "noImplicitThis": true,

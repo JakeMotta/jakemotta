@@ -1,13 +1,13 @@
 import { HomeProject, homeProjectList, projectCategories } from './constants';
 
 /**
- * The projects sorted into their categories, each newest first. Dates are only years, so
- * projects from the same year keep their order in `homeProjectList`, which is newest first too.
+ * The projects sorted into their categories, in `homeProjectList`'s order (src/content.json's), which
+ * is newest first apart from what Jake has placed by hand, like Black Chamber Redesign after Dan James.
  */
 export const projectSections = projectCategories
     .map((category) => ({
         ...category,
-        projects: homeProjectList.filter((project) => project.category === category.id).sort((a, b) => Number(b.date) - Number(a.date)),
+        projects: homeProjectList.filter((project) => project.category === category.id),
     }))
     .filter((section) => section.projects.length > 0);
 

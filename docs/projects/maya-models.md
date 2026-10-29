@@ -1,10 +1,10 @@
 # Maya Models
 
-Jake's first 3D models, made in Maya from 2010 to 2012: guns, a raven, a car, a podracer, a few characters and robots, a skateboard, the Dragon Wasp, the kitchen and fan from [Escaping Confinement](escaping-confinement.md), and two turntables and a toon-shaded spin. Jake approved them on 2026-10-29. The folder is `public/projects/maya-models/`; the card id is `maya-models`.
+Jake's first 3D models, made in Maya from 2010 to 2014: guns, a raven, a car, a podracer, a few characters and robots, a skateboard, the Dragon Wasp, the kitchen and fan from [Escaping Confinement](escaping-confinement.md), two turntables and a toon-shaded spin, and the computer desk from 2014. Jake approved them on 2026-10-29. The computer desk had a card of its own (`maya-desk`) for a day, until Jake had it moved in here on 2026-10-29; its old address, `/project/maya-desk`, opens this one (`movedProjects`). The folder is `public/projects/maya-models/`; the card id is `maya-models`.
 
 ## Preview
 
-`index.html` is a hand-written gallery, a dark sibling of [Sketchbook](sketchbook.md)'s: 23 stills and 3 videos in a grid, newest first. Each tile is a plain link to its file; clicking one opens it full size in a `<dialog>` (a video opens playing, with controls), and clicking again or Escape closes it.
+`index.html` is a hand-written gallery, a dark sibling of [Sketchbook](sketchbook.md)'s: 23 stills and 4 videos in a grid, newest first. Each tile is a plain link to its file; clicking one opens it full size in a `<dialog>` (a video opens playing, with controls), and clicking again or Escape closes it.
 
 **The videos** sit in the grid as silent, looping `<video>` tiles with a poster. They play only while on screen (an `IntersectionObserver`), and not at all with `prefers-reduced-motion`. None has sound, so the page never pauses the site's music.
 
@@ -48,11 +48,17 @@ Videos in `videos/`, each with a poster frame (`<name>.jpg`, its first frame):
 | --- | --- | --- |
 | `elipse.mp4` (1.2 MB, 1024×768, 18.8 s) | `Z:\Old Computer\Documents\Maya\Elipse\Images\Test\New_Project\images\Test3.1.jpg` to `Test3.450.jpg` | Encoded at 24 fps, Maya's default (`film`). Frames 451–455 are identical copies of 450 and are left off, so the loop doesn't stall. |
 | `computer-fan.mp4` (1.7 MB, 640×480, 29.9 s) | `Z:\Old Computer\Drive Photos\videos\1163792_573089096070802_17415_n_300551119991269.mp4` | Re-encoded without its sound track (see below), at its own 29.97 fps. |
+| `computer-desk.mp4` (2.0 MB, 1280×720, 20.8 s) | `Z:\Old Computer\Documents\Maya\Room\Renders\360Rotation\New_Project\images\untitled.1.tga` to `untitled.499.tga` | See The computer desk below. |
 | `car.mp4` (1.4 MB, 320×240, 50 s) | `Z:\Old Computer\Drive Photos\videos\1294840_585509568162088_25300_n_116594528386930.mp4` | Copied unchanged: already H.264, silent, with its index at the front. |
 
 **How the videos were encoded.** Blender 4.5's video sequencer (ffmpeg isn't installed here), H.264 at Blender's "High" quality, no audio, with the `Standard` view transform so the colors pass through unchanged, as for [Escaping Confinement](escaping-confinement.md). Blender writes the MP4's index (`moov`) at the end, so a small script moved it to the front afterwards, letting a video start before it has fully downloaded.
 
 **Elipse doesn't loop seamlessly.** It isn't a full turn: the gold emblem tumbles, then spins fast in place, and the loop cuts from that spin back to the start. Jake chose to put it in the gallery rather than give it a card.
+
+**The computer desk** (March 2014) is a 360° turntable: drawers pulled out, a keyboard tray, a CPU shelf and castors, turning once round on a grey backdrop. It had its own video page in `public/projects/maya-desk/` until it moved in here; that page is gone from the repo but still on the server, which never deletes.
+- **Which render:** `360Rotation` holds two 500-frame renders of the same turn, both 1280×720 TGAs made on the night of 19 March 2014. `Room_Proj/images/` was rendered in ten minutes, the desk on plain black with no shadows; `New_Project/images/` took nearly two hours, with shadows on a graded backdrop. The gallery uses `New_Project`'s.
+- **The loop:** the scene (`Room/DeskRotate.ma`) keys the desk from 0° at frame 1 to −360° at frame 500, easing in and out, at 24 fps. Frame 500 is the same pose as frame 1, so it's left off, and the video loops without a jump.
+- **Poster:** `computer-desk.jpg` is frame 1, the desk from the front.
 
 ## Left out on purpose
 
@@ -62,8 +68,9 @@ Videos in `videos/`, each with a poster frame (`<name>.jpg`, its first frame):
 - **Drawings, not models:** the outlines of a person from the front and side and of the raven (A `…105937839452599…`, `…105937846119265…`, `…105937852785931…`), the guides the models were built over.
 - **An unclear part** (A `31812_106442676068782_…`), a small grey piece on its own.
 - **The fan video's sound track.** It's loud from start to finish, so it was probably added when the video was put together (Maya renders no sound); the gallery's turntables are all silent.
+- **The desk's other files:** the "Andy" rig test (`New_Project/movies/andyRigv*.avi`), which isn't the desk; the quick render in `Room_Proj/images/` and the test frames in both `images/tmp/` folders; the Maya scenes (`Room.ma`, `DeskRotate.ma`, `New_Project/scenes/COMP.ma`) and their textures.
 - **Elipse's other files:** the 455 `asdfN.iff` frames (Maya's own format, the same animation) and the test renders in `images/tmp/`.
 
 ## Card image
 
-`public/images/projects/maya-models.webp`, the top of the gallery.
+`public/images/projects/maya-models.webp`, the top of the gallery. Computer Desk's own card image, `maya-desk.webp`, stays in `public/images/projects/` with the other old ones.

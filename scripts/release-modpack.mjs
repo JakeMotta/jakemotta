@@ -2,12 +2,17 @@
 // Copies a built Progression Survival release into public/downloads/ and
 // regenerates the files that say which release is the latest.
 //
-//   yarn modpack:release <release-folder>
+//   yarn modpack:release [<release-folder>] [--dry-run] [--force]
 //
-// <release-folder> is what the pack builder writes, e.g.
-//   ...\minecraft-progressive-smithing\outputs\Progression-Survival-1.0.0-rc.1
-// It must hold mods.lock.json, SHA256SUMS.txt, Release-Notes.md, one .mrpack and
-// one Progression-Survival-Server-*.zip.
+// With no folder, it publishes the pack repository's latest verified release:
+// outputs/Latest-Release in minecraft-progression, the repository beside this
+// one (or wherever MODPACK_REPO points). If that version is already published,
+// it says so and changes nothing. --dry-run checks a release without writing.
+//
+// A named <release-folder> is any folder the pack builder writes, e.g.
+//   ...\minecraft-progression\outputs\Progression-Survival-1.0.0-rc.10
+// It must hold mods.lock.json, SHA256SUMS.txt or latest.json, Release-Notes.md,
+// one .mrpack and one Progression-Survival-Server-*.zip.
 //
 // Published versions are immutable: every file gets a versioned name and path,
 // so the deploy (which compares by size) and any cache can never serve a stale
@@ -18,6 +23,7 @@
 // Only the client pack, the server template and the notes are published. The
 // custom-source ZIP and the build evidence stay in the build workspace.
 
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
@@ -25,7 +31,9 @@ import { fileURLToPath } from 'node:url';
 
 const SLUG = 'progression-survival';
 const SITE_DIR = `/downloads/${SLUG}`;
-const OUT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'downloads', SLUG);
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const OUT_DIR = join(ROOT, 'public', 'downloads', SLUG);
+const PACK_REPO_NAME = 'minecraft-progression';
 
 // Anything matching these inside an archive is a world, player state, an admin
 // list or a secret, none of which may reach a public download. That includes a
@@ -43,10 +51,18 @@ const fail = (message) => {
 
 const args = process.argv.slice(2);
 const force = args.includes('--force');
+const dryRun = args.includes('--dry-run');
 const source = args.find((arg) => !arg.startsWith('--'));
-if (!source) fail('usage: yarn modpack:release <release-folder> [--force]');
-const sourceDir = resolve(source);
-if (!existsSync(sourceDir)) fail(`no such folder: ${sourceDir}`);
+
+// The pack repository sits beside this one. This repository may be a worktree
+// under .claude\worktrees\, so its siblings are found from the main checkout.
+const packRepo = () => {
+    if (process.env.MODPACK_REPO) return resolve(process.env.MODPACK_REPO);
+    const mainCheckout = resolve(execFileSync('git', ['-C', ROOT, 'rev-parse', '--path-format=absolute', '--git-common-dir'], { encoding: 'utf8' }).trim(), '..');
+    return join(dirname(mainCheckout), PACK_REPO_NAME);
+};
+const sourceDir = source ? resolve(source) : join(packRepo(), 'outputs', 'Latest-Release');
+if (!existsSync(sourceDir)) fail(`no such folder: ${sourceDir}${source ? '' : ` (set MODPACK_REPO if ${PACK_REPO_NAME} is somewhere else)`}`);
 
 const sha256 = (path) => createHash('sha256').update(readFileSync(path)).digest('hex');
 
@@ -75,6 +91,15 @@ if (!existsSync(lockPath)) fail(`${sourceDir} has no mods.lock.json`);
 const lock = JSON.parse(readFileSync(lockPath, 'utf8'));
 const version = lock.version;
 if (!/^\d+\.\d+\.\d+(-[0-9A-Za-z.]+)?$/.test(version ?? '')) fail(`mods.lock.json has an unusable version: ${version}`);
+
+const releaseDir = join(OUT_DIR, 'releases', version);
+if (existsSync(releaseDir) && !force) {
+    if (!source) {
+        console.log(`Up to date: ${lock.pack} ${version}, the pack repository's latest release, is already published.`);
+        process.exit(0);
+    }
+    fail(`${version} is already published. Releases are immutable — bump the version, or pass --force to overwrite one that has not been deployed yet.`);
+}
 
 const listing = readdirSync(sourceDir);
 const pick = (label, test) => {
@@ -120,8 +145,12 @@ const describe = (name) => {
 const client = describe(clientFile);
 const server = describe(serverFile);
 
-const releaseDir = join(OUT_DIR, 'releases', version);
-if (existsSync(releaseDir) && !force) fail(`${version} is already published. Releases are immutable — bump the version, or pass --force to overwrite one that has not been deployed yet.`);
+if (dryRun) {
+    console.log(`Ready to publish ${lock.pack} ${version} from ${sourceDir} (dry run: nothing written)`);
+    console.log(`  ${client.name}  ${client.bytes} bytes`);
+    console.log(`  ${server.name}  ${server.bytes} bytes`);
+    process.exit(0);
+}
 mkdirSync(releaseDir, { recursive: true });
 for (const name of [clientFile, serverFile, 'Release-Notes.md']) copyFileSync(join(sourceDir, name), join(releaseDir, name));
 writeFileSync(join(releaseDir, 'SHA256SUMS.txt'), `${client.sha256}  ${client.name}\n${server.sha256}  ${server.name}\n`);

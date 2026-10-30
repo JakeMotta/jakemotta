@@ -2,6 +2,29 @@
   "pack": "Progression Survival",
   "releases": [
     {
+      "version": "1.0.0-rc.7",
+      "prerelease": true,
+      "published": "2026-10-30",
+      "minecraft": "1.21.1",
+      "neoforge": "21.1.264",
+      "java": 21,
+      "summary": "Combined release with Journal0.8.0, independent Armor/Tools tracks,55 optional quests, Village Bounties, and personal rewards. Version labels are replaced by the package builder.",
+      "notes": "/downloads/progression-survival/releases/1.0.0-rc.7/Release-Notes.md",
+      "checksums": "/downloads/progression-survival/releases/1.0.0-rc.7/SHA256SUMS.txt",
+      "client": {
+        "name": "Progression-Survival-1.0.0-rc.7.mrpack",
+        "url": "/downloads/progression-survival/releases/1.0.0-rc.7/Progression-Survival-1.0.0-rc.7.mrpack",
+        "bytes": 361124,
+        "sha256": "7145008b49453d3d0e9618d5fd91e714d147bb0dcdb6980f1dc4c39ce05fa0ce"
+      },
+      "server": {
+        "name": "Progression-Survival-Server-1.0.0-rc.7.zip",
+        "url": "/downloads/progression-survival/releases/1.0.0-rc.7/Progression-Survival-Server-1.0.0-rc.7.zip",
+        "bytes": 356752,
+        "sha256": "ddf4bafa93756ada1f1ac7405c00d5660c51e3d981c9aa125a0f03c08bfda20b"
+      }
+    },
+    {
       "version": "1.0.0-rc.6",
       "prerelease": true,
       "published": "2026-10-27",

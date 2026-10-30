@@ -15,7 +15,7 @@ The page keeps the two apart, so a new player never reads about moving settings 
 
 The same steps are a file players can keep: `public/downloads/progression-survival/Install-and-Update.md`, linked as "Save these steps" from both tiles. It names no version (it points at the page and `latest.mrpack`), so it doesn't change with a release. Edit it alongside the page whenever the steps change. It's rewritten in place, so the deploy uploads it on every run.
 
-The README inside each `.mrpack` (`overrides/README-Progression.md`) comes from the pack builder. rc.6's still gives the old one-line update advice and can't be changed, since a published release is never edited. The builder's README for the next release should match these steps.
+The README inside each `.mrpack` (`overrides/README-Progression.md`) comes from the pack builder. rc.6's still gives the old one-line update advice and can't be changed, since a published release is never edited; rc.7's matches these steps. Keep the builder's README in step with the page.
 
 ## Self-hosting
 
@@ -23,7 +23,7 @@ Self-hosters get one line at the foot of the Install tile instead: the `.mrpack`
 
 ## Publishing a release
 
-1. Build the release in the pack workspace. It produces a folder such as `outputs/Progression-Survival-1.0.0-rc.2/` holding `mods.lock.json`, `Release-Notes.md`, one `.mrpack`, one `Progression-Survival-Server-*.zip`, and the archives' hashes in `SHA256SUMS.txt` or, in builds that don't write one (rc.2, rc.6), in `latest.json`.
+1. Build the release in the pack workspace. It produces a folder such as `outputs/Progression-Survival-1.0.0-rc.2/` holding `mods.lock.json`, `Release-Notes.md`, one `.mrpack`, one `Progression-Survival-Server-*.zip`, and the archives' hashes in `SHA256SUMS.txt` or, in builds that don't write one (rc.2, rc.6, rc.7), in `latest.json`. The builder also keeps a copy of the newest release in `outputs/Latest-Release/`, with the same versioned file names since rc.7; either folder can be published.
 2. Copy it into the site:
    ```bash
    yarn modpack:release "C:/Users/Jake/Documents/Codex/2026-10-23/minecraft-progressive-smithing/outputs/Progression-Survival-1.0.0-rc.2"
@@ -46,7 +46,7 @@ The deploy uploads `releases.json`, `latest.json`, `.htaccess` and `Install-and-
 
 ## State
 
-- **Published:** `1.0.0-rc.6` (latest, added 2026-10-27, matching the updated server) and `1.0.0-rc.1`, both labelled test builds on the page. rc.2 to rc.5 were built but never published.
-- **Untested (as of 2026-10-26):** a real Prism import and a friend joining over the internet.
+- **Published:** `1.0.0-rc.7` (latest, added 2026-10-30 from `outputs/Latest-Release/`: Journal 0.8.0, Village Bounties and personal rewards), `1.0.0-rc.6` (2026-10-27) and `1.0.0-rc.1`. rc.2 to rc.5 were built but never published. rc.7 is the first whose in-pack README (`overrides/README-Progression.md`) gives the same keep-your-old-instance update steps as the page.
+- **Untested (as of 2026-10-30, by the builder's own record for rc.7):** a real Prism import of the updated pack, a two-account playtest, and a friend joining over the internet.
 - **Server address:** not on the page. Friends get it from Jake.
 - **Installers:** the site offers plain downloads only; nothing on it installs or updates the pack. The server `.zip`'s PowerShell scripts (not linked from the page) only ever write into a new folder: `Create-Server-Instance.ps1` refuses a name that already exists, and none of them deletes anything or touches a client's files (checked 2026-10-29 on rc.6).

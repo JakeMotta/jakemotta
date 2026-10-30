@@ -8,7 +8,7 @@ const FAVORITES = 8;
 
 export interface FavoriteArtist {
     name: string;
-    // Known when the ranking is ListenBrainz's; Spotify's ranks without counts
+    // Known when the ranking is ListenBrainz's or the latest plays'; Spotify's ranks without counts
     plays?: number;
     // Their photo, from Spotify
     image?: string;
@@ -17,7 +17,7 @@ export interface FavoriteArtist {
 }
 
 // A song from Spotify's top songs, as the rows take it
-const fromSpotify = (track: PlaylistTrack): Listen => ({
+const toListen = (track: PlaylistTrack): Listen => ({
     title: track.title,
     artist: track.artists.join(', '),
     album: track.album,
@@ -72,10 +72,11 @@ const topSong = (recent: Listen[], name: string) => {
 };
 
 /**
- * Jake's most-listened artists, from the deepest history there is (docs/listening.md): Spotify's own
- * long-term top artists, through the listening Worker, which reach back a year and more. Failing that,
- * ListenBrainz's all-time top artists once it has counted them, and failing that a count of his latest
- * plays. `ready` is false while none has answered.
+ * Jake's most-listened artists, from the deepest history there is (docs/listening.md): ListenBrainz's
+ * all-time top artists, which hold every Spotify play he's had since 2013 once it has counted them.
+ * Until it has, Spotify's own long-term top artists, through the listening Worker, which reach back a
+ * year or so, and failing that a count of his latest plays. Spotify's list also lends its photos and
+ * songs to the artists ListenBrainz ranks. `ready` is false while none has answered.
  */
 export const useFavoriteArtists = () => {
     useLiveListening();
@@ -97,12 +98,22 @@ export const useFavoriteArtists = () => {
     }, [loadTop]);
 
     return useMemo(() => {
-        if (spotify?.length) {
-            const artists: FavoriteArtist[] = spotify.slice(0, FAVORITES).map(({ name, image, song }) => ({ name, image, song: song ? fromSpotify(song) : topSong(recent, name) }));
-            return { artists, ready: true };
+        const fromSpotify = (name: string) => spotify?.find((artist) => artist.name.toLowerCase() === name.toLowerCase());
+        if (top?.length) {
+            const artists: FavoriteArtist[] = top.slice(0, FAVORITES).map(({ title: name, count: plays }) => {
+                const known = fromSpotify(name);
+                return { name, plays, image: known?.image, song: known?.song ? toListen(known.song) : topSong(recent, name) };
+            });
+            // Waits for Spotify too, for its photos
+            return { artists, ready: spotify !== undefined };
         }
-        const ranked = top?.length ? top.map((item) => ({ name: item.title, plays: item.count })) : countRecent(recent);
-        const artists: FavoriteArtist[] = ranked.slice(0, FAVORITES).map(({ name, plays }) => ({ name, plays, song: topSong(recent, name) }));
-        return { artists, ready: spotify !== undefined && top !== undefined && (!!top?.length || loaded) };
+        if (spotify?.length) {
+            const artists: FavoriteArtist[] = spotify.slice(0, FAVORITES).map(({ name, image, song }) => ({ name, image, song: song ? toListen(song) : topSong(recent, name) }));
+            return { artists, ready: top !== undefined };
+        }
+        const artists: FavoriteArtist[] = countRecent(recent)
+            .slice(0, FAVORITES)
+            .map(({ name, plays }) => ({ name, plays, song: topSong(recent, name) }));
+        return { artists, ready: spotify !== undefined && top !== undefined && loaded };
     }, [spotify, top, recent, loaded]);
 };

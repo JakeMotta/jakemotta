@@ -83,35 +83,79 @@
         opacity: 1;
     }
 
-    // Play here, beside the link out
+    // A button row, for a song that plays here
+    @at-root button#{&} {
+        width: 100%;
+        border: 0;
+        background: none;
+        cursor: pointer;
+        font: inherit;
+        text-align: left;
+    }
+
+    &__art {
+        position: relative;
+        display: flex;
+        flex: none;
+    }
+
+    // The play badge on the cover's corner, which says the row plays rather than links out
     &__play {
+        position: absolute;
+        right: -6px;
+        bottom: -6px;
+        display: flex;
+        width: 24px;
+        height: 24px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--color-primary);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        color: var(--color-primary-ink);
+        font-size: 16px;
+        transition: transform 0.3s var(--spring);
+    }
+
+    &--link:hover &__play {
+        transform: scale(1.18) rotate(-8deg);
+    }
+
+    // The service's logo, the way out to the song there
+    &__out {
         display: flex;
         width: 36px;
         height: 36px;
         flex: none;
         align-items: center;
         justify-content: center;
-        border: 0;
         border-radius: 50%;
-        background: var(--color-primary);
-        color: var(--color-primary-ink);
-        cursor: pointer;
-        font-size: 22px;
-        transition: transform 0.3s var(--spring);
+        color: var(--color-primary-light);
+        font-size: 16px;
+        opacity: 0.7;
+        transition:
+            transform 0.3s var(--spring),
+            opacity 0.2s,
+            background-color 0.2s;
 
         &:hover {
-            transform: scale(1.12) rotate(-6deg);
+            background: rgba(0, 0, 0, 0.18);
+            color: var(--color-primary-light);
+            opacity: 1;
+            transform: translate(1px, -1px) scale(1.08);
         }
 
         &:focus-visible {
             outline: 3px solid var(--color-primary-light);
             outline-offset: 2px;
+            opacity: 1;
         }
+    }
 
-        @media (prefers-reduced-motion: reduce) {
-            &:hover {
-                transform: none;
-            }
+    @media (prefers-reduced-motion: reduce) {
+        &--link:hover &__play,
+        &__out:hover {
+            transform: none;
         }
     }
 }
@@ -130,5 +174,9 @@
 
     &--current .listen-row__play {
         background: var(--color-primary-light);
+    }
+
+    &--current .listen-row__title {
+        font-weight: 900;
     }
 }

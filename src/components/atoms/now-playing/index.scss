@@ -30,9 +30,15 @@
         letter-spacing: 0.02em;
     }
 
-    // The title's link covers the whole card, and its focus ring goes round the card
+    // The title's button or link covers the whole card, and its focus ring goes round the card
     &__stretch {
+        padding: 0;
+        border: 0;
+        background: none;
         color: inherit;
+        cursor: pointer;
+        font: inherit;
+        text-align: left;
 
         &::after {
             position: absolute;
@@ -54,6 +60,72 @@
     &__cover {
         width: 64px;
         border-radius: 12px;
+    }
+
+    &__art {
+        position: relative;
+        display: flex;
+        flex: none;
+    }
+
+    // The play badge on the cover's corner, when the card plays the song here
+    &__play {
+        position: absolute;
+        right: -6px;
+        bottom: -6px;
+        display: flex;
+        width: 26px;
+        height: 26px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--color-primary);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        color: var(--color-primary-ink);
+        font-size: 18px;
+        transition: transform 0.3s var(--spring);
+    }
+
+    &--current &__play {
+        background: var(--color-primary-light);
+    }
+
+    &--link:hover &__play {
+        transform: scale(1.15) rotate(-8deg);
+    }
+
+    // The way out to the song on its service, above the stretched button, so it's a control of its own
+    &__out {
+        position: relative;
+        z-index: 1;
+        color: var(--color-primary-light);
+
+        &:hover {
+            color: var(--color-primary-light);
+        }
+
+        &:focus-visible {
+            outline: 3px solid var(--color-primary-light);
+            outline-offset: 2px;
+        }
+    }
+
+    &--compact &__out {
+        display: flex;
+        width: 30px;
+        height: 30px;
+        align-items: center;
+        justify-content: center;
+        margin: -4px -6px 0 0;
+        border-radius: 50%;
+        transition:
+            transform 0.3s var(--spring),
+            background-color 0.2s;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.2);
+            transform: translate(1px, -1px) scale(1.08);
+        }
     }
 
     &__text {
@@ -166,7 +238,9 @@
         transition: transform 0.3s var(--spring);
     }
 
-    &--link:hover &__go {
+    &--link:hover &__go,
+    &__go:hover {
+        color: var(--color-primary-dark);
         transform: translate(2px, -2px) scale(1.08);
     }
 }
@@ -186,5 +260,10 @@
 @media (prefers-reduced-motion: reduce) {
     .now-playing__dot::after {
         animation: none;
+    }
+
+    .now-playing--link:hover .now-playing__play,
+    .now-playing--compact .now-playing__out:hover {
+        transform: none;
     }
 }

@@ -31,7 +31,8 @@
     }
 }
 
-// The cover under the video, showing while it loads. YouTube's player is never smaller than 200×200.
+// The cover under the video, showing while it loads. YouTube's player is never smaller than 200×200,
+// except in the board's one-cell Now Playing tile, which resets these, as Jake chose (docs/music.md).
 .video-slot {
     position: relative;
     overflow: hidden;

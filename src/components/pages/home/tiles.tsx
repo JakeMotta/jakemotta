@@ -1,7 +1,9 @@
 import React, { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
+import { IconType } from 'react-icons';
+import { FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { FiArrowUpRight, FiDownload } from 'react-icons/fi';
-import { MdPlayArrow } from 'react-icons/md';
+import { MdPause, MdPlayArrow } from 'react-icons/md';
 import { useAudioStore } from '../../../store/audio';
 import { useListeningStore } from '../../../store/listening';
 import { playFirstSong } from '../../../store/first-song';
@@ -10,7 +12,7 @@ import { listenedAgo } from '../../../common/listening';
 import { findTrack } from '../../../common/music';
 import { useReleases } from '../../../common/modpack';
 import { codeWeeks, devlogStats, formatCount, formatDay, useDevlogPosts } from '../../../common/devlog';
-import { CodeFrequency, NowPlaying, PixelCube, PlayerCard, ProjectImage, sourceName, useNowListening } from '../../atoms';
+import { CodeFrequency, NowPlaying, PixelCube, PlayerCard, ProjectImage, sourceName, useNowListening, usePlayListens } from '../../atoms';
 
 /** A tile's way to open itself up: the link in its header to the overlay with the rest of it */
 const ExpandLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
@@ -53,20 +55,25 @@ export const HeroTile = () => {
     );
 };
 
-/** Jake's profiles (socialLinks), on the right of the name tag */
+// The profiles' logos, by socialLinks' labels
+const socialIcons: Record<string, IconType> = { GitHub: FaGithub, LinkedIn: FaLinkedinIn, Instagram: FaInstagram };
+
+/** Jake's profiles (socialLinks), stuck on the right of the name tag like stickers */
 const SayHi = () => (
-    <div className='tile-hi'>
-        <h2 className='tile-hi__title'>Say hi</h2>
-        <ul className='tile-hi__links'>
-            {socialLinks.map(({ label, url }) => (
+    <ul className='tile-hi' aria-label='Say hi'>
+        {socialLinks.map(({ label, url }) => {
+            const Icon = socialIcons[label];
+            return (
                 <li key={label}>
                     <a className='tile-hi__link' href={url} target='_blank' rel='noreferrer'>
-                        {label} <FiArrowUpRight />
+                        {Icon && <Icon className='tile-hi__icon' aria-hidden />}
+                        <span className='tile-hi__label'>{label}</span>
+                        <FiArrowUpRight className='tile-hi__go' aria-hidden />
                     </a>
                 </li>
-            ))}
-        </ul>
-    </div>
+            );
+        })}
+    </ul>
 );
 
 /**
@@ -233,6 +240,7 @@ export const EarsTile = () => {
     const from = playingNow ? 0 : 1;
     // Every play the store has, which is the last 100 (getRecentListens)
     const before = recent.slice(from);
+    const { playListen } = usePlayListens();
 
     return (
         <section className='tile tile-ears tile--light' aria-labelledby='ears-title'>
@@ -257,6 +265,21 @@ export const EarsTile = () => {
                                 </>
                             );
                             const service = sourceName[play.source];
+                            // A song that can play here plays on a click, as in the library; the rest link out
+                            const { onPlay, current, playing } = playListen(play);
+                            if (onPlay) {
+                                const pausable = current && playing;
+                                return (
+                                    <li key={`${play.listenedAt}-${i}`} className={current ? 'tile-ears__current' : undefined}>
+                                        <button type='button' aria-label={`${pausable ? 'Pause' : 'Play'} ${play.title} by ${play.artist}, ${ago}`} onClick={onPlay}>
+                                            {row}
+                                            <span className='tile-ears__cue' aria-hidden>
+                                                {pausable ? <MdPause /> : <MdPlayArrow />}
+                                            </span>
+                                        </button>
+                                    </li>
+                                );
+                            }
                             return (
                                 <li key={`${play.listenedAt}-${i}`}>
                                     {play.link ? (

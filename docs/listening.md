@@ -46,11 +46,11 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
   - `compact` is the board's version: no arrow, no listen-along button, a smaller cover, and the short label "Played 3h ago", since the tile is one column wide.
 - **`atoms/lately`** is the panel: Recent, Songs, Albums and Artists, with This month, This year and All time for the top lists.
   - ListenBrainz recalculates statistics now and then, and a range it hasn't counted answers 204. Until the visitor picks a range, the panel steps on to the next one that's ready. If they pick one that isn't, it says so.
-- **`atoms/listen-row` and `atoms/listen-cover`** are the pieces both use. Rows link out. Since 2026-10-27, a row that can play in the site's player also has a play button beside the link ([music.md](music.md#songs-from-youtube)). Until then rows had none, so they couldn't be mistaken for the library's songs; Jake asked for them to play.
+- **`atoms/listen-row` and `atoms/listen-cover`** are the pieces both use. A row that can play in the site's player plays its song when it's clicked, with a play badge on its cover, and the service's logo at its end is the way out to the song there (since 2026-10-30, when Jake asked for the click to play rather than open Spotify; `usePlayListens()` decides which rows can). The `NowPlaying` card and the board's tile play the same way. Other rows link out. From 2026-10-27 a playable row had a round play button beside its link out, and before that rows had none, so they couldn't be mistaken for the library's songs ([music.md](music.md#songs-from-youtube)).
   - **YouTube Music plays** play as their own video, with no Worker.
   - **Spotify plays and top songs** play through the Worker's match, so their buttons show only once it answers.
   - **Albums and artists** never get a button.
-- **The library's Favorite artists** (`pages/music/favorites.ts`, since 2026-10-28) come from Spotify's long-term top artists through the Worker ([Top artists](#top-artists)). Only when the Worker can't say are they the all-time top artists from here, or a count of the latest plays while ListenBrainz hasn't counted them. Each plays the artist's top song by the same rules ([music.md](music.md#playback-and-the-shuffle)).
+- **The library's Favorite artists** (`pages/music/favorites.ts`, since 2026-10-28) come from the all-time top artists here, which hold Jake's whole Spotify history since its import on 2026-10-30, with photos from Spotify's long-term top artists through the Worker ([Top artists](#top-artists)). Until ListenBrainz has counted the import they're Spotify's ranking, and failing both a count of the latest plays. Each plays the artist's top song by the same rules ([music.md](music.md#playback-and-the-shuffle)).
 - **Times are relative** ("3h ago"), never clock times, which would say when Jake sleeps.
 
 ## Listen along
@@ -83,7 +83,7 @@ Listen-along needs more than ListenBrainz has (the exact position in the song, a
 
 ### Top artists
 
-`GET /api/listening/top-artists` answers `{ artists: [{ name, image, url, song? }] }`: Jake's 50 most-played artists on Spotify, most played first, for the library's Favorite artists (since 2026-10-28). Jake asked for them to come from as much of his history as there is, and ListenBrainz only had two days of plays.
+`GET /api/listening/top-artists` answers `{ artists: [{ name, image, url, song? }] }`: Jake's 50 most-played artists on Spotify, most played first, for the library's Favorite artists (since 2026-10-28). Jake asked for them to come from as much of his history as there is, and ListenBrainz only had two days of plays. Since his Spotify history was imported (2026-10-30) ListenBrainz's all-time count ranks them, and this list lends its photos and songs. The Worker deployed on 2026-10-30 predates this route and answers it with a 404, so it needs `wrangler deploy` before the photos show.
 
 - **Where from:** Spotify's `GET /me/top/artists` and `/me/top/tracks` with `time_range=long_term`, Spotify's longest range (about a year of plays and more). Each artist's `song` is their highest-ranked song among his 50 top songs, in the playlist's shape, and those songs join the list `/match` accepts.
 - **Caching:** both lists are kept in KV for a day (`top-artists`, `top-tracks`), and answers are cached for 6 hours. `HIDDEN` artists and songs are left out.
@@ -160,7 +160,7 @@ iOS doesn't let any app see what YouTube Music is playing, so nothing can scrobb
 
 ## Past history
 
-Both imports go into ListenBrainz, so its "All time" statistics cover everything. ListenBrainz ignores a play it already has with the same time and track, so re-running an import is harmless.
+Both imports go into ListenBrainz, so its "All time" statistics cover everything. The Spotify import went in on 2026-10-30: 58,194 plays, back to 2013. ListenBrainz counts its statistics in batches, so they lag an import by a day or more; until then its stats endpoints answer 204. ListenBrainz ignores a play it already has with the same time and track, so re-running an import is harmless.
 
 - **Spotify:**
   - Request the **Extended streaming history** under Spotify's Account → Privacy settings; it can take up to 30 days to arrive.

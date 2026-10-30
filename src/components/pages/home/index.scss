@@ -371,11 +371,15 @@ $phone: 639px;
     }
 
     // Written on the tag, a little crooked. As big as the room Say hi leaves it: the tag's width, less
-    // the links' column and the padding, over the name's width in ems.
+    // the stickers' column (and their hover), the gap and the padding, over the name's width in ems.
     &__name {
         margin: 0;
         color: var(--color-primary-dark);
-        font-size: clamp(40px, calc((100cqw - 250px) / 5.6), 74px);
+        font-size: clamp(40px, calc((100cqw - 290px) / 5.6), 74px);
+
+        @container (max-width: 560px) {
+            font-size: clamp(40px, calc((100cqw - 260px) / 5.6), 74px);
+        }
         white-space: nowrap;
         font-weight: 900;
         letter-spacing: -0.04em;
@@ -998,6 +1002,7 @@ $phone: 639px;
         }
 
         a,
+        button,
         li > span {
             display: flex;
             min-width: 0;
@@ -1011,7 +1016,8 @@ $phone: 639px;
             text-decoration: none;
         }
 
-        a {
+        a,
+        button {
             border-radius: 6px;
             transition: transform 0.3s $spring;
 
@@ -1020,6 +1026,49 @@ $phone: 639px;
                 transform: translateX(4px);
             }
         }
+
+        button {
+            width: 100%;
+            padding: 0;
+            border: 0;
+            background: none;
+            cursor: pointer;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: left;
+        }
+    }
+
+    // A row that plays here: its time gives way to a play button on hover, and the song on now keeps its button
+    &__cue {
+        display: none;
+        width: 22px;
+        height: 22px;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        border-radius: 50%;
+        background: var(--color-primary-ink);
+        color: var(--color-primary-light);
+        font-size: 16px;
+    }
+
+    &__before button:hover,
+    &__before button:focus-visible,
+    &__current {
+        .tile-ears__ago {
+            display: none;
+        }
+
+        .tile-ears__cue {
+            display: flex;
+        }
+    }
+
+    &__current .tile-ears__name strong {
+        font-weight: 900;
     }
 
     &__name {
@@ -1046,60 +1095,139 @@ $phone: 639px;
     }
 }
 
-// Say hi, on the name tag: a small heading over the profile links, each on its own ruled line
+// Say hi, on the name tag: the profile links as ink stickers, each stuck on at its own angle, that
+// straighten and lift on hover. In a column on the tag's right; on a phone, in a row under the name.
 .tile-hi {
-    width: 150px;
+    display: flex;
+    width: 176px;
     flex: none;
+    flex-direction: column;
+    gap: 7px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
     @media (max-width: $phone) {
         width: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-right: 34px;
+        gap: 8px;
     }
 
-    &__title {
-        margin: 0 0 4px !important;
-        font-size: 12px;
-        font-weight: 900;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
+    li:nth-child(3n + 1) {
+        --stuck: -2.5deg;
     }
 
-    &__links {
-        margin: 0;
-        padding: 0;
-        list-style: none;
+    li:nth-child(3n + 2) {
+        --stuck: 1.5deg;
+        margin-left: 10px;
+    }
 
-        // Side by side on a phone, under the name, clear of the tag's peeling corner
-        @media (max-width: $phone) {
-            display: grid;
-            justify-content: space-between;
-            margin-right: 34px;
-            gap: 10px;
-            grid-template-columns: repeat(3, auto);
+    // The last stands in from the edge, clear of the tag's peeling corner
+    li:nth-child(3n) {
+        --stuck: -1deg;
+        margin-right: 18px;
+    }
+
+    @media (max-width: $phone) {
+        li:nth-child(n) {
+            margin: 0;
+        }
+    }
+
+    // A narrow tag (a desktop near 1100px) has less height too: smaller stickers, closer together
+    @media (min-width: $phone + 1) {
+        @container (max-width: 560px) {
+            width: 156px;
+            gap: 5px;
+
+            .tile-hi__link {
+                min-height: 34px;
+                gap: 7px;
+                font-size: 15px;
+            }
+
+            .tile-hi__icon {
+                width: 24px;
+                height: 24px;
+                padding: 4px;
+            }
         }
     }
 
     &__link {
         display: flex;
-        min-height: 32px;
+        min-height: 40px;
         align-items: center;
-        justify-content: space-between;
-        gap: 6px;
-        border-bottom: 2px solid var(--color-primary-ink);
-        color: var(--color-primary-ink);
-        font-size: 15px;
+        gap: 9px;
+        padding: 0 12px 0 8px;
+        border-radius: 999px;
+        background: var(--color-primary-ink);
+        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+        color: var(--color-primary-light);
+        font-size: 17px;
         font-weight: 900;
+        letter-spacing: -0.01em;
         text-decoration: none;
-        transition: padding 0.3s $spring;
+        transform: rotate(var(--stuck, 0deg));
+        transition:
+            transform 0.35s $spring,
+            box-shadow 0.35s $spring;
 
         &:hover {
-            padding-left: 6px;
-            color: var(--color-primary-ink);
+            box-shadow: 0 8px 14px rgba(0, 0, 0, 0.28);
+            color: var(--color-primary-light);
+            transform: rotate(0deg) translate(-4px, -2px) scale(1.05);
         }
 
         @media (max-width: $phone) {
             min-height: 40px;
-            font-size: 14px;
+            gap: 7px;
+            padding-right: 10px;
+            font-size: 15px;
         }
+    }
+
+    // The logo in a pale disc, like the sticker's printed badge
+    &__icon {
+        width: 28px;
+        height: 28px;
+        flex: none;
+        padding: 5px;
+        border-radius: 50%;
+        background: var(--color-primary-light);
+        color: var(--color-primary-ink);
+
+        @media (max-width: $phone) {
+            width: 26px;
+            height: 26px;
+        }
+    }
+
+    &__label {
+        flex: 1;
+    }
+
+    &__go {
+        flex: none;
+        font-size: 17px;
+        opacity: 0.7;
+        transition:
+            transform 0.35s $spring,
+            opacity 0.2s;
+    }
+
+    &__link:hover &__go {
+        opacity: 1;
+        transform: translate(2px, -2px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tile-hi__link,
+    .tile-hi__link:hover {
+        transform: none;
     }
 }
 

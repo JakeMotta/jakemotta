@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { ColorShiftingBackground } from '../../templates';
-import { FloatingPlayer, useVideoStore } from '../../atoms';
+import { FloatingPlayer } from '../../atoms';
 import { useAudioStore } from '../../../store/audio';
 import { useCommonStore } from '../../../store/common';
 import { usePageMeta } from '../../../common/seo';
@@ -23,7 +23,6 @@ export const Home = () => {
     const nowRef = useRef<HTMLElement>(null);
     const [nowInView, setNowInView] = useState(true);
     // A song from YouTube whose video has no card big enough in sight, like the one-cell Now Playing tile on a desktop or a tablet
-    const videoNeedsFloating = useVideoStore((store) => store.needsFloating);
     usePageMeta();
 
     // Behind an overlay the whole board is inert; while the visitor hasn't chosen yet, everything but the Now Playing tile is.
@@ -67,9 +66,8 @@ export const Home = () => {
                 <ModpackTile />
             </main>
 
-            {/* The music, wherever the Now Playing tile is out of sight: behind an overlay, or scrolled away on a phone. It hides itself while nothing plays.
-                It also holds a YouTube song's video when the tile's cover is too small for it. */}
-            {!waiting && (overlayOpen || !nowInView || videoNeedsFloating) && <FloatingPlayer />}
+            {/* The music, wherever the Now Playing tile is out of sight: behind an overlay, or scrolled away on a phone. It hides itself while nothing plays. */}
+            {!waiting && (overlayOpen || !nowInView) && <FloatingPlayer />}
 
             {/* The overlays load in their own chunks (App.tsx); nothing shows until the one asked for arrives */}
             <Suspense fallback={null}>

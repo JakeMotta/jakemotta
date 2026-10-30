@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { TopKind, TopRange } from '../../../api/listenbrainz';
 import { LISTENBRAINZ_USER, listenedAgo } from '../../../common/listening';
-import { listenUrl, songUrl, streamedTrack } from '../../../common/music';
-import { useAudioStore } from '../../../store/audio';
-import { useListenAlongStore } from '../../../store/listen-along';
+import { songUrl } from '../../../common/music';
 import { topKey, useListeningStore, useLiveListening } from '../../../store/listening';
-import { ListenRow } from '../listen-row';
+import { ListenRow, usePlayListens } from '../listen-row';
 import './index.scss';
 
 type View = 'recent' | TopKind;
-
-type PlayProps = { current?: boolean; playing?: boolean; onPlay?: () => void };
 
 const views: { key: View; label: string }[] = [
     { key: 'recent', label: 'Recent' },
@@ -27,7 +23,8 @@ const ranges: { key: TopRange; label: string }[] = [
 
 /**
  * What Jake has been listening to: his latest plays, and his top songs, albums and artists over a
- * range. Everything comes from ListenBrainz (see docs/listening.md) and links out.
+ * range. Everything comes from ListenBrainz (see docs/listening.md). A song that can play here plays
+ * when its row is clicked; the rest link out.
  */
 export const Lately = ({ pageSize = 8, className = '' }: { pageSize?: number; className?: string }) => {
     useLiveListening();
@@ -39,23 +36,7 @@ export const Lately = ({ pageSize = 8, className = '' }: { pageSize?: number; cl
     const loaded = useListeningStore((store) => store.loaded);
     const top = useListeningStore((store) => (view === 'recent' ? undefined : store.top[topKey(view, range)]));
     const loadTop = useListeningStore((store) => store.loadTop);
-    const worker = useListenAlongStore((store) => !!store.available);
-    const probe = useListenAlongStore((store) => store.probe);
-    const audioUrl = useAudioStore((store) => store.audioUrl);
-    const isPlaying = useAudioStore((store) => store.isPlaying);
-    const { playTrack, togglePlayback } = useAudioStore.getState();
-
-    useEffect(() => {
-        probe();
-    }, [probe]);
-
-    // The props that put a play button on a row, for a song that can play here
-    const play = (url: string | undefined, title: string, artist: string | undefined, cover: string | undefined): PlayProps => {
-        if (!url) return {};
-        const track = streamedTrack(url, title, artist, cover);
-        const current = url === audioUrl;
-        return { current, playing: isPlaying, onPlay: () => (current ? togglePlayback() : playTrack(track)) };
-    };
+    const { worker, play, playListen } = usePlayListens();
 
     useEffect(() => {
         if (view !== 'recent') loadTop(view, range);
@@ -84,7 +65,7 @@ export const Lately = ({ pageSize = 8, className = '' }: { pageSize?: number; cl
                       spotifyUrl={listen.spotifyUrl}
                       source={listen.source}
                       href={listen.link}
-                      {...play(listenUrl(listen, worker), listen.title, listen.artist, listen.cover)}
+                      {...playListen(listen)}
                   />
               ))
             : (top ?? []).map((item, i) => (

@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { FiArrowUpRight, FiHeadphones } from 'react-icons/fi';
+import { MdPause, MdPlayArrow } from 'react-icons/md';
 import { LISTENBRAINZ_USER, listenedAgo } from '../../../common/listening';
 import { useListenAlongStore } from '../../../store/listen-along';
 import { useListeningStore, useLiveListening } from '../../../store/listening';
 import { ListenCover, SourceIcon, sourceName } from '../listen-cover';
+import { usePlayListens } from '../listen-row';
 import './index.scss';
 
 /**
@@ -57,33 +59,46 @@ export const ListenAlongButton = ({ className = '' }: { className?: string }) =>
 
 /**
  * What Jake is listening to right now on Spotify or YouTube Music, or else the last thing he played.
- * The card links out to the track. While he's on Spotify, and the listening Worker is up, it also
- * offers to listen along. `compact` drops the arrow and the listen-along button, for the board's
- * narrow tile; the library's Recent listens tab has both.
+ * Clicking the card plays the song here, from YouTube, when it can (atoms/listen-row's usePlayListens),
+ * and the service's logo is the way out to it there; otherwise the card links out to the track. While
+ * he's on Spotify, and the listening Worker is up, it also offers to listen along. `compact` drops the
+ * arrow and the listen-along button, for the board's narrow tile; the library's Recent listens tab has both.
  */
 export const NowPlaying = ({ compact = false, className = '' }: { compact?: boolean; className?: string }) => {
     const now = useNowListening();
+    const { playListen } = usePlayListens();
     const { listen, live, service } = now;
     const label = compact ? now.shortLabel : now.label;
 
     if (!listen) return null;
 
+    const { onPlay, current, playing } = playListen(listen);
+    const pausable = current && playing;
+    const opensAs = `${listen.title} by ${listen.artist}${service ? `. Opens ${service} in a new tab` : ''}`;
+    const out = onPlay && listen.link && (
+        <a className={compact ? 'now-playing__out now-playing__source' : 'now-playing__go now-playing__out'} href={listen.link} target='_blank' rel='noopener noreferrer' aria-label={opensAs} title={service ? `Open on ${service}` : undefined}>
+            {compact ? <SourceIcon source={listen.source} /> : <FiArrowUpRight aria-hidden />}
+        </a>
+    );
+
     return (
-        <div className={`now-playing${listen.link ? ' now-playing--link' : ''}${compact ? ' now-playing--compact' : ''} ${className}`}>
-            <ListenCover title={listen.title} cover={listen.cover} spotifyUrl={listen.spotifyUrl} className='now-playing__cover' />
+        <div className={`now-playing${onPlay || listen.link ? ' now-playing--link' : ''}${compact ? ' now-playing--compact' : ''}${current ? ' now-playing--current' : ''} ${className}`}>
+            <span className='now-playing__art'>
+                <ListenCover title={listen.title} cover={listen.cover} spotifyUrl={listen.spotifyUrl} className='now-playing__cover' />
+                {onPlay && <span className='now-playing__play'>{pausable ? <MdPause aria-hidden /> : <MdPlayArrow aria-hidden />}</span>}
+            </span>
             <span className='now-playing__text'>
                 <span className='now-playing__label'>
                     {live && <span className='now-playing__dot' aria-hidden />}
                     {label}
                 </span>
-                {/* The title is the link, stretched over the whole card, so the button beside it stays its own control */}
-                {listen.link ? (
-                    <a
-                        className='now-playing__title now-playing__stretch'
-                        href={listen.link}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        aria-label={`${label}: ${listen.title} by ${listen.artist}${service ? `. Opens ${service} in a new tab` : ''}`}>
+                {/* The title is the button or link, stretched over the whole card, so the controls beside it stay their own */}
+                {onPlay ? (
+                    <button type='button' className='now-playing__title now-playing__stretch' aria-label={`${label}: ${pausable ? 'pause' : 'play'} ${listen.title} by ${listen.artist}`} onClick={onPlay}>
+                        {listen.title}
+                    </button>
+                ) : listen.link ? (
+                    <a className='now-playing__title now-playing__stretch' href={listen.link} target='_blank' rel='noopener noreferrer' aria-label={`${label}: ${opensAs}`}>
                         {listen.title}
                     </a>
                 ) : (
@@ -91,13 +106,15 @@ export const NowPlaying = ({ compact = false, className = '' }: { compact?: bool
                 )}
                 <span className='now-playing__artist'>{listen.artist}</span>
             </span>
-            <SourceIcon source={listen.source} className='now-playing__source' />
+            {compact && out ? out : <SourceIcon source={listen.source} className='now-playing__source' />}
             {!compact && <ListenAlongButton />}
-            {listen.link && !compact && (
-                <span className='now-playing__go' aria-hidden>
-                    <FiArrowUpRight />
-                </span>
-            )}
+            {!compact &&
+                (out ||
+                    (listen.link && (
+                        <span className='now-playing__go' aria-hidden>
+                            <FiArrowUpRight />
+                        </span>
+                    )))}
         </div>
     );
 };

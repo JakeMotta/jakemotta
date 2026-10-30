@@ -40,9 +40,10 @@ const PACK_REPO_NAME = 'minecraft-progression';
 // player's own client files: options.txt (and OptiFine's and Iris's copies),
 // the saved server list, single-player saves, screenshots and launcher
 // accounts. A pack that shipped options.txt would overwrite every player's
-// settings with the builder's.
+// settings with the builder's. KubeJS's web_server.json holds the builder's
+// private access token (rc.1 to rc.9 shipped one); KubeJS writes its own.
 const PRIVATE_ENTRY =
-    /(^|\/)(level\.dat|playerdata|advancements|stats|region|jake-progress\.json|locked-armor-returns\.json|empty-server-clock\.json|ops\.json|banned-[a-z]+\.json|whitelist\.json|usercache\.json|server\.properties|launcher_[a-z_]+\.json|logs|crash-reports|backups?|options(of|shaders)?\.txt|servers\.dat(_old)?|saves|screenshots|accounts\.json|\.env)(\/|$)|preview-unlock|\.log$/i;
+    /(^|\/)(level\.dat|playerdata|advancements|stats|region|jake-progress\.json|locked-armor-returns\.json|empty-server-clock\.json|ops\.json|banned-[a-z]+\.json|whitelist\.json|usercache\.json|server\.properties|launcher_[a-z_]+\.json|logs|crash-reports|backups?|options(of|shaders)?\.txt|servers\.dat(_old)?|saves|screenshots|accounts\.json|web_server\.json|\.env)(\/|$)|preview-unlock|\.log$/i;
 
 const fail = (message) => {
     console.error(`release-modpack: ${message}`);

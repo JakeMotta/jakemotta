@@ -44,6 +44,12 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         grid-template-columns: 1.1fr 1.05fr 1.45fr 0.9fr;
         grid-template-rows: minmax(0, 1fr) auto;
 
+        // With the Coming next tile, the last column holds three: Playing and Coming next share the height
+        // (each scrolls if it must), so neither squeezes the other away, then Older releases
+        &--next {
+            grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto;
+        }
+
         @media (max-width: 1099px) {
             flex: none;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -98,7 +104,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             color: var(--color-primary-light);
 
             @media (min-width: 1100px) {
-                grid-row: 1 / span 2;
+                grid-row: 1 / -1;
             }
         }
 
@@ -107,7 +113,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             background: var(--color-primary-light);
 
             @media (min-width: 1100px) {
-                grid-row: 1 / span 2;
+                grid-row: 1 / -1;
             }
         }
 
@@ -126,7 +132,19 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             }
 
             @media (min-width: 1100px) {
-                grid-row: 1 / span 2;
+                grid-row: 1 / -1;
+            }
+        }
+
+        // What the next release brings, before it's out; quieter type, since it isn't a download
+        &--next {
+            --tilt: -0.6deg;
+            gap: 8px;
+            background: var(--color-primary-light);
+            font-size: 13px;
+
+            @media (min-width: 640px) and (max-width: 1099px) {
+                grid-column: 1 / -1;
             }
         }
 
@@ -355,6 +373,27 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             color: var(--color-primary-light);
             font-family: inherit;
             font-weight: 900;
+        }
+    }
+
+    // The Coming next tile's highlights, a short dash list
+    &__next {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            position: relative;
+            padding-left: 16px;
+
+            &::before {
+                content: '–';
+                position: absolute;
+                left: 0;
+            }
         }
     }
 

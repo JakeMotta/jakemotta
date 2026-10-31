@@ -4,8 +4,8 @@ AddType application/x-modrinth-modpack+zip .mrpack
 
 <IfModule mod_rewrite.c>
 	RewriteEngine On
-	RewriteRule ^latest\.mrpack$ /downloads/progression-survival/releases/1.0.0-rc.7/Progression-Survival-1.0.0-rc.7.mrpack [R=302,L]
-	RewriteRule ^latest-server\.zip$ /downloads/progression-survival/releases/1.0.0-rc.7/Progression-Survival-Server-1.0.0-rc.7.zip [R=302,L]
+	RewriteRule ^latest\.mrpack$ /downloads/progression-survival/releases/1.0.0-rc.10/Progression-Survival-1.0.0-rc.10.mrpack [R=302,L]
+	RewriteRule ^latest-server\.zip$ /downloads/progression-survival/releases/1.0.0-rc.10/Progression-Survival-Server-1.0.0-rc.10.zip [R=302,L]
 </IfModule>
 
 <IfModule mod_headers.c>

@@ -11,9 +11,17 @@
   },
   "1.0.0-rc.6": {
     "comparison": "Compared with RC 1, the previous published release.",
-    "added": ["Journal 0.7.5 replaces 0.7.2.", "Ore goals track fresh mining within each Tools tier instead of reusing lifetime totals."],
-    "changed": ["Combat counters follow the active Armor tier.", "Mob difficulty focuses on health and damage scaling."],
-    "removed": ["Disabled Improved Mobs’ extra equipment, block breaking, stealing, flying mounts and other special behaviors."]
+    "added": [
+      "Journal 0.7.5 replaces 0.7.2.",
+      "Ore goals track fresh mining within each Tools tier instead of reusing lifetime totals."
+    ],
+    "changed": [
+      "Combat counters follow the active Armor tier.",
+      "Mob difficulty focuses on health and damage scaling."
+    ],
+    "removed": [
+      "Disabled Improved Mobs’ extra equipment, block breaking, stealing, flying mounts and other special behaviors."
+    ]
   },
   "1.0.0-rc.7": {
     "comparison": "Compared with RC 6, the previous published release.",
@@ -27,7 +35,9 @@
       "Weapon-specific kill goals begin at Copper; one eligible kill can fill a weapon goal and a mob goal.",
       "Food and ore goals are spread across tiers, with once-only task XP and safe deferred rewards when inventories are full."
     ],
-    "removed": ["Disabled enchanted-gear bounty rewards in this release; later versions introduce a new personal reward system."]
+    "removed": [
+      "Disabled enchanted-gear bounty rewards in this release; later versions introduce a new personal reward system."
+    ]
   },
   "1.0.0-rc.10": {
     "comparison": "Compared with RC 7, the previous published release. Includes changes developed in the unpublished RC 8 and RC 9 builds.",
@@ -41,7 +51,9 @@
       "Armor tier supply rewards include 32 arrows from Leather through Diamond.",
       "New bounty boards have waxed display signs, and the ten-bounty quest is called Village Bounties."
     ],
-    "removed": ["Removed a private KubeJS settings file from the downloads. The game content otherwise matches the unpublished RC 9 build."]
+    "removed": [
+      "Removed a private KubeJS settings file from the downloads. The game content otherwise matches the unpublished RC 9 build."
+    ]
   },
   "1.0.0-rc.14": {
     "comparison": "Compared with RC 10, the previous published release. Includes the verified release-audit and tool fixes developed in RC 12 and RC 13.",
@@ -60,5 +72,20 @@
       "Removed the Gold-tier diamond and redstone mining goals because a golden pickaxe cannot harvest them. Gold quartz stays.",
       "Removed development audit commands, a test-only server shutdown hook, a test-mob credit exception and example scripts from the release."
     ]
+  },
+  "1.0.0-rc.15": {
+    "comparison": "Compared with RC 14, the previous published release.",
+    "added": [
+      "Iron Tools: build and activate a simple redstone circuit with your own switch, dust and piston or iron door.",
+      "Gold Tools: place 128 rails of any type and ride across 64 different personally laid rails in one continuous trip; visit a Nether fortress.",
+      "Diamond Tools: brew three useful potion types, craft twelve Eyes of Ender, find a stronghold and enter the End.",
+      "Optional quests for six useful potion types, ten distinct table-enchanted gear pieces and post-Dragon End-city/Elytra flight."
+    ],
+    "changed": [
+      "The personal Ender Dragon advancement is the final Tools capstone. Earlier genuine Dragon/discovery proof counts; no second Dragon fight or duplicate Dragon payout is required.",
+      "Journal 0.9.11 verifies real construction, cart travel, table enchanting and personally initiated brewing. Insert brewing ingredients yourself and keep the stand open until the batch finishes.",
+      "Previously completed tiers and access stay completed. New work applies to active/future tiers, with historical-tier exemptions shown without inventing counters or replaying rewards."
+    ],
+    "removed": []
   }
 }

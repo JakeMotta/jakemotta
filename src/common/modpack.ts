@@ -32,6 +32,8 @@ export const formatSize = (bytes: number) => (bytes < 1024 * 1024 ? `${Math.roun
 
 export const formatDate = (date: string) => new Date(`${date}T00:00:00`).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
 
+export const formatShortDate = (date: string) => new Date(`${date}T00:00:00`).toLocaleDateString('en-US', { year: '2-digit', month: 'numeric', day: 'numeric' });
+
 /** The releases, newest first; `null` while loading, and `failed` if the list didn't load */
 export const useReleases = () => {
     const [releases, setReleases] = useState<Release[] | null>(null);

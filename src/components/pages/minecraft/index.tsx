@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FiAlertTriangle, FiDownload } from 'react-icons/fi';
 import { BentoOverlay, OverlayHeader } from '../../templates';
 import { PixelCube } from '../../atoms';
-import { formatDate, formatSize, PACK_DIR, Release, useReleases } from '../../../common/modpack';
+import { formatDate, formatShortDate, formatSize, PACK_DIR, Release, useReleases } from '../../../common/modpack';
 import './index.scss';
 import { ReleaseChangelog } from './changelog';
 
@@ -247,6 +247,9 @@ export const Minecraft = () => {
                                 <a href={release.client.url} download aria-label={`Download Progression Survival ${release.version}`}>
                                     {release.version}
                                 </a>
+                                <time dateTime={release.published} title={formatDate(release.published)} aria-label={`Released ${formatDate(release.published)}`}>
+                                    {formatShortDate(release.published)}
+                                </time>
                                 <button type='button' aria-haspopup='dialog' onClick={() => setChangelog(release)} aria-label={`Read change log for ${release.version}`}>
                                     Change log
                                 </button>

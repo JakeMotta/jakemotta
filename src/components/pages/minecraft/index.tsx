@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiAlertTriangle, FiArrowUpRight, FiDownload } from 'react-icons/fi';
+import { FiAlertTriangle, FiDownload } from 'react-icons/fi';
 import { BentoOverlay, OverlayHeader } from '../../templates';
 import { PixelCube } from '../../atoms';
-import { formatDate, formatSize, PACK_DIR, useReleases } from '../../../common/modpack';
+import { formatDate, formatSize, PACK_DIR, Release, useReleases } from '../../../common/modpack';
 import './index.scss';
-
-/** The install and update steps as a file to keep, matching the two tiles below */
-const GUIDE = `${PACK_DIR}/Install-and-Update.md`;
+import { ReleaseChangelog } from './changelog';
 
 /**
  * The Progression Journal build being tested for the next release, and what it brings, taken from the
@@ -43,6 +41,7 @@ const isOlder = (a: string, b: string) => {
 export const Minecraft = () => {
     const navigate = useNavigate();
     const { releases, failed } = useReleases();
+    const [changelog, setChangelog] = useState<Release | null>(null);
     const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
     const latest = releases?.[0];
     const latestLink = `${window.location.origin}${PACK_DIR}/latest.mrpack`;
@@ -90,11 +89,11 @@ export const Minecraft = () => {
                             </p>
                             {/* What the pack is, in plain words; the release's own `summary` is a changelog, kept for the release notes */}
                             <p>Survival the slow way: earn every armor and tool tier yourself, with tougher mobs and dungeons worth the trip.</p>
-                            <a className='modpack__button' href={latest.notes} target='_blank' rel='noreferrer'>
-                                Release notes <FiArrowUpRight />
-                            </a>
+                            <button type='button' className='modpack__button' aria-haspopup='dialog' onClick={() => setChangelog(latest)}>
+                                Change log
+                            </button>
                             <a className='modpack__button modpack__button--solid' href={latest.client.url} download>
-                                <FiDownload /> Download the pack ({formatSize(latest.client.bytes)})
+                                <FiDownload /> Download ({formatSize(latest.client.bytes)})
                             </a>
                             <div className='modpack__latest'>
                                 <label htmlFor='modpack-latest-link'>Always-latest link</label>
@@ -142,10 +141,7 @@ export const Minecraft = () => {
                             Choose <b>Multiplayer → Add Server</b> and enter the address Jake sends you.
                         </li>
                     </ol>
-                    <p className='modpack__callout'>Launch the imported instance itself. Copying the mods into another Minecraft profile won't work.</p>
-                    <a className='modpack__file' href={GUIDE} download>
-                        <FiDownload /> Save these steps
-                    </a>
+                    <p className='modpack__callout'>Launch the imported instance so its mods and settings stay together.</p>
                     <p className='modpack__hosting'>
                         <b>Hosting your own server?</b> The same <code>.mrpack</code> works with server tools that can install from one. Set <code>difficulty=hard</code> in{' '}
                         <code>server.properties</code> to play it as intended.
@@ -195,9 +191,6 @@ export const Minecraft = () => {
                         <b>Settings reset already?</b> If the old instance is still there, close Minecraft and copy its <code>options.txt</code> across as above. If it's been deleted,
                         look in your Recycle Bin and any backups for it. Reinstalling the pack won't bring your settings back.
                     </p>
-                    <a className='modpack__file' href={GUIDE} download>
-                        <FiDownload /> Save these steps
-                    </a>
                 </section>
 
                 <section className='modpack__tile modpack__tile--playing' aria-labelledby='modpack-playing'>
@@ -211,17 +204,17 @@ export const Minecraft = () => {
                         <kbd>E</kbd> opens your inventory and shows your mob difficulty.
                     </p>
                     <p>
-                        <b>Armor:</b> craft your own sets and weapons, then complete combat and dungeon goals while wearing them.
+                        <b>Armor:</b> craft your own matching armor sets, then complete combat and dungeon goals while wearing them.
                     </p>
                     <p>
-                        <b>Tools:</b> craft utility tools and complete mining, farming, food and other survival goals.
+                        <b>Tools:</b> craft utility tools and weapons, then complete mining, farming, food and other survival goals.
                     </p>
                     <p>
                         <b>Quests:</b> optional challenges that pay out XP once.
                     </p>
                     <p>
-                        You can craft higher-tier gear early; you can't wear or use it until you unlock it. Sharing materials is fine, but task credit is personal. Players within 32 blocks
-                        share credit for clearing a dungeon.
+                        You can craft armor before its wear unlock; tool recipes follow your Tools tier. Tool work needs the exact current-tier tool. Bows unlock at Stone Tools.
+                        Sharing materials is fine, but progress is personal. Nearby eligible players can share dungeon-clear credit.
                     </p>
                 </section>
 
@@ -251,20 +244,20 @@ export const Minecraft = () => {
                     {releases && releases.length > 1 ? (
                         releases.slice(1).map((release) => (
                             <p key={release.version} className='modpack__older'>
-                                <b>{release.version}</b>
-                                <a href={release.client.url} download>
-                                    Pack
+                                <a href={release.client.url} download aria-label={`Download Progression Survival ${release.version}`}>
+                                    {release.version}
                                 </a>
-                                <a href={release.notes} target='_blank' rel='noreferrer'>
-                                    Notes
-                                </a>
+                                <button type='button' aria-haspopup='dialog' onClick={() => setChangelog(release)} aria-label={`Read change log for ${release.version}`}>
+                                    Change log
+                                </button>
                             </p>
                         ))
                     ) : (
-                        <p>{releases ? "Nothing older yet. This is the first release." : 'Loading…'}</p>
+                        <p>{failed ? "The release list couldn’t load. Try refreshing." : releases ? "No older releases yet." : 'Loading…'}</p>
                     )}
                 </section>
             </div>
+            <ReleaseChangelog release={changelog} onClose={() => setChangelog(null)} />
         </BentoOverlay>
     );
 };

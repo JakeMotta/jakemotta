@@ -1,24 +1,24 @@
 {
   "pack": "Progression Survival",
-  "version": "1.0.0-rc.10",
+  "version": "1.0.0-rc.14",
   "prerelease": true,
-  "published": "2026-10-30",
+  "published": "2026-11-01",
   "minecraft": "1.21.1",
   "neoforge": "21.1.264",
   "java": 21,
-  "summary": "Combined release with Journal 0.9.0, independent Armor/Tools tracks, 60 optional quests, Village Bounties, and personal rewards.",
-  "notes": "/downloads/progression-survival/releases/1.0.0-rc.10/Release-Notes.md",
-  "checksums": "/downloads/progression-survival/releases/1.0.0-rc.10/SHA256SUMS.txt",
+  "summary": "Combined release with Journal 0.9.9, independent Armor/Tools tracks, 60 optional quests, Village Bounties, and personal rewards.",
+  "notes": "/downloads/progression-survival/releases/1.0.0-rc.14/Release-Notes.md",
+  "checksums": "/downloads/progression-survival/releases/1.0.0-rc.14/SHA256SUMS.txt",
   "client": {
-    "name": "Progression-Survival-1.0.0-rc.10.mrpack",
-    "url": "/downloads/progression-survival/releases/1.0.0-rc.10/Progression-Survival-1.0.0-rc.10.mrpack",
-    "bytes": 425350,
-    "sha256": "7b39ef5cf8adb135d5c2d00e5ec0a590e02ecd495319ae3ebff04573f7372f58"
+    "name": "Progression-Survival-1.0.0-rc.14.mrpack",
+    "url": "/downloads/progression-survival/releases/1.0.0-rc.14/Progression-Survival-1.0.0-rc.14.mrpack",
+    "bytes": 471356,
+    "sha256": "da5f6f964a7f25df2f2d08e10b4bc7762b6a275754ca32fa574556a420fe9b68"
   },
   "server": {
-    "name": "Progression-Survival-Server-1.0.0-rc.10.zip",
-    "url": "/downloads/progression-survival/releases/1.0.0-rc.10/Progression-Survival-Server-1.0.0-rc.10.zip",
-    "bytes": 420190,
-    "sha256": "76db588b00c600161c5f835decb36038853cc9d20fcc772da3d79980c13d655f"
+    "name": "Progression-Survival-Server-1.0.0-rc.14.zip",
+    "url": "/downloads/progression-survival/releases/1.0.0-rc.14/Progression-Survival-Server-1.0.0-rc.14.zip",
+    "bytes": 465890,
+    "sha256": "9ff72243bbb01400e91abacc130c134bb3655a78bd11f5a146254d1b04390873"
   }
 }

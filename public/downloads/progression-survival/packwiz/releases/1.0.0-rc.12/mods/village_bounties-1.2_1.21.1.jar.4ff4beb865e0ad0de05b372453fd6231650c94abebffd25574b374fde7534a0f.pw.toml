@@ -1,0 +1,8 @@
+name = "village_bounties-1.2_1.21.1.jar"
+filename = "village_bounties-1.2_1.21.1.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/q3FFq595/versions/Sn8bVqCZ/village_bounties-1.2_1.21.1.jar"
+hash-format = "sha512"
+hash = "7ebec589bf037038b29b2f2a1b06367008975c53cd206b8988b83d5e945c91f87bfad554bd68f985653265b105355e86b3a897dc00bbe9dd6683cb65b15cc1d9"

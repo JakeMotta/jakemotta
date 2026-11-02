@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FiAlertTriangle, FiDownload } from 'react-icons/fi';
 import { BentoOverlay, OverlayHeader } from '../../templates';
 import { PixelCube } from '../../atoms';
-import { formatDate, formatShortDate, formatSize, PACK_DIR, Release, useReleases } from '../../../common/modpack';
+import { formatDate, formatShortDate, formatSize, PACK_DIR, Release, useAutoUpdate, useReleases } from '../../../common/modpack';
 import './index.scss';
 import { ReleaseChangelog } from './changelog';
 
@@ -41,6 +41,7 @@ const isOlder = (a: string, b: string) => {
 export const Minecraft = () => {
     const navigate = useNavigate();
     const { releases, failed } = useReleases();
+    const autoUpdate = useAutoUpdate();
     const [changelog, setChangelog] = useState<Release | null>(null);
     const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
     const latest = releases?.[0];
@@ -81,6 +82,7 @@ export const Minecraft = () => {
                     {failed && <p>The release list didn't load. Refresh the page, or ask Jake for the pack file.</p>}
                     {latest && (
                         <>
+                            <p className='modpack__meta'>Latest published release</p>
                             <div className='modpack__version'>
                                 <span>{latest.version}</span>
                             </div>
@@ -92,18 +94,27 @@ export const Minecraft = () => {
                             <button type='button' className='modpack__button' aria-haspopup='dialog' onClick={() => setChangelog(latest)}>
                                 Change log
                             </button>
-                            <a className='modpack__button modpack__button--solid' href={latest.client.url} download>
-                                <FiDownload /> Download ({formatSize(latest.client.bytes)})
+                            {autoUpdate && (
+                                <>
+                                    <a className='modpack__button modpack__button--solid' href={autoUpdate.starter.url} download>
+                                        <FiDownload /> Get auto-updating Prism instance ({formatSize(autoUpdate.starter.bytes)})
+                                    </a>
+                                    <p className='modpack__aside'>Server-compatible client: {autoUpdate.version}. Import once; approved updates run before each launch.</p>
+                                </>
+                            )}
+                            <a className='modpack__button' href={latest.client.url} download>
+                                <FiDownload /> Manual latest release ({formatSize(latest.client.bytes)})
                             </a>
+                            <p className='modpack__aside'>The server-compatible client can be older than the latest release. Use the auto-updating instance for our server; manual downloads need a matching server.</p>
                             <div className='modpack__latest'>
-                                <label htmlFor='modpack-latest-link'>Always-latest link</label>
+                                <label htmlFor='modpack-latest-link'>Manual latest-release link</label>
                                 <div>
                                     <input id='modpack-latest-link' readOnly value={latestLink} onFocus={(event) => event.target.select()} />
                                     <button type='button' onClick={copyLatestLink}>
                                         {copyState === 'copied' ? 'Copied' : copyState === 'failed' ? "Couldn't copy" : 'Copy'}
                                     </button>
                                 </div>
-                                <span>This link always downloads the newest pack, so it's the one to bookmark or share.</span>
+                                <span>This manual link follows the latest published release, which may differ from the live server.</span>
                             </div>
                         </>
                     )}
@@ -129,10 +140,10 @@ export const Minecraft = () => {
                             and sign in with your Minecraft Java account.
                         </li>
                         <li>
-                            Download the pack. It's a single <code>.mrpack</code> file.
+                            Download the auto-updating Prism <code>.zip</code> above for our server. The <code>.mrpack</code> is the manual option.
                         </li>
                         <li>
-                            In Prism, choose <b>Add Instance → Import</b>, select the file and confirm. Prism downloads Minecraft, NeoForge and every mod for you.
+                            In Prism, choose <b>Add Instance → Import</b> and select the ZIP. Review its update command for <b>jakemotta.com</b> and accept the trusted instance’s command prompt. Prism installs Minecraft and NeoForge; the first launch downloads the approved mods.
                         </li>
                         <li>
                             Launch <b>Progression Survival</b>. If Prism asks for Java, pick <b>Java 21</b>, and give the instance about <b>4 GB</b> of memory.
@@ -141,7 +152,7 @@ export const Minecraft = () => {
                             Choose <b>Multiplayer → Add Server</b> and enter the address Jake sends you.
                         </li>
                     </ol>
-                    <p className='modpack__callout'>Launch the imported instance so its mods and settings stay together.</p>
+                    <p className='modpack__callout'>Launch the imported instance. It checks for server-approved updates before starting Minecraft; a failed update check stops launch.</p>
                     <p className='modpack__hosting'>
                         <b>Hosting your own server?</b> The same <code>.mrpack</code> works with server tools that can install from one. Set <code>difficulty=hard</code> in{' '}
                         <code>server.properties</code> to play it as intended.
@@ -159,38 +170,17 @@ export const Minecraft = () => {
                             <b>Keep your old Prism instance.</b> Don't uninstall or delete it until the new version works and your settings have been transferred.
                         </p>
                     </div>
-                    <p>
-                        The pack doesn't update itself. A new version is a separate instance that starts on Minecraft's default settings until you bring yours across. Your progress
-                        on the server stays there.
-                    </p>
+                    <p>Set up the auto-updating instance once. After that, close Minecraft and press Play to check for approved updates. Your progress on the multiplayer server stays there.</p>
                     <ol className='modpack__steps'>
-                        <li>Close Minecraft completely.</li>
-                        <li>
-                            Back up the old instance: select it in Prism, choose <b>Copy…</b>, tick <b>Select all</b> and confirm.
-                        </li>
-                        <li>
-                            Download the new version and import it with <b>Add Instance → Import</b>, as its own instance. Leave the old one as it is.
-                        </li>
-                        <li>
-                            For each instance, select it and click <b>Folder</b>, then open its game folder, called <code>minecraft</code> or <code>.minecraft</code>.
-                        </li>
-                        <li>
-                            Copy <code>options.txt</code> from the old game folder into the new one. If the new one already has one, rename that to <code>options.txt.bak</code> first.
-                            This brings your FOV, GUI scale, sound, mouse sensitivity and key binds.
-                        </li>
-                        <li>Launch the new instance, check your settings, join the server and make sure your progress is there. New or changed mods can still need a tweak.</li>
-                        <li>Once it all works, you can remove the old instance, or keep it as a backup.</li>
+                        <li>Close Minecraft. Back up your old instance with <b>Copy… → Select all</b>, and keep it until the new one works.</li>
+                        <li>Download and import the auto-updating Prism ZIP as a separate instance.</li>
+                        <li>Open each instance’s <b>Folder</b>, then its <code>minecraft</code> or <code>.minecraft</code> game folder. Copy <code>options.txt</code> and <code>servers.dat</code> into the new game folder, backing up any existing copies first.</li>
+                        <li>If wanted, bring your <code>saves</code>, <code>resourcepacks</code>, <code>shaderpacks</code> and <code>screenshots</code> too. Leave old <code>mods</code>, pack-owned <code>config</code> folders and updater state behind.</li>
+                        <li>Launch the new instance, check your settings, then join the server.</li>
                     </ol>
-                    <p className='modpack__aside'>
-                        <b>Worth bringing too:</b> <code>servers.dat</code> keeps your saved servers. If you have single-player worlds, resource packs, shaders or screenshots, copy{' '}
-                        <code>saves</code>, <code>resourcepacks</code>, <code>shaderpacks</code> or <code>screenshots</code> across as well. Don't copy the old <code>config</code> or{' '}
-                        <code>mods</code> folders: they can undo the new version's settings or bring back mods it replaced. And leave the instance's Minecraft and NeoForge versions
-                        alone; the pack sets them.
-                    </p>
-                    <p className='modpack__callout'>
-                        <b>Settings reset already?</b> If the old instance is still there, close Minecraft and copy its <code>options.txt</code> across as above. If it's been deleted,
-                        look in your Recycle Bin and any backups for it. Reinstalling the pack won't bring your settings back.
-                    </p>
+                    <p className='modpack__aside'>Automatic updates need an Internet connection. Minecraft/NeoForge upgrades require a replacement starter. Changes you make to pack-owned configs may be replaced by an update.</p>
+                    <p className='modpack__callout'>Existing manual <code>.mrpack</code> instances do not become automatic. Keep them as backups, or use Prism’s <b>Edit → Modrinth → Update Pack</b> with the release matching your server.</p>
+                    <a className='modpack__button' href={`${PACK_DIR}/packwiz/Install-and-Update.md`}>Full install and update guide</a>
                 </section>
 
                 <section className='modpack__tile modpack__tile--playing' aria-labelledby='modpack-playing'>

@@ -16,9 +16,11 @@ Options -Indexes
 	RewriteBase /
 
 	# The standalone sites under /projects/ are not part of this app. They are
-	# plain files with rewrite rules of their own, and routing them through
+	# plain files with rewrite rules of their own. Modpack downloads also have
+	# their own rules; missing update files must return 404, not React HTML.
+	# Routing these paths through
 	# index.html would break them.
-	RewriteCond %{REQUEST_URI} !^/projects/
+	RewriteCond %{REQUEST_URI} !^/(projects|downloads/progression-survival)/
 
 	# Anything that really is on disk — a bundle, an image, a font — is served
 	# as itself. Only paths with no file behind them reach the router.

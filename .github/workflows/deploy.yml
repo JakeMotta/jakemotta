@@ -205,7 +205,7 @@ jobs:
             # run, so the default time comparison would call all 1.6GB new and
             # re-upload it on every push. Size alone is safe for the bundles
             # because a changed bundle gets a new hashed filename.
-            mirror="mirror --reverse --verbose --parallel=2 --ignore-time --exclude-glob '.DS_Store'"
+            mirror="mirror --reverse --verbose --parallel=2 --ignore-time --exclude-glob '.DS_Store' --exclude '^downloads/progression-survival/packwiz/(pack[.]toml|current[.]json)$'"
             if [ "$FULL" = true ]; then
               printf "%s ./build/ %s\n" "$mirror" "$target"
             else
@@ -232,6 +232,7 @@ jobs:
             # bundles that no longer exist. Upload them unconditionally.
             printf "put -O %s ./build/index.html\n" "$target"
             printf "put -O %s ./build/asset-manifest.json\n" "$target"
+            printf "put -O %s ./build/.htaccess\n" "$target"
 
             # The privacy policy is edited in place under a fixed name, so a
             # reworded sentence of the same length would never go up either.
@@ -250,6 +251,15 @@ jobs:
             packs="${target%/}/downloads/progression-survival/"
             for file in releases.json latest.json .htaccess Install-and-Update.md; do
               printf "put -O %s ./build/downloads/progression-survival/%s\n" "$packs" "$file"
+            done
+
+            # Mutable Packwiz pointers must upload even when their byte length is unchanged.
+            # Put the approved manifest LAST, after all immutable payload files exist.
+            updater="${packs%/}/packwiz/"
+            for file in Install-and-Update.md .htaccess current.json pack.toml; do
+              if [ -f "build/downloads/progression-survival/packwiz/$file" ]; then
+                printf "put -O %s ./build/downloads/progression-survival/packwiz/%s\n" "$updater" "$file"
+              fi
             done
 
             # The Ambii Business demos are prebuilt apps under projects/, and

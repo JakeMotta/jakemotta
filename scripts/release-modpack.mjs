@@ -24,6 +24,7 @@
 // custom-source ZIP and the build evidence stay in the build workspace.
 
 import { execFileSync } from 'node:child_process';
+import { publishPackwiz } from './publish-packwiz.mjs';
 import { createHash } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
@@ -94,13 +95,8 @@ const version = lock.version;
 if (!/^\d+\.\d+\.\d+(-[0-9A-Za-z.]+)?$/.test(version ?? '')) fail(`mods.lock.json has an unusable version: ${version}`);
 
 const releaseDir = join(OUT_DIR, 'releases', version);
-if (existsSync(releaseDir) && !force) {
-    if (!source) {
-        console.log(`Up to date: ${lock.pack} ${version}, the pack repository's latest release, is already published.`);
-        process.exit(0);
-    }
-    fail(`${version} is already published. Releases are immutable — bump the version, or pass --force to overwrite one that has not been deployed yet.`);
-}
+const alreadyPublished = existsSync(releaseDir);
+if (alreadyPublished && !force && source) fail(`${version} is already published. Releases are immutable.`);
 
 const listing = readdirSync(sourceDir);
 const pick = (label, test) => {
@@ -147,9 +143,16 @@ const client = describe(clientFile);
 const server = describe(serverFile);
 
 if (dryRun) {
+    publishPackwiz({ sourceDir, packRepoRoot: packRepo(), dryRun: true });
     console.log(`Ready to publish ${lock.pack} ${version} from ${sourceDir} (dry run: nothing written)`);
     console.log(`  ${client.name}  ${client.bytes} bytes`);
     console.log(`  ${server.name}  ${server.bytes} bytes`);
+    process.exit(0);
+}
+// Publishing candidates deliberately leaves the running server's approved channel alone.
+publishPackwiz({ sourceDir, packRepoRoot: packRepo() });
+if (alreadyPublished && !force) {
+    console.log(`Up to date: ${lock.pack} ${version}; Packwiz candidate validated, approved channel unchanged.`);
     process.exit(0);
 }
 mkdirSync(releaseDir, { recursive: true });

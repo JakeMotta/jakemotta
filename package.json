@@ -36,6 +36,8 @@
     "eject": "react-scripts eject",
     "devlog:stats": "node scripts/devlog-stats.mjs",
     "modpack:release": "node scripts/release-modpack.mjs",
+    "modpack:updates": "node scripts/publish-packwiz.mjs",
+    "test:packwiz": "node --test scripts/publish-packwiz.test.mjs",
     "projects:convert": "node scripts/convert-php-sites.mjs",
     "projects:ambii": "node scripts/build-ambii-demos.mjs",
     "projects:greenfoot": "node scripts/build-greenfoot.mjs",

@@ -28,6 +28,30 @@ export interface Release {
     server: ReleaseFile;
 }
 
+export interface AutoUpdate {
+    version: string;
+    journal: string;
+    minecraft: string;
+    neoforge: string;
+    java: number;
+    starter: ReleaseFile;
+    guide: string;
+    feed: string;
+}
+
+export const useAutoUpdate = () => {
+    const [approved, setApproved] = useState<AutoUpdate | null>(null);
+    useEffect(() => {
+        let live = true;
+        fetch(`${PACK_DIR}/packwiz/current.json`, { cache: 'no-store' })
+            .then(response => { if (!response.ok) throw new Error('Update feed unavailable'); return response.json(); })
+            .then(value => { if (live && typeof value.version === 'string' && value.starter?.url?.startsWith(`${PACK_DIR}/packwiz/releases/`)) setApproved(value); })
+            .catch(() => {});
+        return () => { live = false; };
+    }, []);
+    return approved;
+};
+
 export const formatSize = (bytes: number) => (bytes < 1024 * 1024 ? `${Math.round(bytes / 1024)} KB` : `${(bytes / 1024 / 1024).toFixed(1)} MB`);
 
 export const formatDate = (date: string) => new Date(`${date}T00:00:00`).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });

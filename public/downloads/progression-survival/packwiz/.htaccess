@@ -1,0 +1,11 @@
+# Approved client channel; versioned payloads are immutable.
+AddType text/plain .toml
+<IfModule mod_headers.c>
+  <FilesMatch "^(pack\.toml|current\.json|Install-and-Update\.md)$">
+    Header always set Cache-Control "no-store"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^latest-prism\.zip$ /downloads/progression-survival/packwiz/releases/1.0.0-rc.12/Progression-Survival-Prism-Auto-1.0.0-rc.12.zip [R=302,L]
+</IfModule>

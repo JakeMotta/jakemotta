@@ -41,15 +41,19 @@ export interface AutoUpdate {
 
 export const useAutoUpdate = () => {
     const [approved, setApproved] = useState<AutoUpdate | null>(null);
+    const [failed, setFailed] = useState(false);
     useEffect(() => {
         let live = true;
         fetch(`${PACK_DIR}/packwiz/current.json`, { cache: 'no-store' })
             .then(response => { if (!response.ok) throw new Error('Update feed unavailable'); return response.json(); })
-            .then(value => { if (live && typeof value.version === 'string' && value.starter?.url?.startsWith(`${PACK_DIR}/packwiz/releases/`)) setApproved(value); })
-            .catch(() => {});
+            .then(value => {
+                if (typeof value.version !== 'string' || !value.starter?.url?.startsWith(`${PACK_DIR}/packwiz/releases/`)) throw new Error('Invalid update feed');
+                if (live) setApproved(value);
+            })
+            .catch(() => { if (live) setFailed(true); });
         return () => { live = false; };
     }, []);
-    return approved;
+    return { approved, failed };
 };
 
 export const formatSize = (bytes: number) => (bytes < 1024 * 1024 ? `${Math.round(bytes / 1024)} KB` : `${(bytes / 1024 / 1024).toFixed(1)} MB`);

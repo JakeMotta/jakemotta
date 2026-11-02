@@ -1,3 +1,6 @@
 projects/
 node_modules/
 demos/
+
+# Generated Packwiz objects are checksum-addressed; never reformat their bytes.
+public/downloads/progression-survival/packwiz/

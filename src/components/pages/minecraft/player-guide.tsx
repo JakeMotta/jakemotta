@@ -19,7 +19,7 @@ const pages = {
         { title: 'Bring personal files, then check', body: <><p>If wanted, also copy <code>saves</code>, <code>resourcepacks</code>, <code>shaderpacks</code> and <code>screenshots</code>.</p><p>Leave old mods, pack-owned configs, launcher accounts and updater state behind. Updates can replace pack-owned config edits.</p><p>Launch, check settings and join before retiring the old setup. Multiplayer progression stays on the server.</p></> },
     ],
     manual: [
-        { title: 'Match your server', body: <><p>Ask the host which release to use. The automatic ZIP follows Jake’s server; another server may need a different release.</p><p>Open <b>All downloads → Manual</b>, or choose <b>Older releases</b>, and download the matching <code>.mrpack</code>. Keep it packaged.</p></> },
+        { title: 'Match your server', body: <><p>Ask the host which release to use. The automatic ZIP follows Jake’s server; another server may need a different release.</p><p>Open <b>Get the pack → Manual client</b>, or choose <b>Older releases</b>, and download the matching <code>.mrpack</code>. Keep it packaged.</p></> },
         { title: 'Import & launch', body: <><p>In Prism, use <b>Add Instance → Import</b>, select the <code>.mrpack</code>, name the new setup and confirm.</p><p>Launch with Java 21 and about 4 GB of memory, then add your host’s address in Multiplayer.</p></> },
         { title: 'Updating a manual setup', body: <><p>Manual installs do <b>not</b> auto-update. Follow your host’s release instructions.</p><p>Use the <b>Update / switch</b> guide to back up your old setup, import separately and move personal settings without copying old mods or pack-owned configs.</p></> },
     ],

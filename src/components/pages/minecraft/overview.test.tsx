@@ -20,17 +20,20 @@ beforeAll(() => {
     HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); this.dispatchEvent(new Event('close')); };
 });
 beforeEach(() => {
+    window.matchMedia = jest.fn().mockReturnValue({matches:true});
     (useReleases as jest.Mock).mockReturnValue({ releases:[latest,{...latest,version:'old'}],failed:false });
     (useAutoUpdate as jest.Mock).mockReturnValue({ approved:{version:latest.version,starter:{...file,url:'/immutable/auto.zip'}},failed:false });
 });
 
 test('overview keeps long content out of the page and has a direct immutable automatic download', () => {
     render(<Minecraft />);
-    expect(document.querySelectorAll('.modpack__overview-card')).toHaveLength(6);
+    expect(document.querySelectorAll('.modpack__overview-card')).toHaveLength(5);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button',{name:'All downloads'})).not.toBeInTheDocument();
+    expect(screen.getByRole('button',{name:'Older releases & change logs'}).closest('.modpack__overview-card--download')).not.toBeNull();
     expect(screen.queryByText(/Microsoft account that owns/)).not.toBeInTheDocument();
     expect(screen.getByRole('link',{name:'Download auto-update ZIP'})).toHaveAttribute('href','/immutable/auto.zip');
-    fireEvent.click(screen.getByRole('button',{name:'Already playing?'}));
+    fireEvent.click(screen.getByRole('button',{name:'Update / switch'}));
     expect(screen.getByRole('dialog',{name:'Player setup & updates'})).toHaveAttribute('open');
     expect(screen.getByRole('heading',{name:'Already using the automatic setup?'})).toBeVisible();
     fireEvent.click(screen.getByRole('button',{name:'Close player setup & updates'}));
@@ -51,12 +54,11 @@ test('credits browse all pinned mods one at a time', () => {
 
 test('manual download and historical dates remain available through their pop-ups', () => {
     render(<Minecraft />);
-    fireEvent.click(screen.getByRole('button',{name:'All downloads'}));
-    fireEvent.click(screen.getByRole('button',{name:'Manual',exact:true}));
+    fireEvent.click(screen.getByRole('button',{name:'Manual client'}));
     expect(screen.getByRole('link',{name:'Download .mrpack'})).toHaveAttribute('href',file.url);
     expect(screen.getAllByRole('link',{name:'Download auto-update ZIP'})).toHaveLength(1);
-    fireEvent.click(screen.getByRole('button',{name:'Close all downloads'}));
-    fireEvent.click(screen.getByRole('button',{name:'Open older releases'}));
+    fireEvent.click(screen.getByRole('button',{name:'Close manual client'}));
+    fireEvent.click(screen.getByRole('button',{name:'Older releases & change logs'}));
     expect(screen.getByRole('link',{name:'Download Progression Survival old'})).toHaveAttribute('href',file.url);
     expect(screen.getByLabelText('Released November 3, 2026')).toHaveAttribute('dateTime','2026-11-03');
 });

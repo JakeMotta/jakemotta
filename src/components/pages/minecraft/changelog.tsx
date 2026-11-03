@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiDownload, FiX } from 'react-icons/fi';
 import { Markdown } from '../../atoms';
 import { Release } from '../../../common/modpack';
 import changelogs from '../../../common/modpack-changelogs.json';
+import { useDialogMotion } from './dialog-motion';
 
 interface ChangeLog {
   comparison: string;
@@ -14,14 +15,10 @@ const history: Record<string, ChangeLog> = changelogs;
 
 /** A native modal keeps keyboard focus here and lets Escape return to the release button. */
 export const ReleaseChangelog = ({ release, onClose }: { release: Release | null; onClose: () => void }) => {
-  const dialog = useRef<HTMLDialogElement>(null);
+  const motion = useDialogMotion(!!release, onClose);
   const entry = release ? history[release.version] : undefined;
   const [notes, setNotes] = useState({ version: '', text: '', failed: false });
 
-  useEffect(() => {
-    if (release && !dialog.current?.open) dialog.current?.showModal();
-    else if (!release && dialog.current?.open) dialog.current.close();
-  }, [release]);
 
   // Future releases still open in-page even before a curated history entry is written.
   useEffect(() => {
@@ -42,13 +39,15 @@ export const ReleaseChangelog = ({ release, onClose }: { release: Release | null
     return () => controller.abort();
   }, [release, entry]);
 
-  const close = () => dialog.current?.close();
+  const close = motion.close;
   return (
     <dialog
-      ref={dialog}
-      className="modpack-changelog"
+      ref={motion.dialog}
+      className="modpack-changelog modpack-release-dialog"
+      data-closing={motion.closing || undefined}
       aria-labelledby="modpack-changelog-title"
-      onClose={onClose}
+      onClose={motion.closed}
+      onCancel={motion.cancel}
       onClick={(event) => {
         if (event.target === event.currentTarget) close();
       }}

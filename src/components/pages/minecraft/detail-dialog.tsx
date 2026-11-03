@@ -1,19 +1,14 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
+import { useDialogMotion } from './dialog-motion';
 
 export const DetailDialog = ({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) => {
-    const ref = useRef<HTMLDialogElement>(null);
-    useEffect(() => {
-        const opener = document.activeElement as HTMLElement | null;
-        const dialog = ref.current;
-        dialog?.showModal();
-        return () => { dialog?.close(); opener?.focus({ preventScroll: true }); };
-    }, []);
-    return <dialog ref={ref} className='modpack-changelog modpack-detail' aria-labelledby='modpack-detail-title' onClose={onClose} onClick={event => { if (event.target === event.currentTarget) ref.current?.close(); }}>
+    const motion = useDialogMotion(true, onClose);
+    return <dialog ref={motion.dialog} className='modpack-changelog modpack-detail' data-closing={motion.closing || undefined} aria-labelledby='modpack-detail-title' onClose={motion.closed} onCancel={motion.cancel} onClick={event => { if (event.target === event.currentTarget) motion.close(); }}>
         <div className='modpack-changelog__content'>
             <header className='modpack-changelog__header'>
                 <h3 id='modpack-detail-title'>{title}</h3>
-                <button type='button' onClick={() => ref.current?.close()} aria-label={`Close ${title.toLowerCase()}`} autoFocus><FiX /></button>
+                <button type='button' onClick={motion.close} aria-label={`Close ${title.toLowerCase()}`} autoFocus><FiX /></button>
             </header>
             <div className='modpack-detail__body'>{children}</div>
         </div>

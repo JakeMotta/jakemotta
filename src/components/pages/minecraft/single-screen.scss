@@ -1,100 +1,170 @@
 .modpack.modpack--single-screen {
     overflow: hidden !important;
     .overlay-header { flex: 0 0 auto; }
-    .modpack__overview {
-        display: grid; flex: 1; min-height: 0; gap: 14px;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-template-rows: repeat(2, minmax(0, 1fr));
-    }
+    .modpack__overview { display: grid; flex: 1; min-height: 0; gap: 14px; grid-template-columns: 1.1fr 1fr 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); }
     .modpack__overview-card {
-        display: flex; flex-direction: column; justify-content: space-between; align-items: stretch;
-        min-width: 0; min-height: 0; gap: 12px; padding: clamp(18px, 2.5vw, 36px);
-        border: 0; border-radius: 22px; background: rgba(0, 0, 0, 0.1); color: inherit;
-        text-align: left; font: inherit;
-        h3, .modpack__overview-title { display: flex; align-items: center; gap: 12px; margin: 0; font-size: clamp(20px, 2.2vw, 32px); font-weight: 900; line-height: 1.1; }
+        display: flex; flex-direction: column; justify-content: space-between; align-items: stretch; min-width: 0; min-height: 0; gap: 12px;
+        padding: clamp(16px, 1.8vw, 28px); border: 3px solid var(--color-primary-ink); border-radius: 22px;
+        background: var(--color-primary); color: var(--color-primary-ink); text-align: left; font: inherit;
+        h3, .modpack__overview-title { display: flex; align-items: center; gap: 10px; margin: 0; font-size: clamp(21px, 2vw, 30px); font-weight: 900; line-height: 1.1; }
         h3 svg, .modpack__overview-title svg { flex-shrink: 0; width: 1em; height: 1em; }
-        &--download, &--older { background: var(--color-primary-dark); color: var(--color-primary-light); }
+        &--download { grid-row: 1 / span 2; background: var(--color-primary-dark); color: var(--color-primary-light); }
         &--setup, &--credits { background: var(--color-primary-light); }
-        &--playing { border: 3px solid var(--color-primary-ink); }
     }
-    button.modpack__overview-card { cursor: pointer; transition: transform 0.2s; }
-    button.modpack__overview-card:hover { transform: translateY(-3px) rotate(-0.4deg); }
-    .modpack__overview-description { max-width: 36ch; font-size: clamp(14px, 1.2vw, 18px); font-weight: 700; line-height: 1.45; }
-    .modpack__overview-hint, .modpack__overview-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 900; }
-    .modpack__overview-link { min-height: 32px; padding: 0; border: 0; background: none; color: inherit; text-decoration: underline; cursor: pointer; font-family: inherit; }
-    .modpack__overview-version { font-size: 13px; }
-    .modpack__overview-download, .modpack__overview-actions button {
-        display: flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 8px 12px;
-        border: 2px solid currentColor; border-radius: 14px; color: inherit; font: inherit; font-weight: 900; text-decoration: none; line-height: 1.15;
+    button.modpack__overview-card { cursor: pointer; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s; }
+    button.modpack__overview-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.16); }
+    .modpack__overview-description { font-size: clamp(14px, 1.1vw, 18px); font-weight: 800; line-height: 1.4; }
+    .modpack__overview-more { font-size: clamp(13px, 0.95vw, 15px); font-weight: 700; line-height: 1.45; }
+    .modpack__overview-facts { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; font-weight: 900; }
+    .modpack__overview-facts > span { padding: 5px 8px; border: 1px solid currentColor; border-radius: 7px; }
+    .modpack__overview-hint, .modpack__overview-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 900; }
+    .modpack__overview-link { min-height: 36px; padding: 7px 10px; border: 2px solid currentColor; border-radius: 10px; background: transparent; color: inherit; cursor: pointer; font-family: inherit; text-align: left; }
+    .modpack__overview-version { font-size: 12px; }
+    .modpack__download-paths { display: flex; flex: 1; flex-direction: column; justify-content: space-evenly; gap: 16px; min-height: 0; }
+    .modpack__download-path { display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 2px solid currentColor; border-radius: 14px; h4 { margin: 0; font-size: 19px; font-weight: 900; line-height: 1.2; } }
+    .modpack__path-note { font-size: 12px; line-height: 1.35; font-weight: 700; }
+    .modpack__overview-download, .modpack__overview-secondary, .modpack__overview-actions button {
+        display: flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 8px 10px;
+        border: 2px solid currentColor; border-radius: 10px; color: inherit; font: inherit; font-size: 14px; font-weight: 900; text-decoration: none; line-height: 1.2;
     }
     .modpack__overview-download { background: var(--color-primary-light); border-color: var(--color-primary-light); color: var(--color-primary-ink); }
+    .modpack__overview-secondary { background: transparent; cursor: pointer; }
     .modpack__overview-actions { display: flex; flex-wrap: wrap; gap: 8px; }
     .modpack__overview-actions button { flex: 1; background: transparent; cursor: pointer; }
+    @media (max-width: 1099px) {
+        .modpack__overview-card { padding: 16px; gap: 9px; }
+        .modpack__download-path { padding: 12px; gap: 8px; }
+        .modpack__overview-card h3, .modpack__overview-title { font-size: 22px; }
+        .modpack__overview-more { font-size: 13px; }
+        .modpack__overview-actions { flex-direction: column; gap: 6px; }
+    }
     @media (max-width: 639px) {
-        padding: 14px 12px; gap: 10px;
+        padding: 12px; gap: 10px;
         .overlay-header__row { gap: 8px; flex-wrap: nowrap; }
         .overlay-header__title { font-size: 26px; }
         .overlay-header__subtitle { font-size: 13px; }
         .modpack__cube { width: 30px; height: 30px; flex-shrink: 0; }
-        .modpack__overview { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 10px; }
-        .modpack__overview-card { padding: 14px; gap: 8px; border-radius: 16px; h3, .modpack__overview-title { font-size: 18px; gap: 7px; flex-wrap: wrap; } }
-        .modpack__overview-description { font-size: 13px; }
-        .modpack__overview-hint, .modpack__overview-link { font-size: 12px; }
-        .modpack__overview-version { font-size: 11px; }
-        .modpack__overview-download, .modpack__overview-actions button { font-size: 12px; padding: 6px 8px; }
-        .modpack__overview-actions { flex-direction: column; gap: 6px; }
-        .modpack__overview-card--download .modpack__overview-description, .modpack__overview-card--setup .modpack__overview-description { display: none; }
+        .modpack__overview { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 1.35fr) repeat(2, minmax(0, 1fr)); gap: 10px; }
+        .modpack__overview-card { padding: 12px; gap: 8px; border-radius: 16px; h3, .modpack__overview-title { font-size: 18px; gap: 7px; } }
+        .modpack__overview-card--download { grid-row: auto; grid-column: 1 / -1; }
+        .modpack__download-paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; flex: none; }
+        .modpack__download-path { padding: 8px; gap: 6px; h4 { font-size: 14px; } }
+        .modpack__overview-more { display: none; }
+        .modpack__overview-description { font-size: 12px; line-height: 1.35; }
+        .modpack__overview-hint { font-size: 11px; }
+        .modpack__overview-facts { font-size: 10px; gap: 4px; }
+        .modpack__overview-facts > span { padding: 3px 5px; }
+        .modpack__overview-version, .modpack__path-note { font-size: 10px; }
+        .modpack__overview-download, .modpack__overview-secondary, .modpack__overview-actions button { min-height: 36px; font-size: 12px; padding: 6px; }
+        .modpack__overview-link { min-height: 32px; font-size: 12px; }
+        .modpack__overview-card--setup .modpack__overview-description { font-size: 11px; }
     }
-    @media (max-height: 650px) {
+    @media (max-height: 700px) {
         gap: 8px; padding-top: 10px; padding-bottom: 10px;
         .overlay-header__subtitle { display: none; }
-        .modpack__overview { gap: 8px; }
-        .modpack__overview-card { padding: 10px 12px; gap: 6px; h3, .modpack__overview-title { font-size: 17px; } }
-        .modpack__overview-description, .modpack__overview-version { display: none; }
-        .modpack__overview-download, .modpack__overview-actions button { min-height: 36px; font-size: 12px; padding: 5px 8px; }
-        .modpack__overview-link { min-height: 28px; }
+        .modpack__overview-card { padding: 12px; gap: 8px; }
+        .modpack__overview-more { display: none; }
+        .modpack__download-path { padding: 10px; gap: 8px; }
+        .modpack__overview-description { font-size: 13px; }
+        .modpack__overview-download, .modpack__overview-secondary, .modpack__overview-actions button { min-height: 36px; font-size: 12px; padding: 5px 8px; }
     }
-    @media (prefers-reduced-motion: reduce) { button.modpack__overview-card:hover { transform: none; } }
+    @media (max-width: 639px) and (max-height: 700px) {
+        .modpack__overview { gap: 8px; grid-template-rows: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)); }
+        .modpack__overview-card { padding: 9px; gap: 6px; h3, .modpack__overview-title { font-size: 16px; } }
+        .modpack__overview-description { font-size: 11px; }
+        .modpack__download-path { padding: 6px; gap: 5px; h4 { font-size: 12px; } }
+        .modpack__overview-version, .modpack__path-note, .modpack__overview-facts { display: none; }
+        .modpack__overview-card--download > .modpack__overview-description { display: none; }
+        .modpack__overview-actions button { min-height: 30px; font-size: 11px; }
+        .modpack__overview-hint { font-size: 10px; }
+    }
+    @media (min-width: 500px) and (max-height: 480px) {
+        .modpack__overview { grid-template-columns: 1.15fr 1fr 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); }
+        .modpack__overview-card--download { grid-column: auto; grid-row: 1 / span 2; }
+        .modpack__download-paths { display: flex; gap: 6px; }
+        .modpack__download-path { padding: 6px; gap: 5px; h4 { font-size: 12px; } }
+        .modpack__overview-card--download > .modpack__overview-description, .modpack__overview-version, .modpack__path-note, .modpack__overview-facts { display: none; }
+        .modpack__overview-actions { flex-direction: row; }
+        .modpack__overview-card h3, .modpack__overview-title { font-size: 16px; }
+        .modpack__overview-description { font-size: 11px; }
+        .modpack__overview-download, .modpack__overview-secondary { min-height: 30px; font-size: 11px; }
+        .modpack__overview-link { min-height: 30px; font-size: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { button.modpack__overview-card { transition: none; } button.modpack__overview-card:hover { transform: none; } }
 }
 
-.modpack-detail {
-    width: min(680px, calc(100vw - 24px)); max-height: calc(100dvh - 24px);
+.modpack-detail, .modpack-release-dialog {
+    width: min(720px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0;
+    background: var(--color-primary); color: var(--color-primary-ink); border: 3px solid var(--color-primary-ink); border-radius: 22px;
+    &[open] { animation: modpack-modal-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+    &[data-closing] { animation: modpack-modal-out 180ms ease-in both; }
+    &::backdrop { background: color-mix(in srgb, var(--color-primary-ink) 65%, transparent); animation: modpack-backdrop-in 260ms ease-out both; }
+    &[data-closing]::backdrop { animation: modpack-backdrop-out 180ms ease-in both; }
     .modpack-changelog__content { max-height: calc(100dvh - 30px); }
-    .modpack-changelog__header { padding: 16px 20px; h3 { margin: 0; font-size: 24px; font-weight: 900; } }
-    &__body { min-height: 0; overflow: auto; padding: 20px; font-size: 15px; line-height: 1.5; overscroll-behavior: contain; }
+    .modpack-changelog__header { padding: 16px 20px; border-bottom: 3px solid var(--color-primary-ink); background: var(--color-primary-dark); color: var(--color-primary-light); h3 { margin: 0; font-size: 25px; font-weight: 900; } button { border: 2px solid var(--color-primary-ink); background: var(--color-primary-light); color: var(--color-primary-ink); border-radius: 12px; } }
     a { color: inherit; font-weight: 900; text-decoration: underline; }
     .modpack__button { text-decoration: none; }
-    .modpack__choice--auto { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
-    .modpack__choice { gap: 10px; }
-    .modpack__button--solid { background: var(--color-primary-ink); color: var(--color-primary-light); }
-    .modpack__latest input { background: var(--color-primary-ink); }
-    .modpack__text-action { font-family: inherit; }
-    .modpack__command { margin: 0; background: rgba(0, 0, 0, 0.08); border-radius: 8px; }
-    code { overflow-wrap: anywhere; font-size: 0.9em; }
     a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visible, input:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
-    @media (max-width: 639px) { .modpack-changelog__header { padding: 12px 14px; h3 { font-size: 20px; } } &__body { padding: 14px; font-size: 14px; } }
+    @media (max-width: 639px) { .modpack-changelog__header { padding: 12px 14px; h3 { font-size: 20px; } } }
+    @media (prefers-reduced-motion: reduce) { &[open], &[data-closing], &::backdrop, &[data-closing]::backdrop { animation: none; } }
 }
-.modpack-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
-.modpack-tabs button { min-height: 40px; padding: 7px 12px; border: 2px solid currentColor; border-radius: 10px; background: transparent; color: inherit; font: inherit; font-weight: 900; cursor: pointer; }
-.modpack-tabs button[aria-pressed='true'] { background: var(--color-primary-ink); color: var(--color-primary-light); border-color: var(--color-primary-ink); }
-.modpack-reader__page { display: flex; min-height: 190px; flex-direction: column; gap: 14px; h4 { margin: 0; font-size: 22px; font-weight: 900; line-height: 1.2; } }
-.modpack-reader__reference { display: inline-block; margin-top: 16px; font-size: 13px; }
-.modpack-pager { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; margin-top: 20px; padding-top: 14px; border-top: 1px solid currentColor; }
-.modpack-pager button { display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; padding: 5px 10px; border: 2px solid currentColor; border-radius: 12px; background: transparent; color: inherit; font: inherit; font-weight: 900; cursor: pointer; }
-.modpack-pager button:disabled { opacity: 0.4; cursor: default; }
+.modpack-detail__body { min-height: 0; overflow: auto; padding: 20px; font-size: 15px; font-weight: 700; line-height: 1.45; overscroll-behavior: contain; }
+.modpack-release-dialog .modpack-changelog__body { min-height: 0; margin: 16px 16px 0; padding: 18px; background: var(--color-primary-light); border: 2px solid var(--color-primary-ink); border-radius: 14px; }
+.modpack-release-dialog footer { border-top: 0; padding: 16px; }
+.modpack-detail .modpack__choice { padding: 16px; border: 2px solid var(--color-primary-ink); border-radius: 14px; background: var(--color-primary-light); gap: 10px; margin: 0; }
+.modpack-detail .modpack__button--solid { background: var(--color-primary-ink); color: var(--color-primary-light); }
+.modpack-detail .modpack__latest input { background: var(--color-primary-ink); }
+.modpack-detail .modpack__text-action { font-family: inherit; }
+.modpack-detail .modpack__command { margin: 0; background: var(--color-primary); border: 1px solid var(--color-primary-ink); border-radius: 8px; }
+.modpack-detail code { overflow-wrap: anywhere; font-size: 0.9em; }
+.modpack-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.modpack-tabs button { min-height: 40px; padding: 7px 12px; border: 2px solid var(--color-primary-ink); border-radius: 10px; background: var(--color-primary-light); color: var(--color-primary-ink); font: inherit; font-weight: 900; cursor: pointer; }
+.modpack-tabs button[aria-pressed='true'] { background: var(--color-primary-dark); color: var(--color-primary-light); }
+.modpack-reader__page { display: flex; min-height: 190px; flex-direction: column; gap: 12px; padding: 16px; border: 2px solid var(--color-primary-ink); border-radius: 14px; background: var(--color-primary-light); h4 { margin: 0; font-size: 22px; font-weight: 900; line-height: 1.2; } }
+.modpack-reader__reference { display: inline-block; margin-top: 14px; font-size: 13px; }
+.modpack-pager { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; margin-top: 16px; }
+.modpack-pager button { display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; padding: 5px 10px; border: 2px solid var(--color-primary-ink); border-radius: 10px; background: var(--color-primary-light); color: var(--color-primary-ink); font: inherit; font-weight: 900; cursor: pointer; }
+.modpack-pager button:disabled { opacity: 0.45; cursor: default; }
 .modpack-pager span { font-size: 12px; font-weight: 900; white-space: nowrap; }
-.modpack-credit-reader { display: flex; flex-direction: column; gap: 14px; select { max-width: 100%; color: inherit; background: transparent; padding: 6px; font: inherit; } }
-.modpack-credit-reader__mod { display: flex; flex-direction: column; gap: 12px; padding-top: 14px; border-top: 1px solid currentColor; overflow-wrap: anywhere; h4 { margin: 0; font-size: 23px; } }
+.modpack-credit-reader { display: flex; flex-direction: column; gap: 12px; select { max-width: 100%; color: inherit; background: var(--color-primary-light); border: 2px solid var(--color-primary-ink); border-radius: 8px; padding: 6px; font: inherit; } }
+.modpack-credit-reader__mod { display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 2px solid var(--color-primary-ink); border-radius: 14px; background: var(--color-primary-light); overflow-wrap: anywhere; h4 { margin: 0; font-size: 23px; font-weight: 900; } }
 .modpack-credit-reader .modpack-pager { margin-top: 0; }
-.modpack-archive { display: flex; flex-direction: column; gap: 20px; padding-top: 20px; }
-@media (max-height: 650px) { .modpack-reader__page { min-height: 0; gap: 10px; } .modpack-tabs { margin-bottom: 12px; } .modpack-detail__body { font-size: 14px; } }
-
+.modpack-archive { display: flex; flex-direction: column; gap: 12px; padding-top: 16px; }
+.modpack-archive .modpack__older { padding: 12px; border: 2px solid var(--color-primary-ink); border-radius: 10px; background: var(--color-primary-light); }
+@media (max-width: 639px) { .modpack-detail__body { padding: 14px; font-size: 14px; } .modpack-reader__page, .modpack-credit-reader__mod, .modpack-detail .modpack__choice { padding: 12px; } }
+@media (max-height: 650px) { .modpack-reader__page { min-height: 0; gap: 9px; } .modpack-tabs { margin-bottom: 12px; } .modpack-detail__body { font-size: 14px; } }
 @media (max-width: 420px) { .modpack-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; } .modpack-tabs button { padding: 5px; font-size: 12px; line-height: 1.15; } }
+@keyframes modpack-modal-in { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes modpack-modal-out { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(10px) scale(0.98); } }
+@keyframes modpack-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modpack-backdrop-out { from { opacity: 1; } to { opacity: 0; } }
 
-@media (min-width: 500px) and (max-height: 480px) {
+.modpack__copy-compact { display: none; }
+@media (max-width: 360px) and (max-height: 700px), (min-width: 500px) and (max-height: 480px) {
     .modpack.modpack--single-screen {
-        .modpack__overview { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); }
-        .modpack__overview-actions { flex-direction: row; }
-        .modpack__overview-actions button { font-size: 11px; }
+        .modpack__copy-full { display: none; }
+        .modpack__copy-compact { display: inline; }
+        .modpack__overview-card:not(.modpack__overview-card--download) { padding: 7px; gap: 4px; }
+        .modpack__overview-actions { flex-direction: row; gap: 4px; }
+        .modpack__overview-actions button { min-height: 30px; padding: 5px; font-size: 11px; }
+    }
+}
+@media (max-width: 360px) and (max-height: 650px) {
+    .modpack-detail__body { padding: 12px; }
+    .modpack-detail .modpack-changelog__header { padding: 10px 12px; }
+    .modpack-reader__page { padding: 10px; gap: 8px; h4 { font-size: 20px; } }
+    .modpack-tabs { margin-bottom: 10px; }
+    .modpack-pager button { min-height: 40px; }
+    .modpack-reader__reference { margin-top: 10px; }
+    .modpack-credit-reader__mod { padding: 10px; h4 { font-size: 20px; } }
+}
+
+@media (min-width: 640px) and (max-width: 1099px) and (min-height: 701px) {
+    .modpack.modpack--single-screen {
+        .modpack__overview-card { padding: 14px; gap: 6px; }
+        .modpack__overview-description { font-size: 13px; line-height: 1.35; }
+        .modpack__overview-more { font-size: 12px; line-height: 1.4; }
+        .modpack__overview-facts > span { padding: 3px 6px; font-size: 11px; }
+        .modpack__overview-actions button { min-height: 36px; font-size: 13px; }
     }
 }

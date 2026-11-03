@@ -56,7 +56,7 @@ export const DownloadOptions = ({ approved, autoFailed, latest, releaseFailed, o
                             <FiDownload aria-hidden /> Download .mrpack
                         </a>
                         <p className='modpack__aside'>{formatSize(latest.client.bytes)} · Choose a release matching your server.</p>
-                        {approved && approved.version !== latest.version && <p className='modpack__aside'>Joining Jake’s server? Choose Automatic instead; the latest manual release can be ahead of the approved server.</p>}
+                        {approved && approved.version !== latest.version && <p className='modpack__aside'>Joining Jake’s server? Use the auto-update ZIP on the overview; the latest manual release can be ahead of the approved server.</p>}
                         <details className='modpack__details'>
                             <summary>Copy the latest manual link</summary>
                             <div className='modpack__latest'>

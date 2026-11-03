@@ -30,6 +30,7 @@ beforeAll(() => {
   };
 });
 beforeEach(() => {
+  window.matchMedia = jest.fn().mockReturnValue({matches:true});
   global.fetch = jest.fn();
 });
 afterEach(() => {

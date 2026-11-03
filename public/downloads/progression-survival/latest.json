@@ -1,24 +1,24 @@
 {
   "pack": "Progression Survival",
-  "version": "1.0.0-rc.15",
+  "version": "1.0.0-rc.16",
   "prerelease": true,
-  "published": "2026-11-01",
+  "published": "2026-11-03",
   "minecraft": "1.21.1",
   "neoforge": "21.1.264",
   "java": 21,
-  "summary": "Combined release with Journal 0.9.11, independent Armor/Tools tracks, expanded optional quests, Village Bounties, and personal rewards.",
-  "notes": "/downloads/progression-survival/releases/1.0.0-rc.15/Release-Notes.md",
-  "checksums": "/downloads/progression-survival/releases/1.0.0-rc.15/SHA256SUMS.txt",
+  "summary": "Shared crop harvesting with Journal 0.9.11, preserving the existing Armor/Tools progression, optional quests, Village Bounties, and personal rewards.",
+  "notes": "/downloads/progression-survival/releases/1.0.0-rc.16/Release-Notes.md",
+  "checksums": "/downloads/progression-survival/releases/1.0.0-rc.16/SHA256SUMS.txt",
   "client": {
-    "name": "Progression-Survival-1.0.0-rc.15.mrpack",
-    "url": "/downloads/progression-survival/releases/1.0.0-rc.15/Progression-Survival-1.0.0-rc.15.mrpack",
-    "bytes": 499851,
-    "sha256": "f2239e39e262768f848369c85e05527f0ad23038a0302ce7c7c46d001410c54b"
+    "name": "Progression-Survival-1.0.0-rc.16.mrpack",
+    "url": "/downloads/progression-survival/releases/1.0.0-rc.16/Progression-Survival-1.0.0-rc.16.mrpack",
+    "bytes": 500075,
+    "sha256": "9e14ed340a8d38153af5b1a7a6738cf59f4996906beef981cfe3c21828b0b0e2"
   },
   "server": {
-    "name": "Progression-Survival-Server-1.0.0-rc.15.zip",
-    "url": "/downloads/progression-survival/releases/1.0.0-rc.15/Progression-Survival-Server-1.0.0-rc.15.zip",
-    "bytes": 493887,
-    "sha256": "5be6e12d3d3650cf6282f92ad2755f05049a325e1bcacf2267af8ef269cb9239"
+    "name": "Progression-Survival-Server-1.0.0-rc.16.zip",
+    "url": "/downloads/progression-survival/releases/1.0.0-rc.16/Progression-Survival-Server-1.0.0-rc.16.zip",
+    "bytes": 494113,
+    "sha256": "e6ae679d91f4dcf657359aadb36188155535de9b2e30f09488aa4bd631ed5a97"
   }
 }

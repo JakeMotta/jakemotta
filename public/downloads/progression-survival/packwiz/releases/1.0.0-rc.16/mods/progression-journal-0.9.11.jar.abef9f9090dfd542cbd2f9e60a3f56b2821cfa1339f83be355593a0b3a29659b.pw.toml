@@ -1,0 +1,8 @@
+name = "progression-journal-0.9.11.jar"
+filename = "progression-journal-0.9.11.jar"
+side = "client"
+
+[download]
+url = "https://jakemotta.com/downloads/progression-survival/packwiz/releases/1.0.0-rc.16/mods/progression-journal-0.9.11.jar"
+hash-format = "sha256"
+hash = "5f23099216c38731bf3f12bd81bde6d421ccce6c214dab0ae030bc24440d01b1"

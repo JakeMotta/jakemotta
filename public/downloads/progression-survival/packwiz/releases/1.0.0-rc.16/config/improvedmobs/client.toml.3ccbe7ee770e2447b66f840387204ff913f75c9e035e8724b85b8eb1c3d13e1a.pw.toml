@@ -1,0 +1,8 @@
+name = "client.toml"
+filename = "client.toml"
+side = "client"
+
+[download]
+url = "https://jakemotta.com/downloads/progression-survival/packwiz/releases/1.0.0-rc.16/config/improvedmobs/client.toml"
+hash-format = "sha256"
+hash = "750d73495881ce0bd532d086c8778161f70efb9e379edb44127cef64036ec7ff"

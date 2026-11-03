@@ -2,6 +2,29 @@
   "pack": "Progression Survival",
   "releases": [
     {
+      "version": "1.0.0-rc.16",
+      "prerelease": true,
+      "published": "2026-11-03",
+      "minecraft": "1.21.1",
+      "neoforge": "21.1.264",
+      "java": 21,
+      "summary": "Shared crop harvesting with Journal 0.9.11, preserving the existing Armor/Tools progression, optional quests, Village Bounties, and personal rewards.",
+      "notes": "/downloads/progression-survival/releases/1.0.0-rc.16/Release-Notes.md",
+      "checksums": "/downloads/progression-survival/releases/1.0.0-rc.16/SHA256SUMS.txt",
+      "client": {
+        "name": "Progression-Survival-1.0.0-rc.16.mrpack",
+        "url": "/downloads/progression-survival/releases/1.0.0-rc.16/Progression-Survival-1.0.0-rc.16.mrpack",
+        "bytes": 500075,
+        "sha256": "9e14ed340a8d38153af5b1a7a6738cf59f4996906beef981cfe3c21828b0b0e2"
+      },
+      "server": {
+        "name": "Progression-Survival-Server-1.0.0-rc.16.zip",
+        "url": "/downloads/progression-survival/releases/1.0.0-rc.16/Progression-Survival-Server-1.0.0-rc.16.zip",
+        "bytes": 494113,
+        "sha256": "e6ae679d91f4dcf657359aadb36188155535de9b2e30f09488aa4bd631ed5a97"
+      }
+    },
+    {
       "version": "1.0.0-rc.15",
       "prerelease": true,
       "published": "2026-11-01",

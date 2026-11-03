@@ -1,0 +1,12 @@
+name = "Progression Survival"
+pack-format = "packwiz:1.1.0"
+version = "1.0.0-rc.16"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "9456c3c6c04958fb99da8dde79237a2785a1a432fdf24b0caac160cfcf40da87"
+
+[versions]
+minecraft = "1.21.1"
+neoforge = "21.1.264"

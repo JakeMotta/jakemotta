@@ -87,5 +87,17 @@
       "Previously completed tiers and access stay completed. New work applies to active/future tiers, with historical-tier exemptions shown without inventing counters or replaying rewards."
     ],
     "removed": []
+  },
+  "1.0.0-rc.16": {
+    "comparison": "Compared with RC 15, the previous published release.",
+    "added": [],
+    "changed": [
+      "Mature wheat, carrots and potatoes credit the player who harvests them, including crops planted by another player and existing village farms. Required and optional harvest goals use the same rule.",
+      "Planting stays personal. Immature crops, item pickups, cancelled breaks and duplicate callbacks do not earn mature-harvest credit.",
+      "Existing progress, completed tiers, earned access and reward receipts are preserved. Uses the existing Journal 0.9.11."
+    ],
+    "removed": [
+      "Removed the requirement to harvest only crops you planted yourself. Sapling planting and growth goals stay personal."
+    ]
   }
 }

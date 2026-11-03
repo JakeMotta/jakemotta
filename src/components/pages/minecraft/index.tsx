@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FiArrowUpRight, FiBookOpen, FiDownload, FiHelpCircle, FiPackage, FiServer, FiUsers } from 'react-icons/fi';
 import { BentoOverlay, OverlayHeader } from '../../templates';
 import { PixelCube } from '../../atoms';
-import { formatDate, formatShortDate, Release, useAutoUpdate, useReleases } from '../../../common/modpack';
-import './index.scss';
+import { Release, useAutoUpdate, useReleases } from '../../../common/modpack';
 import { ReleaseChangelog } from './changelog';
 import { DownloadOptions } from './download-options';
 import { PlayerGuide } from './player-guide';
 import { ServerGuide } from './server-guide';
 import { ModCredits } from './mod-credits';
+import { DetailDialog, StepReader } from './detail-dialog';
+import { ReleaseArchive } from './release-archive';
+import './index.scss';
+import './single-screen.scss';
 
 /**
  * The Progression Journal build being tested for the next release, and what it brings, taken from the
@@ -36,97 +40,61 @@ const isOlder = (a: string, b: string) => {
     return false;
 };
 
-/**
- * The modpack tile opened: the Progression Survival download page, laid out as a board of its own.
- * Everything about the releases comes from releases.json, so shipping a new version never needs
- * this page to change.
- */
+type Panel = 'downloads' | 'setup' | 'update' | 'playing' | 'hosting' | 'credits' | 'older';
+const titles: Record<Panel, string> = { downloads: 'All downloads', setup: 'Player setup & updates', update: 'Player setup & updates', playing: 'Playing', hosting: 'Host your own server', credits: 'Mod credits', older: 'Older releases' };
+
 export const Minecraft = () => {
     const navigate = useNavigate();
     const { releases, failed } = useReleases();
-    const { approved: autoUpdate, failed: autoFailed } = useAutoUpdate();
+    const { approved, failed: autoFailed } = useAutoUpdate();
+    const [panel, setPanel] = useState<Panel | null>(null);
+    const [downloadMode, setDownloadMode] = useState<'auto' | 'manual'>('auto');
     const [changelog, setChangelog] = useState<Release | null>(null);
     const latest = releases?.[0];
     const latestJournal = latest ? journalIn(latest.summary) : null;
-    // Shown only once the releases have loaded, and only while the latest one carries an older journal
     const showNext = !!latest && (!latestJournal || isOlder(latestJournal, NEXT_JOURNAL));
-
-    return (
-        <BentoOverlay label='Progression Survival modpack' onClose={() => navigate('/')} className='modpack'>
-            <OverlayHeader
-                title='Progression Survival'
-                subtitle='A survival modpack built around earning your next tier. Join our server or host a world of your own.'
-                lead={<PixelCube className='modpack__cube' />}
-            />
-
-            <div className={`modpack__grid${showNext ? ' modpack__grid--next' : ''}`}>
-                <section className='modpack__tile modpack__tile--download' aria-labelledby='modpack-download'>
-                    <h3 id='modpack-download' className='modpack__eyebrow'>
-                        Download
-                    </h3>
-                    <DownloadOptions approved={autoUpdate} autoFailed={autoFailed} latest={latest} releaseFailed={failed} onChangelog={setChangelog} />
-                </section>
-
-                <PlayerGuide />
-                <ServerGuide release={latest} failed={failed} />
-
-                <section className='modpack__tile modpack__tile--playing' aria-labelledby='modpack-playing'>
-                    <h3 id='modpack-playing' className='modpack__eyebrow'>
-                        Playing
-                    </h3>
-                    <p>Build a life between expeditions: mine, farm, cook and explore to earn better equipment, then take on tougher fights and dungeons. Hard difficulty and scaling mobs keep new tiers meaningful.</p>
-                    <p className='modpack__key'><kbd>J</kbd> opens your Progression Journal: your current tier, tasks, progress and unlocks.</p>
-                    <p><b>Armor:</b> craft your own matching sets, then finish combat and dungeon goals while wearing them. You can craft armor before unlocking the right to wear it.</p>
-                    <p><b>Tools & weapons:</b> recipes follow your Tools tier. Mine, farm, cook and complete survival goals with the exact current-tier tool. Bows unlock at Stone Tools; later goals lead into redstone, transport and the End.</p>
-                    <p><b>Village bounties & quests:</b> pick up repeatable jobs at village boards, or take optional journal challenges for one-time XP rewards.</p>
-                    <p><b>Play together:</b> share materials and a home while earning personal progression. Nearby eligible players can share dungeon-clear credit. Your journal explains the requirements for each task.</p>
-                    <p className='modpack__key'><kbd>E</kbd> opens your inventory, including your mob difficulty.</p>
-                </section>
-
-                {/* What's being tested for the next release; never a download, since it isn't in a pack yet */}
-                {showNext && latest && (
-                    <section className='modpack__tile modpack__tile--next' aria-labelledby='modpack-next'>
-                        <h3 id='modpack-next' className='modpack__eyebrow'>
-                            Coming next
-                        </h3>
-                        <p>
-                            Progression Journal {NEXT_JOURNAL} is being tested for the next release. It isn't in the download yet
-                            {latestJournal ? `: ${latest.version} has Journal ${latestJournal}.` : '.'}
-                        </p>
-                        <ul className='modpack__next'>
-                            {NEXT_HIGHLIGHTS.map((line) => (
-                                <li key={line}>{line}</li>
-                            ))}
-                        </ul>
-                        <p className='modpack__aside'>When it ships, the server and everyone's pack update together.</p>
-                    </section>
-                )}
-
-                <section className='modpack__tile modpack__tile--older' aria-labelledby='modpack-older'>
-                    <h3 id='modpack-older' className='modpack__eyebrow'>
-                        Older releases
-                    </h3>
-                    {releases && releases.length > 1 ? (
-                        releases.slice(1).map((release) => (
-                            <p key={release.version} className='modpack__older'>
-                                <a href={release.client.url} download aria-label={`Download Progression Survival ${release.version}`}>
-                                    {release.version}
-                                </a>
-                                <time dateTime={release.published} title={formatDate(release.published)} aria-label={`Released ${formatDate(release.published)}`}>
-                                    {formatShortDate(release.published)}
-                                </time>
-                                <button type='button' aria-haspopup='dialog' onClick={() => setChangelog(release)} aria-label={`Read change log for ${release.version}`}>
-                                    Change log
-                                </button>
-                            </p>
-                        ))
-                    ) : (
-                        <p>{failed ? "The release list couldn’t load. Try refreshing." : releases ? "No older releases yet." : 'Loading…'}</p>
-                    )}
-                </section>
-                <ModCredits approvedVersion={autoUpdate?.version} latestVersion={latest?.version} />
-            </div>
-            <ReleaseChangelog release={changelog} onClose={() => setChangelog(null)} />
-        </BentoOverlay>
-    );
+    const openDownloads = () => { setDownloadMode('auto'); setPanel('downloads'); };
+    const playingPages = [
+        { title: 'Earn your next tier', body: <><p>Mine, farm, cook and explore to earn better equipment, then take on tougher fights and dungeons. Hard difficulty and scaling mobs keep each new tier meaningful.</p><p><kbd>J</kbd> opens your Progression Journal for current tiers, tasks and unlocks. <kbd>E</kbd> opens your inventory and shows your mob difficulty.</p></> },
+        { title: 'Armor, tools & weapons', body: <><p><b>Armor:</b> craft your own matching sets, then complete combat and dungeon goals while wearing them. You can craft armor before unlocking the right to wear it.</p><p><b>Tools:</b> recipes follow your Tools tier. Survival goals need the exact current-tier tool. Bows unlock at Stone Tools; later goals lead into redstone, transport and the End.</p></> },
+        { title: 'Bounties & playing together', body: <><p>Village boards offer repeatable bounties. Optional Journal challenges pay one-time XP rewards.</p><p>Share materials and a home while earning personal progression. Nearby eligible players can share dungeon-clear credit. The Journal explains each task’s requirements.</p></> },
+        ...(showNext ? [{ title: 'Coming next', body: <><p>Journal {NEXT_JOURNAL} is being tested; it is not in the download yet.</p><ul>{NEXT_HIGHLIGHTS.map(line => <li key={line}>{line}</li>)}</ul></> }] : []),
+    ];
+    return <BentoOverlay label='Progression Survival modpack' onClose={() => navigate('/')} className='modpack modpack--single-screen'>
+        <OverlayHeader title='Progression Survival' subtitle='Earn your next tier. Pick a section to explore.' lead={<PixelCube className='modpack__cube' />} />
+        <div className='modpack__overview'>
+            <section className='modpack__overview-card modpack__overview-card--download' aria-labelledby='overview-download'>
+                <h3 id='overview-download'><FiDownload aria-hidden /> Get the pack</h3>
+                <p className='modpack__overview-description'>An automatic client for Jake’s server. Import once, then launch to update.</p>
+                {approved ? <><p className='modpack__overview-version'>Server approved · {approved.version}</p><a className='modpack__overview-download' href={approved.starter.url} download aria-label='Download auto-update ZIP'>Auto-update ZIP <FiDownload aria-hidden /></a></> : <p role='status'>{autoFailed ? 'Download unavailable. Try refreshing.' : 'Loading download…'}</p>}
+                <button className='modpack__overview-link' type='button' aria-haspopup='dialog' onClick={openDownloads}>All downloads <FiArrowUpRight aria-hidden /></button>
+            </section>
+            <section className='modpack__overview-card modpack__overview-card--setup' aria-labelledby='overview-setup'>
+                <h3 id='overview-setup'><FiHelpCircle aria-hidden /> Setup & updates</h3>
+                <p className='modpack__overview-description'>Short steps for joining, updating or moving your settings.</p>
+                <div className='modpack__overview-actions'><button type='button' aria-haspopup='dialog' onClick={() => setPanel('setup')}>First time</button><button type='button' aria-haspopup='dialog' onClick={() => setPanel('update')}>Already playing?</button></div>
+            </section>
+            <button type='button' className='modpack__overview-card modpack__overview-card--playing' aria-haspopup='dialog' aria-label='Open playing guide' onClick={() => setPanel('playing')}>
+                <span className='modpack__overview-title'><FiBookOpen aria-hidden /> Playing</span><span className='modpack__overview-description'>Personal tiers, tougher adventures, village bounties and a Journal to guide you.</span><span className='modpack__overview-hint'>How it plays <FiArrowUpRight aria-hidden /></span>
+            </button>
+            <button type='button' className='modpack__overview-card modpack__overview-card--hosting' aria-haspopup='dialog' aria-label='Open self-hosting guide' onClick={() => setPanel('hosting')}>
+                <span className='modpack__overview-title'><FiServer aria-hidden /> Host a server</span><span className='modpack__overview-description'>Create a world for your friends. Verified server download and step-by-step setup.</span><span className='modpack__overview-hint'>Server guide <FiArrowUpRight aria-hidden /></span>
+            </button>
+            <button type='button' className='modpack__overview-card modpack__overview-card--credits' aria-haspopup='dialog' aria-label='Open mod credits' onClick={() => setPanel('credits')}>
+                <span className='modpack__overview-title'><FiUsers aria-hidden /> Mod credits</span><span className='modpack__overview-description'>Meet the creators behind every bundled mod, with project and license links.</span><span className='modpack__overview-hint'>Browse creators <FiArrowUpRight aria-hidden /></span>
+            </button>
+            <button type='button' className='modpack__overview-card modpack__overview-card--older' aria-haspopup='dialog' aria-label='Open older releases' onClick={() => setPanel('older')}>
+                <span className='modpack__overview-title'><FiPackage aria-hidden /> Older releases</span><span className='modpack__overview-description'>Find a specific client version and read what changed.</span><span className='modpack__overview-hint'>Release archive <FiArrowUpRight aria-hidden /></span>
+            </button>
+        </div>
+        {panel && <DetailDialog title={titles[panel]} onClose={() => setPanel(null)}>
+            {panel === 'downloads' && <><nav className='modpack-tabs' aria-label='Download type'><button type='button' aria-pressed={downloadMode === 'auto'} onClick={() => setDownloadMode('auto')}>Automatic</button><button type='button' aria-pressed={downloadMode === 'manual'} onClick={() => setDownloadMode('manual')}>Manual</button></nav><DownloadOptions approved={approved} autoFailed={autoFailed} latest={latest} releaseFailed={failed} onChangelog={setChangelog} mode={downloadMode} /></>}
+            {(panel === 'setup' || panel === 'update') && <PlayerGuide initial={panel === 'update' ? 'update' : 'start'} />}
+            {panel === 'hosting' && <ServerGuide release={latest} failed={failed} />}
+            {panel === 'playing' && <StepReader pages={playingPages} />}
+            {panel === 'credits' && <ModCredits approvedVersion={approved?.version} latestVersion={latest?.version} />}
+            {panel === 'older' && <ReleaseArchive releases={releases} failed={failed} onChangelog={setChangelog} />}
+        </DetailDialog>}
+        <ReleaseChangelog release={changelog} onClose={() => setChangelog(null)} />
+    </BentoOverlay>;
 };

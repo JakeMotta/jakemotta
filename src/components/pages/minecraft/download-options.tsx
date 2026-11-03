@@ -8,9 +8,10 @@ interface Props {
     latest?: Release;
     releaseFailed: boolean;
     onChangelog: (release: Release) => void;
+    mode?: 'auto' | 'manual';
 }
 
-export const DownloadOptions = ({ approved, autoFailed, latest, releaseFailed, onChangelog }: Props) => {
+export const DownloadOptions = ({ approved, autoFailed, latest, releaseFailed, onChangelog, mode }: Props) => {
     const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
     const latestLink = `${window.location.origin}${PACK_DIR}/latest.mrpack`;
     const copyLink = async () => {
@@ -24,7 +25,7 @@ export const DownloadOptions = ({ approved, autoFailed, latest, releaseFailed, o
 
     return (
         <>
-            <section className='modpack__choice modpack__choice--auto' aria-labelledby='modpack-auto-title'>
+            {mode !== 'manual' && <section className='modpack__choice modpack__choice--auto' aria-labelledby='modpack-auto-title'>
                 <span className='modpack__recommended'>Join Jake’s server</span>
                 <h4 id='modpack-auto-title'>Automatic updates</h4>
                 <p>Import once. After setup, press <b>Play</b> in Prism to update and launch.</p>
@@ -39,9 +40,9 @@ export const DownloadOptions = ({ approved, autoFailed, latest, releaseFailed, o
                 ) : (
                     <p role='status'>{autoFailed ? 'The server download could not load. Refresh this page, or ask Jake for the auto-update ZIP.' : 'Loading the server-compatible download…'}</p>
                 )}
-            </section>
+            </section>}
 
-            <section className='modpack__choice modpack__choice--manual' aria-labelledby='modpack-manual-title'>
+            {mode !== 'auto' && <section className='modpack__choice modpack__choice--manual' aria-labelledby='modpack-manual-title'>
                 <h4 id='modpack-manual-title'>Manual download</h4>
                 <p>Latest published client for manual installs and self-hosted servers. You manage updates and match the server’s release.</p>
                 {latest ? (
@@ -55,7 +56,7 @@ export const DownloadOptions = ({ approved, autoFailed, latest, releaseFailed, o
                             <FiDownload aria-hidden /> Download .mrpack
                         </a>
                         <p className='modpack__aside'>{formatSize(latest.client.bytes)} · Choose a release matching your server.</p>
-                        {approved && approved.version !== latest.version && <p className='modpack__aside'>Joining Jake’s server? Use the auto-update ZIP above; the latest manual release can be ahead of the approved server.</p>}
+                        {approved && approved.version !== latest.version && <p className='modpack__aside'>Joining Jake’s server? Choose Automatic instead; the latest manual release can be ahead of the approved server.</p>}
                         <details className='modpack__details'>
                             <summary>Copy the latest manual link</summary>
                             <div className='modpack__latest'>
@@ -71,7 +72,7 @@ export const DownloadOptions = ({ approved, autoFailed, latest, releaseFailed, o
                 ) : (
                     <p role='status'>{releaseFailed ? 'The manual release list could not load. Refresh to try again.' : 'Loading manual releases…'}</p>
                 )}
-            </section>
+            </section>}
         </>
     );
 };

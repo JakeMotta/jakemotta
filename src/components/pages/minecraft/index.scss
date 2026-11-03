@@ -2,6 +2,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
 // A board of its own, on the page ground with an ink rim, its tiles in the usual surfaces
 .modpack {
+    overflow-y: auto !important;
     gap: 14px;
     // 16px down, so the header's first line is level with the close button
     padding: 16px 20px 20px;
@@ -37,28 +38,12 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
     &__grid {
         display: grid;
-        min-height: 0;
-        flex: 1;
+        flex: none;
         gap: 14px;
-        // Download, install and update take a column each; Playing sits over the older releases in the last
-        grid-template-columns: 1.1fr 1.05fr 1.45fr 0.9fr;
-        grid-template-rows: minmax(0, 1fr) auto;
-
-        // With the Coming next tile, the last column holds three: Playing and Coming next share the height
-        // (each scrolls if it must), so neither squeezes the other away, then Older releases
-        &--next {
-            grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto;
-        }
-
-        @media (max-width: 1099px) {
-            flex: none;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            grid-template-rows: none;
-        }
-
-        @media (max-width: 639px) {
-            grid-template-columns: minmax(0, 1fr);
-        }
+        align-items: start;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1.1fr);
+        @media (max-width: 1099px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        @media (max-width: 639px) { grid-template-columns: minmax(0, 1fr); }
     }
 
     &__tile {
@@ -67,7 +52,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         min-height: 0;
         flex-direction: column;
         gap: 12px;
-        overflow: auto;
+        overflow: visible;
         padding: 20px;
         border-radius: 20px;
         font-size: 14px;
@@ -104,7 +89,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             color: var(--color-primary-light);
 
             @media (min-width: 1100px) {
-                grid-row: 1 / -1;
+                grid-row: auto;
             }
         }
 
@@ -113,7 +98,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             background: var(--color-primary-light);
 
             @media (min-width: 1100px) {
-                grid-row: 1 / -1;
+                grid-row: auto;
             }
         }
 
@@ -132,7 +117,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             }
 
             @media (min-width: 1100px) {
-                grid-row: 1 / -1;
+                grid-row: auto;
             }
         }
 
@@ -231,12 +216,14 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         flex-direction: column;
         gap: 12px;
         min-width: 0;
-        padding: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 14px;
+        align-self: stretch;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
 
         h4 { margin: 0; font-size: 23px; font-weight: 900; line-height: 1.15; }
-        &--auto { background: rgba(255, 255, 255, 0.07); border-width: 2px; }
+        &--auto { padding-bottom: 20px; border-bottom: 1px solid currentColor; margin-bottom: 4px; }
         &--manual h4 { font-size: 18px; }
         .modpack__button--solid { white-space: normal; text-align: center; padding-block: 12px; line-height: 1.25; }
         .modpack__button svg { flex-shrink: 0; }
@@ -380,13 +367,26 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         font-size: 13px;
     }
 
-    // For the odd visitor running a server rather than joining one, kept to the foot of the Install tile
-    &__hosting {
-        margin-top: auto !important;
-        padding-top: 10px;
-        border-top: 2px dashed rgba(0, 0, 0, 0.2);
-        font-size: 13px;
+    &__guide-section { display: flex; flex-direction: column; gap: 12px; }
+    &__guide-section h4, &__details-body h4 { margin: 0; font-size: 16px; }
+    &__details-body h4 { scroll-margin-top: 20px; }
+    &__details-body h4:focus { outline: 3px solid currentColor; outline-offset: 4px; }
+    &__command { display: block; margin-top: 10px; padding: 10px !important; overflow-wrap: anywhere; font-size: 12px; }
+    &__tile--hosting { background: rgba(0, 0, 0, 0.12); }
+    &__tile--hosting .modpack__button { border-radius: 14px; padding-block: 10px; }
+    &__tile--playing { @media (min-width: 1100px) { grid-column: span 2; } }
+    &__tile--credits {
+        grid-column: 1 / -1;
+        background: var(--color-primary-light);
     }
+    &__credits-list {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+        gap: 20px; list-style: none; margin: 0; padding: 0;
+        li { display: flex; flex-direction: column; gap: 7px; min-width: 0; padding-top: 12px; border-top: 1px solid currentColor; overflow-wrap: anywhere; }
+        h4 { margin: 0; font-size: 17px; }
+    }
+    &__tile code { overflow-wrap: anywhere; }
+    &__tile--download .modpack__button { align-self: stretch; width: 100%; text-align: center; }
 
     &__key {
         display: flex;

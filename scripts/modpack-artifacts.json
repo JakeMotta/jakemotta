@@ -1,0 +1,107 @@
+{
+  "7e28575000ce4fe285442d16566d37e5c86ca02618c95c143a4cf509b13bd1d2": {
+    "authors": [
+      "redy1aye"
+    ],
+    "license": "MIT",
+    "evidence": "https://cdn.modrinth.com/data/cDfJDREb/versions/9p4nSJEO/CopperEquipment-NeoForge-1.21.1-1.3.5.jar"
+  },
+  "375e0b2f988ab4f5bde182166c0f0b102377adc8f823660c24ade08b0b3cde56": {
+    "authors": [
+      "YUNGNICKYOUNG"
+    ],
+    "license": "LGPLv3",
+    "evidence": "https://cdn.modrinth.com/data/Ua7DFN59/versions/2prKITKh/YungsApi-1.21.1-NeoForge-5.1.9.jar"
+  },
+  "9cc92f2c09533fc5482c60f993bd891c655a0e32b637037cdcb7c2b23adedeeb": {
+    "authors": [
+      "shedaniel"
+    ],
+    "license": "GNU LGPLv3",
+    "evidence": "https://cdn.modrinth.com/data/lhGA9TYQ/versions/1IiqEQGl/architectury-13.0.11-neoforge.jar"
+  },
+  "8aa762e34068c498cb3fda14ebb9de95ddcfdc1b19154d1d8f9109af0729e75c": {
+    "authors": [
+      "Alessandro"
+    ],
+    "license": "All Rights Reserved",
+    "evidence": "https://cdn.modrinth.com/data/6wy8fmIk/versions/ZkTlq92y/astages-2.5.3-1.21.1.jar"
+  },
+  "e205d5cc2d63a7e37d1f4d0bc6c16a583dd0cab165e498a7cf4b765c58df666f": {
+    "authors": [
+      "Alessandro"
+    ],
+    "license": "All Rights Reserved",
+    "evidence": "https://cdn.modrinth.com/data/WeZ2k3T1/versions/YMyzHXhN/astages_ftbquests-2.1.0-1.21.1.jar"
+  },
+  "0f76d46f2f18eb67e67c7974170d7b27deb66473396461c8dc50d6949de1449b": {
+    "authors": [
+      "latvian.dev"
+    ],
+    "license": "MIT",
+    "evidence": "https://cdn.modrinth.com/data/iHLDc0eo/versions/uPFbnD32/better-advanced-tooltips-2101.1.0-build.5.jar"
+  },
+  "624c2d2d1cbadb946d967e17757bd5b2d129d4d3ed71f2da0c70607d04476ac2": {
+    "authors": [
+      "FTB Team"
+    ],
+    "license": "All Rights Reserved",
+    "evidence": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-library-neoforge/2101.1.37/ftb-library-neoforge-2101.1.37.jar"
+  },
+  "6b42457d680108d0af5b8deb21e3fe7b92138209f0683c62441dc360d4fc01d5": {
+    "authors": [
+      "FTB Team"
+    ],
+    "license": "All Rights Reserved",
+    "evidence": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-quests-neoforge/2101.1.37/ftb-quests-neoforge-2101.1.37.jar"
+  },
+  "e6bcd670493624e6906df872a9c6af4a33fe6405cac57a32c59cd4cd5838c655": {
+    "authors": [
+      "FTB Team"
+    ],
+    "license": "All Rights Reserved",
+    "evidence": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-teams-neoforge/2101.1.11/ftb-teams-neoforge-2101.1.11.jar"
+  },
+  "696e1c29b89c7008616eee02baab5df66d8d87a9c0d31b595e53f23346a5c947": {
+    "authors": [
+      "Flemmli97"
+    ],
+    "license": "All rights reserved",
+    "evidence": "https://cdn.modrinth.com/data/23MovWyi/versions/bgyn3PYl/improvedmobs-1.21.1-1.16.0.b-neoforge.jar"
+  },
+  "df9a8458b1f83fed06ba54684977911795a5153a462b81a610895f5b1f2f0cbf": {
+    "authors": [
+      "latvian.dev"
+    ],
+    "license": "GNU LGPLv3",
+    "evidence": "https://cdn.modrinth.com/data/umyGl7zF/versions/THIGFPwf/kubejs-neoforge-2101.7.2-build.377.jar"
+  },
+  "e0e9b0e78edd380440266c0f4ea8d489dac851ef075a4566a66a6dae2f7bbb66": {
+    "authors": [
+      "latvian.dev, Mozilla"
+    ],
+    "license": "MPL-2.0",
+    "evidence": "https://cdn.modrinth.com/data/sk9knFPE/versions/cQ4POTah/rhino-2101.2.7-build.85.jar"
+  },
+  "44f44b2769b2aa3dafde835284a39d3b71c0c1735c6cdc79615505a052e48499": {
+    "authors": [
+      "Flemmli97"
+    ],
+    "license": "All rights reserved",
+    "evidence": "https://cdn.modrinth.com/data/P2rffivS/versions/fcNC0Ok0/tenshilib-1.21.1-2.3.1-neoforge.jar"
+  },
+  "502d8a4ef2bd2a4b1278483112f9a14d122ba78274092fb66b3ab674caab1778": {
+    "authors": [
+      "Parzival000"
+    ],
+    "license": "MIT",
+    "evidence": "https://cdn.modrinth.com/data/q3FFq595/versions/Sn8bVqCZ/village_bounties-1.2_1.21.1.jar"
+  },
+  "61816c3b7c9d92c6b44f93dce87ceb0a22827f20285d5d9c4d10d519d734de04": {
+    "authors": [
+      "YUNGNICKYOUNG, Acarii"
+    ],
+    "license": "LGPLv3",
+    "evidence": "https://cdn.modrinth.com/data/o1C1Dkj5/versions/D6aZn0Em/YungsBetterDungeons-1.21.1-NeoForge-5.1.4.jar"
+  }
+}

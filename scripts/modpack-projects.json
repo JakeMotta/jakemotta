@@ -1,0 +1,342 @@
+{
+  "modrinth:cDfJDREb": {
+    "name": "Copper Equipment",
+    "project": "https://modrinth.com/mod/copper-equipment",
+    "source": "https://github.com/Redy1aye/CopperEquipment",
+    "authors": [
+      {
+        "name": "Redy1aye",
+        "role": "Owner",
+        "url": "https://modrinth.com/user/Redy1aye"
+      },
+      {
+        "name": "aric3435",
+        "role": "Member",
+        "url": "https://modrinth.com/user/aric3435"
+      }
+    ],
+    "license": {
+      "name": "MIT License",
+      "url": "https://github.com/redy1aye/CopperEquipment/blob/CopperEquipment/LICENSE"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/cDfJDREb",
+      "https://api.modrinth.com/v2/team/L3t8isKa/members",
+      "https://github.com/redy1aye/CopperEquipment/blob/CopperEquipment/LICENSE"
+    ]
+  },
+  "modrinth:Ua7DFN59": {
+    "name": "YUNG's API",
+    "project": "https://modrinth.com/mod/yungs-api",
+    "source": "https://github.com/YUNG-GANG/YUNGs-API",
+    "authors": [
+      {
+        "name": "YUNGNICKYOUNG",
+        "role": "Developer",
+        "url": "https://modrinth.com/user/YUNGNICKYOUNG"
+      },
+      {
+        "name": "Drullkus",
+        "role": "Member",
+        "url": "https://modrinth.com/user/Drullkus"
+      }
+    ],
+    "license": {
+      "name": "GNU Lesser General Public License v3.0 only",
+      "url": "https://github.com/YUNG-GANG/YUNGs-API/blob/26.1.2/LICENSE"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/Ua7DFN59",
+      "https://api.modrinth.com/v2/team/3TidTIHz/members",
+      "https://github.com/YUNG-GANG/YUNGs-API/blob/26.1.2/LICENSE"
+    ]
+  },
+  "modrinth:o1C1Dkj5": {
+    "name": "YUNG's Better Dungeons",
+    "project": "https://modrinth.com/mod/yungs-better-dungeons",
+    "source": "https://github.com/YUNG-GANG/YUNGs-Better-Dungeons",
+    "authors": [
+      {
+        "name": "Acarii",
+        "role": "Builder",
+        "url": "https://modrinth.com/user/Acarii"
+      },
+      {
+        "name": "YUNGNICKYOUNG",
+        "role": "Developer",
+        "url": "https://modrinth.com/user/YUNGNICKYOUNG"
+      },
+      {
+        "name": "Drullkus",
+        "role": "Member",
+        "url": "https://modrinth.com/user/Drullkus"
+      }
+    ],
+    "license": {
+      "name": "GNU Lesser General Public License v3.0 only",
+      "url": "https://github.com/YUNG-GANG/YUNGs-Better-Dungeons/blob/26.1.2/LICENSE"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/o1C1Dkj5",
+      "https://api.modrinth.com/v2/team/dxsKu4w1/members",
+      "https://github.com/YUNG-GANG/YUNGs-Better-Dungeons/blob/26.1.2/LICENSE"
+    ]
+  },
+  "modrinth:lhGA9TYQ": {
+    "name": "Architectury API",
+    "project": "https://modrinth.com/mod/architectury-api",
+    "source": "https://github.com/architectury/architectury",
+    "authors": [
+      {
+        "name": "MaxNeedsSnacks",
+        "role": "Author",
+        "url": "https://modrinth.com/user/MaxNeedsSnacks"
+      },
+      {
+        "name": "Juuz",
+        "role": "Toolchain Maintainer",
+        "url": "https://modrinth.com/user/Juuz"
+      },
+      {
+        "name": "shedaniel",
+        "role": "Original author",
+        "url": "https://github.com/shedaniel"
+      }
+    ],
+    "license": {
+      "name": "GNU Lesser General Public License v3.0 only",
+      "url": "https://github.com/architectury/architectury-api/blob/1.19.2/LICENSE.md"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/lhGA9TYQ",
+      "https://api.modrinth.com/v2/team/72qgsq9X/members",
+      "https://github.com/architectury/architectury-api/blob/1.19.2/LICENSE.md"
+    ]
+  },
+  "modrinth:6wy8fmIk": {
+    "name": "AStages",
+    "project": "https://modrinth.com/mod/astages",
+    "source": "https://github.com/Alessandro-Casale/AStages",
+    "authors": [
+      {
+        "name": "_Kessy_",
+        "role": "Owner",
+        "url": "https://modrinth.com/user/_Kessy_"
+      }
+    ],
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://modrinth.com/mod/astages"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/6wy8fmIk",
+      "https://api.modrinth.com/v2/team/UMPaWZqX/members"
+    ]
+  },
+  "modrinth:WeZ2k3T1": {
+    "name": "AStages FTB Quests",
+    "project": "https://modrinth.com/mod/astages-ftb-quests",
+    "source": "https://github.com/Alessandro-Casale/AStagesAddons",
+    "authors": [
+      {
+        "name": "_Kessy_",
+        "role": "Owner",
+        "url": "https://modrinth.com/user/_Kessy_"
+      }
+    ],
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://modrinth.com/mod/astages-ftb-quests"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/WeZ2k3T1",
+      "https://api.modrinth.com/v2/team/FtHenBUr/members"
+    ]
+  },
+  "modrinth:iHLDc0eo": {
+    "name": "Better Advanced Tooltips",
+    "project": "https://modrinth.com/mod/better-advanced-tooltips",
+    "source": "https://github.com/latvian-dev/better-advanced-tooltips",
+    "authors": [
+      {
+        "name": "Lat",
+        "role": "Member",
+        "url": "https://modrinth.com/user/Lat"
+      }
+    ],
+    "license": {
+      "name": "MIT License",
+      "url": "https://github.com/latvian-dev/better-advanced-tooltips/blob/2601/LICENSE"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/iHLDc0eo",
+      "https://api.modrinth.com/v2/team/4ag2UWF6/members",
+      "https://github.com/latvian-dev/better-advanced-tooltips/blob/2601/LICENSE"
+    ]
+  },
+  "modrinth:23MovWyi": {
+    "name": "Improved Mobs",
+    "project": "https://modrinth.com/mod/improved-mobs",
+    "source": "https://github.com/Flemmli97/ImprovedMobs",
+    "authors": [
+      {
+        "name": "flemmli97",
+        "role": "Owner",
+        "url": "https://modrinth.com/user/flemmli97"
+      }
+    ],
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://modrinth.com/mod/improved-mobs"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/23MovWyi",
+      "https://api.modrinth.com/v2/team/cLeIY1W8/members"
+    ]
+  },
+  "modrinth:umyGl7zF": {
+    "name": "KubeJS",
+    "project": "https://modrinth.com/mod/kubejs",
+    "source": "https://github.com/KubeJS-Mods/KubeJS",
+    "authors": [
+      {
+        "name": "Lat",
+        "role": "Member",
+        "url": "https://modrinth.com/user/Lat"
+      }
+    ],
+    "license": {
+      "name": "GNU Lesser General Public License v3.0 only",
+      "url": "https://github.com/kube-mods/kubejs/blob/2601/LICENSE.txt"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/umyGl7zF",
+      "https://api.modrinth.com/v2/team/YlpCyjKr/members",
+      "https://github.com/kube-mods/kubejs/blob/2601/LICENSE.txt"
+    ]
+  },
+  "modrinth:sk9knFPE": {
+    "name": "Rhino",
+    "project": "https://modrinth.com/mod/rhino",
+    "source": "https://github.com/KubeJS-Mods/Rhino",
+    "authors": [
+      {
+        "name": "Lat",
+        "role": "Member",
+        "url": "https://modrinth.com/user/Lat"
+      },
+      {
+        "name": "Mozilla",
+        "role": "Upstream author",
+        "url": "https://www.mozilla.org/"
+      }
+    ],
+    "license": {
+      "name": "Mozilla Public License 2.0",
+      "url": "https://github.com/kube-mods/rhino/blob/main/LICENSE"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/sk9knFPE",
+      "https://api.modrinth.com/v2/team/zzKhfQN9/members",
+      "https://github.com/kube-mods/rhino/blob/main/LICENSE"
+    ]
+  },
+  "modrinth:P2rffivS": {
+    "name": "TenshiLib",
+    "project": "https://modrinth.com/mod/tenshilib",
+    "source": "https://github.com/Flemmli97/TenshiLib",
+    "authors": [
+      {
+        "name": "flemmli97",
+        "role": "Owner",
+        "url": "https://modrinth.com/user/flemmli97"
+      }
+    ],
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://modrinth.com/mod/tenshilib"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/P2rffivS",
+      "https://api.modrinth.com/v2/team/QkSXZz4v/members"
+    ]
+  },
+  "modrinth:q3FFq595": {
+    "name": "Village Bounties",
+    "project": "https://modrinth.com/mod/village-bounties",
+    "source": null,
+    "authors": [
+      {
+        "name": "Parzival000",
+        "role": "Owner",
+        "url": "https://modrinth.com/user/Parzival000"
+      }
+    ],
+    "license": {
+      "name": "MIT License",
+      "url": "https://modrinth.com/mod/village-bounties"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/q3FFq595",
+      "https://api.modrinth.com/v2/team/WN1tb8I5/members"
+    ]
+  },
+  "ftb:ftb-library": {
+    "name": "FTB Library",
+    "project": "https://github.com/FTBTeam/FTB-Library",
+    "source": "https://github.com/FTBTeam/FTB-Library",
+    "authors": [
+      {
+        "name": "FTB Team",
+        "role": "Author",
+        "url": "https://github.com/FTBTeam"
+      }
+    ],
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://github.com/FTBTeam/FTB-Library/blob/f0c8d837fcabf6846da51e323f663db20300c364/LICENSE.md"
+    },
+    "evidence": [
+      "https://github.com/FTBTeam/FTB-Library/blob/f0c8d837fcabf6846da51e323f663db20300c364/fabric/src/main/resources/fabric.mod.json",
+      "https://github.com/FTBTeam/FTB-Library/blob/f0c8d837fcabf6846da51e323f663db20300c364/LICENSE.md"
+    ]
+  },
+  "ftb:ftb-quests": {
+    "name": "FTB Quests",
+    "project": "https://github.com/FTBTeam/FTB-Quests",
+    "source": "https://github.com/FTBTeam/FTB-Quests",
+    "authors": [
+      {
+        "name": "FTB Team",
+        "role": "Author",
+        "url": "https://github.com/FTBTeam"
+      }
+    ],
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://github.com/FTBTeam/FTB-Quests/blob/d76327d69f9392961746c6e3fd6e976b88308ef8/fabric/src/main/resources/fabric.mod.json"
+    },
+    "evidence": [
+      "https://github.com/FTBTeam/FTB-Quests/blob/d76327d69f9392961746c6e3fd6e976b88308ef8/fabric/src/main/resources/fabric.mod.json"
+    ]
+  },
+  "ftb:ftb-teams": {
+    "name": "FTB Teams",
+    "project": "https://github.com/FTBTeam/FTB-Teams",
+    "source": "https://github.com/FTBTeam/FTB-Teams",
+    "authors": [
+      {
+        "name": "FTB Team",
+        "role": "Author",
+        "url": "https://github.com/FTBTeam"
+      }
+    ],
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://github.com/FTBTeam/FTB-Teams/blob/47e8c4faa797a19f41a7a351eb78ae89e41b4a26/fabric/src/main/resources/fabric.mod.json"
+    },
+    "evidence": [
+      "https://github.com/FTBTeam/FTB-Teams/blob/47e8c4faa797a19f41a7a351eb78ae89e41b4a26/fabric/src/main/resources/fabric.mod.json"
+    ]
+  }
+}

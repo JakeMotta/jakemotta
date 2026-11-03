@@ -1,0 +1,488 @@
+{
+  "approved": "1.0.0-rc.16",
+  "latest": "1.0.0-rc.16",
+  "releases": [
+    {
+      "version": "1.0.0-rc.16",
+      "manifestSha256": "85b1b8fea0affbbb9a0c16dea61b2afc8fc6e783ecb09c8490bdc85d7c1984b6",
+      "serverSha256": "e6ae679d91f4dcf657359aadb36188155535de9b2e30f09488aa4bd631ed5a97",
+      "mods": [
+        {
+          "name": "Architectury API",
+          "project": "https://modrinth.com/mod/architectury-api",
+          "source": "https://github.com/architectury/architectury",
+          "authors": [
+            {
+              "name": "MaxNeedsSnacks",
+              "role": "Author",
+              "url": "https://modrinth.com/user/MaxNeedsSnacks"
+            },
+            {
+              "name": "Juuz",
+              "role": "Toolchain Maintainer",
+              "url": "https://modrinth.com/user/Juuz"
+            },
+            {
+              "name": "shedaniel",
+              "role": "Original author",
+              "url": "https://github.com/shedaniel"
+            }
+          ],
+          "license": {
+            "name": "GNU Lesser General Public License v3.0 only",
+            "url": "https://github.com/architectury/architectury-api/blob/1.19.2/LICENSE.md"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/lhGA9TYQ",
+            "https://api.modrinth.com/v2/team/72qgsq9X/members",
+            "https://github.com/architectury/architectury-api/blob/1.19.2/LICENSE.md"
+          ],
+          "declaredAuthors": [
+            "shedaniel"
+          ],
+          "declaredLicense": "GNU LGPLv3",
+          "artifactEvidence": "https://cdn.modrinth.com/data/lhGA9TYQ/versions/1IiqEQGl/architectury-13.0.11-neoforge.jar",
+          "filename": "architectury-13.0.11-neoforge.jar",
+          "version": "13.0.11+neoforge",
+          "sha256": "9cc92f2c09533fc5482c60f993bd891c655a0e32b637037cdcb7c2b23adedeeb",
+          "side": "Client & server"
+        },
+        {
+          "name": "AStages",
+          "project": "https://modrinth.com/mod/astages",
+          "source": "https://github.com/Alessandro-Casale/AStages",
+          "authors": [
+            {
+              "name": "_Kessy_",
+              "role": "Owner",
+              "url": "https://modrinth.com/user/_Kessy_"
+            }
+          ],
+          "license": {
+            "name": "All Rights Reserved",
+            "url": "https://modrinth.com/mod/astages"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/6wy8fmIk",
+            "https://api.modrinth.com/v2/team/UMPaWZqX/members"
+          ],
+          "declaredAuthors": [
+            "Alessandro"
+          ],
+          "declaredLicense": "All Rights Reserved",
+          "artifactEvidence": "https://cdn.modrinth.com/data/6wy8fmIk/versions/ZkTlq92y/astages-2.5.3-1.21.1.jar",
+          "filename": "astages-2.5.3-1.21.1.jar",
+          "version": "2.5.3-1.21.1",
+          "sha256": "8aa762e34068c498cb3fda14ebb9de95ddcfdc1b19154d1d8f9109af0729e75c",
+          "side": "Client & server"
+        },
+        {
+          "name": "AStages FTB Quests",
+          "project": "https://modrinth.com/mod/astages-ftb-quests",
+          "source": "https://github.com/Alessandro-Casale/AStagesAddons",
+          "authors": [
+            {
+              "name": "_Kessy_",
+              "role": "Owner",
+              "url": "https://modrinth.com/user/_Kessy_"
+            }
+          ],
+          "license": {
+            "name": "All Rights Reserved",
+            "url": "https://modrinth.com/mod/astages-ftb-quests"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/WeZ2k3T1",
+            "https://api.modrinth.com/v2/team/FtHenBUr/members"
+          ],
+          "declaredAuthors": [
+            "Alessandro"
+          ],
+          "declaredLicense": "All Rights Reserved",
+          "artifactEvidence": "https://cdn.modrinth.com/data/WeZ2k3T1/versions/YMyzHXhN/astages_ftbquests-2.1.0-1.21.1.jar",
+          "filename": "astages_ftbquests-2.1.0-1.21.1.jar",
+          "version": "2.1.0-1.21.1",
+          "sha256": "e205d5cc2d63a7e37d1f4d0bc6c16a583dd0cab165e498a7cf4b765c58df666f",
+          "side": "Client & server"
+        },
+        {
+          "name": "Better Advanced Tooltips",
+          "project": "https://modrinth.com/mod/better-advanced-tooltips",
+          "source": "https://github.com/latvian-dev/better-advanced-tooltips",
+          "authors": [
+            {
+              "name": "Lat",
+              "role": "Member",
+              "url": "https://modrinth.com/user/Lat"
+            }
+          ],
+          "license": {
+            "name": "MIT License",
+            "url": "https://github.com/latvian-dev/better-advanced-tooltips/blob/2601/LICENSE"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/iHLDc0eo",
+            "https://api.modrinth.com/v2/team/4ag2UWF6/members",
+            "https://github.com/latvian-dev/better-advanced-tooltips/blob/2601/LICENSE"
+          ],
+          "declaredAuthors": [
+            "latvian.dev"
+          ],
+          "declaredLicense": "MIT",
+          "artifactEvidence": "https://cdn.modrinth.com/data/iHLDc0eo/versions/uPFbnD32/better-advanced-tooltips-2101.1.0-build.5.jar",
+          "filename": "better-advanced-tooltips-2101.1.0-build.5.jar",
+          "version": "2101.1.0-build.5",
+          "sha256": "0f76d46f2f18eb67e67c7974170d7b27deb66473396461c8dc50d6949de1449b",
+          "side": "Client & server"
+        },
+        {
+          "name": "Copper Equipment",
+          "project": "https://modrinth.com/mod/copper-equipment",
+          "source": "https://github.com/Redy1aye/CopperEquipment",
+          "authors": [
+            {
+              "name": "Redy1aye",
+              "role": "Owner",
+              "url": "https://modrinth.com/user/Redy1aye"
+            },
+            {
+              "name": "aric3435",
+              "role": "Member",
+              "url": "https://modrinth.com/user/aric3435"
+            }
+          ],
+          "license": {
+            "name": "MIT License",
+            "url": "https://github.com/redy1aye/CopperEquipment/blob/CopperEquipment/LICENSE"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/cDfJDREb",
+            "https://api.modrinth.com/v2/team/L3t8isKa/members",
+            "https://github.com/redy1aye/CopperEquipment/blob/CopperEquipment/LICENSE"
+          ],
+          "declaredAuthors": [
+            "redy1aye"
+          ],
+          "declaredLicense": "MIT",
+          "artifactEvidence": "https://cdn.modrinth.com/data/cDfJDREb/versions/9p4nSJEO/CopperEquipment-NeoForge-1.21.1-1.3.5.jar",
+          "filename": "CopperEquipment-NeoForge-1.21.1-1.3.5.jar",
+          "version": "1.3.5",
+          "sha256": "7e28575000ce4fe285442d16566d37e5c86ca02618c95c143a4cf509b13bd1d2",
+          "side": "Client & server"
+        },
+        {
+          "name": "FTB Library",
+          "project": "https://github.com/FTBTeam/FTB-Library",
+          "source": "https://github.com/FTBTeam/FTB-Library",
+          "authors": [
+            {
+              "name": "FTB Team",
+              "role": "Author",
+              "url": "https://github.com/FTBTeam"
+            }
+          ],
+          "license": {
+            "name": "All Rights Reserved",
+            "url": "https://github.com/FTBTeam/FTB-Library/blob/f0c8d837fcabf6846da51e323f663db20300c364/LICENSE.md"
+          },
+          "evidence": [
+            "https://github.com/FTBTeam/FTB-Library/blob/f0c8d837fcabf6846da51e323f663db20300c364/fabric/src/main/resources/fabric.mod.json",
+            "https://github.com/FTBTeam/FTB-Library/blob/f0c8d837fcabf6846da51e323f663db20300c364/LICENSE.md"
+          ],
+          "declaredAuthors": [
+            "FTB Team"
+          ],
+          "declaredLicense": "All Rights Reserved",
+          "artifactEvidence": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-library-neoforge/2101.1.37/ftb-library-neoforge-2101.1.37.jar",
+          "filename": "ftb-library-neoforge-2101.1.37.jar",
+          "version": "2101.1.37",
+          "sha256": "624c2d2d1cbadb946d967e17757bd5b2d129d4d3ed71f2da0c70607d04476ac2",
+          "side": "Client & server"
+        },
+        {
+          "name": "FTB Quests",
+          "project": "https://github.com/FTBTeam/FTB-Quests",
+          "source": "https://github.com/FTBTeam/FTB-Quests",
+          "authors": [
+            {
+              "name": "FTB Team",
+              "role": "Author",
+              "url": "https://github.com/FTBTeam"
+            }
+          ],
+          "license": {
+            "name": "All Rights Reserved",
+            "url": "https://github.com/FTBTeam/FTB-Quests/blob/d76327d69f9392961746c6e3fd6e976b88308ef8/fabric/src/main/resources/fabric.mod.json"
+          },
+          "evidence": [
+            "https://github.com/FTBTeam/FTB-Quests/blob/d76327d69f9392961746c6e3fd6e976b88308ef8/fabric/src/main/resources/fabric.mod.json"
+          ],
+          "declaredAuthors": [
+            "FTB Team"
+          ],
+          "declaredLicense": "All Rights Reserved",
+          "artifactEvidence": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-quests-neoforge/2101.1.37/ftb-quests-neoforge-2101.1.37.jar",
+          "filename": "ftb-quests-neoforge-2101.1.37.jar",
+          "version": "2101.1.37",
+          "sha256": "6b42457d680108d0af5b8deb21e3fe7b92138209f0683c62441dc360d4fc01d5",
+          "side": "Client & server"
+        },
+        {
+          "name": "FTB Teams",
+          "project": "https://github.com/FTBTeam/FTB-Teams",
+          "source": "https://github.com/FTBTeam/FTB-Teams",
+          "authors": [
+            {
+              "name": "FTB Team",
+              "role": "Author",
+              "url": "https://github.com/FTBTeam"
+            }
+          ],
+          "license": {
+            "name": "All Rights Reserved",
+            "url": "https://github.com/FTBTeam/FTB-Teams/blob/47e8c4faa797a19f41a7a351eb78ae89e41b4a26/fabric/src/main/resources/fabric.mod.json"
+          },
+          "evidence": [
+            "https://github.com/FTBTeam/FTB-Teams/blob/47e8c4faa797a19f41a7a351eb78ae89e41b4a26/fabric/src/main/resources/fabric.mod.json"
+          ],
+          "declaredAuthors": [
+            "FTB Team"
+          ],
+          "declaredLicense": "All Rights Reserved",
+          "artifactEvidence": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-teams-neoforge/2101.1.11/ftb-teams-neoforge-2101.1.11.jar",
+          "filename": "ftb-teams-neoforge-2101.1.11.jar",
+          "version": "2101.1.11",
+          "sha256": "e6bcd670493624e6906df872a9c6af4a33fe6405cac57a32c59cd4cd5838c655",
+          "side": "Client & server"
+        },
+        {
+          "name": "Improved Mobs",
+          "project": "https://modrinth.com/mod/improved-mobs",
+          "source": "https://github.com/Flemmli97/ImprovedMobs",
+          "authors": [
+            {
+              "name": "flemmli97",
+              "role": "Owner",
+              "url": "https://modrinth.com/user/flemmli97"
+            }
+          ],
+          "license": {
+            "name": "All Rights Reserved",
+            "url": "https://modrinth.com/mod/improved-mobs"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/23MovWyi",
+            "https://api.modrinth.com/v2/team/cLeIY1W8/members"
+          ],
+          "declaredAuthors": [
+            "Flemmli97"
+          ],
+          "declaredLicense": "All rights reserved",
+          "artifactEvidence": "https://cdn.modrinth.com/data/23MovWyi/versions/bgyn3PYl/improvedmobs-1.21.1-1.16.0.b-neoforge.jar",
+          "filename": "improvedmobs-1.21.1-1.16.0.b-neoforge.jar",
+          "version": "1.21.1-1.16.0.b-neoforge",
+          "sha256": "696e1c29b89c7008616eee02baab5df66d8d87a9c0d31b595e53f23346a5c947",
+          "side": "Client & server"
+        },
+        {
+          "name": "KubeJS",
+          "project": "https://modrinth.com/mod/kubejs",
+          "source": "https://github.com/KubeJS-Mods/KubeJS",
+          "authors": [
+            {
+              "name": "Lat",
+              "role": "Member",
+              "url": "https://modrinth.com/user/Lat"
+            }
+          ],
+          "license": {
+            "name": "GNU Lesser General Public License v3.0 only",
+            "url": "https://github.com/kube-mods/kubejs/blob/2601/LICENSE.txt"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/umyGl7zF",
+            "https://api.modrinth.com/v2/team/YlpCyjKr/members",
+            "https://github.com/kube-mods/kubejs/blob/2601/LICENSE.txt"
+          ],
+          "declaredAuthors": [
+            "latvian.dev"
+          ],
+          "declaredLicense": "GNU LGPLv3",
+          "artifactEvidence": "https://cdn.modrinth.com/data/umyGl7zF/versions/THIGFPwf/kubejs-neoforge-2101.7.2-build.377.jar",
+          "filename": "kubejs-neoforge-2101.7.2-build.377.jar",
+          "version": "2101.7.2-build.377",
+          "sha256": "df9a8458b1f83fed06ba54684977911795a5153a462b81a610895f5b1f2f0cbf",
+          "side": "Client & server"
+        },
+        {
+          "name": "Rhino",
+          "project": "https://modrinth.com/mod/rhino",
+          "source": "https://github.com/KubeJS-Mods/Rhino",
+          "authors": [
+            {
+              "name": "Lat",
+              "role": "Member",
+              "url": "https://modrinth.com/user/Lat"
+            },
+            {
+              "name": "Mozilla",
+              "role": "Upstream author",
+              "url": "https://www.mozilla.org/"
+            }
+          ],
+          "license": {
+            "name": "Mozilla Public License 2.0",
+            "url": "https://github.com/kube-mods/rhino/blob/main/LICENSE"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/sk9knFPE",
+            "https://api.modrinth.com/v2/team/zzKhfQN9/members",
+            "https://github.com/kube-mods/rhino/blob/main/LICENSE"
+          ],
+          "declaredAuthors": [
+            "latvian.dev, Mozilla"
+          ],
+          "declaredLicense": "MPL-2.0",
+          "artifactEvidence": "https://cdn.modrinth.com/data/sk9knFPE/versions/cQ4POTah/rhino-2101.2.7-build.85.jar",
+          "filename": "rhino-2101.2.7-build.85.jar",
+          "version": "2101.2.7-build.85+Rhino-1.21",
+          "sha256": "e0e9b0e78edd380440266c0f4ea8d489dac851ef075a4566a66a6dae2f7bbb66",
+          "side": "Client & server"
+        },
+        {
+          "name": "TenshiLib",
+          "project": "https://modrinth.com/mod/tenshilib",
+          "source": "https://github.com/Flemmli97/TenshiLib",
+          "authors": [
+            {
+              "name": "flemmli97",
+              "role": "Owner",
+              "url": "https://modrinth.com/user/flemmli97"
+            }
+          ],
+          "license": {
+            "name": "All Rights Reserved",
+            "url": "https://modrinth.com/mod/tenshilib"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/P2rffivS",
+            "https://api.modrinth.com/v2/team/QkSXZz4v/members"
+          ],
+          "declaredAuthors": [
+            "Flemmli97"
+          ],
+          "declaredLicense": "All rights reserved",
+          "artifactEvidence": "https://cdn.modrinth.com/data/P2rffivS/versions/fcNC0Ok0/tenshilib-1.21.1-2.3.1-neoforge.jar",
+          "filename": "tenshilib-1.21.1-2.3.1-neoforge.jar",
+          "version": "1.21.1-2.3.1-neoforge",
+          "sha256": "44f44b2769b2aa3dafde835284a39d3b71c0c1735c6cdc79615505a052e48499",
+          "side": "Client & server"
+        },
+        {
+          "name": "Village Bounties",
+          "project": "https://modrinth.com/mod/village-bounties",
+          "source": null,
+          "authors": [
+            {
+              "name": "Parzival000",
+              "role": "Owner",
+              "url": "https://modrinth.com/user/Parzival000"
+            }
+          ],
+          "license": {
+            "name": "MIT License",
+            "url": "https://modrinth.com/mod/village-bounties"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/q3FFq595",
+            "https://api.modrinth.com/v2/team/WN1tb8I5/members"
+          ],
+          "declaredAuthors": [
+            "Parzival000"
+          ],
+          "declaredLicense": "MIT",
+          "artifactEvidence": "https://cdn.modrinth.com/data/q3FFq595/versions/Sn8bVqCZ/village_bounties-1.2_1.21.1.jar",
+          "filename": "village_bounties-1.2_1.21.1.jar",
+          "version": "1.2_1.21.1",
+          "sha256": "502d8a4ef2bd2a4b1278483112f9a14d122ba78274092fb66b3ab674caab1778",
+          "side": "Client & server"
+        },
+        {
+          "name": "YUNG's API",
+          "project": "https://modrinth.com/mod/yungs-api",
+          "source": "https://github.com/YUNG-GANG/YUNGs-API",
+          "authors": [
+            {
+              "name": "YUNGNICKYOUNG",
+              "role": "Developer",
+              "url": "https://modrinth.com/user/YUNGNICKYOUNG"
+            },
+            {
+              "name": "Drullkus",
+              "role": "Member",
+              "url": "https://modrinth.com/user/Drullkus"
+            }
+          ],
+          "license": {
+            "name": "GNU Lesser General Public License v3.0 only",
+            "url": "https://github.com/YUNG-GANG/YUNGs-API/blob/26.1.2/LICENSE"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/Ua7DFN59",
+            "https://api.modrinth.com/v2/team/3TidTIHz/members",
+            "https://github.com/YUNG-GANG/YUNGs-API/blob/26.1.2/LICENSE"
+          ],
+          "declaredAuthors": [
+            "YUNGNICKYOUNG"
+          ],
+          "declaredLicense": "LGPLv3",
+          "artifactEvidence": "https://cdn.modrinth.com/data/Ua7DFN59/versions/2prKITKh/YungsApi-1.21.1-NeoForge-5.1.9.jar",
+          "filename": "YungsApi-1.21.1-NeoForge-5.1.9.jar",
+          "version": "1.21.1-NeoForge-5.1.9",
+          "sha256": "375e0b2f988ab4f5bde182166c0f0b102377adc8f823660c24ade08b0b3cde56",
+          "side": "Client & server"
+        },
+        {
+          "name": "YUNG's Better Dungeons",
+          "project": "https://modrinth.com/mod/yungs-better-dungeons",
+          "source": "https://github.com/YUNG-GANG/YUNGs-Better-Dungeons",
+          "authors": [
+            {
+              "name": "Acarii",
+              "role": "Builder",
+              "url": "https://modrinth.com/user/Acarii"
+            },
+            {
+              "name": "YUNGNICKYOUNG",
+              "role": "Developer",
+              "url": "https://modrinth.com/user/YUNGNICKYOUNG"
+            },
+            {
+              "name": "Drullkus",
+              "role": "Member",
+              "url": "https://modrinth.com/user/Drullkus"
+            }
+          ],
+          "license": {
+            "name": "GNU Lesser General Public License v3.0 only",
+            "url": "https://github.com/YUNG-GANG/YUNGs-Better-Dungeons/blob/26.1.2/LICENSE"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/o1C1Dkj5",
+            "https://api.modrinth.com/v2/team/dxsKu4w1/members",
+            "https://github.com/YUNG-GANG/YUNGs-Better-Dungeons/blob/26.1.2/LICENSE"
+          ],
+          "declaredAuthors": [
+            "YUNGNICKYOUNG, Acarii"
+          ],
+          "declaredLicense": "LGPLv3",
+          "artifactEvidence": "https://cdn.modrinth.com/data/o1C1Dkj5/versions/D6aZn0Em/YungsBetterDungeons-1.21.1-NeoForge-5.1.4.jar",
+          "filename": "YungsBetterDungeons-1.21.1-NeoForge-5.1.4.jar",
+          "version": "1.21.1-NeoForge-5.1.4",
+          "sha256": "61816c3b7c9d92c6b44f93dce87ceb0a22827f20285d5d9c4d10d519d734de04",
+          "side": "Server only"
+        }
+      ]
+    }
+  ]
+}

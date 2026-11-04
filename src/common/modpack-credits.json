@@ -1,11 +1,11 @@
 {
-  "approved": "1.0.0-rc.19",
-  "latest": "1.0.0-rc.19",
+  "approved": "1.0.0-rc.20",
+  "latest": "1.0.0-rc.20",
   "releases": [
     {
-      "version": "1.0.0-rc.19",
-      "manifestSha256": "18639e5eed597a5013e5b654ea6fbdc965c867fd8aa173efde29c59b5c2b9eb9",
-      "serverSha256": "ffb77dfd01519774b914d6365d12bf7da883b0483b27411339c26f461bf5f679",
+      "version": "1.0.0-rc.20",
+      "manifestSha256": "f67ccb3baa97220d593bf6a4119174221b91ced27ca3311f8d626449172ba0f0",
+      "serverSha256": "da1e7f8b69e0468b9ab4220b02a62715b0bfccb157cc229b353afd95ad1b323f",
       "mods": [
         {
           "name": "Architectury API",
@@ -133,6 +133,35 @@
           "filename": "better-advanced-tooltips-2101.1.0-build.5.jar",
           "version": "2101.1.0-build.5",
           "sha256": "0f76d46f2f18eb67e67c7974170d7b27deb66473396461c8dc50d6949de1449b",
+          "side": "Client & server"
+        },
+        {
+          "name": "Cloth Config API",
+          "project": "https://modrinth.com/mod/cloth-config",
+          "source": "https://github.com/shedaniel/ClothConfig/",
+          "authors": [
+            {
+              "name": "shedaniel",
+              "role": "Owner",
+              "url": "https://modrinth.com/user/shedaniel"
+            }
+          ],
+          "license": {
+            "name": "GNU Lesser General Public License v3.0 only",
+            "url": "https://modrinth.com/mod/cloth-config"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/9s6osm5g",
+            "https://api.modrinth.com/v2/team/z9omIQMN/members"
+          ],
+          "declaredAuthors": [
+            "shedaniel"
+          ],
+          "declaredLicense": "GNU LGPLv3",
+          "artifactEvidence": "https://cdn.modrinth.com/data/9s6osm5g/versions/izKINKFg/cloth-config-15.0.140-neoforge.jar",
+          "filename": "cloth-config-15.0.140-neoforge.jar",
+          "version": "15.0.140+neoforge",
+          "sha256": "65e722e0d98431a07c45f8bdd8d529a217cc8c175fde1740248bd5c1b4f3c0d4",
           "side": "Client & server"
         },
         {
@@ -405,6 +434,35 @@
           "filename": "village_bounties-1.2_1.21.1.jar",
           "version": "1.2_1.21.1",
           "sha256": "502d8a4ef2bd2a4b1278483112f9a14d122ba78274092fb66b3ab674caab1778",
+          "side": "Client & server"
+        },
+        {
+          "name": "You're in Grave Danger",
+          "project": "https://modrinth.com/mod/yigd",
+          "source": "https://github.com/B1n-ry/Youre-in-grave-danger/tree/1.17.1",
+          "authors": [
+            {
+              "name": "b1n-ry",
+              "role": "Owner",
+              "url": "https://modrinth.com/user/b1n-ry"
+            }
+          ],
+          "license": {
+            "name": "MIT License",
+            "url": "https://modrinth.com/mod/yigd"
+          },
+          "evidence": [
+            "https://api.modrinth.com/v2/project/HnD1GX6e",
+            "https://api.modrinth.com/v2/team/UhZRhlhQ/members"
+          ],
+          "declaredAuthors": [
+            "b1n_ry"
+          ],
+          "declaredLicense": "MIT",
+          "artifactEvidence": "https://cdn.modrinth.com/data/HnD1GX6e/versions/Axk4bfXT/youre-in-grave-danger-neoforge-2.0.13.jar",
+          "filename": "youre-in-grave-danger-neoforge-2.0.13.jar",
+          "version": "2.0.13",
+          "sha256": "dd2142a3c6a9d5b990ab36220be482f7aa9f528755f93b8fef8996f509ddcda2",
           "side": "Client & server"
         },
         {

@@ -338,5 +338,45 @@
     "evidence": [
       "https://github.com/FTBTeam/FTB-Teams/blob/47e8c4faa797a19f41a7a351eb78ae89e41b4a26/fabric/src/main/resources/fabric.mod.json"
     ]
+  },
+  "modrinth:HnD1GX6e": {
+    "name": "You're in Grave Danger",
+    "project": "https://modrinth.com/mod/yigd",
+    "source": "https://github.com/B1n-ry/Youre-in-grave-danger/tree/1.17.1",
+    "authors": [
+      {
+        "name": "b1n-ry",
+        "role": "Owner",
+        "url": "https://modrinth.com/user/b1n-ry"
+      }
+    ],
+    "license": {
+      "name": "MIT License",
+      "url": "https://modrinth.com/mod/yigd"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/HnD1GX6e",
+      "https://api.modrinth.com/v2/team/UhZRhlhQ/members"
+    ]
+  },
+  "modrinth:9s6osm5g": {
+    "name": "Cloth Config API",
+    "project": "https://modrinth.com/mod/cloth-config",
+    "source": "https://github.com/shedaniel/ClothConfig/",
+    "authors": [
+      {
+        "name": "shedaniel",
+        "role": "Owner",
+        "url": "https://modrinth.com/user/shedaniel"
+      }
+    ],
+    "license": {
+      "name": "GNU Lesser General Public License v3.0 only",
+      "url": "https://modrinth.com/mod/cloth-config"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/9s6osm5g",
+      "https://api.modrinth.com/v2/team/z9omIQMN/members"
+    ]
   }
 }

@@ -7,5 +7,5 @@ AddType text/plain .toml
 </IfModule>
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteRule ^latest-prism\.zip$ /downloads/progression-survival/packwiz/releases/1.0.0-rc.19/Progression-Survival-Prism-Auto-1.0.0-rc.19.zip [R=302,L]
+  RewriteRule ^latest-prism\.zip$ /downloads/progression-survival/packwiz/releases/1.0.0-rc.20/Progression-Survival-Prism-Auto-1.0.0-rc.20.zip [R=302,L]
 </IfModule>

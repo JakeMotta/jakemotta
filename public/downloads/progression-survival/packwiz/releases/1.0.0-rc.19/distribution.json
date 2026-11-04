@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 2,
+  "version": "1.0.0-rc.19",
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.264",
+  "java": 21,
+  "journal": "0.9.14",
+  "sourceClientSha256": "5a41316c9e72ef42eea2dbe5fb6ebf236f65946def7a3afbd0f47b84567adb6e",
+  "managedClientFiles": {
+    "mods/CopperEquipment-NeoForge-1.21.1-1.3.5.jar": {
+      "algorithm": "sha512",
+      "hash": "06449c9d3e53446b58e1deee80aa0b75f559d2c0fdc734635d62e9b1b45399a432533b62751b272ac211610c8d181f06e21119e96307cf67341cc16773d24942"
+    },
+    "mods/YungsApi-1.21.1-NeoForge-5.1.9.jar": {
+      "algorithm": "sha512",
+      "hash": "7e3cf0b429e8a1c51dca094c2d8eabf12245bb42cbcd8b6e3e54959f931bef93201b81a08d200b417059aaa438e8eb445c3978a09568597bfb588199b7775967"
+    },
+    "mods/architectury-13.0.11-neoforge.jar": {
+      "algorithm": "sha512",
+      "hash": "d9f7c3bb8162577dfb461ffdf04bd6a3563c7586934a0e2a744c14421beffb8286f0d88d4c758317003f20f99fe8072a39b9d675af061e036970d36db36027f0"
+    },
+    "mods/astages-2.5.3-1.21.1.jar": {
+      "algorithm": "sha512",
+      "hash": "769382864f19b13b9efc861e5911ebd9d75629f5c475ee0660f852339843d325e83ad996baf0633afbc40b6637525a4303d8b89884c9da878bfa9776b950c61f"
+    },
+    "mods/astages_ftbquests-2.1.0-1.21.1.jar": {
+      "algorithm": "sha512",
+      "hash": "011f2d358d017c754cfc57af67de977718fd059b71926f6902e390f6f66b266edc5191a6e36c1ee5a50f72829149525f36c850e2118aa3278ffe02b60500eabd"
+    },
+    "mods/better-advanced-tooltips-2101.1.0-build.5.jar": {
+      "algorithm": "sha512",
+      "hash": "05b5cdad948d1735eab7a67a16aaf32814678c392014ec2ada61b8341c0ed1c1ac181cab1de9da3f2c4632592f4a1a5db254bd0543e6778897c8ccd260894142"
+    },
+    "mods/ftb-library-neoforge-2101.1.37.jar": {
+      "algorithm": "sha512",
+      "hash": "36f7e2fd41de638b044ad2b391f69f276ab28df3d86cf9d83638a2e0432ef151e1737ce60d671901d0a3b49424c9ba1a09c0293fc0c6637871020b46feae9159"
+    },
+    "mods/ftb-quests-neoforge-2101.1.37.jar": {
+      "algorithm": "sha512",
+      "hash": "d89b053bc87d0272d770dc24f1be3497910097205136df60c0251529151c4faf400718abae0ed429a596e43877e3d033928b0a227a30759660067d9e276fc5f8"
+    },
+    "mods/ftb-teams-neoforge-2101.1.11.jar": {
+      "algorithm": "sha512",
+      "hash": "21c9350c6c7ec54ee54b74f2bdc0a44f91005bedda3caf27d673b2f2bcad1dbef5aec970201ec8e959db2a1743ceb2e24ae99a9e36744dce740a0ab1dad01c52"
+    },
+    "mods/improvedmobs-1.21.1-1.16.0.b-neoforge.jar": {
+      "algorithm": "sha512",
+      "hash": "412a0672ca5e80cf9b7a62dbc0d69c6bee9d33b3a9234cd939c6dc53c43ac647e04afe4801192e4c301708f08c65f9f4da6ef203bab18f6e30bf441f776269eb"
+    },
+    "mods/kubejs-neoforge-2101.7.2-build.377.jar": {
+      "algorithm": "sha512",
+      "hash": "fcdbee8790f8f39c106ab4bf606808c9c5bf0f13a41e216207a6fe4d15bf4a5722ce57078781e3a1823e7fdd2928e8e042d104d8ae255a36db8f12a9f46d8089"
+    },
+    "mods/rhino-2101.2.7-build.85.jar": {
+      "algorithm": "sha512",
+      "hash": "0a6c7f4410281aeb03b815ec03487a8e80a4d3dae013d81282e447bf9c08144ef57318af614ea6d40b7d9a8c25031c557890ec792a5895a82467c1643116f693"
+    },
+    "mods/tenshilib-1.21.1-2.3.1-neoforge.jar": {
+      "algorithm": "sha512",
+      "hash": "25cea06beb1ee84f70b3d94d5f903e059976de48f4cbcaef2feff88ef5d4c90d9eb4d5acab87db8470d702218d5493a910a5137af8cc0fef17f662e37bace565"
+    },
+    "mods/village_bounties-1.2_1.21.1.jar": {
+      "algorithm": "sha512",
+      "hash": "7ebec589bf037038b29b2f2a1b06367008975c53cd206b8988b83d5e945c91f87bfad554bd68f985653265b105355e86b3a897dc00bbe9dd6683cb65b15cc1d9"
+    },
+    "mods/progression-journal-0.9.14.jar": {
+      "algorithm": "sha256",
+      "hash": "9273d9bdbc1ba897296439dca1bfc9e5f248fc378c04d55eef8d43d4e40fd209"
+    },
+    "progression-pack.json": {
+      "algorithm": "sha256",
+      "hash": "357194f384afb3a978ad5814c58f3d24635943a9ac9b88972db88826453fca09"
+    },
+    "README-Progression.md": {
+      "algorithm": "sha256",
+      "hash": "bd7d35c19bf43eb40be9e260a2add3e6cbc7be56fd1bd158fe3a7e4fc23b9769"
+    },
+    "config/improvedmobs/client.toml": {
+      "algorithm": "sha256",
+      "hash": "750d73495881ce0bd532d086c8778161f70efb9e379edb44127cef64036ec7ff"
+    },
+    "config/village_bounties-common.toml": {
+      "algorithm": "sha256",
+      "hash": "18a2936975735beed5b095614eeca5d48147e2ba3d6ff2aa22ae81be43c4ef1d"
+    }
+  },
+  "baseURL": "https://jakemotta.com/downloads/progression-survival/packwiz",
+  "indexHash": "7e99444f138cfdfd4d9974ffdacd51345d26d431d228aad47acea2c01cd6103f",
+  "channelFiles": [
+    "README-Progression.md.da7ba57a20282243a34c5d5bcaa66b7a0af0eb6d2ebdd782061fa87bb267a11b.pw.toml",
+    "config/improvedmobs/client.toml.3e11fa76f171ec614e85eff84562e8015fc949aa1adaaea726214a656b41ae60.pw.toml",
+    "config/village_bounties-common.toml.ce9b625fdffeb82869f57ad712c9e49ef1bee4d5e02c78f9d4ac547335e53fe2.pw.toml",
+    "mods/CopperEquipment-NeoForge-1.21.1-1.3.5.jar.d3001f25f6fbaf15921e535054caab5ebc53a06497281c0a7ee81f91b02530f7.pw.toml",
+    "mods/YungsApi-1.21.1-NeoForge-5.1.9.jar.04fd9aeed4c1f1e241fac00cb4dac9e3d715be2b25730d54b326544d26b21e88.pw.toml",
+    "mods/architectury-13.0.11-neoforge.jar.58b2d233699916b7c2ac455483c48358e5c5ada069e539895d5757054395d1f6.pw.toml",
+    "mods/astages-2.5.3-1.21.1.jar.0e687f956eee474abe31205b6b1a2b306db237fbefb83de70f02d259c01720b9.pw.toml",
+    "mods/astages_ftbquests-2.1.0-1.21.1.jar.11507f8a4262dc26861f24901517c81955ebdb30b76dd8802846e4f4713980f1.pw.toml",
+    "mods/better-advanced-tooltips-2101.1.0-build.5.jar.9e4f0793e758f79f682137ee8d9f44b3187baeb6dfc7cd40f36cdb9801ea6269.pw.toml",
+    "mods/ftb-library-neoforge-2101.1.37.jar.cfa00c85cf319e1f95b41bd0d5b4d92d60e99cd98a1101bd497500829521aac4.pw.toml",
+    "mods/ftb-quests-neoforge-2101.1.37.jar.1ab0955451cc0922b650054c8b386ab30f4ab5348bd891956259a2db75a43791.pw.toml",
+    "mods/ftb-teams-neoforge-2101.1.11.jar.715d11d836a6295873358f547ec894f7af816b8d0a6892c197e35a09a82113c0.pw.toml",
+    "mods/improvedmobs-1.21.1-1.16.0.b-neoforge.jar.6948de204030d1724f092cd8010ac4a8924466604d16963eeea5a775ccb7ef85.pw.toml",
+    "mods/kubejs-neoforge-2101.7.2-build.377.jar.0b7260eff339116b68f5ace030a0df2e38390e1659d933003f133858090f050c.pw.toml",
+    "mods/progression-journal-0.9.14.jar.14e322356b86b199cc4362085b36851f102e64c6b0c635e9db4bbb21906a3ec5.pw.toml",
+    "mods/rhino-2101.2.7-build.85.jar.491e21fb2da5ca037d3685474ece04eba3dfe7a898f92667ad75482fb550e7cc.pw.toml",
+    "mods/tenshilib-1.21.1-2.3.1-neoforge.jar.cb3279a3f60a718cb345b0ca820fd094c4dfebd5ee3a3b045dde601b9faacad0.pw.toml",
+    "mods/village_bounties-1.2_1.21.1.jar.4ff4beb865e0ad0de05b372453fd6231650c94abebffd25574b374fde7534a0f.pw.toml",
+    "progression-pack.json.1621928b8bba28e4dffd4e1bf088705794afb06abe9ac46b393f8d3512ff1973.pw.toml"
+  ],
+  "starter": {
+    "name": "Progression-Survival-Prism-Auto-1.0.0-rc.19.zip",
+    "bytes": 3865536,
+    "sha256": "a5ff60b61b79300a80a0edfbb61767ab7781eff11d0fca7cd8397a40f27fff8d"
+  },
+  "files": {
+    "Progression-Survival-Prism-Auto-1.0.0-rc.19.zip": "a5ff60b61b79300a80a0edfbb61767ab7781eff11d0fca7cd8397a40f27fff8d",
+    "README-Progression.md": "bd7d35c19bf43eb40be9e260a2add3e6cbc7be56fd1bd158fe3a7e4fc23b9769",
+    "README-Progression.md.da7ba57a20282243a34c5d5bcaa66b7a0af0eb6d2ebdd782061fa87bb267a11b.pw.toml": "da7ba57a20282243a34c5d5bcaa66b7a0af0eb6d2ebdd782061fa87bb267a11b",
+    "config/improvedmobs/client.toml": "750d73495881ce0bd532d086c8778161f70efb9e379edb44127cef64036ec7ff",
+    "config/improvedmobs/client.toml.3e11fa76f171ec614e85eff84562e8015fc949aa1adaaea726214a656b41ae60.pw.toml": "3e11fa76f171ec614e85eff84562e8015fc949aa1adaaea726214a656b41ae60",
+    "config/village_bounties-common.toml": "18a2936975735beed5b095614eeca5d48147e2ba3d6ff2aa22ae81be43c4ef1d",
+    "config/village_bounties-common.toml.ce9b625fdffeb82869f57ad712c9e49ef1bee4d5e02c78f9d4ac547335e53fe2.pw.toml": "ce9b625fdffeb82869f57ad712c9e49ef1bee4d5e02c78f9d4ac547335e53fe2",
+    "index.toml": "7e99444f138cfdfd4d9974ffdacd51345d26d431d228aad47acea2c01cd6103f",
+    "mods/CopperEquipment-NeoForge-1.21.1-1.3.5.jar.d3001f25f6fbaf15921e535054caab5ebc53a06497281c0a7ee81f91b02530f7.pw.toml": "d3001f25f6fbaf15921e535054caab5ebc53a06497281c0a7ee81f91b02530f7",
+    "mods/YungsApi-1.21.1-NeoForge-5.1.9.jar.04fd9aeed4c1f1e241fac00cb4dac9e3d715be2b25730d54b326544d26b21e88.pw.toml": "04fd9aeed4c1f1e241fac00cb4dac9e3d715be2b25730d54b326544d26b21e88",
+    "mods/architectury-13.0.11-neoforge.jar.58b2d233699916b7c2ac455483c48358e5c5ada069e539895d5757054395d1f6.pw.toml": "58b2d233699916b7c2ac455483c48358e5c5ada069e539895d5757054395d1f6",
+    "mods/astages-2.5.3-1.21.1.jar.0e687f956eee474abe31205b6b1a2b306db237fbefb83de70f02d259c01720b9.pw.toml": "0e687f956eee474abe31205b6b1a2b306db237fbefb83de70f02d259c01720b9",
+    "mods/astages_ftbquests-2.1.0-1.21.1.jar.11507f8a4262dc26861f24901517c81955ebdb30b76dd8802846e4f4713980f1.pw.toml": "11507f8a4262dc26861f24901517c81955ebdb30b76dd8802846e4f4713980f1",
+    "mods/better-advanced-tooltips-2101.1.0-build.5.jar.9e4f0793e758f79f682137ee8d9f44b3187baeb6dfc7cd40f36cdb9801ea6269.pw.toml": "9e4f0793e758f79f682137ee8d9f44b3187baeb6dfc7cd40f36cdb9801ea6269",
+    "mods/ftb-library-neoforge-2101.1.37.jar.cfa00c85cf319e1f95b41bd0d5b4d92d60e99cd98a1101bd497500829521aac4.pw.toml": "cfa00c85cf319e1f95b41bd0d5b4d92d60e99cd98a1101bd497500829521aac4",
+    "mods/ftb-quests-neoforge-2101.1.37.jar.1ab0955451cc0922b650054c8b386ab30f4ab5348bd891956259a2db75a43791.pw.toml": "1ab0955451cc0922b650054c8b386ab30f4ab5348bd891956259a2db75a43791",
+    "mods/ftb-teams-neoforge-2101.1.11.jar.715d11d836a6295873358f547ec894f7af816b8d0a6892c197e35a09a82113c0.pw.toml": "715d11d836a6295873358f547ec894f7af816b8d0a6892c197e35a09a82113c0",
+    "mods/improvedmobs-1.21.1-1.16.0.b-neoforge.jar.6948de204030d1724f092cd8010ac4a8924466604d16963eeea5a775ccb7ef85.pw.toml": "6948de204030d1724f092cd8010ac4a8924466604d16963eeea5a775ccb7ef85",
+    "mods/kubejs-neoforge-2101.7.2-build.377.jar.0b7260eff339116b68f5ace030a0df2e38390e1659d933003f133858090f050c.pw.toml": "0b7260eff339116b68f5ace030a0df2e38390e1659d933003f133858090f050c",
+    "mods/progression-journal-0.9.14.jar": "9273d9bdbc1ba897296439dca1bfc9e5f248fc378c04d55eef8d43d4e40fd209",
+    "mods/progression-journal-0.9.14.jar.14e322356b86b199cc4362085b36851f102e64c6b0c635e9db4bbb21906a3ec5.pw.toml": "14e322356b86b199cc4362085b36851f102e64c6b0c635e9db4bbb21906a3ec5",
+    "mods/rhino-2101.2.7-build.85.jar.491e21fb2da5ca037d3685474ece04eba3dfe7a898f92667ad75482fb550e7cc.pw.toml": "491e21fb2da5ca037d3685474ece04eba3dfe7a898f92667ad75482fb550e7cc",
+    "mods/tenshilib-1.21.1-2.3.1-neoforge.jar.cb3279a3f60a718cb345b0ca820fd094c4dfebd5ee3a3b045dde601b9faacad0.pw.toml": "cb3279a3f60a718cb345b0ca820fd094c4dfebd5ee3a3b045dde601b9faacad0",
+    "mods/village_bounties-1.2_1.21.1.jar.4ff4beb865e0ad0de05b372453fd6231650c94abebffd25574b374fde7534a0f.pw.toml": "4ff4beb865e0ad0de05b372453fd6231650c94abebffd25574b374fde7534a0f",
+    "pack.toml": "4fc3f22d4249a7dbaed1276e060c8ac1e8d3e56f09a51688f7f25aeca1fddbdd",
+    "progression-pack.json": "357194f384afb3a978ad5814c58f3d24635943a9ac9b88972db88826453fca09",
+    "progression-pack.json.1621928b8bba28e4dffd4e1bf088705794afb06abe9ac46b393f8d3512ff1973.pw.toml": "1621928b8bba28e4dffd4e1bf088705794afb06abe9ac46b393f8d3512ff1973"
+  }
+}

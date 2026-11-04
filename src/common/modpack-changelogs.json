@@ -99,5 +99,28 @@
     "removed": [
       "Removed the requirement to harvest only crops you planted yourself. Sapling planting and growth goals stay personal."
     ]
+  },
+  "1.0.0-rc.19": {
+    "comparison": "Compared with RC 16, the previous published release.",
+    "added": [
+      "Public announcements for newly earned journal goals and equipment-tier advances, including player and tier context.",
+      "A 47-job bounty catalog: 10 Easy, 10 Medium, 15 Hard and 12 Elite, with destination-specific gathering, fish capture, treasure recovery, hunts and dungeon clears.",
+      "Separate clearing goals for all five dungeon types and the all-types challenge, requiring at least 90% of original spawners after a complete structure census.",
+      "Small Nether Dungeons in newly generated Nether terrain; explored terrain and existing worlds are preserved."
+    ],
+    "changed": [
+      "Bows are available from Wood Tools; shields unlock at Iron Armor access. Crossbows retain their Iron Armor requirement.",
+      "Food preparation uses different vanilla dishes: Iron 16 pumpkin pies / 32 cookies; Gold 12 cakes / 12 suspicious stews; Diamond 12 rabbit stews / 16 golden carrots; Netherite 8 golden apples. Earlier bread, mushroom stew and cod work remain.",
+      "Cod cooking, brewing and bounty copper smelting credit ingredient contributors on completion, regardless of who collects output or whether the menu remains open.",
+      "Enemy scaling caps at difficulty 250 are 3x health, 2x melee damage and 1.5x projectile/explosion damage. Known old saved-enemy modifiers convert once, preserving damage taken and unrelated attributes.",
+      "Easy / Medium bounties pay 20-35 / 60-100 XP with guaranteed emeralds and supplies. Hard / Elite pay 180-260 / 400-600 XP with guaranteed unlocked-tier armor, emeralds and supplies.",
+      "Arrow supply rewards are 8 / 16 / 32 / 64 by difficulty. Exact rewards remain visible before acceptance; accepted contracts and pending payouts retain their original terms.",
+      "Combat and food wording is clearer, fallback journal rows are corrected, and existing progression, inventories and reward receipts remain preserved."
+    ],
+    "removed": [
+      "The extra five-skeleton requirement for shield access.",
+      "Torch supply rewards and the overlapping generic Netherite feast requirement.",
+      "Output collection as the trigger for cod cooking credit."
+    ]
   }
 }

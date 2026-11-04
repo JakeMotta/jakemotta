@@ -1,0 +1,96 @@
+hash-format = "sha256"
+
+[[files]]
+file = "README-Progression.md.da7ba57a20282243a34c5d5bcaa66b7a0af0eb6d2ebdd782061fa87bb267a11b.pw.toml"
+hash = "da7ba57a20282243a34c5d5bcaa66b7a0af0eb6d2ebdd782061fa87bb267a11b"
+metafile = true
+
+[[files]]
+file = "config/improvedmobs/client.toml.3e11fa76f171ec614e85eff84562e8015fc949aa1adaaea726214a656b41ae60.pw.toml"
+hash = "3e11fa76f171ec614e85eff84562e8015fc949aa1adaaea726214a656b41ae60"
+metafile = true
+
+[[files]]
+file = "config/village_bounties-common.toml.ce9b625fdffeb82869f57ad712c9e49ef1bee4d5e02c78f9d4ac547335e53fe2.pw.toml"
+hash = "ce9b625fdffeb82869f57ad712c9e49ef1bee4d5e02c78f9d4ac547335e53fe2"
+metafile = true
+
+[[files]]
+file = "mods/CopperEquipment-NeoForge-1.21.1-1.3.5.jar.d3001f25f6fbaf15921e535054caab5ebc53a06497281c0a7ee81f91b02530f7.pw.toml"
+hash = "d3001f25f6fbaf15921e535054caab5ebc53a06497281c0a7ee81f91b02530f7"
+metafile = true
+
+[[files]]
+file = "mods/YungsApi-1.21.1-NeoForge-5.1.9.jar.04fd9aeed4c1f1e241fac00cb4dac9e3d715be2b25730d54b326544d26b21e88.pw.toml"
+hash = "04fd9aeed4c1f1e241fac00cb4dac9e3d715be2b25730d54b326544d26b21e88"
+metafile = true
+
+[[files]]
+file = "mods/architectury-13.0.11-neoforge.jar.58b2d233699916b7c2ac455483c48358e5c5ada069e539895d5757054395d1f6.pw.toml"
+hash = "58b2d233699916b7c2ac455483c48358e5c5ada069e539895d5757054395d1f6"
+metafile = true
+
+[[files]]
+file = "mods/astages-2.5.3-1.21.1.jar.0e687f956eee474abe31205b6b1a2b306db237fbefb83de70f02d259c01720b9.pw.toml"
+hash = "0e687f956eee474abe31205b6b1a2b306db237fbefb83de70f02d259c01720b9"
+metafile = true
+
+[[files]]
+file = "mods/astages_ftbquests-2.1.0-1.21.1.jar.11507f8a4262dc26861f24901517c81955ebdb30b76dd8802846e4f4713980f1.pw.toml"
+hash = "11507f8a4262dc26861f24901517c81955ebdb30b76dd8802846e4f4713980f1"
+metafile = true
+
+[[files]]
+file = "mods/better-advanced-tooltips-2101.1.0-build.5.jar.9e4f0793e758f79f682137ee8d9f44b3187baeb6dfc7cd40f36cdb9801ea6269.pw.toml"
+hash = "9e4f0793e758f79f682137ee8d9f44b3187baeb6dfc7cd40f36cdb9801ea6269"
+metafile = true
+
+[[files]]
+file = "mods/ftb-library-neoforge-2101.1.37.jar.cfa00c85cf319e1f95b41bd0d5b4d92d60e99cd98a1101bd497500829521aac4.pw.toml"
+hash = "cfa00c85cf319e1f95b41bd0d5b4d92d60e99cd98a1101bd497500829521aac4"
+metafile = true
+
+[[files]]
+file = "mods/ftb-quests-neoforge-2101.1.37.jar.1ab0955451cc0922b650054c8b386ab30f4ab5348bd891956259a2db75a43791.pw.toml"
+hash = "1ab0955451cc0922b650054c8b386ab30f4ab5348bd891956259a2db75a43791"
+metafile = true
+
+[[files]]
+file = "mods/ftb-teams-neoforge-2101.1.11.jar.715d11d836a6295873358f547ec894f7af816b8d0a6892c197e35a09a82113c0.pw.toml"
+hash = "715d11d836a6295873358f547ec894f7af816b8d0a6892c197e35a09a82113c0"
+metafile = true
+
+[[files]]
+file = "mods/improvedmobs-1.21.1-1.16.0.b-neoforge.jar.6948de204030d1724f092cd8010ac4a8924466604d16963eeea5a775ccb7ef85.pw.toml"
+hash = "6948de204030d1724f092cd8010ac4a8924466604d16963eeea5a775ccb7ef85"
+metafile = true
+
+[[files]]
+file = "mods/kubejs-neoforge-2101.7.2-build.377.jar.0b7260eff339116b68f5ace030a0df2e38390e1659d933003f133858090f050c.pw.toml"
+hash = "0b7260eff339116b68f5ace030a0df2e38390e1659d933003f133858090f050c"
+metafile = true
+
+[[files]]
+file = "mods/progression-journal-0.9.14.jar.14e322356b86b199cc4362085b36851f102e64c6b0c635e9db4bbb21906a3ec5.pw.toml"
+hash = "14e322356b86b199cc4362085b36851f102e64c6b0c635e9db4bbb21906a3ec5"
+metafile = true
+
+[[files]]
+file = "mods/rhino-2101.2.7-build.85.jar.491e21fb2da5ca037d3685474ece04eba3dfe7a898f92667ad75482fb550e7cc.pw.toml"
+hash = "491e21fb2da5ca037d3685474ece04eba3dfe7a898f92667ad75482fb550e7cc"
+metafile = true
+
+[[files]]
+file = "mods/tenshilib-1.21.1-2.3.1-neoforge.jar.cb3279a3f60a718cb345b0ca820fd094c4dfebd5ee3a3b045dde601b9faacad0.pw.toml"
+hash = "cb3279a3f60a718cb345b0ca820fd094c4dfebd5ee3a3b045dde601b9faacad0"
+metafile = true
+
+[[files]]
+file = "mods/village_bounties-1.2_1.21.1.jar.4ff4beb865e0ad0de05b372453fd6231650c94abebffd25574b374fde7534a0f.pw.toml"
+hash = "4ff4beb865e0ad0de05b372453fd6231650c94abebffd25574b374fde7534a0f"
+metafile = true
+
+[[files]]
+file = "progression-pack.json.1621928b8bba28e4dffd4e1bf088705794afb06abe9ac46b393f8d3512ff1973.pw.toml"
+hash = "1621928b8bba28e4dffd4e1bf088705794afb06abe9ac46b393f8d3512ff1973"
+metafile = true

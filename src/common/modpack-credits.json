@@ -1,11 +1,11 @@
 {
-  "approved": "1.0.0-rc.16",
-  "latest": "1.0.0-rc.16",
+  "approved": "1.0.0-rc.19",
+  "latest": "1.0.0-rc.19",
   "releases": [
     {
-      "version": "1.0.0-rc.16",
-      "manifestSha256": "85b1b8fea0affbbb9a0c16dea61b2afc8fc6e783ecb09c8490bdc85d7c1984b6",
-      "serverSha256": "e6ae679d91f4dcf657359aadb36188155535de9b2e30f09488aa4bd631ed5a97",
+      "version": "1.0.0-rc.19",
+      "manifestSha256": "18639e5eed597a5013e5b654ea6fbdc965c867fd8aa173efde29c59b5c2b9eb9",
+      "serverSha256": "ffb77dfd01519774b914d6365d12bf7da883b0483b27411339c26f461bf5f679",
       "mods": [
         {
           "name": "Architectury API",

@@ -2,6 +2,29 @@
   "pack": "Progression Survival",
   "releases": [
     {
+      "version": "1.0.0-rc.19",
+      "prerelease": true,
+      "published": "2026-11-04",
+      "minecraft": "1.21.1",
+      "neoforge": "21.1.264",
+      "java": 21,
+      "summary": "Destination-based bounties, gentler enemy scaling, public achievements and progression improvements with Journal 0.9.14. Update server and clients together.",
+      "notes": "/downloads/progression-survival/releases/1.0.0-rc.19/Release-Notes.md",
+      "checksums": "/downloads/progression-survival/releases/1.0.0-rc.19/SHA256SUMS.txt",
+      "client": {
+        "name": "Progression-Survival-1.0.0-rc.19.mrpack",
+        "url": "/downloads/progression-survival/releases/1.0.0-rc.19/Progression-Survival-1.0.0-rc.19.mrpack",
+        "bytes": 549979,
+        "sha256": "5a41316c9e72ef42eea2dbe5fb6ebf236f65946def7a3afbd0f47b84567adb6e"
+      },
+      "server": {
+        "name": "Progression-Survival-Server-1.0.0-rc.19.zip",
+        "url": "/downloads/progression-survival/releases/1.0.0-rc.19/Progression-Survival-Server-1.0.0-rc.19.zip",
+        "bytes": 543023,
+        "sha256": "ffb77dfd01519774b914d6365d12bf7da883b0483b27411339c26f461bf5f679"
+      }
+    },
+    {
       "version": "1.0.0-rc.16",
       "prerelease": true,
       "published": "2026-11-03",

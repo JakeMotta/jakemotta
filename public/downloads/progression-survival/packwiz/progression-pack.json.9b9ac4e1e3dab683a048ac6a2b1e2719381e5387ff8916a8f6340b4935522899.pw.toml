@@ -1,0 +1,8 @@
+name = "progression-pack.json"
+filename = "progression-pack.json"
+side = "client"
+
+[download]
+url = "https://jakemotta.com/downloads/progression-survival/packwiz/releases/1.0.0-rc.21/progression-pack.json"
+hash-format = "sha256"
+hash = "fdac680cbba18832d53e552fc618cfd7c082de1b2bea460b14f0456a26423a74"

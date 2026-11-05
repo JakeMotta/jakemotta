@@ -378,5 +378,25 @@
       "https://api.modrinth.com/v2/project/9s6osm5g",
       "https://api.modrinth.com/v2/team/z9omIQMN/members"
     ]
+  },
+  "modrinth:rfrQ6buJ": {
+    "name": "PlayerLocatorPlus NeoForged",
+    "project": "https://modrinth.com/mod/playerlocatorplus-neoforged",
+    "source": "https://github.com/kanoyo-git/PlayerLocatorPlus-Neoforged",
+    "authors": [
+      {
+        "name": "Kanoyo",
+        "role": "Owner",
+        "url": "https://modrinth.com/user/Kanoyo"
+      }
+    ],
+    "license": {
+      "name": "GNU General Public License v3.0 or later",
+      "url": "https://modrinth.com/mod/playerlocatorplus-neoforged"
+    },
+    "evidence": [
+      "https://api.modrinth.com/v2/project/rfrQ6buJ",
+      "https://api.modrinth.com/v2/team/Ha1GXMRB/members"
+    ]
   }
 }

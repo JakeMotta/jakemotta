@@ -1,0 +1,8 @@
+name = "village_bounties-common.toml"
+filename = "village_bounties-common.toml"
+side = "client"
+
+[download]
+url = "https://jakemotta.com/downloads/progression-survival/packwiz/releases/1.0.0-rc.21/config/village_bounties-common.toml"
+hash-format = "sha256"
+hash = "18a2936975735beed5b095614eeca5d48147e2ba3d6ff2aa22ae81be43c4ef1d"

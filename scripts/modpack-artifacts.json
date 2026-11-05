@@ -117,5 +117,12 @@
     ],
     "license": "GNU LGPLv3",
     "evidence": "https://cdn.modrinth.com/data/9s6osm5g/versions/izKINKFg/cloth-config-15.0.140-neoforge.jar"
+  },
+  "95ae3b56b5e29af06cf19bc561f82a61720e80bd8757d7668e04dc1ca9e5f10d": {
+    "authors": [
+      "Kanoyo, sit <me@sit.sh>"
+    ],
+    "license": "GPL-3.0-or-later",
+    "evidence": "https://cdn.modrinth.com/data/rfrQ6buJ/versions/JnjZOXii/player-locator-plus-neoforged-1.21.1-2.5.1.jar"
   }
 }

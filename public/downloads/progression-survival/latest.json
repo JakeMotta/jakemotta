@@ -1,24 +1,24 @@
 {
   "pack": "Progression Survival",
-  "version": "1.0.0-rc.20",
+  "version": "1.0.0-rc.21",
   "prerelease": true,
-  "published": "2026-11-04",
+  "published": "2026-11-05",
   "minecraft": "1.21.1",
   "neoforge": "21.1.264",
   "java": 21,
-  "summary": "One-hour recoverable graves on top of RC19, retaining Journal 0.9.14, progression, bounties and reduced enemy scaling. Update server and clients together.",
-  "notes": "/downloads/progression-survival/releases/1.0.0-rc.20/Release-Notes.md",
-  "checksums": "/downloads/progression-survival/releases/1.0.0-rc.20/SHA256SUMS.txt",
+  "summary": "Personal Settings and private player-location sharing on top of RC20, with Journal 0.9.15. Update server and clients together.",
+  "notes": "/downloads/progression-survival/releases/1.0.0-rc.21/Release-Notes.md",
+  "checksums": "/downloads/progression-survival/releases/1.0.0-rc.21/SHA256SUMS.txt",
   "client": {
-    "name": "Progression-Survival-1.0.0-rc.20.mrpack",
-    "url": "/downloads/progression-survival/releases/1.0.0-rc.20/Progression-Survival-1.0.0-rc.20.mrpack",
-    "bytes": 550952,
-    "sha256": "b135f7f3a59fd231123ea921cb87ec65d104226a7cea68a82e9afd3b6dc76f8c"
+    "name": "Progression-Survival-1.0.0-rc.21.mrpack",
+    "url": "/downloads/progression-survival/releases/1.0.0-rc.21/Progression-Survival-1.0.0-rc.21.mrpack",
+    "bytes": 575911,
+    "sha256": "f9d43de0987a459c3f7681f13f59b9e378b3ed3ff3e66e09e6ec100446920f0d"
   },
   "server": {
-    "name": "Progression-Survival-Server-1.0.0-rc.20.zip",
-    "url": "/downloads/progression-survival/releases/1.0.0-rc.20/Progression-Survival-Server-1.0.0-rc.20.zip",
-    "bytes": 543914,
-    "sha256": "da1e7f8b69e0468b9ab4220b02a62715b0bfccb157cc229b353afd95ad1b323f"
+    "name": "Progression-Survival-Server-1.0.0-rc.21.zip",
+    "url": "/downloads/progression-survival/releases/1.0.0-rc.21/Progression-Survival-Server-1.0.0-rc.21.zip",
+    "bytes": 568658,
+    "sha256": "bbeb5397ce5df771b6e55a5614a88625457467c2e9da128675cf6f535d91f453"
   }
 }

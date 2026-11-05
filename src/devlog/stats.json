@@ -1,25 +1,33 @@
 {
-  "generatedAt": "2026-10-29T16:40:29.938Z",
+  "generatedAt": "2026-11-05T20:30:00.682Z",
   "since": "2026-08-06",
   "totals": {
-    "minutes": 1842,
-    "sessions": 31,
-    "replies": 13955,
+    "minutes": 2702,
+    "sessions": 104,
+    "replies": 17297,
     "tokens": {
-      "input": 28948,
-      "output": 12564262,
-      "cacheWrite": 48681489,
-      "cacheRead": 3640242178
+      "input": 36210,
+      "output": 15288163,
+      "cacheWrite": 58971603,
+      "cacheRead": 4221339698
     }
   },
   "models": [
     {
       "name": "Opus 5.5",
-      "tokens": 3472723551
+      "tokens": 4027156179
     },
     {
       "name": "Opus 5",
       "tokens": 228793326
+    },
+    {
+      "name": "Sonnet 5.5",
+      "tokens": 38700803
+    },
+    {
+      "name": "Haiku 5.5",
+      "tokens": 985366
     }
   ],
   "days": [
@@ -141,19 +149,6 @@
       }
     },
     {
-      "date": "2026-10-26",
-      "project": "Other",
-      "minutes": 25,
-      "replies": 32,
-      "sessions": 1,
-      "tokens": {
-        "input": 70,
-        "output": 104642,
-        "cacheWrite": 224479,
-        "cacheRead": 6010119
-      }
-    },
-    {
       "date": "2026-10-27",
       "project": "jakemotta.com",
       "minutes": 641,
@@ -208,231 +203,443 @@
     {
       "date": "2026-10-29",
       "project": "jakemotta.com",
-      "minutes": 33,
-      "replies": 64,
+      "minutes": 271,
+      "replies": 1108,
+      "sessions": 7,
+      "tokens": {
+        "input": 2296,
+        "output": 841471,
+        "cacheWrite": 3361936,
+        "cacheRead": 215845678
+      }
+    },
+    {
+      "date": "2026-10-29",
+      "project": "Other",
+      "minutes": 12,
+      "replies": 17,
+      "sessions": 1,
+      "tokens": {
+        "input": 34,
+        "output": 9691,
+        "cacheWrite": 35894,
+        "cacheRead": 2474699
+      }
+    },
+    {
+      "date": "2026-10-30",
+      "project": "Friday",
+      "minutes": 215,
+      "replies": 613,
+      "sessions": 32,
+      "tokens": {
+        "input": 1306,
+        "output": 449103,
+        "cacheWrite": 1601287,
+        "cacheRead": 82229941
+      }
+    },
+    {
+      "date": "2026-10-30",
+      "project": "jakemotta.com",
+      "minutes": 156,
+      "replies": 394,
+      "sessions": 7,
+      "tokens": {
+        "input": 856,
+        "output": 306863,
+        "cacheWrite": 1204200,
+        "cacheRead": 72956889
+      }
+    },
+    {
+      "date": "2026-10-30",
+      "project": "Other",
+      "minutes": 211,
+      "replies": 249,
+      "sessions": 15,
+      "tokens": {
+        "input": 702,
+        "output": 93266,
+        "cacheWrite": 690926,
+        "cacheRead": 27972652
+      }
+    },
+    {
+      "date": "2026-10-30",
+      "project": "Progression Survival",
+      "minutes": 167,
+      "replies": 462,
+      "sessions": 23,
+      "tokens": {
+        "input": 940,
+        "output": 377142,
+        "cacheWrite": 1319904,
+        "cacheRead": 37427875
+      }
+    },
+    {
+      "date": "2026-10-30",
+      "project": "TYB",
+      "minutes": 8,
+      "replies": 20,
+      "sessions": 1,
+      "tokens": {
+        "input": 40,
+        "output": 49991,
+        "cacheWrite": 183986,
+        "cacheRead": 2624702
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "project": "Black Box",
+      "minutes": 18,
+      "replies": 20,
+      "sessions": 1,
+      "tokens": {
+        "input": 48,
+        "output": 57079,
+        "cacheWrite": 145517,
+        "cacheRead": 2717005
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "project": "Friday",
+      "minutes": 5,
+      "replies": 20,
       "sessions": 2,
       "tokens": {
-        "input": 132,
-        "output": 36839,
-        "cacheWrite": 232334,
-        "cacheRead": 9073424
+        "input": 44,
+        "output": 5073,
+        "cacheWrite": 91343,
+        "cacheRead": 1499434
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "project": "Other",
+      "minutes": 3,
+      "replies": 13,
+      "sessions": 2,
+      "tokens": {
+        "input": 34,
+        "output": 2817,
+        "cacheWrite": 56943,
+        "cacheRead": 284388
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "project": "TYB",
+      "minutes": 0,
+      "replies": 1,
+      "sessions": 1,
+      "tokens": {
+        "input": 2,
+        "output": 283,
+        "cacheWrite": 2586,
+        "cacheRead": 40924
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "project": "Black Box",
+      "minutes": 155,
+      "replies": 307,
+      "sessions": 3,
+      "tokens": {
+        "input": 706,
+        "output": 499803,
+        "cacheWrite": 1110231,
+        "cacheRead": 121381581
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "project": "Progression Survival",
+      "minutes": 19,
+      "replies": 69,
+      "sessions": 2,
+      "tokens": {
+        "input": 148,
+        "output": 42524,
+        "cacheWrite": 346415,
+        "cacheRead": 9153168
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "project": "jakemotta.com",
+      "minutes": 23,
+      "replies": 95,
+      "sessions": 2,
+      "tokens": {
+        "input": 198,
+        "output": 97815,
+        "cacheWrite": 413004,
+        "cacheRead": 12355287
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "project": "Other",
+      "minutes": 18,
+      "replies": 50,
+      "sessions": 1,
+      "tokens": {
+        "input": 110,
+        "output": 32461,
+        "cacheWrite": 182755,
+        "cacheRead": 7216840
       }
     }
   ],
   "commits": [
     {
       "project": "jakemotta.com",
-      "hash": "fa770fc",
-      "date": "2026-10-29T10:23:25-06:00",
-      "subject": "Start each visit on a random song from Jake's music, recent listens or playlist",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/fa770fcd9d6cdbf1d9ec1bc044291f3ef0938155"
+      "hash": "432162f",
+      "date": "2026-11-04T17:25:05-07:00",
+      "subject": "Publish RC21 personal settings and private player locator",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/432162fcfd06464bbdcd830e2a312f4b2f9e4f0c"
     },
     {
       "project": "jakemotta.com",
-      "hash": "1dc935a",
-      "date": "2026-10-28T18:04:45-06:00",
-      "subject": "Document the ten-song Up next, the scrolling Recent listens tile, Spotify's top artists, the skyline fix and card image versions",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/1dc935ac010dc2b5b78bcb1976a6b64a4f8109b1"
+      "hash": "1fded54",
+      "date": "2026-11-04T12:33:58-07:00",
+      "subject": "Publish RC20 gravestones and approve matching client updates",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/1fded545510d9df99090c21a9f680605da2b93a9"
     },
     {
       "project": "jakemotta.com",
-      "hash": "829c4f4",
-      "date": "2026-10-28T18:03:13-06:00",
-      "subject": "Rank Favorite artists by Spotify's long-term top artists, through the listening Worker",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/829c4f44c09ea89cd700891f0fa8c61aec536aae"
+      "hash": "9cf2770",
+      "date": "2026-11-04T11:39:57-07:00",
+      "subject": "Publish RC19 progression and bounty release",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/9cf2770f6c0f5182e14e8f0504e2d834e8484bee"
     },
     {
       "project": "jakemotta.com",
-      "hash": "fdcc45e",
-      "date": "2026-10-28T18:00:28-06:00",
-      "subject": "List ten songs in Up next, the last 100 plays in the Recent listens tile, and turn the YouTube video with its tile",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/fdcc45e6e84617a23243d347d0e18ebb75924102"
+      "hash": "9be23c0",
+      "date": "2026-11-03T12:39:12-07:00",
+      "subject": "Unify Minecraft cards and animate themed dialogs",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/9be23c0c9cf09fe8b45a2771b94ed153857af43f"
     },
     {
       "project": "jakemotta.com",
-      "hash": "0284c37",
-      "date": "2026-10-28T17:54:32-06:00",
-      "subject": "Get the 2012 portfolio's skyline scrolling again, and ask for fresh copies of the card images Cloudflare still serves stale",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/0284c37ec1cbfea1938b80c9165158b11330db54"
+      "hash": "ce9da16",
+      "date": "2026-11-03T01:10:59-07:00",
+      "subject": "Keep overview tests aligned with generated mod credits",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/ce9da166e1fc6a64d5ece2c9dea9538f042cc563"
     },
     {
       "project": "jakemotta.com",
-      "hash": "7ae4c9d",
-      "date": "2026-10-28T17:50:44-06:00",
-      "subject": "Carry the third round of canvas comments into the site",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/7ae4c9d2bc9b2ddd6b309c39753d43684ff2b800"
+      "hash": "2396176",
+      "date": "2026-11-03T01:08:45-07:00",
+      "subject": "Fit Minecraft overview on one screen with paged dialogs",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/2396176280fe2a45e0be5e974aa785ce899f3d86"
     },
     {
       "project": "jakemotta.com",
-      "hash": "86944ca",
-      "date": "2026-10-28T17:34:45-06:00",
-      "subject": "Make the YouTube player ahead of time, hide it until its video starts, and keep its volume with ours",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/86944ca4536d156e5b1a67b5f412039acbfad47d"
+      "hash": "d095b25",
+      "date": "2026-11-02T18:57:50-07:00",
+      "subject": "Clarify Minecraft player setup and hosting with generated mod credits",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/d095b25b9bc5866158d853e11658aee01d65077c"
     },
     {
       "project": "jakemotta.com",
-      "hash": "3869a51",
-      "date": "2026-10-28T17:13:52-06:00",
-      "subject": "Run Psycho's leaderboard on its 2017 database again, with rules that only take leaderboard rows",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/3869a5172a883b0b6d8e95b44759be3048dd47a6"
+      "hash": "fe8b636",
+      "date": "2026-11-02T18:35:37-07:00",
+      "subject": "Publish shared-harvest release and matching server-approved client",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/fe8b63682942f078feed8e8c7084eb14d846ccd1"
     },
     {
       "project": "jakemotta.com",
-      "hash": "e6fa5e1",
-      "date": "2026-10-28T17:02:44-06:00",
-      "subject": "Carry the current-site canvas into the site: name-tag hero, library rows, top artists",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/e6fa5e13bde326d4325b81acd0244a8c8dc519ae"
+      "hash": "367ea05",
+      "date": "2026-11-02T13:46:00-07:00",
+      "subject": "Clarify automatic and manual Minecraft downloads",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/367ea05842526f2a581685e822cbe4d27dc200f4"
     },
     {
       "project": "jakemotta.com",
-      "hash": "9314b6a",
-      "date": "2026-10-28T16:53:36-06:00",
-      "subject": "Add Psycho with a leaderboard ready for a new database, take Worxxx, Noah Garza and Survivor off the list, and put Flash first in Art",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/9314b6ae07747eaf15b14158577698210da37f58"
+      "hash": "be17618",
+      "date": "2026-11-02T12:49:08-07:00",
+      "subject": "Protect generated updater checksums from formatting [skip ci]",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/be176186d9d53b12af7fc7248b7e621233457e42"
     },
     {
       "project": "jakemotta.com",
-      "hash": "fe818b9",
-      "date": "2026-10-28T16:28:28-06:00",
-      "subject": "Show framed projects as soon as they're parsed, and hear Escape in them from then",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/fe818b9c982e2131c3fac2dec08a31ba38580166"
+      "hash": "f467d27",
+      "date": "2026-11-02T12:45:44-07:00",
+      "subject": "Publish server-compatible automatic Prism updates",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/f467d274365695424259c29ce1be777f2f90873d"
     },
     {
       "project": "jakemotta.com",
-      "hash": "edf6605",
-      "date": "2026-10-28T16:18:05-06:00",
-      "subject": "Stop game music doubling on Start over, halve game volume, give hub pages their own routes, and fix NinjaDonut's floor, jump and stuck enem…",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/edf66055815cc1ad3bcbf20b2882d0970e639d26"
+      "hash": "85dd55e",
+      "date": "2026-11-01T11:53:44-07:00",
+      "subject": "Restore bullets in Minecraft changelog dialogs",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/85dd55e46b14cfac7ebb64afa0bac9b3b7152c75"
     },
     {
       "project": "jakemotta.com",
-      "hash": "e7661bb",
-      "date": "2026-10-28T14:11:19-06:00",
-      "subject": "Note that Cloudflare can serve a rewritten file stale for a week",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/e7661bb402bcde30172f2eadde198fe9b30fc7ed"
+      "hash": "eb34ea3",
+      "date": "2026-11-01T01:59:02-06:00",
+      "subject": "Publish progression expansion and date Minecraft archive rows",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/eb34ea3e361cfb243ec370c7ab6ff639312e07c8"
     },
     {
       "project": "jakemotta.com",
-      "hash": "fb86743",
-      "date": "2026-10-28T13:56:21-06:00",
-      "subject": "Turn off folder listings, and stop publishing the Ambii build in Pistol Art's files",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/fb867433be97622460531333336707c51c2f37cd"
+      "hash": "87ae39f",
+      "date": "2026-10-31T20:32:51-06:00",
+      "subject": "Show readable Minecraft changelogs and simplify release links",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/87ae39f56016b40cb4a721096a5938a3fe37592e"
     },
     {
       "project": "jakemotta.com",
-      "hash": "c4b1e1c",
-      "date": "2026-10-28T13:30:16-06:00",
-      "subject": "Record the expansion's push to the Ambii jakemotta-demo branches",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/c4b1e1c2525f880dd62b675ba87def4d61a9a94e"
+      "hash": "e17d243",
+      "date": "2026-10-31T19:58:30-06:00",
+      "subject": "Publish bow-fixed Progression Survival 1.0.0-rc.14",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/e17d24382771859fb660f811e72a42e42ee289de"
     },
     {
       "project": "jakemotta.com",
-      "hash": "d7905b0",
-      "date": "2026-10-28T13:19:32-06:00",
-      "subject": "Record keeping Cesar's photo in Pokémon's Pong battle",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/d7905b0aa067f68da1712d27ceb881b05c4abd41"
+      "hash": "227c1e5",
+      "date": "2026-10-30T19:35:21-06:00",
+      "subject": "Add a Coming next tile for Progression Journal 0.9.8 on the modpack page",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/227c1e5c43ddba1991f1ff563ec8b5b5fbe7abce"
     },
     {
       "project": "jakemotta.com",
-      "hash": "8208cc1",
-      "date": "2026-10-27T23:01:55-06:00",
-      "subject": "Finish the Ambii demo's expansion: fixes from the browser checks, rebuilt apps, hub and docs",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/8208cc1a3a6dc1ec2168f5909f1dd0a370eaba0c"
+      "hash": "dcbb474",
+      "date": "2026-10-30T15:43:22-06:00",
+      "subject": "Publish Progression Survival 1.0.0-rc.10, and refuse KubeJS's web_server.json",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/dcbb474f9b89269d9c2d06c4f0c80a35a988bee5"
     },
     {
       "project": "jakemotta.com",
-      "hash": "7e5c9d2",
-      "date": "2026-10-27T23:01:36-06:00",
-      "subject": "Add the Ambii demo's guest tracks, art, beds and welcome clip",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/7e5c9d2e9729b52b6f7a6850782b11e2035ecc28"
+      "hash": "12bab98",
+      "date": "2026-10-30T15:32:04-06:00",
+      "subject": "Take modpack releases from the pack's own repository",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/12bab983f40f947a4c8d4b7f8fce34fa8c1be457"
     },
     {
       "project": "jakemotta.com",
-      "hash": "f618466",
-      "date": "2026-10-27T21:11:32-06:00",
-      "subject": "Settle the Ambii demo's guest music on the artists whose terms fit, and credit them by the player",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/f618466eb442c092508cbe76f94e8dbb5e819b9a"
+      "hash": "2d16bf7",
+      "date": "2026-10-30T14:44:15-06:00",
+      "subject": "Name the modpack repository's GitHub home in the modpack docs",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/2d16bf78b8d9108ee0f5ec3dae3b20f3974838a3"
     },
     {
       "project": "jakemotta.com",
-      "hash": "b7a7129",
-      "date": "2026-10-27T20:56:19-06:00",
-      "subject": "Grow the Ambii demo's catalogue, stations and seed (mock side, work in progress)",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/b7a71294f12987183e4ea44b372dd3a5d6e85f94"
+      "hash": "f663986",
+      "date": "2026-10-30T14:38:20-06:00",
+      "subject": "Note the modpack's new source repository in the modpack docs",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/f663986cc127960cdfb8930f39a7f6bc9b0546ab"
     }
   ],
   "github": {
     "user": "JakeMotta",
     "url": "https://github.com/JakeMotta",
     "contributions": {
-      "total": 5522,
-      "date": "2026-10-29"
+      "total": 5682,
+      "date": "2026-11-05"
     },
-    "commits": 681,
-    "additions": 238017,
-    "deletions": 58212,
+    "commits": 5728,
+    "additions": 2564302,
+    "deletions": 1413003,
     "projects": [
       {
+        "name": "TYB",
+        "commits": 2184,
+        "additions": 540140,
+        "deletions": 148587
+      },
+      {
+        "name": "Ambii",
+        "commits": 1398,
+        "additions": 803927,
+        "deletions": 722410
+      },
+      {
         "name": "TapSlayDie",
-        "commits": 615,
-        "additions": 195538,
-        "deletions": 55878
+        "commits": 1315,
+        "additions": 466663,
+        "deletions": 292257
       },
       {
         "name": "jakemotta.com",
-        "commits": 47,
-        "additions": 32378,
-        "deletions": 1868
+        "commits": 79,
+        "additions": 44458,
+        "deletions": 3543
+      },
+      {
+        "name": "Progression Survival",
+        "commits": 30,
+        "additions": 49080,
+        "deletions": 6079
+      },
+      {
+        "name": "Friday",
+        "commits": 22,
+        "additions": 3217,
+        "deletions": 243
       },
       {
         "name": "Asteroids",
-        "commits": 10,
-        "additions": 3043,
-        "deletions": 241
+        "commits": 11,
+        "additions": 3239,
+        "deletions": 252
       },
       {
         "name": "Farming game",
         "commits": 9,
         "additions": 7058,
         "deletions": 225
+      },
+      {
+        "name": "Black Box",
+        "commits": 4,
+        "additions": 3831,
+        "deletions": 181
+      },
+      {
+        "name": "Other",
+        "commits": 676,
+        "additions": 642689,
+        "deletions": 239226
       }
     ],
     "weeks": [
       {
-        "week": "2025-11-03",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
-      },
-      {
         "week": "2025-11-10",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 31,
+        "additions": 1978,
+        "deletions": 1110
       },
       {
         "week": "2025-11-17",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 41,
+        "additions": 2077,
+        "deletions": 1603
       },
       {
         "week": "2025-11-24",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 25,
+        "additions": 822,
+        "deletions": 785
       },
       {
         "week": "2025-12-01",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 27,
+        "additions": 1004,
+        "deletions": 627
       },
       {
         "week": "2025-12-08",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 17,
+        "additions": 1064,
+        "deletions": 692
       },
       {
         "week": "2025-12-15",
@@ -454,261 +661,267 @@
       },
       {
         "week": "2026-01-05",
-        "commits": 4,
-        "additions": 247,
-        "deletions": 30
+        "commits": 25,
+        "additions": 2624,
+        "deletions": 6831
       },
       {
         "week": "2026-01-12",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 13,
+        "additions": 1278,
+        "deletions": 192
       },
       {
         "week": "2026-01-19",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 22,
+        "additions": 1198,
+        "deletions": 995
       },
       {
         "week": "2026-01-26",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 9,
+        "additions": 7394,
+        "deletions": 6319
       },
       {
         "week": "2026-02-02",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 16,
+        "additions": 2149,
+        "deletions": 1686
       },
       {
         "week": "2026-02-09",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 26,
+        "additions": 2369,
+        "deletions": 1825
       },
       {
         "week": "2026-02-16",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 25,
+        "additions": 5825,
+        "deletions": 7612
       },
       {
         "week": "2026-02-23",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 24,
+        "additions": 2112,
+        "deletions": 1893
       },
       {
         "week": "2026-03-02",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 26,
+        "additions": 1116,
+        "deletions": 887
       },
       {
         "week": "2026-03-09",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 24,
+        "additions": 1046,
+        "deletions": 702
       },
       {
         "week": "2026-03-16",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 13,
+        "additions": 329,
+        "deletions": 158
       },
       {
         "week": "2026-03-23",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 35,
+        "additions": 15289,
+        "deletions": 12808
       },
       {
         "week": "2026-03-30",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 32,
+        "additions": 1859,
+        "deletions": 1419
       },
       {
         "week": "2026-04-06",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 35,
+        "additions": 2729,
+        "deletions": 2241
       },
       {
         "week": "2026-04-13",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 30,
+        "additions": 2761,
+        "deletions": 1380
       },
       {
         "week": "2026-04-20",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 32,
+        "additions": 5470,
+        "deletions": 3879
       },
       {
         "week": "2026-04-27",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 18,
+        "additions": 1635,
+        "deletions": 1326
       },
       {
         "week": "2026-05-04",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 38,
+        "additions": 8674,
+        "deletions": 6483
       },
       {
         "week": "2026-05-11",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 63,
+        "additions": 18691,
+        "deletions": 15735
       },
       {
         "week": "2026-05-18",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 46,
+        "additions": 3754,
+        "deletions": 1778
       },
       {
         "week": "2026-05-25",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 31,
+        "additions": 1410,
+        "deletions": 1173
       },
       {
         "week": "2026-06-01",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 26,
+        "additions": 2456,
+        "deletions": 1047
       },
       {
         "week": "2026-06-08",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 18,
+        "additions": 3030,
+        "deletions": 521
       },
       {
         "week": "2026-06-15",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 21,
+        "additions": 2080,
+        "deletions": 546
       },
       {
         "week": "2026-06-22",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 31,
+        "additions": 3898,
+        "deletions": 2773
       },
       {
         "week": "2026-06-29",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 36,
+        "additions": 6429,
+        "deletions": 7441
       },
       {
         "week": "2026-07-06",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 23,
+        "additions": 3795,
+        "deletions": 1921
       },
       {
         "week": "2026-07-13",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 37,
+        "additions": 3822,
+        "deletions": 762
       },
       {
         "week": "2026-07-20",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 34,
+        "additions": 4763,
+        "deletions": 857
       },
       {
         "week": "2026-07-27",
-        "commits": 21,
-        "additions": 24192,
-        "deletions": 2642
+        "commits": 91,
+        "additions": 43362,
+        "deletions": 6858
       },
       {
         "week": "2026-08-03",
-        "commits": 196,
-        "additions": 60248,
-        "deletions": 22316
+        "commits": 220,
+        "additions": 61667,
+        "deletions": 22718
       },
       {
         "week": "2026-08-10",
-        "commits": 117,
-        "additions": 30200,
-        "deletions": 13177
+        "commits": 132,
+        "additions": 35166,
+        "deletions": 14960
       },
       {
         "week": "2026-08-17",
-        "commits": 3,
-        "additions": 260,
-        "deletions": 242
+        "commits": 50,
+        "additions": 36865,
+        "deletions": 1672
       },
       {
         "week": "2026-08-24",
-        "commits": 49,
-        "additions": 7828,
-        "deletions": 2718
+        "commits": 74,
+        "additions": 11465,
+        "deletions": 3596
       },
       {
         "week": "2026-08-31",
-        "commits": 68,
-        "additions": 14597,
-        "deletions": 4014
+        "commits": 75,
+        "additions": 16909,
+        "deletions": 4328
       },
       {
         "week": "2026-09-07",
-        "commits": 24,
-        "additions": 14316,
-        "deletions": 2555
+        "commits": 42,
+        "additions": 19421,
+        "deletions": 3506
       },
       {
         "week": "2026-09-14",
-        "commits": 129,
-        "additions": 39488,
-        "deletions": 7606
+        "commits": 146,
+        "additions": 43443,
+        "deletions": 8412
       },
       {
         "week": "2026-09-21",
-        "commits": 8,
-        "additions": 4409,
-        "deletions": 608
+        "commits": 268,
+        "additions": 135223,
+        "deletions": 21250
       },
       {
         "week": "2026-09-28",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 385,
+        "additions": 101447,
+        "deletions": 20154
       },
       {
         "week": "2026-10-05",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 84,
+        "additions": 31543,
+        "deletions": 9848
       },
       {
         "week": "2026-10-12",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 329,
+        "additions": 215325,
+        "deletions": 204657
       },
       {
         "week": "2026-10-19",
-        "commits": 0,
-        "additions": 0,
-        "deletions": 0
+        "commits": 186,
+        "additions": 126270,
+        "deletions": 9675
       },
       {
         "week": "2026-10-26",
-        "commits": 47,
-        "additions": 32378,
-        "deletions": 1868
+        "commits": 213,
+        "additions": 122016,
+        "deletions": 10730
+      },
+      {
+        "week": "2026-11-02",
+        "commits": 53,
+        "additions": 14303,
+        "deletions": 6820
       }
     ]
   }

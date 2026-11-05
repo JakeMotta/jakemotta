@@ -10,7 +10,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const generateRandomHue = () => Math.floor(Math.random() * 360);
 
 /**
- * Paints the whole site in one hue by writing the four colors to their CSS variables, which Tailwind's
+ * Paints the whole site in one hue by writing its colors to their CSS variables, which Tailwind's
  * primary colors and the SCSS read. It writes the DOM directly and never goes through React state: the
  * hue moves about twelve times a second, and re-rendering the app that often made everything lag.
  */
@@ -23,6 +23,9 @@ export const applyHue = (hue: number) => {
     style.setProperty('--color-primary-light', `hsl(${hue}, 45%, 94%)`);
     // A near-black of the hue, readable as small text straight on the page ground
     style.setProperty('--color-primary-ink', `hsl(${hue}, 45%, 15%)`);
+    // The hue a third and two thirds of the way round, for charts with more series than one hue's shades can tell apart
+    style.setProperty('--color-accent-1', `hsl(${(hue + 120) % 360}, 40%, 60%)`);
+    style.setProperty('--color-accent-2', `hsl(${(hue + 240) % 360}, 40%, 60%)`);
 };
 
 export const ThemeProvider: React.FC<{ children: ReactNode; initialHue: number }> = ({ children, initialHue }) => {

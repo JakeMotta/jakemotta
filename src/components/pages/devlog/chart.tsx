@@ -120,7 +120,7 @@ export const UsageChart = ({ days, projects, since, until }: UsageChartProps) =>
                                     {projects.map((project, p) => {
                                         const entry = column.entries.find((item) => item.project === project);
                                         const value = entry ? amount(entry, measure) : 0;
-                                        return value ? <span key={project} className={`devlog-swatch--${p}`} style={{ flexGrow: value }} /> : null;
+                                        return value ? <span key={project} className={`devlog-swatch--${p % 8}`} style={{ flexGrow: value }} /> : null;
                                     })}
                                 </span>
                             </li>

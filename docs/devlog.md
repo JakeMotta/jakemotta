@@ -13,7 +13,7 @@ On a desktop, Me & Claude and On GitHub take the height they need as far as the 
 
 ## The board's tile
 
-`DevlogTile` (`pages/home/tiles.tsx`) is the dev log on the board, in the cell Up next had: the newest post's date and title, the code frequency chart small (the same `CodeFrequency`, `compact`: no dates, legend or hover numbers), and the commit and contribution counts. It reads the same `stats.json`, and the posts through the same `useDevlogPosts()`, so opening the overlay after it fetches nothing again.
+`DevlogTile` (`pages/home/tiles.tsx`) is the dev log on the board, in the cell Up next had: the newest post's date and title, the code frequency chart small (the same `CodeFrequency`, `compact`: no dates, legend or hover numbers, and drawn as one element cut to the bars by a mask, since 2026-11-05, rather than the full chart's 150 or so; see [performance.md](performance.md#keep-the-board-small)), and the commit and contribution counts. It reads the same `stats.json`, and the posts through the same `useDevlogPosts()`, so opening the overlay after it fetches nothing again.
 
 ## Code frequency
 

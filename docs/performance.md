@@ -1,8 +1,8 @@
 # Performance
 
-The site is loud on purpose: a hue that never stops moving, particles, a vignette that pulses with the bass. All of it shares one browser thread with everything else on the page, including a project framed in the viewer: a same-origin frame runs on its parent's main thread, so whatever the board spends, a Java game in the viewer loses. This page is what keeps that cheap enough for slow devices, and the rules for anything new that runs every frame.
+The site is loud on purpose: a hue that never stops moving, a vignette that pulses with the bass. All of it shares one browser thread with everything else on the page, including a project framed in the viewer: a same-origin frame runs on its parent's main thread, so whatever the board spends, a Java game in the viewer loses. This page is what keeps that cheap enough for slow devices, and the rules for anything new that runs every frame.
 
-Jake asked for a performance pass on 2026-10-27, with two conditions: nothing taken away, and the hue never paused for the games (the particles may pause).
+Jake asked for a performance pass on 2026-10-27, with two conditions: nothing taken away, and the hue never paused for the games.
 
 ## What it costs
 
@@ -73,13 +73,13 @@ Anything new that animates with the music follows the same three rules: a ref, a
 
 ## What rests behind an overlay
 
-The particles pause (`overlayOpen` in `store/common.ts`, which the board sets), and the board's eq bars and seek slider stop drawing. The hue, the vignette and everything inside the overlay keep going ([board.md](board.md#overlays)).
+While an overlay is up (`overlayOpen` in `store/common.ts`, which the board sets), the board's eq bars and seek slider stop drawing. The hue, the vignette and everything inside the overlay keep going ([board.md](board.md#overlays)).
 
 The board behind is dimmed and shrunk a little, but not blurred (since 2026-11-05). The overlay's panel covers all of it but a 28px margin, and a blurred board had to be blurred again on every step of the hue.
 
 ## Particles
 
-`atoms/ts-particle-background` loads tsparticles' basic bundle (`@tsparticles/basic`): moving circles in one color need nothing more, and the full bundle (`@tsparticles/all`, still in `package.json` but no longer imported) was most of the site's script. It's capped at 60 frames a second; it was 120.
+There are none since 2026-11-06: Jake asked for the white "snow" behind the board to go. It was tsparticles (`atoms/ts-particle-background`, 80 circles redrawn at up to 60 frames a second on a full-screen canvas), and its four `@tsparticles/*` packages went with it.
 
 ## Loading
 

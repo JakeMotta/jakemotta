@@ -1,14 +1,14 @@
 {
-  "version": "1.0.0-rc.21",
-  "journal": "0.9.15",
+  "version": "1.0.0-rc.24",
+  "journal": "0.9.18",
   "minecraft": "1.21.1",
   "neoforge": "21.1.264",
   "java": 21,
   "starter": {
-    "name": "Progression-Survival-Prism-Auto-1.0.0-rc.21.zip",
+    "name": "Progression-Survival-Prism-Auto-1.0.0-rc.24.zip",
     "bytes": 3865536,
     "sha256": "a5ff60b61b79300a80a0edfbb61767ab7781eff11d0fca7cd8397a40f27fff8d",
-    "url": "/downloads/progression-survival/packwiz/releases/1.0.0-rc.21/Progression-Survival-Prism-Auto-1.0.0-rc.21.zip"
+    "url": "/downloads/progression-survival/packwiz/releases/1.0.0-rc.24/Progression-Survival-Prism-Auto-1.0.0-rc.24.zip"
   },
   "guide": "/downloads/progression-survival/packwiz/Install-and-Update.md",
   "feed": "/downloads/progression-survival/packwiz/pack.toml"

@@ -1,24 +1,24 @@
 {
   "pack": "Progression Survival",
-  "version": "1.0.0-rc.21",
+  "version": "1.0.0-rc.24",
   "prerelease": true,
-  "published": "2026-11-05",
+  "published": "2026-11-06",
   "minecraft": "1.21.1",
   "neoforge": "21.1.264",
   "java": 21,
-  "summary": "Personal Settings and private player-location sharing on top of RC20, with Journal 0.9.15. Update server and clients together.",
-  "notes": "/downloads/progression-survival/releases/1.0.0-rc.21/Release-Notes.md",
-  "checksums": "/downloads/progression-survival/releases/1.0.0-rc.21/SHA256SUMS.txt",
+  "summary": "Broader Minecraft activities, new personal-work bounties and pack-version visibility on top of RC21, with Journal 0.9.18. Update server and clients together.",
+  "notes": "/downloads/progression-survival/releases/1.0.0-rc.24/Release-Notes.md",
+  "checksums": "/downloads/progression-survival/releases/1.0.0-rc.24/SHA256SUMS.txt",
   "client": {
-    "name": "Progression-Survival-1.0.0-rc.21.mrpack",
-    "url": "/downloads/progression-survival/releases/1.0.0-rc.21/Progression-Survival-1.0.0-rc.21.mrpack",
-    "bytes": 575911,
-    "sha256": "f9d43de0987a459c3f7681f13f59b9e378b3ed3ff3e66e09e6ec100446920f0d"
+    "name": "Progression-Survival-1.0.0-rc.24.mrpack",
+    "url": "/downloads/progression-survival/releases/1.0.0-rc.24/Progression-Survival-1.0.0-rc.24.mrpack",
+    "bytes": 628406,
+    "sha256": "5fc8a28e980d183b98f8c015b4894e59abd5a50451c5a965dd457bb94601321f"
   },
   "server": {
-    "name": "Progression-Survival-Server-1.0.0-rc.21.zip",
-    "url": "/downloads/progression-survival/releases/1.0.0-rc.21/Progression-Survival-Server-1.0.0-rc.21.zip",
-    "bytes": 568658,
-    "sha256": "bbeb5397ce5df771b6e55a5614a88625457467c2e9da128675cf6f535d91f453"
+    "name": "Progression-Survival-Server-1.0.0-rc.24.zip",
+    "url": "/downloads/progression-survival/releases/1.0.0-rc.24/Progression-Survival-Server-1.0.0-rc.24.zip",
+    "bytes": 620450,
+    "sha256": "b5d7e60c873890b52ab10f568f5245a5b4e4023cf1e8adb169f9586165d8d961"
   }
 }

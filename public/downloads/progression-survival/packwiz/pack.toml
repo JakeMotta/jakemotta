@@ -1,11 +1,11 @@
 name = "Progression Survival"
 pack-format = "packwiz:1.1.0"
-version = "1.0.0-rc.21"
+version = "1.0.0-rc.24"
 
 [index]
-file = "index-04dbf5c5917b765f0dfc4c6992ffd426a3b7d2a68160a1a4021edb986ac12904.toml"
+file = "index-2b88ac2f859367f824b8b1c20a4a5d4d3b3a4929b3d8fd3423b6d4c33df24433.toml"
 hash-format = "sha256"
-hash = "04dbf5c5917b765f0dfc4c6992ffd426a3b7d2a68160a1a4021edb986ac12904"
+hash = "2b88ac2f859367f824b8b1c20a4a5d4d3b3a4929b3d8fd3423b6d4c33df24433"
 
 [versions]
 minecraft = "1.21.1"

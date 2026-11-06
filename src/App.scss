@@ -10,25 +10,33 @@ canvas {
   height: 100%;
 }
 
-/* Global scrollbar customization */
+/* Global scrollbar customization. Chrome, Edge and Safari draw these: a slim thumb with no arrow
+   buttons, its track kept clear of a box's rounded corners. Chrome's own thin scrollbar put its arrows
+   at the very ends of the track, outside the curve of a tile that scrolls (since 2026-11-06). */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, .25);
-  border-radius: 8px;
+  margin: 14px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
+  background: var(--color-primary-dark);
   border-radius: 8px;
 }
 
-/* Firefox scrollbar */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-primary-dark) rgba(0, 0, 0, 0);
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox, which has no arrows to worry about. Chrome would follow these too and ignore the rules above,
+   so they're only for browsers without them. */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary-dark) rgba(0, 0, 0, 0);
+  }
 }

@@ -1,5 +1,4 @@
 export * from './background';
-export * from './ts-particle-background';
 export * from './music-player';
 export * from './music-row';
 export * from './eq-bars';

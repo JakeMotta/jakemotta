@@ -26,9 +26,9 @@ export const DownloadOptions = ({ approved, autoFailed, latest, releaseFailed, o
     return (
         <>
             {mode !== 'manual' && <section className='modpack__choice modpack__choice--auto' aria-labelledby='modpack-auto-title'>
-                <span className='modpack__recommended'>Join Jake’s server</span>
+                <span className='modpack__recommended'>Automatic setup</span>
                 <h4 id='modpack-auto-title'>Automatic updates</h4>
-                <p>Import once. After setup, press <b>Play</b> in Prism to update and launch.</p>
+                <p>Import once. After setup, press <b>Launch</b> in Prism to update and launch.</p>
                 {approved ? (
                     <>
                         <a className='modpack__button modpack__button--solid' href={approved.starter.url} download>
@@ -38,13 +38,13 @@ export const DownloadOptions = ({ approved, autoFailed, latest, releaseFailed, o
                         <p className='modpack__aside'>Server-compatible client: <b>{approved.version}</b></p>
                     </>
                 ) : (
-                    <p role='status'>{autoFailed ? 'The server download could not load. Refresh this page, or ask Jake for the auto-update ZIP.' : 'Loading the server-compatible download…'}</p>
+                    <p role='status'>{autoFailed ? 'The modpack download could not load. Refresh to try again.' : 'Loading the server-compatible download…'}</p>
                 )}
             </section>}
 
             {mode !== 'auto' && <section className='modpack__choice modpack__choice--manual' aria-labelledby='modpack-manual-title'>
                 <h4 id='modpack-manual-title'>Manual download</h4>
-                <p>Latest published client for manual installs and self-hosted servers. You manage updates and match the server’s release.</p>
+                <p>Use the release your server requires. In Prism, choose Add Instance → Import and select the .mrpack. You manage updates.</p>
                 {latest ? (
                     <>
                         <div className='modpack__release-line'>
@@ -56,7 +56,7 @@ export const DownloadOptions = ({ approved, autoFailed, latest, releaseFailed, o
                             <FiDownload aria-hidden /> Download .mrpack
                         </a>
                         <p className='modpack__aside'>{formatSize(latest.client.bytes)} · Choose a release matching your server.</p>
-                        {approved && approved.version !== latest.version && <p className='modpack__aside'>Joining Jake’s server? Use the auto-update ZIP on the overview; the latest manual release can be ahead of the approved server.</p>}
+                        {approved && approved.version !== latest.version && <p className='modpack__aside'>The automatic client follows a separate approved feed. For multiplayer, use the release your host requires.</p>}
                         <details className='modpack__details'>
                             <summary>Copy the latest manual link</summary>
                             <div className='modpack__latest'>

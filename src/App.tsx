@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Home } from './components/pages/home';
 import { ThemeProvider, useTheme, generateRandomHue, applyHue } from './contexts/ThemeContext';
 import { useCommonStore } from './store/common';
-import { TsParticleBackground, MusicPlayer, ListenAlong, YouTubePlayer } from './components/atoms';
+import { MusicPlayer, ListenAlong, YouTubePlayer } from './components/atoms';
 
 import 'antd/dist/reset.css';
 import './global.scss';
@@ -83,9 +83,6 @@ const AppContent = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-
-      {/* Particle background */}
-      <TsParticleBackground />
 
       {/* Music player */}
       <MusicPlayer />

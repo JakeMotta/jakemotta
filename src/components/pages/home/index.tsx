@@ -34,7 +34,7 @@ export const Home = () => {
         board.querySelectorAll('.tile:not(.tile-now)').forEach((tile) => tile.toggleAttribute('inert', waiting));
     }, [overlayOpen, waiting]);
 
-    // Tell the board's animations (the hue cycle in App, the particles) to rest while an overlay is up
+    // Tell the hue cycle in App to step more lightly while an overlay is up
     useEffect(() => {
         useCommonStore.setState({ overlayOpen });
     }, [overlayOpen]);

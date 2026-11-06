@@ -23,4 +23,10 @@ module.exports = {
     },
   },
   plugins: [],
+  // Tailwind's own variables (--tw-translate-x and about thirty more) go only on elements whose classes use them,
+  // instead of on every element and its ::before and ::after. Every element is restyled each time the hue moves,
+  // and those variables were a third of the cost (docs/performance.md).
+  experimental: {
+    optimizeUniversalDefaults: true,
+  },
 };

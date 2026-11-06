@@ -86,7 +86,7 @@ export const Devlog = () => {
                     <ul className='devlog__projects' aria-label='By project'>
                         {byProject.map((row, i) => (
                             <li key={row.project}>
-                                <span className={`devlog__swatch devlog-swatch--${i}`} aria-hidden />
+                                <span className={`devlog__swatch devlog-swatch--${i % 8}`} aria-hidden />
                                 <strong>{row.project}</strong>
                                 <span>
                                     {formatHours(row.minutes)} · {formatCount(row.tokens)} tokens

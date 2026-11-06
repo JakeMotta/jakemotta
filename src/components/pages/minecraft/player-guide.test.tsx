@@ -1,30 +1,19 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { PlayerGuide } from './player-guide';
-import { ServerGuide } from './server-guide';
+import { ServerDownloads, ServerGuide } from './server-guide';
 
-test('beginner setup shows one step at a time and preserves the zipped-import instructions', () => {
-    render(<PlayerGuide />);
-    expect(screen.getByRole('heading', { name: 'Minecraft & Prism' })).toBeVisible();
-    expect(screen.queryByText(/Do not extract the ZIP/)).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
-    expect(screen.getByRole('heading', { name: 'Download — keep the ZIP zipped' })).toBeVisible();
-    expect(screen.getByText(/Do not extract the ZIP/)).toBeVisible();
-    fireEvent.click(screen.getByRole('button', { name: 'Update / switch' }));
-    expect(screen.getByRole('heading', { name: 'Already using the automatic setup?' })).toBeVisible();
-    expect(screen.getByRole('button', { name: 'Back' })).toBeDisabled();
+test('setup remains readable while the automatic download is loading', () => {
+    render(<PlayerGuide approved={null} failed={false} />);
+    expect(screen.getByRole('status')).toHaveTextContent('Loading modpack download');
+    expect(screen.getByText('Add Instance → Import → select the ZIP')).toBeVisible();
+    expect(screen.getByRole('heading',{name:'Launch from Prism'})).toBeVisible();
+    expect(screen.queryByRole('button',{name:/Update|switch/})).not.toBeInTheDocument();
 });
 
-test('existing players can start directly with updating instead of going through setup', () => {
-    render(<PlayerGuide initial='update' />);
-    expect(screen.getByRole('heading', { name: 'Already using the automatic setup?' })).toBeVisible();
-    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
-    expect(screen.getByRole('heading', { name: 'Back up before switching' })).toBeVisible();
-});
-
-test('failed server index does not manufacture a server download', () => {
-    render(<ServerGuide failed />);
+test.each([ServerGuide, ServerDownloads])('failed server index does not manufacture downloads', Component => {
+    render(<Component failed />);
     expect(screen.getByRole('status')).toHaveTextContent('The server release could not load');
     expect(screen.queryByRole('link', { name: /Download server ZIP/ })).not.toBeInTheDocument();
 });

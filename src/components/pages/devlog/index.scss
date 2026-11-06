@@ -74,7 +74,7 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow 0.3s;
 
         &:hover {
-            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             transform: rotate(var(--tilt, -0.4deg)) translateY(-3px);
         }
 
@@ -295,6 +295,23 @@ $spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
 .devlog-swatch--3 {
     background: color-mix(in srgb, var(--color-primary) 40%, var(--color-primary-dark));
+}
+
+// Past four, the hue's shades get too close to tell apart, so the rest turn the hue a third of the way round and back
+.devlog-swatch--4 {
+    background: var(--color-accent-1);
+}
+
+.devlog-swatch--5 {
+    background: var(--color-accent-2);
+}
+
+.devlog-swatch--6 {
+    background: color-mix(in srgb, var(--color-accent-1) 50%, var(--color-primary-light));
+}
+
+.devlog-swatch--7 {
+    background: color-mix(in srgb, var(--color-accent-2) 50%, var(--color-primary-light));
 }
 
 .devlog-post {

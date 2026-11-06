@@ -33,8 +33,10 @@ $phone: 639px;
         grid-auto-rows: auto;
     }
 
+    // No blur behind an overlay (2026-11-05): the overlay's panel covers all but its margin, and redrawing a blurred
+    // board each time the hue moves took the thread a framed game needs (docs/performance.md)
     &--behind {
-        filter: blur(2px) saturate(0.75);
+        filter: saturate(0.75);
         transform: scale(0.985);
     }
 
@@ -124,7 +126,7 @@ $phone: 639px;
 
     &:hover {
         z-index: 2;
-        box-shadow: 0 20px 38px rgba(0, 0, 0, 0.28);
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.22);
         color: inherit;
         transform: rotate(var(--tilt)) translateY(-5px);
     }
@@ -286,7 +288,7 @@ $phone: 639px;
     transform: rotate(-1deg) scale(0.96);
 
     &:hover {
-        box-shadow: 0 22px 34px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.24);
         color: var(--color-primary-ink);
         transform: rotate(var(--tilt)) translateY(-4px) scale(0.97);
     }
@@ -875,6 +877,11 @@ $phone: 639px;
     font-weight: 800;
     text-decoration: none;
     transition: transform 0.35s $spring;
+    // The tile scrolls, and the screenshots out of sight skip their restyle each time the hue moves (docs/performance.md).
+    // The margin keeps the screenshot's shadow, which reaches past the link, from being cut off.
+    content-visibility: auto;
+    contain-intrinsic-size: auto 180px;
+    overflow-clip-margin: 24px;
 
     &:hover {
         color: var(--color-primary-ink);
@@ -1014,6 +1021,10 @@ $phone: 639px;
             font-size: 13px;
             font-weight: 600;
             text-decoration: none;
+            // Most of the 100 rows are scrolled out of sight, and these let the browser skip restyling what's
+            // in them each time the hue moves (docs/performance.md). A row is 26px tall.
+            content-visibility: auto;
+            contain-intrinsic-size: auto 26px;
         }
 
         a,

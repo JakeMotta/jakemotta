@@ -23,7 +23,7 @@ test('automatic and manual choices show their own version and download; changelo
 
 test('unavailable automatic feed gives a clear recovery message without relabeling the manual file as automatic', () => {
     render(<DownloadOptions approved={null} latest={latest} autoFailed releaseFailed={false} onChangelog={() => {}} />);
-    expect(screen.getByText(/server download could not load/i)).toBeVisible();
+    expect(screen.getByText(/modpack download could not load/i)).toBeVisible();
     expect(screen.queryByRole('link', { name: 'Download auto-update ZIP' })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Download .mrpack' })).toHaveAttribute('href', file.url);
 });

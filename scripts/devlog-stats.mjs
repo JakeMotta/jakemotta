@@ -161,7 +161,7 @@ const addTokens = (into, tokens) => {
 const rows = new Map();
 const rowFor = (day, project) => {
     const key = `${day}|${project}`;
-    if (!rows.has(key)) rows.set(key, { date: day, project, minutes: 0, replies: 0, sessions: 0, tokens: emptyTokens() });
+    if (!rows.has(key)) rows.set(key, { date: day, project, minutes: 0, replies: 0, sessions: 0, tokens: emptyTokens(), models: {} });
     return rows.get(key);
 };
 
@@ -188,28 +188,70 @@ for (const [key, ids] of sessions) {
     const [day, project] = key.split('|');
     rowFor(day, project).sessions = ids.size;
 }
-const models = {};
-const totalTokens = emptyTokens();
+const sumTokens = (tokens) => Object.values(tokens).reduce((a, b) => a + b, 0);
 for (const reply of replies.values()) {
     const row = rowFor(reply.day, reply.project);
     row.replies += 1;
     addTokens(row.tokens, reply.tokens);
-    addTokens(totalTokens, reply.tokens);
     // Named as people say them: claude-opus-5-5 is Opus 5.5, claude-opus-5 is Opus 5
     const name = reply.model
         .replace(/^claude-/, '')
         .replace(/-(\d+)(?:-(\d{1,2}))?(?:-\d{8})?$/, (_, major, minor) => ` ${major}${minor ? `.${minor}` : ''}`)
         .replace(/^\w/, (c) => c.toUpperCase());
-    models[name] = (models[name] || 0) + Object.values(reply.tokens).reduce((a, b) => a + b, 0);
+    row.models[name] = (row.models[name] || 0) + sumTokens(reply.tokens);
 }
+
+// The last run's numbers, which this run adds to rather than replaces (see below)
+const previousStats = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : {};
 
 // The headline hours count every project's moments together, so two sessions at once aren't counted twice
 const allMoments = [...moments.values()].flat();
-const days = [...rows.values()]
+const freshDays = [...rows.values()]
     .map((row) => ({ ...row, minutes: Math.round(row.minutes) }))
-    .filter((row) => row.minutes || row.replies)
-    .sort((a, b) => a.date.localeCompare(b.date) || a.project.localeCompare(b.project));
+    .filter((row) => row.minutes || row.replies);
 const allSessions = new Set([...sessions.values()].flatMap((ids) => [...ids]));
+
+// Claude Code deletes a transcript a month after it was last used (cleanupPeriodDays), so a day counted
+// before may have lost some or all of its transcripts since. A day the transcripts now show less of
+// keeps, row by row, whichever count is larger, and whatever is kept that way is added to the totals.
+// A day they show at least as much of is counted fresh, so a project renamed in PROJECTS moves its rows.
+const kept = { minutes: 0, sessions: 0, replies: 0, tokens: emptyTokens(), models: {} };
+const repliesOn = (list, date) => list.filter((row) => row.date === date).reduce((sum, row) => sum + row.replies, 0);
+const oldDays = previousStats.days ?? [];
+// Rows written before the rows carried their models: what they keep goes to the models in the old proportions
+const oldModels = previousStats.models ?? [];
+const oldModelTotal = oldModels.reduce((sum, model) => sum + model.tokens, 0);
+const modelsOf = (row) =>
+    row.models ?? Object.fromEntries(oldModelTotal ? oldModels.map((model) => [model.name, (sumTokens(row.tokens) * model.tokens) / oldModelTotal]) : [['Claude', sumTokens(row.tokens)]]);
+const days = [...freshDays];
+for (const date of new Set(oldDays.map((row) => row.date))) {
+    if (repliesOn(freshDays, date) >= repliesOn(oldDays, date)) continue;
+    for (const old of oldDays.filter((row) => row.date === date)) {
+        const index = days.findIndex((row) => row.date === date && row.project === old.project);
+        const fresh = days[index];
+        if (fresh && fresh.replies >= old.replies) continue;
+        if (fresh) days.splice(index, 1);
+        days.push(old);
+        kept.minutes += Math.max(0, old.minutes - (fresh?.minutes ?? 0));
+        kept.sessions += Math.max(0, old.sessions - (fresh?.sessions ?? 0));
+        kept.replies += old.replies - (fresh?.replies ?? 0);
+        for (const field of Object.keys(kept.tokens)) kept.tokens[field] += Math.max(0, old.tokens[field] - (fresh?.tokens[field] ?? 0));
+        const oldByModel = modelsOf(old);
+        for (const [name, tokens] of Object.entries(oldByModel)) {
+            kept.models[name] = (kept.models[name] || 0) + Math.max(0, tokens - (fresh?.models[name] ?? 0));
+        }
+    }
+}
+days.sort((a, b) => a.date.localeCompare(b.date) || a.project.localeCompare(b.project));
+const totalTokens = emptyTokens();
+const models = {};
+for (const row of freshDays) {
+    addTokens(totalTokens, row.tokens);
+    for (const [name, tokens] of Object.entries(row.models)) models[name] = (models[name] || 0) + tokens;
+}
+addTokens(totalTokens, kept.tokens);
+for (const [name, tokens] of Object.entries(kept.models)) models[name] = (models[name] || 0) + tokens;
+const keptDays = new Set(days.filter((row) => !freshDays.includes(row)).map((row) => row.date));
 
 // Commits: the first sentence of each subject, since some repositories write whole paragraphs there
 const firstSentence = (subject) => {
@@ -457,7 +499,6 @@ const githubProjects = [...projectTotals.values()].filter((project) => project.c
 
 // GitHub's own count from Jake's profile: commits, pull requests, issues and reviews in the last year, private
 // ones included when the profile shows them. It's read from the public page, and kept from the last run if that fails.
-const previousStats = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : {};
 let contributions = previousStats.github?.contributions ?? null;
 try {
     const page = await fetch(`https://github.com/users/${GITHUB_USER}/contributions`, { headers: { 'User-Agent': 'jakemotta.com devlog-stats' } }).then((response) => {
@@ -486,20 +527,21 @@ const stats = {
     generatedAt: new Date().toISOString(),
     since: days[0]?.date ?? null,
     totals: {
-        minutes: Math.round(activeMinutes(allMoments)),
-        sessions: allSessions.size,
-        replies: replies.size,
+        minutes: Math.round(activeMinutes(allMoments)) + kept.minutes,
+        sessions: allSessions.size + kept.sessions,
+        replies: replies.size + kept.replies,
         tokens: totalTokens,
     },
     models: Object.entries(models)
-        .sort((a, b) => b[1] - a[1])
-        .map(([name, tokens]) => ({ name, tokens })),
+        .map(([name, tokens]) => ({ name, tokens: Math.round(tokens) }))
+        .sort((a, b) => b.tokens - a.tokens),
     days,
     commits,
     github,
 };
 writeFileSync(OUT, `${JSON.stringify(stats, null, 2)}\n`);
 
+if (keptDays.size) console.log(`devlog-stats: kept the last run's numbers for ${keptDays.size} day(s) whose transcripts are gone: ${[...keptDays].sort().join(', ')}`);
 if (fromGithub.length) console.log(`devlog-stats: from GitHub: ${fromGithub.sort().join(', ')}`);
 const total = Object.values(totalTokens).reduce((a, b) => a + b, 0);
 console.log(

@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-11-05T20:30:00.682Z",
+  "generatedAt": "2026-11-06T18:45:22.948Z",
   "since": "2026-08-06",
   "totals": {
-    "minutes": 2702,
+    "minutes": 2785,
     "sessions": 104,
-    "replies": 17297,
+    "replies": 17530,
     "tokens": {
-      "input": 36210,
-      "output": 15288163,
-      "cacheWrite": 58971603,
-      "cacheRead": 4221339698
+      "input": 36696,
+      "output": 15432286,
+      "cacheWrite": 59640980,
+      "cacheRead": 4267288190
     }
   },
   "models": [
     {
       "name": "Opus 5.5",
-      "tokens": 4027156179
+      "tokens": 4073918657
     },
     {
       "name": "Opus 5",
@@ -42,6 +42,9 @@
         "output": 68234,
         "cacheWrite": 331792,
         "cacheRead": 20229127
+      },
+      "models": {
+        "Opus 5": 20629724
       }
     },
     {
@@ -55,6 +58,9 @@
         "output": 127394,
         "cacheWrite": 2701598,
         "cacheRead": 80645786
+      },
+      "models": {
+        "Opus 5": 83475197
       }
     },
     {
@@ -68,6 +74,9 @@
         "output": 14993,
         "cacheWrite": 971482,
         "cacheRead": 20439600
+      },
+      "models": {
+        "Opus 5": 21426153
       }
     },
     {
@@ -81,6 +90,9 @@
         "output": 32694,
         "cacheWrite": 1099942,
         "cacheRead": 50325157
+      },
+      "models": {
+        "Opus 5": 51457965
       }
     },
     {
@@ -94,6 +106,9 @@
         "output": 106113,
         "cacheWrite": 235634,
         "cacheRead": 9879996
+      },
+      "models": {
+        "Opus 5": 10221853
       }
     },
     {
@@ -107,6 +122,9 @@
         "output": 111133,
         "cacheWrite": 405573,
         "cacheRead": 19665252
+      },
+      "models": {
+        "Opus 5": 20182060
       }
     },
     {
@@ -120,6 +138,9 @@
         "output": 101973,
         "cacheWrite": 241046,
         "cacheRead": 21057105
+      },
+      "models": {
+        "Opus 5": 21400374
       }
     },
     {
@@ -133,6 +154,9 @@
         "output": 4139,
         "cacheWrite": 83948,
         "cacheRead": 794463
+      },
+      "models": {
+        "Opus 5.5": 882566
       }
     },
     {
@@ -146,6 +170,9 @@
         "output": 5159632,
         "cacheWrite": 18056554,
         "cacheRead": 1277205999
+      },
+      "models": {
+        "Opus 5.5": 1300432369
       }
     },
     {
@@ -159,6 +186,9 @@
         "output": 6037483,
         "cacheWrite": 21893866,
         "cacheRead": 1866464285
+      },
+      "models": {
+        "Opus 5.5": 1894410690
       }
     },
     {
@@ -172,6 +202,9 @@
         "output": 1348,
         "cacheWrite": 1154,
         "cacheRead": 112112
+      },
+      "models": {
+        "Opus 5.5": 114616
       }
     },
     {
@@ -185,6 +218,9 @@
         "output": 655743,
         "cacheWrite": 2186634,
         "cacheRead": 257578452
+      },
+      "models": {
+        "Opus 5.5": 260422611
       }
     },
     {
@@ -198,6 +234,9 @@
         "output": 1902,
         "cacheWrite": 15453,
         "cacheRead": 761301
+      },
+      "models": {
+        "Opus 5.5": 778660
       }
     },
     {
@@ -211,6 +250,9 @@
         "output": 841471,
         "cacheWrite": 3361936,
         "cacheRead": 215845678
+      },
+      "models": {
+        "Opus 5.5": 220051381
       }
     },
     {
@@ -224,6 +266,9 @@
         "output": 9691,
         "cacheWrite": 35894,
         "cacheRead": 2474699
+      },
+      "models": {
+        "Opus 5.5": 2520318
       }
     },
     {
@@ -237,6 +282,10 @@
         "output": 449103,
         "cacheWrite": 1601287,
         "cacheRead": 82229941
+      },
+      "models": {
+        "Opus 5.5": 77367307,
+        "Sonnet 5.5": 6914330
       }
     },
     {
@@ -250,6 +299,9 @@
         "output": 306863,
         "cacheWrite": 1204200,
         "cacheRead": 72956889
+      },
+      "models": {
+        "Opus 5.5": 74468808
       }
     },
     {
@@ -263,6 +315,11 @@
         "output": 93266,
         "cacheWrite": 690926,
         "cacheRead": 27972652
+      },
+      "models": {
+        "Haiku 5.5": 903068,
+        "Sonnet 5.5": 25753310,
+        "Opus 5.5": 2101168
       }
     },
     {
@@ -276,6 +333,10 @@
         "output": 377142,
         "cacheWrite": 1319904,
         "cacheRead": 37427875
+      },
+      "models": {
+        "Opus 5.5": 36443227,
+        "Sonnet 5.5": 2682634
       }
     },
     {
@@ -289,6 +350,9 @@
         "output": 49991,
         "cacheWrite": 183986,
         "cacheRead": 2624702
+      },
+      "models": {
+        "Sonnet 5.5": 2858719
       }
     },
     {
@@ -302,6 +366,9 @@
         "output": 57079,
         "cacheWrite": 145517,
         "cacheRead": 2717005
+      },
+      "models": {
+        "Opus 5.5": 2919649
       }
     },
     {
@@ -315,6 +382,10 @@
         "output": 5073,
         "cacheWrite": 91343,
         "cacheRead": 1499434
+      },
+      "models": {
+        "Opus 5.5": 1409763,
+        "Sonnet 5.5": 186131
       }
     },
     {
@@ -328,6 +399,10 @@
         "output": 2817,
         "cacheWrite": 56943,
         "cacheRead": 284388
+      },
+      "models": {
+        "Haiku 5.5": 82298,
+        "Sonnet 5.5": 261884
       }
     },
     {
@@ -341,6 +416,9 @@
         "output": 283,
         "cacheWrite": 2586,
         "cacheRead": 40924
+      },
+      "models": {
+        "Sonnet 5.5": 43795
       }
     },
     {
@@ -354,6 +432,9 @@
         "output": 499803,
         "cacheWrite": 1110231,
         "cacheRead": 121381581
+      },
+      "models": {
+        "Opus 5.5": 122992321
       }
     },
     {
@@ -367,36 +448,103 @@
         "output": 42524,
         "cacheWrite": 346415,
         "cacheRead": 9153168
+      },
+      "models": {
+        "Opus 5.5": 9542255
       }
     },
     {
       "date": "2026-11-05",
       "project": "jakemotta.com",
-      "minutes": 23,
-      "replies": 95,
+      "minutes": 51,
+      "replies": 186,
       "sessions": 2,
       "tokens": {
-        "input": 198,
-        "output": 97815,
-        "cacheWrite": 413004,
-        "cacheRead": 12355287
+        "input": 386,
+        "output": 153921,
+        "cacheWrite": 822655,
+        "cacheRead": 30353939
+      },
+      "models": {
+        "Opus 5.5": 31330901
       }
     },
     {
       "date": "2026-11-05",
       "project": "Other",
-      "minutes": 18,
-      "replies": 50,
+      "minutes": 50,
+      "replies": 115,
       "sessions": 1,
       "tokens": {
-        "input": 110,
-        "output": 32461,
-        "cacheWrite": 182755,
-        "cacheRead": 7216840
+        "input": 244,
+        "output": 76780,
+        "cacheWrite": 286470,
+        "cacheRead": 23175638
+      },
+      "models": {
+        "Opus 5.5": 23539132
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "project": "jakemotta.com",
+      "minutes": 19,
+      "replies": 77,
+      "sessions": 1,
+      "tokens": {
+        "input": 164,
+        "output": 43698,
+        "cacheWrite": 156011,
+        "cacheRead": 11991042
+      },
+      "models": {
+        "Opus 5.5": 12190915
       }
     }
   ],
   "commits": [
+    {
+      "project": "jakemotta.com",
+      "hash": "420ce27",
+      "date": "2026-11-06T11:33:08-07:00",
+      "subject": "Simplify Minecraft setup with Choose your route layout",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/420ce27d2c5eae2a75efc93cdbfb476ec5cc04b0"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "311f82c",
+      "date": "2026-11-06T11:23:12-07:00",
+      "subject": "Keep scrollbar arrows off rounded corners and calm the hover shadows",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/311f82cf5e36d213e95fabff053eda4df69b1885"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "fd6c8a2",
+      "date": "2026-11-06T10:53:28-07:00",
+      "subject": "Take out the particle snow behind the board",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/fd6c8a28090eed615c5e87fc62ab35d9e11dc0f8"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "4890e37",
+      "date": "2026-11-05T23:21:13-07:00",
+      "subject": "Document the second performance pass",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/4890e37922f0ad3521f7ba83853b154005fe7124"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "96d59e4",
+      "date": "2026-11-05T23:17:19-07:00",
+      "subject": "Halve what each step of the hue costs the board",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/96d59e44260f0d20f818dcf9c8e64764b3c07559"
+    },
+    {
+      "project": "jakemotta.com",
+      "hash": "8ebde4a",
+      "date": "2026-11-05T13:33:58-07:00",
+      "subject": "Count the dev log's numbers from everywhere Jake contributes, TYB included",
+      "url": "https://github.com/JakeMotta/jakemotta/commit/8ebde4ac94574bf85dabb21ed1a861e85c2ce401"
+    },
     {
       "project": "jakemotta.com",
       "hash": "432162f",
@@ -494,60 +642,18 @@
       "date": "2026-10-31T20:32:51-06:00",
       "subject": "Show readable Minecraft changelogs and simplify release links",
       "url": "https://github.com/JakeMotta/jakemotta/commit/87ae39f56016b40cb4a721096a5938a3fe37592e"
-    },
-    {
-      "project": "jakemotta.com",
-      "hash": "e17d243",
-      "date": "2026-10-31T19:58:30-06:00",
-      "subject": "Publish bow-fixed Progression Survival 1.0.0-rc.14",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/e17d24382771859fb660f811e72a42e42ee289de"
-    },
-    {
-      "project": "jakemotta.com",
-      "hash": "227c1e5",
-      "date": "2026-10-30T19:35:21-06:00",
-      "subject": "Add a Coming next tile for Progression Journal 0.9.8 on the modpack page",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/227c1e5c43ddba1991f1ff563ec8b5b5fbe7abce"
-    },
-    {
-      "project": "jakemotta.com",
-      "hash": "dcbb474",
-      "date": "2026-10-30T15:43:22-06:00",
-      "subject": "Publish Progression Survival 1.0.0-rc.10, and refuse KubeJS's web_server.json",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/dcbb474f9b89269d9c2d06c4f0c80a35a988bee5"
-    },
-    {
-      "project": "jakemotta.com",
-      "hash": "12bab98",
-      "date": "2026-10-30T15:32:04-06:00",
-      "subject": "Take modpack releases from the pack's own repository",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/12bab983f40f947a4c8d4b7f8fce34fa8c1be457"
-    },
-    {
-      "project": "jakemotta.com",
-      "hash": "2d16bf7",
-      "date": "2026-10-30T14:44:15-06:00",
-      "subject": "Name the modpack repository's GitHub home in the modpack docs",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/2d16bf78b8d9108ee0f5ec3dae3b20f3974838a3"
-    },
-    {
-      "project": "jakemotta.com",
-      "hash": "f663986",
-      "date": "2026-10-30T14:38:20-06:00",
-      "subject": "Note the modpack's new source repository in the modpack docs",
-      "url": "https://github.com/JakeMotta/jakemotta/commit/f663986cc127960cdfb8930f39a7f6bc9b0546ab"
     }
   ],
   "github": {
     "user": "JakeMotta",
     "url": "https://github.com/JakeMotta",
     "contributions": {
-      "total": 5682,
-      "date": "2026-11-05"
+      "total": 5689,
+      "date": "2026-11-06"
     },
-    "commits": 5728,
-    "additions": 2564302,
-    "deletions": 1413003,
+    "commits": 5740,
+    "additions": 2568485,
+    "deletions": 1413764,
     "projects": [
       {
         "name": "TYB",
@@ -569,15 +675,15 @@
       },
       {
         "name": "jakemotta.com",
-        "commits": 79,
-        "additions": 44458,
-        "deletions": 3543
+        "commits": 86,
+        "additions": 45129,
+        "deletions": 4127
       },
       {
         "name": "Progression Survival",
-        "commits": 30,
-        "additions": 49080,
-        "deletions": 6079
+        "commits": 35,
+        "additions": 52592,
+        "deletions": 6256
       },
       {
         "name": "Friday",
@@ -919,9 +1025,9 @@
       },
       {
         "week": "2026-11-02",
-        "commits": 53,
-        "additions": 14303,
-        "deletions": 6820
+        "commits": 65,
+        "additions": 18486,
+        "deletions": 7581
       }
     ]
   }

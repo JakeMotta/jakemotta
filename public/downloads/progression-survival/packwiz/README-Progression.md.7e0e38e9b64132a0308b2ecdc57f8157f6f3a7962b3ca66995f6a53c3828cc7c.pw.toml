@@ -1,0 +1,8 @@
+name = "README-Progression.md"
+filename = "README-Progression.md"
+side = "client"
+
+[download]
+url = "https://jakemotta.com/downloads/progression-survival/packwiz/releases/1.0.0-rc.26/README-Progression.md"
+hash-format = "sha256"
+hash = "440fbb09e3c7cca8e8a0524dfa13944cdf85f464355d6ccf7000f604f4ae1ffa"

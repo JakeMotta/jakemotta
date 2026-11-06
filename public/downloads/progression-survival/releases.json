@@ -2,6 +2,29 @@
   "pack": "Progression Survival",
   "releases": [
     {
+      "version": "1.0.0-rc.26",
+      "prerelease": true,
+      "published": "2026-11-06",
+      "minecraft": "1.21.1",
+      "neoforge": "21.1.264",
+      "java": 21,
+      "summary": "Progression refinements on top of RC24, with Journal 0.9.19. Update server and clients together.",
+      "notes": "/downloads/progression-survival/releases/1.0.0-rc.26/Release-Notes.md",
+      "checksums": "/downloads/progression-survival/releases/1.0.0-rc.26/SHA256SUMS.txt",
+      "client": {
+        "name": "Progression-Survival-1.0.0-rc.26.mrpack",
+        "url": "/downloads/progression-survival/releases/1.0.0-rc.26/Progression-Survival-1.0.0-rc.26.mrpack",
+        "bytes": 633007,
+        "sha256": "96dc9aa69a061f489c97005b67d3e59119eb457542b70418b0ccbf5ac558fad2"
+      },
+      "server": {
+        "name": "Progression-Survival-Server-1.0.0-rc.26.zip",
+        "url": "/downloads/progression-survival/releases/1.0.0-rc.26/Progression-Survival-Server-1.0.0-rc.26.zip",
+        "bytes": 625034,
+        "sha256": "199f7915e5b5242c3badce445d253d8f55442cff2d10233cabb99cd86dedc87d"
+      }
+    },
+    {
       "version": "1.0.0-rc.24",
       "prerelease": true,
       "published": "2026-11-06",

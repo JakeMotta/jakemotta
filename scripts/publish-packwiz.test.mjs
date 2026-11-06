@@ -30,8 +30,9 @@ test('publishing a newer candidate does not advance the approved server channel'
     writeFileSync(join(folder, 'pack.toml'), 'unchanged approved pointer');
     writeFileSync(join(folder, 'current.json'), '{"version":"retained"}\n');
     const packRepoRoot = resolve('../minecraft-progression');
-    const result = publishPackwiz({ siteRoot, packRepoRoot, sourceDir: join(packRepoRoot, 'outputs/Progression-Survival-1.0.0-rc.15') });
-    assert.equal(result.version, '1.0.0-rc.15');
+    const version = process.env.PACKWIZ_TEST_RELEASE ?? JSON.parse(readFileSync(join(packRepoRoot, 'outputs/Latest-Release/latest.json'), 'utf8')).version;
+    const result = publishPackwiz({ siteRoot, packRepoRoot, sourceDir: join(packRepoRoot, 'outputs/Progression-Survival-' + version) });
+    assert.equal(result.version, version);
     assert.equal(readFileSync(join(folder, 'pack.toml'), 'utf8'), 'unchanged approved pointer');
     assert.equal(readFileSync(join(folder, 'current.json'), 'utf8'), '{"version":"retained"}\n');
 });

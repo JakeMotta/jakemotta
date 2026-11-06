@@ -1,4 +1,24 @@
 {
+  "1.0.0-rc.26": {
+    "comparison": "Changes since RC24.",
+    "added": [
+      "New Prism setups use the permanent name Minecraft - Progression Survival.",
+      "Iron Tools has separate goals for 16 pumpkin pies and one smithing table."
+    ],
+    "changed": [
+      "Gold tool practice now requires 224 mined blocks, 224 soil blocks and 128 logs. Other Gold requirements stay the same.",
+      "Iron Tools asks you to capture cod, salmon, pufferfish and tropical fish in buckets instead of catching another batch with a rod.",
+      "Copper Tools combines catching and cooking 16 cod into one task.",
+      "Working redstone circuits no longer need a fixed dust count or a straight wire layout.",
+      "Personal Settings uses the Journal checkbox style, keeps highlights clear of helper text and scrolls below its fixed title and close button.",
+      "Existing progress, unlocks and paid rewards are preserved."
+    ],
+    "removed": [
+      "Journal task descriptions and the historical-completion suffix.",
+      "The gear tooltip while Personal Settings is open.",
+      "Outdated text claiming shields need five Iron-tier skeleton kills. Shields can be crafted and used as soon as Iron Armor is unlocked."
+    ]
+  },
   "1.0.0-rc.1": {
     "comparison": "The first published release: the starting point for this history.",
     "added": [

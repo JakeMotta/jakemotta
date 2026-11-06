@@ -25,40 +25,62 @@ beforeEach(() => {
     (useAutoUpdate as jest.Mock).mockReturnValue({ approved:{version:latest.version,starter:{...file,url:'/immutable/auto.zip'}},failed:false });
 });
 
-test('overview keeps long content out of the page and has a direct immutable automatic download', () => {
+test('two routes explain the separate downloads and preserve the approved automatic link', () => {
     render(<Minecraft />);
-    expect(document.querySelectorAll('.modpack__overview-card')).toHaveLength(5);
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    expect(screen.queryByRole('button',{name:'All downloads'})).not.toBeInTheDocument();
-    expect(screen.getByRole('button',{name:'Older releases & change logs'}).closest('.modpack__overview-card--download')).not.toBeNull();
-    expect(screen.queryByText(/Microsoft account that owns/)).not.toBeInTheDocument();
-    expect(screen.getByRole('link',{name:'Download auto-update ZIP'})).toHaveAttribute('href','/immutable/auto.zip');
-    fireEvent.click(screen.getByRole('button',{name:'Update / switch'}));
-    expect(screen.getByRole('dialog',{name:'Player setup & updates'})).toHaveAttribute('open');
-    expect(screen.getByRole('heading',{name:'Already using the automatic setup?'})).toBeVisible();
-    fireEvent.click(screen.getByRole('button',{name:'Close player setup & updates'}));
-    expect(screen.queryByRole('dialog',{name:'Player setup & updates'})).not.toBeInTheDocument();
+    expect(screen.getByRole('navigation', {name:'Choose your route'}).children).toHaveLength(2);
+    expect(screen.getByRole('button', {name:/Start playing/})).toHaveAttribute('aria-pressed','true');
+    expect(screen.getByRole('link', {name:'Download Prism Launcher ↗'})).toHaveAttribute('href','https://prismlauncher.org/download/');
+    expect(screen.getByRole('link', {name:'Download modpack ZIP ↓'})).toHaveAttribute('href','/immutable/auto.zip');
+    expect(screen.getByText(/Download the ZIP and leave it zipped/)).toBeVisible();
+    expect(screen.getByText(/Open Prism → select your imported/)).toBeVisible();
+    expect(screen.queryByText(/Jake|switch|migration|returning/i)).not.toBeInTheDocument();
 });
 
-test('credits browse all pinned mods one at a time', () => {
+test('host route replaces setup and gives both downloads from one manual release', () => {
+    (useAutoUpdate as jest.Mock).mockReturnValue({approved:{version:'separate-approved-version',starter:file},failed:false});
     render(<Minecraft />);
-    fireEvent.click(screen.getByRole('button',{name:'Open mod credits'}));
-    expect(screen.getByRole('dialog',{name:'Mod credits'})).toHaveAttribute('open');
-    expect(document.querySelectorAll('.modpack-credit-reader__mod')).toHaveLength(1);
+    fireEvent.click(screen.getByRole('button',{name:/Host a server/}));
+    expect(screen.queryByRole('heading',{name:'Set up in three steps'})).not.toBeInTheDocument();
+    expect(screen.getByRole('link',{name:'Download server ZIP'})).toHaveAttribute('href',latest.server.url);
+    expect(screen.getByRole('link',{name:'Download matching client .mrpack'})).toHaveAttribute('href',latest.client.url);
+    expect(screen.getByRole('link',{name:'Get Java 21 for Windows ↗'})).toHaveAttribute('href',expect.stringContaining('version=21'));
+    fireEvent.click(screen.getByRole('button',{name:'Open server guide →'}));
+    expect(screen.getByRole('heading',{name:'Server guide'})).toHaveFocus();
+    fireEvent.click(screen.getByRole('button',{name:'Next'}));
+    expect(screen.getByRole('heading',{name:'Extract & read'})).toBeVisible();
+    fireEvent.click(screen.getByRole('button',{name:'Back to Host a server'}));
+    expect(screen.getByRole('button',{name:'Open server guide →'})).toHaveFocus();
+    expect(screen.getByRole('button',{name:/Host a server/})).toHaveAttribute('aria-pressed','true');
+});
+
+test('secondary sections replace the routes within the popup and preserve credits and archive', () => {
+    render(<Minecraft />);
+    fireEvent.click(screen.getByRole('button',{name:'Mod credits →'}));
+    expect(screen.queryByRole('navigation',{name:'Choose your route'})).not.toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(screen.getByText(`Mod 1 of ${snapshot.mods.length}`)).toBeVisible();
     for(let i=1;i<snapshot.mods.length;i++) fireEvent.click(screen.getByRole('button',{name:'Next'}));
-    expect(screen.getByText(`Mod ${snapshot.mods.length} of ${snapshot.mods.length}`)).toBeVisible();
-    expect(screen.getByRole('button',{name:'Next'})).toBeDisabled();
     expect(screen.getByRole('link',{name:snapshot.mods[snapshot.mods.length - 1].name})).toBeVisible();
-});
-
-test('manual download and historical dates remain available through their pop-ups', () => {
-    render(<Minecraft />);
-    fireEvent.click(screen.getByRole('button',{name:'Manual client'}));
+    fireEvent.click(screen.getByRole('button',{name:'Back to Start playing'}));
+    fireEvent.click(screen.getByRole('button',{name:'Manual releases & change logs →'}));
     expect(screen.getByRole('link',{name:'Download .mrpack'})).toHaveAttribute('href',file.url);
-    expect(screen.getAllByRole('link',{name:'Download auto-update ZIP'})).toHaveLength(1);
-    fireEvent.click(screen.getByRole('button',{name:'Close manual client'}));
-    fireEvent.click(screen.getByRole('button',{name:'Older releases & change logs'}));
     expect(screen.getByRole('link',{name:'Download Progression Survival old'})).toHaveAttribute('href',file.url);
     expect(screen.getByLabelText('Released November 3, 2026')).toHaveAttribute('dateTime','2026-11-03');
+});
+
+test('feed and release failures stay independent without offering the wrong file', () => {
+    (useAutoUpdate as jest.Mock).mockReturnValue({approved:null,failed:true});
+    render(<Minecraft />);
+    expect(screen.getByRole('status')).toHaveTextContent('modpack download could not load');
+    expect(screen.queryByRole('link',{name:'Download modpack ZIP ↓'})).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button',{name:/Host a server/}));
+    expect(screen.getByRole('link',{name:'Download matching client .mrpack'})).toHaveAttribute('href',file.url);
+});
+
+test('playing guide remains paged inside the popup', () => {
+    render(<Minecraft />);
+    fireEvent.click(screen.getByRole('button',{name:'Playing guide →'}));
+    expect(screen.getByRole('heading',{name:'Earn your next tier'})).toBeVisible();
+    fireEvent.click(screen.getByRole('button',{name:'Next'}));
+    expect(screen.getByRole('heading',{name:'Armor, tools & weapons'})).toBeVisible();
 });

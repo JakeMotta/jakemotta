@@ -1,17 +1,5 @@
-@layer tailwind-base, antd, tailwind-components, tailwind-utilities;
-
-@layer tailwind-base {
-    @tailwind base;
-}
-
-@layer tailwind-components {
-    @tailwind components;
-
-}
-
-@layer tailwind-utilities {
-    @tailwind utilities;
-}
+// Tailwind is loaded once, from index.scss. It was loaded here too, inside layers, until 2026-11-05: that copy never
+// won over the unlayered one, and doubled the work of every restyle (docs/performance.md).
 
 // The hue's four colors (written by applyHue in contexts/ThemeContext.tsx), registered as colors. The whole page
 // restyles each time the hue moves, about twelve times a second, and typed variables make that restyle roughly

@@ -39,6 +39,13 @@
         min-height: 40px;
     }
 
+    // The board's chart: the text colour, cut to the bars by a mask drawn for its size (CompactPlot)
+    &__mask {
+        background: currentColor;
+        mask-repeat: no-repeat;
+        mask-size: 100% 100%;
+    }
+
     &__weeks {
         display: flex;
         height: 100%;

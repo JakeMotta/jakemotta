@@ -178,7 +178,9 @@ const asMedia = (player: Player): Media => ({
  */
 export const YouTubePlayer = () => {
     const audioUrl = useAudioStore((store) => store.audioUrl);
-    const entered = useAudioStore((store) => store.entry !== 'waiting');
+    // Only for a visitor who chose sound: YouTube's player is a megabyte or more of its own script, and someone browsing
+    // in silence may never play a song. Pressing play later makes the entry 'sound', and a song from YouTube makes it at once.
+    const entered = useAudioStore((store) => store.entry === 'sound');
     const nextUrl = useAudioStore((store) => store.shuffled[0]);
     const streamed = isStreamed(audioUrl);
     const frameRef = useRef<HTMLDivElement>(null);

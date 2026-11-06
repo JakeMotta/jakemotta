@@ -64,12 +64,16 @@ export const findTrack = (url: string | undefined): MusicItemProps | undefined =
 // How many songs "Up next" lists, on the board and in the library: the shuffle holds the whole library
 const UP_NEXT_SHOWN = 10;
 
-/** The next few songs in the shuffle, as tracks */
-export const upNextTracks = (shuffled: string[]) =>
-    shuffled
-        .map(findTrack)
-        .filter((track): track is MusicItemProps => !!track)
-        .slice(0, UP_NEXT_SHOWN);
+/** The next few songs in the shuffle, as tracks. It stops looking once it has them, since the shuffle can hold hundreds. */
+export const upNextTracks = (shuffled: string[]) => {
+    const tracks: MusicItemProps[] = [];
+    for (const url of shuffled) {
+        const track = findTrack(url);
+        if (track) tracks.push(track);
+        if (tracks.length === UP_NEXT_SHOWN) break;
+    }
+    return tracks;
+};
 
 /**
  * Makes tracks from elsewhere known to the player: the Spotify playlist's songs, or a play picked

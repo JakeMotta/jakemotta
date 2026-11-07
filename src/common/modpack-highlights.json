@@ -1,0 +1,22 @@
+{
+  "1.0.0-rc.24": {
+    "blurb": "More to do, new bounties and your pack version in Settings. Update your server and clients together.",
+    "lines": [
+      "35 new optional Journal quests, from building to End alchemy",
+      "Five new bounties: honey, long-range skeletons, trident hits, curing a zombie villager and piglin barters",
+      "Personal Settings shows which pack version you’re on",
+      "Cave spiders count wherever spider kills count",
+      "New ways through Tools tiers: craft a smithing table, put on an armor trim or cure a villager"
+    ]
+  },
+  "1.0.0-rc.26": {
+    "blurb": "Shields sooner, less Gold grinding and fish in buckets. Update your server and clients together.",
+    "lines": [
+      "Shields craft and work as soon as you reach Iron Armor",
+      "Gold Tools asks for less mining, digging and woodcutting",
+      "Iron Tools has you catch four kinds of fish in buckets instead of 24 on a rod",
+      "A simpler Journal: task titles and progress, nothing extra",
+      "New Prism setups are named Minecraft - Progression Survival"
+    ]
+  }
+}

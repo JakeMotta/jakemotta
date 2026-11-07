@@ -55,14 +55,14 @@ test('host route replaces setup and gives both downloads from one manual release
 
 test('secondary sections replace the routes within the popup and preserve credits and archive', () => {
     render(<Minecraft />);
-    fireEvent.click(screen.getByRole('button',{name:'Mod credits →'}));
+    fireEvent.click(screen.getByRole('button',{name:/^Mod credits/}));
     expect(screen.queryByRole('navigation',{name:'Choose your route'})).not.toBeInTheDocument();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(screen.getByText(`Mod 1 of ${snapshot.mods.length}`)).toBeVisible();
     for(let i=1;i<snapshot.mods.length;i++) fireEvent.click(screen.getByRole('button',{name:'Next'}));
     expect(screen.getByRole('link',{name:snapshot.mods[snapshot.mods.length - 1].name})).toBeVisible();
     fireEvent.click(screen.getByRole('button',{name:'Back to Start playing'}));
-    fireEvent.click(screen.getByRole('button',{name:'Manual releases & change logs →'}));
+    fireEvent.click(screen.getByRole('button',{name:/^Manual releases & change logs/}));
     expect(screen.getByRole('link',{name:'Download .mrpack'})).toHaveAttribute('href',file.url);
     expect(screen.getByRole('link',{name:'Download Progression Survival old'})).toHaveAttribute('href',file.url);
     expect(screen.getByLabelText('Released November 3, 2026')).toHaveAttribute('dateTime','2026-11-03');
@@ -79,8 +79,25 @@ test('feed and release failures stay independent without offering the wrong file
 
 test('playing guide remains paged inside the popup', () => {
     render(<Minecraft />);
-    fireEvent.click(screen.getByRole('button',{name:'Playing guide →'}));
+    fireEvent.click(screen.getByRole('button',{name:/^Playing guide/}));
     expect(screen.getByRole('heading',{name:'Earn your next tier'})).toBeVisible();
     fireEvent.click(screen.getByRole('button',{name:'Next'}));
     expect(screen.getByRole('heading',{name:'Armor, tools & weapons'})).toBeVisible();
+});
+
+test("what's new shows the latest release beside the route, with its change log and download", () => {
+    render(<Minecraft />);
+    const tile = screen.getByRole('region', {name: latest.version.replace(/^\d+\.\d+\.\d+-/, '')});
+    expect(tile).toHaveTextContent('What’s new');
+    expect(screen.getByRole('link',{name:'Download .mrpack ↓'})).toHaveAttribute('href',latest.client.url);
+    fireEvent.click(screen.getByRole('button',{name:'Full change log'}));
+    expect(screen.getByRole('heading',{name:latest.version})).toBeVisible();
+    expect(screen.getByRole('button',{name:/^Mod credits/})).toHaveTextContent(`The ${snapshot.mods.length} mods in the pack`);
+});
+
+test("what's new falls back to the release summary when no highlights are written for it", () => {
+    (useReleases as jest.Mock).mockReturnValue({ releases:[{...latest,version:'9.9.9-rc.99',summary:'A summary straight from the release notes.'}],failed:false });
+    render(<Minecraft />);
+    expect(screen.getByRole('heading',{name:'rc.99'})).toBeVisible();
+    expect(screen.getByText('A summary straight from the release notes.')).toBeVisible();
 });

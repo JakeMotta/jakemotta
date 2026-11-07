@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiArrowLeft, FiDownload, FiRepeat, FiServer } from 'react-icons/fi';
+import { IconType } from 'react-icons';
+import { FiArchive, FiArrowLeft, FiArrowRight, FiBookOpen, FiDownload, FiHeart, FiRepeat, FiServer } from 'react-icons/fi';
 import { BentoOverlay, OverlayHeader } from '../../templates';
 import { PixelCube } from '../../atoms';
 import { Release, useAutoUpdate, useReleases } from '../../../common/modpack';
@@ -11,6 +12,8 @@ import { ServerGuide, ServerDownloads } from './server-guide';
 import { ModCredits } from './mod-credits';
 import { StepReader } from './detail-dialog';
 import { ReleaseArchive } from './release-archive';
+import { WhatsNew } from './whats-new';
+import credits from '../../../common/modpack-credits.json';
 import './index.scss';
 import './single-screen.scss';
 
@@ -28,6 +31,12 @@ export const Minecraft = () => {
     const heading = useRef<HTMLHeadingElement>(null);
     const returnTo = useRef<Panel | null>(null);
     const latest = releases?.[0];
+    const mods = (credits.releases.find((item) => item.version === approved?.version) ?? credits.releases.find((item) => item.version === latest?.version) ?? credits.releases[0])?.mods.length;
+    const more: [Panel, string, string, IconType][] = [
+        ['playing', 'Playing guide', 'How tiers, the Journal and bounties work', FiBookOpen],
+        ['manual', 'Manual releases & change logs', 'Every build, and what changed in each', FiArchive],
+        ['credits', 'Mod credits', mods ? `The ${mods} mods in the pack and who made them` : 'The mods in the pack and who made them', FiHeart],
+    ];
     const openPanel = (next: Panel) => {
         returnTo.current = next;
         setPanel(next);
@@ -56,7 +65,7 @@ export const Minecraft = () => {
                 {panel === 'hosting' && <ServerGuide release={latest} failed={failed} />}
                 {panel === 'playing' && <StepReader pages={playingPages} />}
                 {panel === 'credits' && <ModCredits approvedVersion={approved?.version} latestVersion={latest?.version} />}
-            </section> : <div className='modpack__routes'>
+            </section> : <div className='modpack__routes'><div className='modpack__route-main'>
                 <nav className='modpack__route-tabs' aria-label='Choose your route'>
                     <button type='button' aria-pressed={route === 'start'} aria-controls='modpack-route-panel' onClick={() => setRoute('start')}><FiDownload aria-hidden /><strong>Start playing</strong><span>Install Prism and add the pack</span></button>
                     <button type='button' aria-pressed={route === 'host'} aria-controls='modpack-route-panel' onClick={() => setRoute('host')}><FiServer aria-hidden /><strong>Host a server</strong><span>Set up a world for your players</span></button>
@@ -70,9 +79,13 @@ export const Minecraft = () => {
                         <button type='button' className='modpack__button' data-open-panel='hosting' onClick={() => openPanel('hosting')}>Open server guide →</button>
                     </>}
                 </section>
-                <nav className='modpack__route-links' aria-label='More about the modpack'>
-                    {([['playing', 'Playing guide'], ['manual', 'Manual releases & change logs'], ['credits', 'Mod credits']] as [Panel, string][]).map(([key, label]) => <button type='button' className='modpack__route-link' key={key} data-open-panel={key} onClick={() => openPanel(key)}>{label} →</button>)}
+                <nav className='modpack__more' aria-label='More about the modpack'>
+                    {more.map(([key, label, about, Icon]) => <button type='button' className='modpack__more-button' key={key} data-open-panel={key} onClick={() => openPanel(key)}>
+                        <Icon aria-hidden className='modpack__more-icon' /><strong>{label}</strong><span>{about}</span><FiArrowRight aria-hidden className='modpack__more-arrow' />
+                    </button>)}
                 </nav>
+            </div>
+                <WhatsNew release={latest} failed={failed} onChangelog={setChangelog} />
             </div>}
         </div>
         <footer className='modpack__every-time'><FiRepeat aria-hidden /><div><strong>Every time you play</strong><span>Open Prism → select your imported Progression Survival instance → Launch.</span></div></footer>
